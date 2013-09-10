@@ -49,7 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CanLine\CanLine.csproj">
-      <Project>{5BD64D61-F283-4833-B5A0-25EBE435AC89}</Project>
+      <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
       <Name>CanLine</Name>
     </ProjectReference>
   </ItemGroup>

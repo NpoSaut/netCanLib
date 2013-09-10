@@ -50,7 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AppiWorking\AppiWorking.csproj">
-      <Project>{F0B79856-02E6-41EC-8F95-4AA17604BA11}</Project>
+      <Project>{5A812723-E98B-4B82-AE7B-8E2747D8541F}</Project>
       <Name>AppiWorking</Name>
     </ProjectReference>
   </ItemGroup>
