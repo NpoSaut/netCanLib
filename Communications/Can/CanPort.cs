@@ -10,12 +10,8 @@ namespace Communications.Can
     /// <summary>
     /// Абстракция CAN-порта
     /// </summary>
-    public abstract class CanPort
+    public abstract class CanPort : Port
     {
-        /// <summary>
-        /// Имя порта
-        /// </summary>
-        public String Name { get; set; }
         /// <summary>
         /// Событие приёма сообщения по линии
         /// </summary>
@@ -26,9 +22,9 @@ namespace Communications.Can
         public bool GenerateLoopbackEcho { get; set; }
 
         protected CanPort(String PortName)
+            : base(PortName)
         {
             this.GenerateLoopbackEcho = true;
-            this.Name = PortName;
         }
 
         #region Отправка сообщений

@@ -45,6 +45,7 @@
     <Compile Include="AppiDeviceSlot.cs" />
     <Compile Include="AppiMessages.cs" />
     <Compile Include="AppiException.cs" />
+    <Compile Include="AppiRsPort.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

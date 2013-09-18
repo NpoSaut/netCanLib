@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Communications.Can;
+using System.IO;
 
 namespace Communications.Appi
 {
@@ -33,15 +34,17 @@ namespace Communications.Appi
 
         private object DevLocker = new object();
 
-        public Dictionary<AppiLine, AppiCanPort> Ports { get; private set; }
+        public AppiRsPort WirelessPort { get; private set; }
+        public IDictionary<AppiLine, AppiCanPort> CanPorts { get; private set; }
 
         public AppiDev()
         {
-            Ports = new Dictionary<AppiLine, AppiCanPort>()
+            CanPorts = new Dictionary<AppiLine, AppiCanPort>()
             {
                 { AppiLine.Can1, new AppiCanPort(this, AppiLine.Can1) },
                 { AppiLine.Can2, new AppiCanPort(this, AppiLine.Can2) }
             };
+            WirelessPort = new AppiRsPort(this, "WRS");
         }
         public virtual void Dispose()
         {
@@ -56,7 +59,7 @@ namespace Communications.Appi
         /// Считывает текущее состояние и сообщения из АППИ
         /// </summary>
         /// <returns>Сообщения, полученные с момента предыдущего считывания</returns>
-        public AppiMessages ReadMessages()
+        private void ReadMessages()
         {
             Byte[] buff;
             lock (DevLocker)
@@ -67,7 +70,6 @@ namespace Communications.Appi
             if (buff.Length < MinimumRequiredBufferSize)
             {
                 Console.Write('~');
-                return AppiMessages.Empty;
             }
 
             var MessagesInA = buff[6];
@@ -77,10 +79,20 @@ namespace Communications.Appi
                     ParseBuffer(buff, 24, MessagesInA).ToList(),
                     ParseBuffer(buff, 524, MessagesInB).ToList()
                     );
-
             OnMessagesRecieved(messages);
 
-            return messages;
+            var BytesInSerial = buff[1024];
+            if (BytesInSerial > 0)
+            {
+                byte[] serialData = new byte[BytesInSerial];
+                Buffer.BlockCopy(buff, 1025, serialData, 0, serialData.Length);
+                OnSerialDataRecieved(serialData);
+            }
+        }
+
+        private void OnSerialDataRecieved(byte[] serialData)
+        {
+            WirelessPort.OnAppiRsBufferRead(serialData);
         }
         /// <summary>
         /// Парсит буфер сообщений АППИ
@@ -142,14 +154,34 @@ namespace Communications.Appi
             SendFrames(new List<CanFrame>() { Frame }, Line);
         }
 
+        internal void PushSerialData(byte[] buff)
+        {
+            for (int pointer = 0; pointer < buff.Length; pointer += UInt16.MaxValue)
+            {
+                UInt16 len = (UInt16)Math.Min(buff.Length - pointer, UInt16.MaxValue);
+
+                MemoryStream ms = new MemoryStream(2048);
+                ms.WriteByte(0x01);
+                ms.WriteByte(0x02);
+                ms.Seek(8, SeekOrigin.Begin);
+                ms.Write(BitConverter.GetBytes(len), 0, 2);
+                ms.Write(buff, pointer, len);
+
+                lock (DevLocker)
+                {
+                    WriteBuffer(ms.GetBuffer());
+                }
+            }
+        }
+
         public event AppiReceiveEventHandler AppiMessagesRecieved;
 
         private void OnMessagesRecieved(AppiMessages mes)
         {
             if (AppiMessagesRecieved != null) AppiMessagesRecieved(this, new AppiMessageRecieveEventArgs(mes));
 
-            Ports[AppiLine.Can1].OnAppiFramesRecieved(mes.ChannelA);
-            Ports[AppiLine.Can2].OnAppiFramesRecieved(mes.ChannelB);
+            CanPorts[AppiLine.Can1].OnAppiFramesRecieved(mes.ChannelA);
+            CanPorts[AppiLine.Can2].OnAppiFramesRecieved(mes.ChannelB);
         }
 
         /// <summary>
