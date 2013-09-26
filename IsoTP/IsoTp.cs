@@ -16,9 +16,9 @@ namespace Communications.Protocols.IsoTP
         /// <param name="AcknowlegmentDescriptor">Дескриптор принимающего устройства</param>
         /// <param name="Data">Данные для передачи</param>
         /// <returns>Объект транзакции</returns>
-        public static TpSendTransaction BeginSend(CanPort Port, int TransmitDescriptor, int AcknowlegmentDescriptor, Byte[] Data, TimeSpan? Timeout = null)
+        public static TpSendTransaction BeginSend(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, Byte[] Data, TimeSpan? Timeout = null)
         {
-            var tr = new TpSendTransaction(Port, TransmitDescriptor, AcknowlegmentDescriptor);
+            var tr = new TpSendTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;
             System.Threading.Tasks.Task.Factory.StartNew(() => tr.Send(new TpPacket(Data)));
             return tr;
@@ -31,28 +31,27 @@ namespace Communications.Protocols.IsoTP
         /// <param name="TransmitDescriptor">Дескриптор передающего устройства</param>
         /// <param name="AcknowlegmentDescriptor">Дескриптор принимающего устройства</param>
         /// <returns>Объект транзакции</returns>
-        public static TpReceiveTransaction BeginReceive(CanPort Port, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
+        public static TpReceiveTransaction BeginReceive(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
         {
-            var tr = new TpReceiveTransaction(Port, TransmitDescriptor, AcknowlegmentDescriptor);
+            var tr = new TpReceiveTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;
             System.Threading.Tasks.Task.Factory.StartNew(() => tr.Receive());
             return tr;
         }
 
         public static TpReceiveTransaction SendRequestAndBeginReceive(
-            CanPort Port,
+            CanFlow Flow,
             int RequestTransmitDescriptor, int RequestAcknowlegmentDescriptor,
             int AnsverTransmitDescriptor, int AnsverAcknowlegmentDescriptor,
             Byte[] RequestData, TimeSpan Timeout)
         {
-            var tr = BeginReceive(Port, AnsverTransmitDescriptor, AnsverAcknowlegmentDescriptor, Timeout);
-            BeginSend(Port, RequestTransmitDescriptor, RequestAcknowlegmentDescriptor, RequestData);
-            return tr;
+            BeginSend(Flow, RequestTransmitDescriptor, RequestAcknowlegmentDescriptor, RequestData).Wait();
+            return BeginReceive(Flow, AnsverTransmitDescriptor, AnsverAcknowlegmentDescriptor, Timeout);
         }
 
-        public static TpReceiveTransaction SendRequestAndBeginReceive(CanPort Port, int MasterDescriptor, int SlaveDescriptor, Byte[] RequestData, TimeSpan Timeout)
+        public static TpReceiveTransaction SendRequestAndBeginReceive(CanFlow Flow, int MasterDescriptor, int SlaveDescriptor, Byte[] RequestData, TimeSpan Timeout)
         {
-            return SendRequestAndBeginReceive(Port, MasterDescriptor, SlaveDescriptor, SlaveDescriptor, MasterDescriptor, RequestData, Timeout);
+            return SendRequestAndBeginReceive(Flow, MasterDescriptor, SlaveDescriptor, SlaveDescriptor, MasterDescriptor, RequestData, Timeout);
         }
     }
 }

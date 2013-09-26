@@ -15,8 +15,8 @@ namespace Communications.Protocols.IsoTP
         public int BlockSize { get; private set; }
         public TimeSpan SeparationTime { get; set; }
 
-        public TpSendTransaction(CanPort Port, int TransmitDescriptor, int AcknowlegmentDescriptor)
-            : base(Port, TransmitDescriptor, AcknowlegmentDescriptor)
+        public TpSendTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
+            : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
         {}
 
         public void Send(TpPacket Packet)
@@ -33,44 +33,41 @@ namespace Communications.Protocols.IsoTP
 
         private void SendFlow()
         {
-            using (var FramesReader = new CanFramesBuffer(AcknowlegmentDescriptor, Port))
+            var AckStream = Flow.Read(Timeout, true).Where(f => f.Descriptor == AcknowlegmentDescriptor);
+
+            try
             {
-                var AckStream = FramesReader.Read(Timeout, true);
+                Flow.Send(GetFirstFrame().GetCanFrame(TransmitDescriptor));
 
-                try
+                // Берём очередь для отправки
+                var PushingCanFrames = GetConsFrames().Select(cf => cf.GetCanFrame(TransmitDescriptor));
+
+                // Повторяем, пока не отослали всю очередь
+                while (Pointer < Buff.Length)
                 {
-                    Port.Send(GetFirstFrame().GetCanFrame(TransmitDescriptor));
+                    // Дожидаемся FlowControl фрейма
+                    ProcessFlowControl(AckStream);
 
-                    // Берём очередь для отправки
-                    var PushingCanFrames = GetConsFrames().Select(cf => cf.GetCanFrame(TransmitDescriptor));
+                    // Берём блок
+                    var Block = PushingCanFrames.Take(BlockSize).ToList();
 
-                    // Повторяем, пока не отослали всю очередь
-                    while (Pointer < Buff.Length)
+                    // Отправляем его либо сразу, либо с SeparationTime
+                    if (SeparationTime == TimeSpan.Zero)
+                        Flow.Send(Block);
+                    else
                     {
-                        // Дожидаемся FlowControl фрейма
-                        ProcessFlowControl(AckStream);
-
-                        // Берём блок
-                        var Block = PushingCanFrames.Take(BlockSize).ToList();
-
-                        // Отправляем его либо сразу, либо с SeparationTime
-                        if (SeparationTime == TimeSpan.Zero)
-                            Port.Send(Block);
-                        else
+                        foreach (var f in Block)
                         {
-                            foreach (var f in Block)
-                            {
-                                Port.Send(f);
-                                System.Threading.Thread.Sleep(SeparationTime);
-                            }
+                            Flow.Send(f);
+                            System.Threading.Thread.Sleep(SeparationTime);
                         }
                     }
                 }
-                catch
-                {
-                    this.Status = TpTransactionStatus.Error;
-                    throw;
-                }
+            }
+            catch
+            {
+                this.Status = TpTransactionStatus.Error;
+                throw;
             }
         }
 
@@ -79,7 +76,7 @@ namespace Communications.Protocols.IsoTP
             try
             {
                 var f = new SingleFrame(Buff);
-                Port.Send(f.GetCanFrame(TransmitDescriptor));
+                Flow.Send(f.GetCanFrame(TransmitDescriptor));
             }
             catch (Exception)
             {

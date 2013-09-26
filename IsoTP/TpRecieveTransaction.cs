@@ -37,8 +37,8 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpReceiveTransaction(CanPort Port, int TransmitDescriptor, int AcknowlegmentDescriptor)
-            : base(Port, TransmitDescriptor, AcknowlegmentDescriptor)
+        public TpReceiveTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
+            : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
         {
             this.SeparationTime = TimeSpan.Zero;
             this.BlockSize = 20;
@@ -51,53 +51,51 @@ namespace Communications.Protocols.IsoTP
 
             bool TransactionStarted = false;
 
-            using (var FramesReader = new CanFramesBuffer(TransmitDescriptor, Port))
+            
+            // Инициализируем чтение с заданным таймаутом,
+            // при истечении таймаута - выбрасываем ошибку.
+            var FramesStream = Flow.Read(Timeout, true).Where(f => f.Descriptor == TransmitDescriptor);
+
+            try
             {
-                // Инициализируем чтение с заданным таймаутом,
-                // при истечении таймаута - выбрасываем ошибку.
-                var FramesStream = FramesReader.Read(Timeout, true);
-
-                try
+                // Ждём первого кадра передачи
+                FirstFrame First = null;
+                foreach (var f in FramesStream)
                 {
-                    // Ждём первого кадра передачи
-                    FirstFrame First = null;
-                    foreach (var f in FramesStream)
+                    var ft = f.GetIsoTpFrameType();
+                    if (ft == IsoTpFrameType.First)
                     {
-                        var ft = f.GetIsoTpFrameType();
-                        if (ft == IsoTpFrameType.First)
-                        {
-                            First = (FirstFrame)f;
-                            break;
-                        }
-                        if (ft == IsoTpFrameType.Single)
-                        {
-                            return ((SingleFrame)f).Data;
-                        }
+                        First = (FirstFrame)f;
+                        break;
                     }
-                    TransactionStarted = true;
-
-                    // После того, как поймали первый кадр - подготавливаем буфер
-                    Buff = new Byte[First.PacketSize];
-                    Buffer.BlockCopy(First.Data, 0, Buff, 0, First.Data.Length);
-                    Pointer += First.Data.Length;
-
-                    ExpectingConsIndex = 1;
-
-                    // Начинаем приём данных
-                    while (Pointer < Buff.Length)
+                    if (ft == IsoTpFrameType.Single)
                     {
-                        SendFlowControl();          // Сообщаем о готовности
-                        ReadBlock(FramesStream);    // Читаем следующий блок
+                        return ((SingleFrame)f).Data;
                     }
                 }
-                catch
+                TransactionStarted = true;
+
+                // После того, как поймали первый кадр - подготавливаем буфер
+                Buff = new Byte[First.PacketSize];
+                Buffer.BlockCopy(First.Data, 0, Buff, 0, First.Data.Length);
+                Pointer += First.Data.Length;
+
+                ExpectingConsIndex = 1;
+
+                // Начинаем приём данных
+                while (Pointer < Buff.Length)
                 {
-                    this.Status = TpTransactionStatus.Error;
-                    // Если в процессе передачи возникла ошибка, отправляем отмену
-                    if (TransactionStarted)
-                        Port.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
-                    throw;      // и пробрасываем ошибку дальше по стеку
+                    SendFlowControl();          // Сообщаем о готовности
+                    ReadBlock(FramesStream);    // Читаем следующий блок
                 }
+            }
+            catch
+            {
+                this.Status = TpTransactionStatus.Error;
+                // Если в процессе передачи возникла ошибка, отправляем отмену
+                if (TransactionStarted)
+                    Flow.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
+                throw;      // и пробрасываем ошибку дальше по стеку
             }
 
             this.Status = TpTransactionStatus.Done;
@@ -126,7 +124,7 @@ namespace Communications.Protocols.IsoTP
         }
         private void SendFlowControl()
         {
-            Port.Send(GenerateFlowControl().GetCanFrame(AcknowlegmentDescriptor));
+            Flow.Send(GenerateFlowControl().GetCanFrame(AcknowlegmentDescriptor));
         }
         private FlowControlFrame GenerateFlowControl()
         {

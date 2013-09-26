@@ -15,7 +15,7 @@ namespace Communications.Protocols.IsoTP
         /// <summary>
         /// Используемый порт
         /// </summary>
-        public CanPort Port { get; private set; }
+        public CanFlow Flow { get; private set; }
         /// <summary>
         /// Используемый дескриптор
         /// </summary>
@@ -48,11 +48,14 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpTransaction(CanPort Port, int TransmitDescriptor, int AcknowlegmentDescriptor)
+        public TpTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
         {
+            if (Flow.Descriptors.Contains(AcknowlegmentDescriptor))
+                throw new DescriptorNotInFlowException(AcknowlegmentDescriptor);
+
             this.TransmitDescriptor = TransmitDescriptor;
             this.AcknowlegmentDescriptor = AcknowlegmentDescriptor;
-            this.Port = Port;
+            this.Flow = Flow;
             this.Timeout = DefaultTimeout;
             this.Status = TpTransactionStatus.Ready;
         }

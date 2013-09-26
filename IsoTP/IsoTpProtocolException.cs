@@ -8,16 +8,15 @@ namespace Communications.Protocols.IsoTP
     /// <summary>
     /// Исключение, связанное с реализацией протокола ISO-TP
     /// </summary>
+    [Serializable]
     public class IsoTpProtocolException : Exception
     {
-        public IsoTpProtocolException()
-            : base()
-        { }
-        public IsoTpProtocolException(String Message)
-            : base(Message)
-        { }
-        public IsoTpProtocolException(String Message, Exception InnerException)
-            : base(Message, InnerException)
-        { }
+        public IsoTpProtocolException() { }
+        public IsoTpProtocolException(string message) : base(message) { }
+        public IsoTpProtocolException(string message, Exception inner) : base(message, inner) { }
+        protected IsoTpProtocolException(
+          System.Runtime.Serialization.SerializationInfo info,
+          System.Runtime.Serialization.StreamingContext context)
+            : base(info, context) { }
     }
 }

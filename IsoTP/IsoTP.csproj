@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DescriptorNotInFlowException.cs" />
     <Compile Include="Frames\ConsecutiveFrame.cs" />
     <Compile Include="Frames\FirstFrame.cs" />
     <Compile Include="Frames\FlowControlFrame.cs" />

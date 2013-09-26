@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.Concurrent;
+using System.Collections.ObjectModel;
 
 namespace Communications.Can
 {
@@ -29,6 +30,11 @@ namespace Communications.Can
         private List<CanFrameHandler> Handlers = new List<CanFrameHandler>();
 
         /// <summary>
+        /// Список дескрипторов, отлавливаемых в данный поток
+        /// </summary>
+        public ReadOnlyCollection<int> Descriptors { get; set; }
+
+        /// <summary>
         /// Создаёт поток вокруг выбранного Can-порта
         /// </summary>
         /// <param name="Port">Can-порт, поток с которого нужно буферизировать</param>
@@ -36,6 +42,7 @@ namespace Communications.Can
         public CanFlow(CanPort Port, params int[] Descriptors)
         {
             this.Port = Port;
+            this.Descriptors = new ReadOnlyCollection<int>(Descriptors);
             foreach (var d in Descriptors)
             {
                 var h = new CanFrameHandler(Port, d);
