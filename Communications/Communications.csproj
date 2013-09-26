@@ -40,6 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Can\CanBufferedBase.cs" />
+    <Compile Include="Can\CanFlow.cs" />
     <Compile Include="Can\CanFrame.cs" />
     <Compile Include="Can\CanFrameHandler.cs" />
     <Compile Include="Can\CanFramesBuffer.cs" />
