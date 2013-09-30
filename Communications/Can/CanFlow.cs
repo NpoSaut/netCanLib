@@ -42,8 +42,8 @@ namespace Communications.Can
         public CanFlow(CanPort Port, params int[] Descriptors)
         {
             this.Port = Port;
-            this.Descriptors = new ReadOnlyCollection<int>(Descriptors);
-            foreach (var d in Descriptors)
+            this.Descriptors = new ReadOnlyCollection<int>(Descriptors.Distinct().ToList());
+            foreach (var d in this.Descriptors)
             {
                 var h = new CanFrameHandler(Port, d);
                 h.Recieved += new CanFramesReceiveEventHandler(Handler_MessageRecieved);
@@ -57,10 +57,11 @@ namespace Communications.Can
         }
 
         /// <summary>Отправляет Can-сообщение в поток</summary>
-        public void Send(CanFrame Frame) { Send(new CanFrame[] { Frame }); }
+        public void Send(CanFrame Frame, bool ClearBeforeSend = false) { Send(new CanFrame[] { Frame }, ClearBeforeSend); }
         /// <summary>Отправляет несколько Can-сообщений в поток</summary>
-        public void Send(IList<CanFrame> Frames)
+        public void Send(IList<CanFrame> Frames, bool ClearBeforeSend = false)
         {
+            if (ClearBeforeSend) Clear();
             Port.Send(Frames);
         }
 
