@@ -9,33 +9,33 @@ namespace Communications.Protocols.IsoTP
     public static class IsoTp
     {
         /// <summary>
-        /// Запускает асинхронный процесс передачи данных и возвращает объект транзакции
+        /// Отправляет данные в формате ISO-TP и возвращает объект транзакции
         /// </summary>
         /// <param name="Port">CAN-порт, через который осуществляется передача</param>
         /// <param name="TransmitDescriptor">Дескриптор передающего устройства</param>
         /// <param name="AcknowlegmentDescriptor">Дескриптор принимающего устройства</param>
         /// <param name="Data">Данные для передачи</param>
         /// <returns>Объект транзакции</returns>
-        public static TpSendTransaction BeginSend(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, Byte[] Data, TimeSpan? Timeout = null)
+        public static TpSendTransaction Send(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, Byte[] Data, TimeSpan? Timeout = null)
         {
             var tr = new TpSendTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;
-            System.Threading.Tasks.Task.Factory.StartNew(() => tr.Send(new TpPacket(Data)));
+            tr.Send(new TpPacket(Data));
             return tr;
         }
 
         /// <summary>
-        /// Запускает асинхронный процесс получения данных и возвращает объект транзакции
+        /// Получает данные формата ISO-TP и возвращает объект транзакции
         /// </summary>
         /// <param name="Port">CAN-порт, через который осуществляется передача</param>
         /// <param name="TransmitDescriptor">Дескриптор передающего устройства</param>
         /// <param name="AcknowlegmentDescriptor">Дескриптор принимающего устройства</param>
         /// <returns>Объект транзакции</returns>
-        public static TpReceiveTransaction BeginReceive(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
+        public static TpReceiveTransaction Receive(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
         {
             var tr = new TpReceiveTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;
-            System.Threading.Tasks.Task.Factory.StartNew(() => tr.Receive());
+            tr.Receive();
             return tr;
         }
 
@@ -45,8 +45,8 @@ namespace Communications.Protocols.IsoTP
             int AnsverTransmitDescriptor, int AnsverAcknowlegmentDescriptor,
             Byte[] RequestData, TimeSpan Timeout)
         {
-            BeginSend(Flow, RequestTransmitDescriptor, RequestAcknowlegmentDescriptor, RequestData).Wait();
-            return BeginReceive(Flow, AnsverTransmitDescriptor, AnsverAcknowlegmentDescriptor, Timeout);
+            Send(Flow, RequestTransmitDescriptor, RequestAcknowlegmentDescriptor, RequestData).Wait();
+            return Receive(Flow, AnsverTransmitDescriptor, AnsverAcknowlegmentDescriptor, Timeout);
         }
 
         public static TpReceiveTransaction SendRequestAndBeginReceive(CanFlow Flow, int MasterDescriptor, int SlaveDescriptor, Byte[] RequestData, TimeSpan Timeout)

@@ -50,7 +50,7 @@ namespace Communications.Protocols.IsoTP
 
         public TpTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
         {
-            if (Flow.Descriptors.Contains(AcknowlegmentDescriptor))
+            if (!Flow.Descriptors.Contains(AcknowlegmentDescriptor))
                 throw new DescriptorNotInFlowException(AcknowlegmentDescriptor);
 
             this.TransmitDescriptor = TransmitDescriptor;
@@ -62,10 +62,10 @@ namespace Communications.Protocols.IsoTP
 
         public void Wait()
         {
-            if (Status == TpTransactionStatus.Ready)
-                throw new ApplicationException("Транзакция ещё не запущена");
+            //if (Status == TpTransactionStatus.Ready)
+            //    throw new ApplicationException("Транзакция ещё не запущена");
 
-            System.Threading.SpinWait.SpinUntil(() => Status == TpTransactionStatus.Active);
+            System.Threading.SpinWait.SpinUntil(() => Status == TpTransactionStatus.Active || Status == TpTransactionStatus.Ready);
         }
     }
 }

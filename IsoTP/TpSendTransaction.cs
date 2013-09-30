@@ -17,7 +17,7 @@ namespace Communications.Protocols.IsoTP
 
         public TpSendTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
             : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
-        {}
+        { }
 
         public void Send(TpPacket Packet)
         {

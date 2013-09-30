@@ -70,7 +70,8 @@ namespace Communications.Protocols.IsoTP
                     }
                     if (ft == IsoTpFrameType.Single)
                     {
-                        return ((SingleFrame)f).Data;
+                        Buff = ((SingleFrame)f).Data;
+                        return Data;
                     }
                 }
                 TransactionStarted = true;

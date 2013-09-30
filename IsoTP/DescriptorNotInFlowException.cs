@@ -19,7 +19,7 @@ namespace Communications.Protocols.IsoTP
             : base(info, context) { }
 
         public DescriptorNotInFlowException(int Descriptor)
-            : this(string.Format("Дескриптор {0:X4} не входит в список отслеживаемых данным потоком дескрипторов"))
+            : this(string.Format("Дескриптор {0:X4} не входит в список отслеживаемых данным потоком дескрипторов", Descriptor))
         {
             this.Descriptor = Descriptor;
         }
