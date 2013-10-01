@@ -71,6 +71,7 @@ namespace Communications.Protocols.IsoTP
                     if (ft == IsoTpFrameType.Single)
                     {
                         Buff = ((SingleFrame)f).Data;
+                        Status = TpTransactionStatus.Done;
                         return Data;
                     }
                 }

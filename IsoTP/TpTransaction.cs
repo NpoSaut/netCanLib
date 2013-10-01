@@ -65,7 +65,7 @@ namespace Communications.Protocols.IsoTP
             //if (Status == TpTransactionStatus.Ready)
             //    throw new ApplicationException("Транзакция ещё не запущена");
 
-            System.Threading.SpinWait.SpinUntil(() => Status == TpTransactionStatus.Active || Status == TpTransactionStatus.Ready);
+            System.Threading.SpinWait.SpinUntil(() => Status == TpTransactionStatus.Done || Status == TpTransactionStatus.Error);
         }
     }
 }
