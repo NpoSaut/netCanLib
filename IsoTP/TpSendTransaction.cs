@@ -46,7 +46,7 @@ namespace Communications.Protocols.IsoTP
                 while (Pointer < Buff.Length)
                 {
                     // Дожидаемся FlowControl фрейма
-                    ProcessFlowControl(AckStream);
+                    while (ProcessFlowControl(AckStream) != FlowControlFlag.ClearToSend) { }
 
                     // Берём блок
                     var Block = PushingCanFrames.Take(BlockSize).ToList();

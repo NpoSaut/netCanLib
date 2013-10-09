@@ -55,6 +55,7 @@ namespace Communications.Appi
             }
         }
 
+        private static int LastReadBufferId = -1;
         /// <summary>
         /// Считывает текущее состояние и сообщения из АППИ
         /// </summary>
@@ -71,6 +72,15 @@ namespace Communications.Appi
             {
                 Console.Write('~');
             }
+
+            // Смотрим, не принимали ли мы это ранее
+            //Console.WriteLine("{0} -> {1}   | {2} : {3}  | {4}", LastReadBufferId, buff[5], buff[6], buff[2], string.Join(" ", buff.Take(10).Select((i,b) => string.Format("{0}:{1:X2}", b, i))));
+            if (buff[5] == LastReadBufferId)
+            {
+                Console.WriteLine("DUBLICATE!");
+                return;
+            }
+            else LastReadBufferId = buff[5];
 
             var MessagesInA = buff[6];
             var MessagesInB = buff[2];
@@ -214,6 +224,7 @@ namespace Communications.Appi
                 {
                     if (!IsListening) break;
                     else this.ReadMessages();
+                    System.Threading.Thread.Sleep(1);
                 }
             }
         }
