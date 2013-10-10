@@ -77,7 +77,7 @@ namespace Communications.Appi
             //Console.WriteLine("{0} -> {1}   | {2} : {3}  | {4}", LastReadBufferId, buff[5], buff[6], buff[2], string.Join(" ", buff.Take(10).Select((i,b) => string.Format("{0}:{1:X2}", b, i))));
             if (buff[5] == LastReadBufferId)
             {
-                Console.WriteLine("DUBLICATE!");
+                //Console.WriteLine("DUBLICATE!");
                 return;
             }
             else LastReadBufferId = buff[5];
