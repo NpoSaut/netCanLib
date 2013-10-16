@@ -222,9 +222,17 @@ namespace Communications.Appi
             {
                 lock (DevLocker)
                 {
-                    if (!IsListening) break;
-                    else this.ReadMessages();
-                    System.Threading.Thread.Sleep(1);
+                    try
+                    {
+                        if (!IsListening) break;
+                        else this.ReadMessages();
+                        System.Threading.Thread.Sleep(1);
+                    }
+                    catch (AppiConnectoinException)
+                    {
+                        this.OnDisconnected();
+                        break;
+                    }
                 }
             }
         }

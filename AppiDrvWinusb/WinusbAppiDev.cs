@@ -75,10 +75,9 @@ namespace Communications.Appi.Winusb
                 //return buff.SkipWhile(b => b == 0).ToArray();
                 return buff;
             }
-            catch (USBException)
+            catch (USBException UsbExc)
             {
-                this.OnDisconnected();
-                return new byte[0];
+                throw new AppiConnectoinException(UsbExc);
             }
         }
         /// <summary>
@@ -87,7 +86,14 @@ namespace Communications.Appi.Winusb
         /// <param name="Buffer">Данные для записи</param>
         protected override void WriteBuffer(byte[] Buffer)
         {
-            WritePipe.Write(Buffer);
+            try
+            {
+                WritePipe.Write(Buffer);
+            }
+            catch (USBException UsbExc)
+            {
+                throw new AppiConnectoinException(UsbExc);
+            }
         } 
         #endregion
 
