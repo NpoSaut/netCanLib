@@ -54,5 +54,20 @@ namespace Communications.Can.LogReader
         {
             ReadTimer.Stop();
         }
+
+
+        private int _BaudRate;
+        public override int BaudRate
+        {
+            get { return _BaudRate; }
+            set
+            {
+                if (_BaudRate != value)
+                {
+                    _BaudRate = value;
+                    OnBaudRateChanged(value);
+                }
+            }
+        }
     }
 }

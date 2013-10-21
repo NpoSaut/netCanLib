@@ -28,5 +28,23 @@ namespace Communications.Appi
         {
             OnFramesRecieved(Frames);
         }
+
+        private int _BaudRate;
+        public override int BaudRate
+        {
+            get { return _BaudRate; }
+            set
+            {
+                Device.SetBaudRate(this.Line, value);
+            }
+        }
+        internal void RenewBaudRate(int newValue)
+        {
+            if (newValue != _BaudRate)
+            {
+                _BaudRate = newValue;
+                base.OnBaudRateChanged(newValue);
+            }
+        }
     }
 }

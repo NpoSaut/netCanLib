@@ -85,6 +85,12 @@ namespace Communications.Appi
             var MessagesInA = buff[6];
             var MessagesInB = buff[2];
 
+            int SpeedA = buff[7] | buff[8] << 8;
+            int SpeedB = buff[9] | buff[10] << 8;
+
+            CanPorts[AppiLine.Can1].RenewBaudRate(SpeedA * 1000);
+            CanPorts[AppiLine.Can2].RenewBaudRate(SpeedB * 1000);
+
             var messages = new AppiMessages(
                     ParseBuffer(buff, 24, MessagesInA).ToList(),
                     ParseBuffer(buff, 524, MessagesInB).ToList()
@@ -259,6 +265,26 @@ namespace Communications.Appi
         protected virtual void OnDisconnected()
         {
             if (Disconnected != null) Disconnected(this, new EventArgs());
+        }
+
+        /// <summary>
+        /// Устанавливает скорость обмена по выбранной линии
+        /// </summary>
+        /// <param name="appiLine">Линия, для которой требуется установить скорость</param>
+        /// <param name="value">Новое значение скорости</param>
+        internal void SetBaudRate(AppiLine appiLine, int value)
+        {
+            using (var ms = new MemoryStream())
+            {
+                using (var bw = new BinaryWriter(ms))
+                {
+                    bw.Write((byte)appiLine);
+                    bw.Write((byte)0x01);
+                    bw.Write((UInt16)(value / 1000));
+                }
+                WriteBuffer(ms.ToArray());
+            }
+            
         }
     }
 

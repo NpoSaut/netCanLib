@@ -13,6 +13,16 @@ namespace Communications.Can
     public abstract class CanPort : Port
     {
         /// <summary>
+        /// Получает или задаёт скорость порта (в бодах)
+        /// </summary>
+        public abstract int BaudRate { get; set; }
+        public event BaudRateChangedEventHandler BaudRateChanged;
+        protected void OnBaudRateChanged(int newValue)
+        {
+            if (BaudRateChanged != null) BaudRateChanged(this, new BaudRateChangedEventArgs(newValue));
+        }
+
+        /// <summary>
         /// Событие приёма сообщения по линии
         /// </summary>
         public event CanFramesReceiveEventHandler Recieved;
@@ -117,6 +127,17 @@ namespace Communications.Can
         {
             this.Frames = Frames;
             this.Port = Port;
+        }
+    }
+
+    public delegate void BaudRateChangedEventHandler(object sender, BaudRateChangedEventArgs e);
+    public class BaudRateChangedEventArgs : EventArgs
+    {
+        public int NewBaudRate { get; private set; }
+
+        public BaudRateChangedEventArgs(int NewValue)
+        {
+            this.NewBaudRate = NewValue;
         }
     }
 }
