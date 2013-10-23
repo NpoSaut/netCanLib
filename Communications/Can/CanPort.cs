@@ -13,6 +13,11 @@ namespace Communications.Can
     public abstract class CanPort : Port
     {
         /// <summary>
+        /// Список логгеров, ассоциированных с данным портом
+        /// </summary>
+        public IList<ILog> Logs { get; set; }
+
+        /// <summary>
         /// Получает или задаёт скорость порта (в бодах)
         /// </summary>
         public abstract int BaudRate { get; set; }
@@ -66,6 +71,7 @@ namespace Communications.Can
         /// <param name="Frames">Список отправленных сообщений</param>
         protected virtual void OnSent(IList<CanFrame> Frames)
         {
+            LogFramesFlow(FramesFlowDirection.Out, Frames);
             if (GenerateLoopbackEcho)
                 this.OnFramesRecieved(Frames.Select(f => f.GetLoopbackFrame()).ToList());
         }
@@ -80,6 +86,8 @@ namespace Communications.Can
             if (Frames.Any())
             {
                 foreach (var f in Frames) f.Time = DateTime.Now;
+
+                LogFramesFlow(FramesFlowDirection.In, Frames);
 
                 if (Recieved != null) Recieved(this, new CanFramesReceiveEventArgs(Frames, this));
 
@@ -114,6 +122,14 @@ namespace Communications.Can
         public override string ToString()
         {
             return string.Format("CanPort {0}", Name);
+        }
+
+        private enum FramesFlowDirection { In, Out }
+        private void LogFramesFlow(FramesFlowDirection Direction, IList<CanFrame> Frames)
+        {
+            string h = Direction.ToString().PadRight(4);
+            if (Logs != null)
+                foreach (var f in Frames) Logs.PushTextEvent(string.Format("{0} {1}", h, f));
         }
     }   
     

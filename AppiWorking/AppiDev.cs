@@ -18,6 +18,14 @@ namespace Communications.Appi
     /// </summary>
     public abstract class AppiDev : IDisposable
     {
+        public Communications.ILog BufferLog { get; set; }
+        private enum BufferDirection { In, Out }
+        private void PushBufferToLog(BufferDirection Direction, Byte[] Buffer)
+        {
+            if (BufferLog != null)
+                BufferLog.PushTextEvent(string.Format("{0} {1}", Direction.ToString().PadRight(4), BitConverter.ToString(Buffer).Replace('-', ' ')));
+        }
+
         /// <summary>
         /// Размер буфера
         /// </summary>
@@ -66,6 +74,7 @@ namespace Communications.Appi
             lock (DevLocker)
             {
                 buff = ReadBuffer();
+                PushBufferToLog(BufferDirection.In, buff);
             }
 
             if (buff.Length < MinimumRequiredBufferSize)
@@ -78,6 +87,7 @@ namespace Communications.Appi
             if (buff[5] == LastReadBufferId)
             {
                 //Console.WriteLine("DUBLICATE!");
+                if (BufferLog != null) BufferLog.PushTextEvent("Повторяющийся буфер обнаружен и проигнорирован.");
                 return;
             }
             else LastReadBufferId = buff[5];
@@ -155,6 +165,7 @@ namespace Communications.Appi
                     Buffer.BlockCopy(MessagesBuffer, 0, Buff, 10, MessagesBuffer.Length);
 
                     WriteBuffer(Buff);
+                    PushBufferToLog(BufferDirection.Out, Buff);
 
                     unchecked { SendMessageCounter++; }
                 }
@@ -185,7 +196,9 @@ namespace Communications.Appi
 
                 lock (DevLocker)
                 {
-                    WriteBuffer(ms.GetBuffer());
+                    var UsbBuff = ms.GetBuffer();
+                    WriteBuffer(UsbBuff);
+                    PushBufferToLog(BufferDirection.Out, UsbBuff);
                 }
             }
         }
@@ -282,7 +295,9 @@ namespace Communications.Appi
                     bw.Write((byte)0x01);
                     bw.Write((UInt16)(value / 1000));
                 }
-                WriteBuffer(ms.ToArray());
+                var buff = ms.ToArray();
+                WriteBuffer(buff);
+                PushBufferToLog(BufferDirection.Out, buff);
             }
             
         }
