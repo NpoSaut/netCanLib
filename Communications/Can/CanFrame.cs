@@ -128,7 +128,7 @@ namespace Communications.Can
 
         public override string ToString()
         {
-            return string.Format("{0:X4} | {1}", Descriptor, string.Join(" ", Data.Select(b => b.ToString("X2"))));
+            return string.Format("{0:X4} | {1}{2}", Descriptor, string.Join(" ", Data.Select(b => b.ToString("X2"))), IsLoopback ? " *" : "");
         }
     }
 }
