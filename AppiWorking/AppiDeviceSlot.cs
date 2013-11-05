@@ -21,7 +21,7 @@ namespace Communications.Appi
         /// </summary>
         /// <param name="BeginListening">Начинает прослушивать линию сразу же после открытия устройства</param>
         /// <returns></returns>
-        public AppiDev OpenDevice(bool BeginListening = false)
+        public AppiDev OpenDevice(bool BeginListening = true)
         {
             lock (openingLocker)
             {

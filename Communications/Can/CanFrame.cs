@@ -63,7 +63,7 @@ namespace Communications.Can
         /// Создаёт CAN-сообщение с заданным ID
         /// </summary>
         /// <param name="Id">Идентификатор сообщения</param>
-        /// <param name="Data">Данные сообщения</param>
+        /// <param name="DataBuffer">Данные сообщения</param>
         /// <param name="Offset">Отступ от начала массива данных (в байтах)</param>
         /// <param name="Length">Длинна данных в буфере</param>
         public static CanFrame NewWithId(int Id, Byte[] DataBuffer, int Offset, int Length)
@@ -76,7 +76,7 @@ namespace Communications.Can
         /// Создаёт пустое CAN-сообщение с заданными ID и длиной
         /// </summary>
         /// <param name="Id">Идентификатор сообщения</param>
-        /// <param name="Data">Длина сообщения</param>
+        /// <param name="Length">Длина сообщения</param>
         public static CanFrame NewWithId(int Id, int Length)
         {
             return NewWithId(Id, new Byte[Length]);
@@ -91,10 +91,10 @@ namespace Communications.Can
         /// <remarks>Из массива данных берётся только первый N байт, где N вычисляется на основании дескриптора</remarks>
         public static CanFrame NewWithDescriptor(int Descriptor, Byte[] DataBuffer, int Offset = 0)
         {
-            int DescriptedLength = Descriptor % 0x20;
-            Byte[] data = new Byte[DescriptedLength];
-            Array.Copy(DataBuffer, Offset, data, 0, Math.Min(DescriptedLength, DataBuffer.Length));
-            return new CanFrame() { Id = Descriptor / 0x20, Data = data };
+            int descriptedLength = Descriptor % 0x20;
+            Byte[] data = new Byte[descriptedLength];
+            Array.Copy(DataBuffer, Offset, data, 0, Math.Min(descriptedLength, DataBuffer.Length));
+            return new CanFrame { Id = Descriptor / 0x20, Data = data };
         }
         /// <summary>
         /// Создаёт пустое CAN-сообщение с заданным Дескриптором
