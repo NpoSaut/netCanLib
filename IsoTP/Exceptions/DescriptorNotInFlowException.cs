@@ -1,9 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Communications.Protocols.IsoTP
+namespace Communications.Protocols.IsoTP.Exceptions
 {
     [Serializable]
     public class DescriptorNotInFlowException : IsoTpProtocolException

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Communications.Can;
+using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP
@@ -87,22 +88,26 @@ namespace Communications.Protocols.IsoTP
 
         private FlowControlFlag ProcessFlowControl(IEnumerable<CanFrame> FramesStream)
         {
-            var FC = FramesStream
-                        .Where(f => f.GetIsoTpFrameType() == IsoTpFrameType.FlowControl)
-                        //.Cast<FlowControlFrame>()
-                        .Select(f => (FlowControlFrame)f)
-                        .SkipWhile(fc => fc.Flag == FlowControlFlag.Wait)
-                        .First();
+            try
+            {
+                var FC = FramesStream
+                                .Where(f => f.GetIsoTpFrameType() == IsoTpFrameType.FlowControl)
+                    //.Cast<FlowControlFrame>()
+                                .Select(f => (FlowControlFrame)f)
+                                .SkipWhile(fc => fc.Flag == FlowControlFlag.Wait)
+                                .First();
 
-            // Считываем параметры отправки кадров
-            this.BlockSize = FC.BlockSize != 0 ? FC.BlockSize : int.MaxValue;
-            this.SeparationTime = FC.SeparationTime;
+                // Считываем параметры отправки кадров
+                this.BlockSize = FC.BlockSize != 0 ? FC.BlockSize : int.MaxValue;
+                this.SeparationTime = FC.SeparationTime;
 
-            // Выбрасываем ошибку, если принимающая сторона отказывается от транзакции
-            if (FC.Flag == FlowControlFlag.Abort)
-                throw new IsoTpTransactionAbortedException("Принимающая сторона ответила флагом отмены транзакции");
+                // Выбрасываем ошибку, если принимающая сторона отказывается от транзакции
+                if (FC.Flag == FlowControlFlag.Abort)
+                    throw new IsoTpTransactionAbortedException("Принимающая сторона ответила флагом отмены транзакции");
 
-            return FC.Flag;
+                return FC.Flag;
+            }
+            catch (TimeoutException timeoutException) { throw new IsoTpFlowControlTimeoutException(timeoutException); }
         }
 
         int ConsecutiveFrameSent = 0;

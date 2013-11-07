@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Communications.Can;
+using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP
@@ -51,53 +52,59 @@ namespace Communications.Protocols.IsoTP
 
             bool TransactionStarted = false;
 
-            
-            // Инициализируем чтение с заданным таймаутом,
-            // при истечении таймаута - выбрасываем ошибку.
-            var FramesStream = Flow.Read(Timeout, true).Where(f => f.Descriptor == TransmitDescriptor);
-
             try
             {
-                // Ждём первого кадра передачи
-                FirstFrame First = null;
-                foreach (var f in FramesStream)
+                // Инициализируем чтение с заданным таймаутом,
+                // при истечении таймаута - выбрасываем ошибку.
+                var FramesStream = Flow.Read(Timeout, true).Where(f => f.Descriptor == TransmitDescriptor);
+
+                try
                 {
-                    var ft = f.GetIsoTpFrameType();
-                    if (ft == IsoTpFrameType.First)
+                    // Ждём первого кадра передачи
+                    FirstFrame First = null;
+                    foreach (var f in FramesStream)
                     {
-                        First = (FirstFrame)f;
-                        break;
+                        var ft = f.GetIsoTpFrameType();
+                        if (ft == IsoTpFrameType.First)
+                        {
+                            First = (FirstFrame)f;
+                            break;
+                        }
+                        if (ft == IsoTpFrameType.Single)
+                        {
+                            Buff = ((SingleFrame)f).Data;
+                            Status = TpTransactionStatus.Done;
+                            return Data;
+                        }
                     }
-                    if (ft == IsoTpFrameType.Single)
+                    TransactionStarted = true;
+
+                    // После того, как поймали первый кадр - подготавливаем буфер
+                    Buff = new Byte[First.PacketSize];
+                    Buffer.BlockCopy(First.Data, 0, Buff, 0, First.Data.Length);
+                    Pointer += First.Data.Length;
+
+                    ExpectingConsIndex = 1;
+
+                    // Начинаем приём данных
+                    while (Pointer < Buff.Length)
                     {
-                        Buff = ((SingleFrame)f).Data;
-                        Status = TpTransactionStatus.Done;
-                        return Data;
+                        SendFlowControl();          // Сообщаем о готовности
+                        ReadBlock(FramesStream);    // Читаем следующий блок
                     }
                 }
-                TransactionStarted = true;
-
-                // После того, как поймали первый кадр - подготавливаем буфер
-                Buff = new Byte[First.PacketSize];
-                Buffer.BlockCopy(First.Data, 0, Buff, 0, First.Data.Length);
-                Pointer += First.Data.Length;
-
-                ExpectingConsIndex = 1;
-
-                // Начинаем приём данных
-                while (Pointer < Buff.Length)
+                catch
                 {
-                    SendFlowControl();          // Сообщаем о готовности
-                    ReadBlock(FramesStream);    // Читаем следующий блок
+                    this.Status = TpTransactionStatus.Error;
+                    // Если в процессе передачи возникла ошибка, отправляем отмену
+                    if (TransactionStarted)
+                        Flow.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
+                    throw;      // и пробрасываем ошибку дальше по стеку
                 }
             }
-            catch
+            catch (TimeoutException timeoutException)
             {
-                this.Status = TpTransactionStatus.Error;
-                // Если в процессе передачи возникла ошибка, отправляем отмену
-                if (TransactionStarted)
-                    Flow.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
-                throw;      // и пробрасываем ошибку дальше по стеку
+                throw new IsoTpReceiveTimeoutException(timeoutException);
             }
 
             this.Status = TpTransactionStatus.Done;
