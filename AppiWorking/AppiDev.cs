@@ -165,6 +165,7 @@ namespace Communications.Appi
                     Buffer.BlockCopy(MessagesBuffer, 0, Buff, 10, MessagesBuffer.Length);
 
                     WriteBuffer(Buff);
+                    System.Threading.Thread.Sleep(fg.Count);
                     PushBufferToLog(BufferDirection.Out, Buff);
 
                     unchecked { SendMessageCounter++; }
