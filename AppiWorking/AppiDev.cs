@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using Communications.Can;
 using System.IO;
 
@@ -31,6 +32,8 @@ namespace Communications.Appi
         /// </summary>
         public const int BufferSize = 2048;
 
+        private readonly Dictionary<AppiLine, AppiSendBuffer> _sendBuffers;
+
         // Это число, в некотором роде, является волшебным числом.
         // Почему-то, иногда после завершения работы с АППИ, оно начинает выдавать свой буфер с некоторым сдвигом.
         // Тогда размер буфера уменьшается. Но вроде как, он всё равно содержит данные...
@@ -40,7 +43,7 @@ namespace Communications.Appi
         protected abstract Byte[] ReadBuffer();
         protected abstract void WriteBuffer(Byte[] Buffer);
 
-        private object DevLocker = new object();
+        private readonly object DevLocker = new object();
 
         public AppiRsPort WirelessPort { get; private set; }
         public IDictionary<AppiLine, AppiCanPort> CanPorts { get; private set; }
@@ -52,6 +55,13 @@ namespace Communications.Appi
                 { AppiLine.Can1, new AppiCanPort(this, AppiLine.Can1) },
                 { AppiLine.Can2, new AppiCanPort(this, AppiLine.Can2) }
             };
+
+            _sendBuffers = new Dictionary<AppiLine, AppiSendBuffer>()
+            {
+                { AppiLine.Can1, new AppiSendBuffer(this) },
+                { AppiLine.Can2, new AppiSendBuffer(this) }
+            };
+
             WirelessPort = new AppiRsPort(this, "WRS");
         }
         public virtual void Dispose()
@@ -101,6 +111,11 @@ namespace Communications.Appi
             CanPorts[AppiLine.Can1].RenewBaudRate(SpeedA * 1000);
             CanPorts[AppiLine.Can2].RenewBaudRate(SpeedB * 1000);
 
+            var OutMessagesInA = BitConverter.ToUInt16(buff, 17);
+            var OutMessagesInB = BitConverter.ToUInt16(buff, 19);
+            _sendBuffers[AppiLine.Can1].PostCount(OutMessagesInA);
+            //_sendBuffers[AppiLine.Can2].PostCount(OutMessagesInB);
+
             var messages = new AppiMessages(
                     ParseBuffer(buff, 24, MessagesInA).ToList(),
                     ParseBuffer(buff, 524, MessagesInB).ToList()
@@ -146,30 +161,32 @@ namespace Communications.Appi
         internal void SendFrames(IList<CanFrame> Frames, AppiLine Line)
         {
             var FrameGroups = Frames
-                    .Select((f, i) => new { f, i })
-                    .GroupBy(fi => fi.i / FramesPerSendGroup, fi => fi.f)
-                    .Select(fg => fg.ToList())
-                    .ToList();
+                .Select((f, i) => new {f, i})
+                .GroupBy(fi => fi.i/FramesPerSendGroup, fi => fi.f)
+                .Select(fg => fg.ToList())
+                .ToList();
 
             foreach (var fg in FrameGroups)
             {
-                lock (DevLocker)
+                Byte[] Buff = new Byte[2048];
+                Buffer.SetByte(Buff, 0, 0x02);
+                Buffer.SetByte(Buff, 1, (byte) Line);
+                Buffer.SetByte(Buff, 2, SendMessageCounter);
+                Buffer.SetByte(Buff, 3, (byte) fg.Count);
+
+                var MessagesBuffer = fg.SelectMany(m => m.ToBufferBytes()).ToArray();
+                Buffer.BlockCopy(MessagesBuffer, 0, Buff, 10, MessagesBuffer.Length);
+
+                lock (_sendBuffers[Line].Locker)
                 {
-                    Byte[] Buff = new Byte[2048];
-                    Buffer.SetByte(Buff, 0, 0x02);
-                    Buffer.SetByte(Buff, 1, (byte)Line);
-                    Buffer.SetByte(Buff, 3, SendMessageCounter);
-                    Buffer.SetByte(Buff, 3, (byte)fg.Count);
-
-                    var MessagesBuffer = fg.SelectMany(m => m.ToBufferBytes()).ToArray();
-                    Buffer.BlockCopy(MessagesBuffer, 0, Buff, 10, MessagesBuffer.Length);
-
-                    WriteBuffer(Buff);
-                    System.Threading.Thread.Sleep(fg.Count);
-                    PushBufferToLog(BufferDirection.Out, Buff);
-
-                    unchecked { SendMessageCounter++; }
+                    Monitor.Wait(_sendBuffers[Line].Locker);
+                    lock (DevLocker)
+                    {
+                        WriteBuffer(Buff);
+                        unchecked { SendMessageCounter++; }
+                    }
                 }
+                PushBufferToLog(BufferDirection.Out, Buff);
             }
         }
         /// <summary>
@@ -240,19 +257,16 @@ namespace Communications.Appi
         {
             while (true)
             {
-                lock (DevLocker)
+                try
                 {
-                    try
-                    {
-                        if (!IsListening) break;
-                        else this.ReadMessages();
-                        System.Threading.Thread.Sleep(1);
-                    }
-                    catch (AppiConnectoinException)
-                    {
-                        this.OnDisconnected();
-                        break;
-                    }
+                    if (!IsListening) break;
+                    else this.ReadMessages();
+                    System.Threading.Thread.Sleep(1);
+                }
+                catch (AppiConnectoinException)
+                {
+                    this.OnDisconnected();
+                    break;
                 }
             }
         }
@@ -278,7 +292,10 @@ namespace Communications.Appi
         /// </summary>
         protected virtual void OnDisconnected()
         {
-            if (Disconnected != null) Disconnected(this, new EventArgs());
+            lock (DevLocker)
+            {
+                if (Disconnected != null) Disconnected(this, new EventArgs());
+            }
         }
 
         /// <summary>
@@ -297,7 +314,10 @@ namespace Communications.Appi
                     bw.Write((UInt16)(value / 1000));
                 }
                 var buff = ms.ToArray();
-                WriteBuffer(buff);
+                lock (DevLocker)
+                {
+                    WriteBuffer(buff); 
+                }
                 PushBufferToLog(BufferDirection.Out, buff);
             }
             
