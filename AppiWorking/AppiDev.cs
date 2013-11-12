@@ -19,7 +19,7 @@ namespace Communications.Appi
     /// </summary>
     public abstract class AppiDev : IDisposable
     {
-        public Communications.ILog BufferLog { get; set; }
+        public ILog BufferLog { get; set; }
         private enum BufferDirection { In, Out }
         private void PushBufferToLog(BufferDirection Direction, Byte[] Buffer)
         {
@@ -78,7 +78,7 @@ namespace Communications.Appi
         /// Считывает текущее состояние и сообщения из АППИ
         /// </summary>
         /// <returns>Сообщения, полученные с момента предыдущего считывания</returns>
-        private void ReadMessages()
+        private void GetAndComputeBuffer()
         {
             Byte[] buff;
             lock (DevLocker)
@@ -87,21 +87,27 @@ namespace Communications.Appi
                 PushBufferToLog(BufferDirection.In, buff);
             }
 
-            if (buff.Length < MinimumRequiredBufferSize)
-            {
-                Console.Write('~');
-            }
-
             // Смотрим, не принимали ли мы это ранее
-            //Console.WriteLine("{0} -> {1}   | {2} : {3}  | {4}", LastReadBufferId, buff[5], buff[6], buff[2], string.Join(" ", buff.Take(10).Select((i,b) => string.Format("{0}:{1:X2}", b, i))));
             if (buff[5] == LastReadBufferId)
             {
-                //Console.WriteLine("DUBLICATE!");
                 if (BufferLog != null) BufferLog.PushTextEvent("Повторяющийся буфер обнаружен и проигнорирован.");
                 return;
             }
             else LastReadBufferId = buff[5];
 
+            switch (buff[0])
+            {
+                case 0x02:
+                    ParseMessagesBuffer(buff);
+                    break;
+                case 0x09:
+                    ParseVersionBuffer(buff);
+                    break;
+            }
+        }
+
+        private void ParseMessagesBuffer(Byte[] buff)
+        {
             var MessagesInA = buff[6];
             var MessagesInB = buff[2];
 
@@ -114,7 +120,7 @@ namespace Communications.Appi
             var OutMessagesInA = BitConverter.ToUInt16(buff, 17);
             var OutMessagesInB = BitConverter.ToUInt16(buff, 19);
             _sendBuffers[AppiLine.Can1].PostCount(OutMessagesInA);
-            //_sendBuffers[AppiLine.Can2].PostCount(OutMessagesInB);
+            _sendBuffers[AppiLine.Can2].PostCount(OutMessagesInB);
 
             var messages = new AppiMessages(
                     ParseBuffer(buff, 24, MessagesInA).ToList(),
@@ -129,6 +135,32 @@ namespace Communications.Appi
                 Buffer.BlockCopy(buff, 1025, serialData, 0, serialData.Length);
                 OnSerialDataRecieved(serialData);
             }
+        }
+
+        private readonly object appiVersionLocker = new object();
+        private Version AppiVersion { get; set; }
+        private void ParseVersionBuffer(Byte[] buff)
+        {
+            lock (appiVersionLocker)
+            {
+                AppiVersion = new Version(buff[6], 0);
+                Monitor.PulseAll(appiVersionLocker);
+            }
+        }
+
+        internal Version GetAppiVersion()
+        {
+            var versionAskingBuffer = new byte[] {0x09, 0x01};
+            lock (appiVersionLocker)
+            {
+                AppiVersion = null;
+                lock (DevLocker)
+                {
+                    WriteBuffer(versionAskingBuffer);
+                }
+                Monitor.Wait(appiVersionLocker);
+            }
+            return AppiVersion;
         }
 
         private void OnSerialDataRecieved(byte[] serialData)
@@ -245,7 +277,7 @@ namespace Communications.Appi
             lock (DevLocker)
                 if (!IsListening)
                 {
-                    ListeningThread = new System.Threading.Thread(ListeningLoop) { Name = "Поток прослушивания АППИ" };
+                    ListeningThread = new Thread(ListeningLoop) { Name = "Поток прослушивания АППИ" };
                     IsListening = true;
                     ListeningThread.Start();
                 }
@@ -260,7 +292,7 @@ namespace Communications.Appi
                 try
                 {
                     if (!IsListening) break;
-                    else this.ReadMessages();
+                    else this.GetAndComputeBuffer();
                     System.Threading.Thread.Sleep(1);
                 }
                 catch (AppiConnectoinException)
@@ -347,7 +379,7 @@ namespace Communications.Appi
 
             BitConverter.GetBytes((UInt16)Frame.Descriptor).Reverse().ToArray().CopyTo(buff, 0);
             Frame.Data.CopyTo(buff, 2);
-
+            
             return buff;
         }
 
