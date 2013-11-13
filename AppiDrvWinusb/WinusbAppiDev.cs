@@ -66,7 +66,7 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// Чтение буфера
         /// </summary>
-        protected override byte[] ReadBuffer()
+        protected override byte[] ReadBufferImplement()
         {
             try
             {
@@ -84,7 +84,7 @@ namespace Communications.Appi.Winusb
         /// Запись буфера
         /// </summary>
         /// <param name="Buffer">Данные для записи</param>
-        protected override void WriteBuffer(byte[] Buffer)
+        protected override void WriteBufferImplement(byte[] Buffer)
         {
             try
             {

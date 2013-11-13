@@ -30,10 +30,8 @@ namespace Communications.Appi
                     var dev = InternalOpenDevice();
                     if (dev != null)
                     {
+                        dev.Initialize();
                         OpenedDevice = dev;
-                        IsOpened = true;
-                        if (BeginListening) dev.BeginListen();
-                        dev.GetAppiVersion();
                         return dev;
                     }
                     else throw new AppiException("Функция открытия устройства вернула null");

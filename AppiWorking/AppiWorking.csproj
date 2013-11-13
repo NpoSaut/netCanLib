@@ -47,6 +47,10 @@
     <Compile Include="AppiException.cs" />
     <Compile Include="AppiRsPort.cs" />
     <Compile Include="AppiSendBuffer.cs" />
+    <Compile Include="Buffers\AppiBufferBase.cs" />
+    <Compile Include="Buffers\AppiBufferIdentiferAttribute.cs" />
+    <Compile Include="Buffers\MessagesReadAppiBuffer.cs" />
+    <Compile Include="Buffers\VersionReadAppiBuffer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -54,6 +58,9 @@
       <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
       <Name>Communications</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Exceptions\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
