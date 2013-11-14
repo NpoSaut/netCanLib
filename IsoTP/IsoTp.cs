@@ -16,7 +16,7 @@ namespace Communications.Protocols.IsoTP
         /// <param name="AcknowlegmentDescriptor">Дескриптор принимающего устройства</param>
         /// <param name="Data">Данные для передачи</param>
         /// <returns>Объект транзакции</returns>
-        public static TpSendTransaction Send(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, Byte[] Data, TimeSpan? Timeout = null)
+        public static TpSendTransaction Send(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, Byte[] Data, TimeSpan? Timeout = null)
         {
             var tr = new TpSendTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;
@@ -31,7 +31,7 @@ namespace Communications.Protocols.IsoTP
         /// <param name="TransmitDescriptor">Дескриптор передающего устройства</param>
         /// <param name="AcknowlegmentDescriptor">Дескриптор принимающего устройства</param>
         /// <returns>Объект транзакции</returns>
-        public static TpReceiveTransaction Receive(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
+        public static TpReceiveTransaction Receive(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
         {
             var tr = new TpReceiveTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;

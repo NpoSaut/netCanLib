@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{D6B9D8FF-66C3-4411-88D3-524A4A19DC03}</ProjectGuid>
+    <ProjectGuid>{5545B567-9876-4F3B-B7DF-1F87FC34FF43}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>CommunicationsTests</RootNamespace>
-    <AssemblyName>CommunicationsTests</AssemblyName>
+    <RootNamespace>IsoTpTest</RootNamespace>
+    <AssemblyName>IsoTpTest</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -53,19 +53,23 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CanFlowTest.cs" />
-    <Compile Include="Stuff\CanFrameHelper.cs" />
-    <Compile Include="Stuff\ChainedCanFlow.cs" />
-    <Compile Include="Stuff\MockCanPort.cs" />
+    <Compile Include="Integration\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CommunicationsTests\CommunicationsTests.csproj">
+      <Project>{d6b9d8ff-66c3-4411-88d3-524a4a19dc03}</Project>
+      <Name>CommunicationsTests</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Communications\Communications.csproj">
-      <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
+      <Project>{6c5b1eca-5187-4f63-8cf1-c17df50d0f65}</Project>
       <Name>Communications</Name>
     </ProjectReference>
+    <ProjectReference Include="..\IsoTP\IsoTP.csproj">
+      <Project>{a45417b6-4547-4e98-b69e-4cb1cfe45f61}</Project>
+      <Name>IsoTP</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>

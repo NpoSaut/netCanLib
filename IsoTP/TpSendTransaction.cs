@@ -16,7 +16,7 @@ namespace Communications.Protocols.IsoTP
         public int BlockSize { get; private set; }
         public TimeSpan SeparationTime { get; set; }
 
-        public TpSendTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
+        public TpSendTransaction(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
             : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
         { }
 

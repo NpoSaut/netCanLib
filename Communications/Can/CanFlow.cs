@@ -19,7 +19,7 @@ namespace Communications.Can
     /// Этот класс похож на класс CanFramesBuffer, но более ориентирован на ведение диалога: он просматривает
     /// лишь один CanPort, но зато позволяет отправлять сообщения.
     /// </remarks>
-    public class CanFlow : CanBufferedBase, IDisposable
+    public class CanFlow : CanBufferedBase, IDisposable, ICanFlow
     {
         /// <summary>
         /// Порт, через который ведётся диалог
