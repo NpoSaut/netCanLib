@@ -44,13 +44,16 @@
     <Compile Include="AppiDev.cs" />
     <Compile Include="AppiDeviceSlot.cs" />
     <Compile Include="AppiMessages.cs" />
-    <Compile Include="AppiException.cs" />
+    <Compile Include="Exceptions\AppiBufferDecodeException.cs" />
+    <Compile Include="Exceptions\AppiConnectoinException.cs" />
+    <Compile Include="Exceptions\AppiException.cs" />
     <Compile Include="AppiRsPort.cs" />
     <Compile Include="AppiSendBuffer.cs" />
     <Compile Include="Buffers\AppiBufferBase.cs" />
     <Compile Include="Buffers\AppiBufferIdentiferAttribute.cs" />
     <Compile Include="Buffers\MessagesReadAppiBuffer.cs" />
     <Compile Include="Buffers\VersionReadAppiBuffer.cs" />
+    <Compile Include="Exceptions\TransferAbortedException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -59,9 +62,7 @@
       <Name>Communications</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Exceptions\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

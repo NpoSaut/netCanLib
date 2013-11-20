@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using Communications.Appi.Buffers;
+using Communications.Appi.Exceptions;
 using Communications.Can;
 using System.IO;
 
@@ -82,6 +83,7 @@ namespace Communications.Appi
             {
                 if (IsListening)
                     StopListening();
+                OnDisconnected();
             }
         }
 
@@ -267,6 +269,7 @@ namespace Communications.Appi
         /// </summary>
         public event EventHandler Disconnected;
 
+        private bool _disconnectionProcessed = false;
         /// <summary>
         /// События при отключении устройства.
         /// </summary>
@@ -274,7 +277,15 @@ namespace Communications.Appi
         {
             lock (DevLocker)
             {
-                if (Disconnected != null) Disconnected(this, new EventArgs());
+                if (!_disconnectionProcessed)
+                {
+                    if (Disconnected != null) Disconnected(this, new EventArgs());
+                    foreach (var appiSendBuffer in _sendBuffers.Values)
+                    {
+                        appiSendBuffer.AbortAllTransfers();
+                    }
+                    _disconnectionProcessed = true;
+                }
             }
         }
 

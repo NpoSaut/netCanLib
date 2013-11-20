@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using Communications.Appi.Buffers;
+using Communications.Appi.Exceptions;
 using Communications.Can;
 
 namespace Communications.Appi
@@ -45,6 +46,21 @@ namespace Communications.Appi
         }
 
         public abstract void SyncronizedSend(IList<CanFrame> Frames);
+
+        private bool _transfersAborted = false;
+        public void AbortAllTransfers()
+        {
+            lock (Locker)
+            {
+                _transfersAborted = true;
+                Monitor.PulseAll(Locker);
+            }
+        }
+
+        protected void CheckAborted()
+        {
+            if (_transfersAborted) throw new TransferAbortedException();
+        }
     }
 
     class AppiTimeoutSendBuffer : AppiSendBuffer
@@ -60,6 +76,7 @@ namespace Communications.Appi
                 lock (Locker)
                 {
                     SpinWait.SpinUntil(() => DateTime.Now >= _nextSendAviableAt);
+                    CheckAborted();
                     Device.WriteBuffer(buffer);
                     int nowSent = Math.Min(FramesPerSendGroup, Frames.Count - sent);
                     _nextSendAviableAt = DateTime.Now.AddMilliseconds(nowSent*2);
@@ -98,7 +115,9 @@ namespace Communications.Appi
             {
                 lock (Locker)
                 {
+                    CheckAborted();
                     Monitor.Wait(Locker);
+                    CheckAborted();
                     Device.WriteBuffer(buffer);
                 }
             }
