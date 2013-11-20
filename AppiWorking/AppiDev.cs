@@ -280,10 +280,11 @@ namespace Communications.Appi
                 if (!_disconnectionProcessed)
                 {
                     if (Disconnected != null) Disconnected(this, new EventArgs());
-                    foreach (var appiSendBuffer in _sendBuffers.Values)
-                    {
-                        appiSendBuffer.AbortAllTransfers();
-                    }
+                    if (_sendBuffers != null)
+                        foreach (var appiSendBuffer in _sendBuffers.Values)
+                        {
+                            appiSendBuffer.AbortAllTransfers();
+                        }
                     _disconnectionProcessed = true;
                 }
             }
