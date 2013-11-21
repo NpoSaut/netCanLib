@@ -51,6 +51,7 @@
     <Compile Include="Can\FrameEncoders\FrameEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameSbsEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameStreamEncoder.cs" />
+    <Compile Include="Can\ICanFlow.cs" />
     <Compile Include="Can\LogReader\CanVirtualPort.cs" />
     <Compile Include="Can\LogReader\StreamEncoderPort.cs" />
     <Compile Include="Can\LogReader\TextLogReaderPort.cs" />
@@ -61,6 +62,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial\RsPort.cs" />
     <Compile Include="Serial\RsStream.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

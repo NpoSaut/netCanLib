@@ -11,6 +11,13 @@ namespace Communications.Can
     public class CanFrame
     {
         /// <summary>
+        /// Максимальное значение идентификатора CAN-фрейма
+        /// </summary>
+        public const UInt16 IdMaxValue = 0x7ff;
+
+        public static UInt16 GetDescriptorFor(int Id, int Length) { return (UInt16)(Id*0x20 + Length); }
+
+        /// <summary>
         /// Идентификатор сообщения
         /// </summary>
         public int Id { get; private set; }
@@ -25,7 +32,7 @@ namespace Communications.Can
         /// </summary>
         public int Descriptor
         {
-            get { return Id * 0x20 + Data.Length; }
+            get { return GetDescriptorFor(Id, Data.Length); }
         }
 
         /// <summary>

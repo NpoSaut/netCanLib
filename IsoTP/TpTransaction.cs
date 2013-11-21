@@ -16,7 +16,7 @@ namespace Communications.Protocols.IsoTP
         /// <summary>
         /// Используемый порт
         /// </summary>
-        public CanFlow Flow { get; private set; }
+        public ICanFlow Flow { get; private set; }
         /// <summary>
         /// Используемый дескриптор
         /// </summary>
@@ -49,7 +49,7 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
+        public TpTransaction(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
         {
             if (!Flow.Descriptors.Contains(AcknowlegmentDescriptor))
                 throw new DescriptorNotInFlowException(AcknowlegmentDescriptor);

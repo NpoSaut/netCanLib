@@ -38,7 +38,7 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpReceiveTransaction(CanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
+        public TpReceiveTransaction(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
             : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
         {
             this.SeparationTime = TimeSpan.Zero;
