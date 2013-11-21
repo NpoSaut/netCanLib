@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using Communications.Appi.Buffers;
+using Communications.Appi.Exceptions;
 using Communications.Can;
 using System.IO;
 
@@ -24,7 +26,7 @@ namespace Communications.Appi
         private void PushBufferToLog(BufferDirection Direction, Byte[] Buffer)
         {
             if (BufferLog != null)
-                BufferLog.PushTextEvent(string.Format("{0} {1}", Direction.ToString().PadRight(4), BitConverter.ToString(Buffer).Replace('-', ' ')));
+                BufferLog.PushTextEvent(String.Format("{0} {1}", Direction.ToString().PadRight(4), BitConverter.ToString(Buffer).Replace('-', ' ')));
         }
 
         /// <summary>
@@ -32,7 +34,7 @@ namespace Communications.Appi
         /// </summary>
         public const int BufferSize = 2048;
 
-        private readonly Dictionary<AppiLine, AppiSendBuffer> _sendBuffers;
+        private Dictionary<AppiLine, AppiSendBuffer> _sendBuffers;
 
         // Это число, в некотором роде, является волшебным числом.
         // Почему-то, иногда после завершения работы с АППИ, оно начинает выдавать свой буфер с некоторым сдвигом.
@@ -40,8 +42,25 @@ namespace Communications.Appi
         // TODO: надо бы разобраться со сдвигом этого буфера
         public const int MinimumRequiredBufferSize = 524+500;
 
-        protected abstract Byte[] ReadBuffer();
-        protected abstract void WriteBuffer(Byte[] Buffer);
+        protected abstract Byte[] ReadBufferImplement();
+        protected abstract void WriteBufferImplement(Byte[] Buffer);
+
+        internal Byte[] ReadBuffer()
+        {
+            lock (DevLocker)
+            {
+                return ReadBufferImplement();
+            }
+        }
+
+        internal void WriteBuffer(Byte[] Buffer)
+        {
+            lock (DevLocker)
+            {
+                WriteBufferImplement(Buffer);
+                unchecked { _sendMessageCounter++; }
+            }
+        }
 
         private readonly object DevLocker = new object();
 
@@ -56,12 +75,6 @@ namespace Communications.Appi
                 { AppiLine.Can2, new AppiCanPort(this, AppiLine.Can2) }
             };
 
-            _sendBuffers = new Dictionary<AppiLine, AppiSendBuffer>()
-            {
-                { AppiLine.Can1, new AppiSendBuffer(this) },
-                { AppiLine.Can2, new AppiSendBuffer(this) }
-            };
-
             WirelessPort = new AppiRsPort(this, "WRS");
         }
         public virtual void Dispose()
@@ -70,7 +83,15 @@ namespace Communications.Appi
             {
                 if (IsListening)
                     StopListening();
+                OnDisconnected();
             }
+        }
+
+        internal event EventHandler<AppiBufferReadEventArgs> BufferRead;
+        private void OnBufferRead(AppiBufferReadEventArgs e)
+        {
+            EventHandler<AppiBufferReadEventArgs> handler = BufferRead;
+            if (handler != null) handler(this, e);
         }
 
         private static int LastReadBufferId = -1;
@@ -80,85 +101,54 @@ namespace Communications.Appi
         /// <returns>Сообщения, полученные с момента предыдущего считывания</returns>
         private void GetAndComputeBuffer()
         {
-            Byte[] buff;
-            lock (DevLocker)
-            {
-                buff = ReadBuffer();
-                PushBufferToLog(BufferDirection.In, buff);
-            }
+            var bufferBytes = ReadBuffer();
+            PushBufferToLog(BufferDirection.In, bufferBytes);
 
+            var buffer = AppiBufferBase.Decode(bufferBytes);
+
+            // Если принят неопознанный буфер - выходим
+            if (buffer == null) return;
+            
             // Смотрим, не принимали ли мы это ранее
-            if (buff[5] == LastReadBufferId)
+            if (buffer.SequentNumber == LastReadBufferId)
             {
                 if (BufferLog != null) BufferLog.PushTextEvent("Повторяющийся буфер обнаружен и проигнорирован.");
                 return;
             }
-            else LastReadBufferId = buff[5];
+            else LastReadBufferId = buffer.SequentNumber;
 
-            switch (buff[0])
-            {
-                case 0x02:
-                    ParseMessagesBuffer(buff);
-                    break;
-                case 0x09:
-                    ParseVersionBuffer(buff);
-                    break;
-            }
+            OnBufferRead(new AppiBufferReadEventArgs(buffer));
+
+            if (buffer is MessagesReadAppiBuffer) ProcessMessagesBuffer((MessagesReadAppiBuffer)buffer);
+            if (buffer is VersionReadAppiBuffer) ParseVersionBuffer((VersionReadAppiBuffer)buffer);
         }
 
-        private void ParseMessagesBuffer(Byte[] buff)
+        private void ProcessMessagesBuffer(MessagesReadAppiBuffer buff)
         {
-            var MessagesInA = buff[6];
-            var MessagesInB = buff[2];
-
-            int SpeedA = buff[7] | buff[8] << 8;
-            int SpeedB = buff[9] | buff[10] << 8;
-
-            CanPorts[AppiLine.Can1].RenewBaudRate(SpeedA * 1000);
-            CanPorts[AppiLine.Can2].RenewBaudRate(SpeedB * 1000);
-
-            var OutMessagesInA = BitConverter.ToUInt16(buff, 17);
-            var OutMessagesInB = BitConverter.ToUInt16(buff, 19);
-            _sendBuffers[AppiLine.Can1].PostCount(OutMessagesInA);
-            _sendBuffers[AppiLine.Can2].PostCount(OutMessagesInB);
-
-            var messages = new AppiMessages(
-                    ParseBuffer(buff, 24, MessagesInA).ToList(),
-                    ParseBuffer(buff, 524, MessagesInB).ToList()
-                    );
-            OnMessagesRecieved(messages);
-
-            var BytesInSerial = buff[1024];
-            if (BytesInSerial > 0)
-            {
-                byte[] serialData = new byte[BytesInSerial];
-                Buffer.BlockCopy(buff, 1025, serialData, 0, serialData.Length);
-                OnSerialDataRecieved(serialData);
-            }
+            OnCanMessagesRecieved(buff.CanMessages);
+            if (buff.SerialBuffer.Length > 0)
+                OnSerialDataRecieved(buff.SerialBuffer);
         }
 
-        private readonly object appiVersionLocker = new object();
+        private readonly object _appiVersionLocker = new object();
         private Version AppiVersion { get; set; }
-        private void ParseVersionBuffer(Byte[] buff)
+        private void ParseVersionBuffer(VersionReadAppiBuffer buff)
         {
-            lock (appiVersionLocker)
+            lock (_appiVersionLocker)
             {
-                AppiVersion = new Version(buff[6], 0);
-                Monitor.PulseAll(appiVersionLocker);
+                AppiVersion = buff.AppiVersion;
+                Monitor.PulseAll(_appiVersionLocker);
             }
         }
 
         internal Version GetAppiVersion()
         {
             var versionAskingBuffer = new byte[] {0x09, 0x01};
-            lock (appiVersionLocker)
+            lock (_appiVersionLocker)
             {
                 AppiVersion = null;
-                lock (DevLocker)
-                {
-                    WriteBuffer(versionAskingBuffer);
-                }
-                Monitor.Wait(appiVersionLocker);
+                WriteBuffer(versionAskingBuffer);
+                Monitor.Wait(_appiVersionLocker);
             }
             return AppiVersion;
         }
@@ -167,24 +157,9 @@ namespace Communications.Appi
         {
             WirelessPort.OnAppiRsBufferRead(serialData);
         }
-        /// <summary>
-        /// Парсит буфер сообщений АППИ
-        /// </summary>
-        /// <param name="Buff">Буфер сообщений</param>
-        /// <param name="Offset">Отступ от начала буфера</param>
-        /// <param name="Count">Количество сообщений в буфере</param>
-        private IEnumerable<CanFrame> ParseBuffer(Byte[] Buff, int Offset, int Count)
-        {
-            Byte[] buff = new Byte[10];
-            for (int i = 0; i < Count; i++)
-            {
-                Buffer.BlockCopy(Buff, Offset + i * buff.Length, buff, 0, buff.Length);
-                yield return AppiCanFrameConstructor.FromBufferBytes(buff);
-            }
-        }
 
         public const int FramesPerSendGroup = 20;
-        private byte SendMessageCounter = 0;
+        private byte _sendMessageCounter = 0;
         /// <summary>
         /// Отправляет список сообщений в указанный канал
         /// </summary>
@@ -192,34 +167,10 @@ namespace Communications.Appi
         /// <param name="Line">Канал связи</param>
         internal void SendFrames(IList<CanFrame> Frames, AppiLine Line)
         {
-            var FrameGroups = Frames
-                .Select((f, i) => new {f, i})
-                .GroupBy(fi => fi.i/FramesPerSendGroup, fi => fi.f)
-                .Select(fg => fg.ToList())
-                .ToList();
-
-            foreach (var fg in FrameGroups)
-            {
-                Byte[] Buff = new Byte[2048];
-                Buffer.SetByte(Buff, 0, 0x02);
-                Buffer.SetByte(Buff, 1, (byte) Line);
-                Buffer.SetByte(Buff, 2, SendMessageCounter);
-                Buffer.SetByte(Buff, 3, (byte) fg.Count);
-
-                var MessagesBuffer = fg.SelectMany(m => m.ToBufferBytes()).ToArray();
-                Buffer.BlockCopy(MessagesBuffer, 0, Buff, 10, MessagesBuffer.Length);
-
-                lock (_sendBuffers[Line].Locker)
-                {
-                    Monitor.Wait(_sendBuffers[Line].Locker);
-                    lock (DevLocker)
-                    {
-                        WriteBuffer(Buff);
-                        unchecked { SendMessageCounter++; }
-                    }
-                }
-                PushBufferToLog(BufferDirection.Out, Buff);
-            }
+            if (_sendBuffers == null) throw new AppiException("Не инициализированы средства отправки в CAN-линию");
+            if (!_sendBuffers.ContainsKey(Line)) throw new AppiException("Не инициализировано средства отправки в линию {0}", Line);
+            
+            _sendBuffers[Line].SyncronizedSend(Frames);
         }
         /// <summary>
         /// Отправляет одно сообщение в канал
@@ -244,30 +195,29 @@ namespace Communications.Appi
                 ms.Write(BitConverter.GetBytes(len), 0, 2);
                 ms.Write(buff, pointer, len);
 
-                lock (DevLocker)
-                {
-                    var UsbBuff = ms.GetBuffer();
-                    WriteBuffer(UsbBuff);
-                    PushBufferToLog(BufferDirection.Out, UsbBuff);
-                }
+                var usbBuff = ms.GetBuffer();
+                WriteBuffer(usbBuff);
+                PushBufferToLog(BufferDirection.Out, usbBuff);
             }
         }
 
         public event AppiReceiveEventHandler AppiMessagesRecieved;
 
-        private void OnMessagesRecieved(AppiMessages mes)
+        private void OnCanMessagesRecieved(IDictionary<AppiLine, IList<CanFrame>> messages)
         {
-            if (AppiMessagesRecieved != null) AppiMessagesRecieved(this, new AppiMessageRecieveEventArgs(mes));
+            if (AppiMessagesRecieved != null) AppiMessagesRecieved(this, new AppiMessageRecieveEventArgs(messages));
 
-            CanPorts[AppiLine.Can1].OnAppiFramesRecieved(mes.ChannelA);
-            CanPorts[AppiLine.Can2].OnAppiFramesRecieved(mes.ChannelB);
+            foreach (var kvp in messages.Where(kvp => kvp.Value.Any()))
+            {
+                CanPorts[kvp.Key].OnAppiFramesRecieved(kvp.Value);
+            }
         }
 
         /// <summary>
         /// Признак действия режима прослушивания линии
         /// </summary>
         public bool IsListening { get; private set; }
-        private System.Threading.Thread ListeningThread;
+        private Thread ListeningThread;
         /// <summary>
         /// Начать прослушивание линии
         /// </summary>
@@ -293,7 +243,7 @@ namespace Communications.Appi
                 {
                     if (!IsListening) break;
                     else this.GetAndComputeBuffer();
-                    System.Threading.Thread.Sleep(1);
+                    Thread.Sleep(1);
                 }
                 catch (AppiConnectoinException)
                 {
@@ -319,6 +269,7 @@ namespace Communications.Appi
         /// </summary>
         public event EventHandler Disconnected;
 
+        private bool _disconnectionProcessed = false;
         /// <summary>
         /// События при отключении устройства.
         /// </summary>
@@ -326,7 +277,20 @@ namespace Communications.Appi
         {
             lock (DevLocker)
             {
-                if (Disconnected != null) Disconnected(this, new EventArgs());
+                if (!_disconnectionProcessed)
+                {
+                    lock (_appiVersionLocker)
+                    {
+                        Monitor.PulseAll(_appiVersionLocker);
+                    }
+                    if (Disconnected != null) Disconnected(this, new EventArgs());
+                    if (_sendBuffers != null)
+                        foreach (var appiSendBuffer in _sendBuffers.Values)
+                        {
+                            appiSendBuffer.AbortAllTransfers();
+                        }
+                    _disconnectionProcessed = true;
+                }
             }
         }
 
@@ -346,25 +310,56 @@ namespace Communications.Appi
                     bw.Write((UInt16)(value / 1000));
                 }
                 var buff = ms.ToArray();
-                lock (DevLocker)
-                {
-                    WriteBuffer(buff); 
-                }
+                WriteBuffer(buff);
                 PushBufferToLog(BufferDirection.Out, buff);
             }
             
+        }
+
+        internal void Initialize()
+        {
+            BeginListen();
+            GetAppiVersion();
+            if (AppiVersion < new Version(4, 0))
+            {
+                _sendBuffers =
+                    new Dictionary<AppiLine, AppiSendBuffer>
+                    {
+                        {AppiLine.Can1, new AppiTimeoutSendBuffer(this, AppiLine.Can1)},
+                        {AppiLine.Can2, new AppiTimeoutSendBuffer(this, AppiLine.Can2)}
+                    };
+            }
+            else
+            {
+                _sendBuffers =
+                    new Dictionary<AppiLine, AppiSendBuffer>
+                    {
+                        {AppiLine.Can1, new AppiFeedbackSendBuffer(this, AppiLine.Can1)},
+                        {AppiLine.Can2, new AppiFeedbackSendBuffer(this, AppiLine.Can2)}
+                    };
+            }
         }
     }
 
     public delegate void AppiReceiveEventHandler(object sender, AppiMessageRecieveEventArgs e);
     public class AppiMessageRecieveEventArgs : EventArgs
     {
-        public AppiMessages Messages { get; set; }
+        public IDictionary<AppiLine, IList<CanFrame>> Messages { get; set; }
 
-        public AppiMessageRecieveEventArgs(AppiMessages Messages)
+        public AppiMessageRecieveEventArgs(IDictionary<AppiLine, IList<CanFrame>> Messages)
         {
             this.Messages = Messages;
         }
+    }
+
+    internal class AppiBufferReadEventArgs : EventArgs
+    {
+        public AppiBufferBase Buffer { get; private set; }
+
+        /// <summary>
+        /// Инициализирует новый экземпляр класса <see cref="T:System.EventArgs"/>.
+        /// </summary>
+        public AppiBufferReadEventArgs(AppiBufferBase Buffer) { this.Buffer = Buffer; }
     }
 
     internal static class AppiCanFrameConstructor

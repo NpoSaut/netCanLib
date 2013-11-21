@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Communications.Appi.Exceptions;
 using MadWizard.WinUSBNet;
 
 namespace Communications.Appi.Winusb
@@ -66,7 +67,7 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// Чтение буфера
         /// </summary>
-        protected override byte[] ReadBuffer()
+        protected override byte[] ReadBufferImplement()
         {
             try
             {
@@ -84,7 +85,7 @@ namespace Communications.Appi.Winusb
         /// Запись буфера
         /// </summary>
         /// <param name="Buffer">Данные для записи</param>
-        protected override void WriteBuffer(byte[] Buffer)
+        protected override void WriteBufferImplement(byte[] Buffer)
         {
             try
             {
@@ -97,7 +98,8 @@ namespace Communications.Appi.Winusb
         } 
         #endregion
 
-        internal static List<WinusbAppiDev> OpenedDevices { get; set; }
+        private static readonly object OpenedDevicesLocker = new object();
+        private static List<WinusbAppiDev> OpenedDevices { get; set; }
 
         static WinusbAppiDev()
         {
@@ -127,15 +129,20 @@ namespace Communications.Appi.Winusb
         {
             //ReadPipe.Abort();
             //WritePipe.Abort();
-
-            OpenedDevices.Remove(this);
+            lock (OpenedDevicesLocker)
+            {
+                OpenedDevices.Remove(this);
+            }
             base.Dispose();
             Device.Dispose();
         }
 
         internal static bool IsDeviceOpened(string DevicePath)
         {
-            return OpenedDevices.Any(d => d.DevicePath == DevicePath);
+            lock (OpenedDevicesLocker)
+            {
+                return OpenedDevices.Any(d => d.DevicePath == DevicePath);
+            }
         }
     }
 }

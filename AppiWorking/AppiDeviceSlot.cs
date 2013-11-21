@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Communications.Appi.Exceptions;
 
 namespace Communications.Appi
 {
@@ -30,10 +31,8 @@ namespace Communications.Appi
                     var dev = InternalOpenDevice();
                     if (dev != null)
                     {
+                        dev.Initialize();
                         OpenedDevice = dev;
-                        IsOpened = true;
-                        if (BeginListening) dev.BeginListen();
-                        dev.GetAppiVersion();
                         return dev;
                     }
                     else throw new AppiException("Функция открытия устройства вернула null");
@@ -46,11 +45,7 @@ namespace Communications.Appi
         /// <summary>
         /// Уже открытое устройство на этом слоте (null, если устройство не открыто)
         /// </summary>
-        public AppiDev OpenedDevice { get; private set; }
-        /// <summary>
-        /// Имеется ли открытое устройство на этом слоте
-        /// </summary>
-        public bool IsOpened { get;  private set; }
+        protected AppiDev OpenedDevice { get; private set; }
     }
 
     /// <summary>
