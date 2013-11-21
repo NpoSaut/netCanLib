@@ -22,7 +22,8 @@ namespace Communications.Appi.Winusb
 
         protected override AppiDev InternalOpenDevice()
         {
-            return new WinusbAppiDev(DeviceInfo);
+            var dev = new WinusbAppiDev(DeviceInfo);
+            return dev;
         }
     }
 }

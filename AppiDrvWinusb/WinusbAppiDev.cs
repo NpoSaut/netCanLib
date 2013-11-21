@@ -98,7 +98,8 @@ namespace Communications.Appi.Winusb
         } 
         #endregion
 
-        internal static List<WinusbAppiDev> OpenedDevices { get; set; }
+        private static readonly object OpenedDevicesLocker = new object();
+        private static List<WinusbAppiDev> OpenedDevices { get; set; }
 
         static WinusbAppiDev()
         {
@@ -128,15 +129,20 @@ namespace Communications.Appi.Winusb
         {
             //ReadPipe.Abort();
             //WritePipe.Abort();
-
-            OpenedDevices.Remove(this);
+            lock (OpenedDevicesLocker)
+            {
+                OpenedDevices.Remove(this);
+            }
             base.Dispose();
             Device.Dispose();
         }
 
         internal static bool IsDeviceOpened(string DevicePath)
         {
-            return OpenedDevices.Any(d => d.DevicePath == DevicePath);
+            lock (OpenedDevicesLocker)
+            {
+                return OpenedDevices.Any(d => d.DevicePath == DevicePath);
+            }
         }
     }
 }

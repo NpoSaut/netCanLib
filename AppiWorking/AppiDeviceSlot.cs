@@ -45,11 +45,7 @@ namespace Communications.Appi
         /// <summary>
         /// Уже открытое устройство на этом слоте (null, если устройство не открыто)
         /// </summary>
-        public AppiDev OpenedDevice { get; private set; }
-        /// <summary>
-        /// Имеется ли открытое устройство на этом слоте
-        /// </summary>
-        public bool IsOpened { get;  private set; }
+        protected AppiDev OpenedDevice { get; private set; }
     }
 
     /// <summary>
