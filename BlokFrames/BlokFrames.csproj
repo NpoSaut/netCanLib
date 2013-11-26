@@ -48,6 +48,7 @@
     <Compile Include="Halfset\HalfsetFrame.cs" />
     <Compile Include="Halfset\HalfsetValue.cs" />
     <Compile Include="InputData.cs" />
+    <Compile Include="IpdEmulation.cs" />
     <Compile Include="MmAltLongFrame.cs" />
     <Compile Include="MmState.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
