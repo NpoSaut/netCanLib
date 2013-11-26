@@ -148,7 +148,12 @@ namespace Communications.Appi
             {
                 AppiVersion = null;
                 WriteBuffer(versionAskingBuffer);
-                Monitor.Wait(_appiVersionLocker);
+                bool versionRecieved = Monitor.Wait(_appiVersionLocker, TimeSpan.FromSeconds(2));
+                if (!versionRecieved)
+                {
+                    OnDisconnected();
+                    throw new AppiConnectoinException("АППИ не ответило на запрос версии. Скорее всего, не удаётся установить связь с АППИ.");
+                }
             }
             return AppiVersion;
         }

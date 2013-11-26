@@ -25,23 +25,23 @@ namespace Communications.Appi
 
         protected IEnumerable<Byte[]> EncodeBuffers(IEnumerable<CanFrame> Frames)
         {
-            var FrameGroups = Frames
+            var frameGroups = Frames
                 .Select((f, i) => new { f, i })
                 .GroupBy(fi => fi.i / FramesPerSendGroup, fi => fi.f)
                 .Select(fg => fg.ToList());
 
-            foreach (var fg in FrameGroups)
+            foreach (var fg in frameGroups)
             {
-                Byte[] Buff = new Byte[2048];
-                Buffer.SetByte(Buff, 0, 0x02);
-                Buffer.SetByte(Buff, 1, (byte)Line);
+                Byte[] buff = new Byte[2048];
+                Buffer.SetByte(buff, 0, 0x02);
+                Buffer.SetByte(buff, 1, (byte)Line);
                 //Buffer.SetByte(Buff, 2, SendMessageCounter);
-                Buffer.SetByte(Buff, 3, (byte)fg.Count);
+                Buffer.SetByte(buff, 3, (byte)fg.Count);
 
                 var messagesBuffer = fg.SelectMany(m => m.ToBufferBytes()).ToArray();
-                Buffer.BlockCopy(messagesBuffer, 0, Buff, 10, messagesBuffer.Length);
+                Buffer.BlockCopy(messagesBuffer, 0, buff, 10, messagesBuffer.Length);
 
-                yield return Buff;
+                yield return buff;
             }
         }
 
