@@ -59,8 +59,11 @@ namespace Communications.Appi.Winusb
             
             WritePipe = Device.Pipes.First(p => p.IsOut);
             WritePipe.Policy.PipeTransferTimeout = 100;
-            
-            OpenedDevices.Add(this);
+
+            lock (OpenedDevicesLocker)
+            {
+                OpenedDevices.Add(this);
+            }
         }
 
         #region Чтение и запись буфера
@@ -76,9 +79,10 @@ namespace Communications.Appi.Winusb
                 //return buff.SkipWhile(b => b == 0).ToArray();
                 return buff;
             }
-            catch (USBException UsbExc)
+            catch (USBException usbExc)
             {
-                throw new AppiConnectoinException(UsbExc);
+                OnDisconnected();
+                throw new AppiConnectoinException("Ошибка при чтении буфера АППИ из USB", usbExc);
             }
         }
         /// <summary>
@@ -91,44 +95,24 @@ namespace Communications.Appi.Winusb
             {
                 WritePipe.Write(Buffer);
             }
-            catch (USBException UsbExc)
+            catch (USBException usbExc)
             {
-                throw new AppiConnectoinException(UsbExc);
+                OnDisconnected();
+                throw new AppiConnectoinException("Ошибка при записи буфера АППИ в USB", usbExc);
             }
         } 
         #endregion
 
         private static readonly object OpenedDevicesLocker = new object();
         private static List<WinusbAppiDev> OpenedDevices { get; set; }
-
+        
         static WinusbAppiDev()
         {
             OpenedDevices = new List<WinusbAppiDev>();
-
-            //var f = new System.Windows.Forms.Form();
-            //f.Show();
-
-            //USBNotifier n = new USBNotifier(f, DeviceGuid);
-            //n.Removal += new USBEventHandler(n_Removal);
-            //n.Arrival += new USBEventHandler(n_Arrival);
-        }
-
-        static void n_Arrival(object sender, USBEvent e)
-        {
-            throw new NotImplementedException();
-        }
-
-        static void n_Removal(object sender, USBEvent e)
-        {
-            var DisconnectedOpenedDevice = OpenedDevices.FirstOrDefault(d => d.DevicePath == e.DevicePath);
-            if (DisconnectedOpenedDevice != null)
-                DisconnectedOpenedDevice.OnDisconnected();
         }
 
         public override void Dispose()
         {
-            //ReadPipe.Abort();
-            //WritePipe.Abort();
             lock (OpenedDevicesLocker)
             {
                 OpenedDevices.Remove(this);

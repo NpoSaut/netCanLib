@@ -16,7 +16,7 @@ namespace Communications.Appi
         /// </summary>
         public abstract bool IsFree { get; }
 
-        object openingLocker = new object();
+        readonly object openingLocker = new object();
         /// <summary>
         /// Открывает АППИ
         /// </summary>
@@ -31,9 +31,17 @@ namespace Communications.Appi
                     var dev = InternalOpenDevice();
                     if (dev != null)
                     {
-                        dev.Initialize();
-                        OpenedDevice = dev;
-                        return dev;
+                        try
+                        {
+                            dev.Initialize();
+                            OpenedDevice = dev;
+                            return dev;
+                        }
+                        catch (AppiException)
+                        {
+                            dev.Dispose();
+                            throw;
+                        }
                     }
                     else throw new AppiException("Функция открытия устройства вернула null");
                 }

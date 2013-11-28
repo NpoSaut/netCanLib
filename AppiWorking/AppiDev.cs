@@ -125,9 +125,9 @@ namespace Communications.Appi
 
         private void ProcessMessagesBuffer(MessagesReadAppiBuffer buff)
         {
-            OnCanMessagesRecieved(buff.CanMessages);
+            OnCanMessagesReceived(buff.CanMessages);
             if (buff.SerialBuffer.Length > 0)
-                OnSerialDataRecieved(buff.SerialBuffer);
+                OnSerialDataReceived(buff.SerialBuffer);
         }
 
         private readonly object _appiVersionLocker = new object();
@@ -144,21 +144,22 @@ namespace Communications.Appi
         internal Version GetAppiVersion()
         {
             var versionAskingBuffer = new byte[] {0x09, 0x01};
+            bool versionReceived;
             lock (_appiVersionLocker)
             {
                 AppiVersion = null;
                 WriteBuffer(versionAskingBuffer);
-                bool versionRecieved = Monitor.Wait(_appiVersionLocker, TimeSpan.FromSeconds(2));
-                if (!versionRecieved)
-                {
-                    OnDisconnected();
-                    throw new AppiConnectoinException("АППИ не ответило на запрос версии. Скорее всего, не удаётся установить связь с АППИ.");
-                }
+                versionReceived = Monitor.Wait(_appiVersionLocker, TimeSpan.FromSeconds(2));
+            }
+            if (!versionReceived)
+            {
+                OnDisconnected();
+                throw new AppiConnectoinException("АППИ не ответило на запрос версии. Скорее всего, не удаётся установить связь с АППИ.");
             }
             return AppiVersion;
         }
 
-        private void OnSerialDataRecieved(byte[] serialData)
+        private void OnSerialDataReceived(byte[] serialData)
         {
             WirelessPort.OnAppiRsBufferRead(serialData);
         }
@@ -206,11 +207,11 @@ namespace Communications.Appi
             }
         }
 
-        public event AppiReceiveEventHandler AppiMessagesRecieved;
+        public event AppiReceiveEventHandler AppiMessagesReceived;
 
-        private void OnCanMessagesRecieved(IDictionary<AppiLine, IList<CanFrame>> messages)
+        private void OnCanMessagesReceived(IDictionary<AppiLine, IList<CanFrame>> messages)
         {
-            if (AppiMessagesRecieved != null) AppiMessagesRecieved(this, new AppiMessageRecieveEventArgs(messages));
+            if (AppiMessagesReceived != null) AppiMessagesReceived(this, new AppiMessageRecieveEventArgs(messages));
 
             foreach (var kvp in messages.Where(kvp => kvp.Value.Any()))
             {
@@ -221,20 +222,20 @@ namespace Communications.Appi
         /// <summary>
         /// Признак действия режима прослушивания линии
         /// </summary>
-        public bool IsListening { get; private set; }
-        private Thread ListeningThread;
+        private bool IsListening { get; set; }
+        private Thread _listeningThread;
         /// <summary>
         /// Начать прослушивание линии
         /// </summary>
         /// <remarks>Запускает отдельный поток для прослушивания линии</remarks>
-        public void BeginListen()
+        private void BeginListen()
         {
             lock (DevLocker)
                 if (!IsListening)
                 {
-                    ListeningThread = new Thread(ListeningLoop) { Name = "Поток прослушивания АППИ" };
+                    _listeningThread = new Thread(ListeningLoop) { Name = "Поток прослушивания АППИ" };
                     IsListening = true;
-                    ListeningThread.Start();
+                    _listeningThread.Start();
                 }
         }
         /// <summary>
@@ -260,7 +261,7 @@ namespace Communications.Appi
         /// <summary>
         /// Остановить прослушивание линии
         /// </summary>
-        public void StopListening()
+        private void StopListening()
         {
             if (IsListening)
             {
@@ -288,13 +289,13 @@ namespace Communications.Appi
                     {
                         Monitor.PulseAll(_appiVersionLocker);
                     }
-                    if (Disconnected != null) Disconnected(this, new EventArgs());
                     if (_sendBuffers != null)
                         foreach (var appiSendBuffer in _sendBuffers.Values)
                         {
                             appiSendBuffer.AbortAllTransfers();
                         }
                     _disconnectionProcessed = true;
+                    if (Disconnected != null) Disconnected(this, new EventArgs());
                 }
             }
         }
