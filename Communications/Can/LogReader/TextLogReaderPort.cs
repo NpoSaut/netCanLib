@@ -9,22 +9,22 @@ namespace Communications.Can.LogReader
 {
     public class TextLogReaderPort : CanVirtualPort
     {
-        private TextReader tr { get; set; }
+        private TextReader Reader { get; set; }
         public String Pattern { get; set; }
 
         public TextLogReaderPort(FileInfo LogFile)
             : base(LogFile.Name)
         {
             Pattern = @"(?<descriptor>[0-9a-fA-F]{4})[\s]((?<databyte>[0-9a-fA-F]{2})\s?){1,8}";
-            tr = new StreamReader(LogFile.FullName);
+            Reader = new StreamReader(LogFile.FullName);
         }
 
         protected override CanFrame ReadNextFrame()
         {
-            var l = tr.ReadLine();
+            var l = Reader.ReadLine();
             if (l == null) return null;
 
-            Regex regex = new Regex(Pattern);
+            var regex = new Regex(Pattern);
             Match match = regex.Match(l);
             if (!match.Success) return null;
 
@@ -37,7 +37,7 @@ namespace Communications.Can.LogReader
         public override void Dispose()
         {
             base.Dispose();
-            tr.Close();
+            Reader.Close();
         }
     }
 }

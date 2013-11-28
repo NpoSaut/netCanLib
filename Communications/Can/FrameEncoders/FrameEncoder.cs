@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
-namespace Communications.Can.FrameEncoders
+﻿namespace Communications.Can.FrameEncoders
 {
     /// <summary>
     /// Абстрактный класс для кодирования фреймов

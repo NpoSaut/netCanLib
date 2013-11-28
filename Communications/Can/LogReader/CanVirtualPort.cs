@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.IO;
 using System.Timers;
-using System.Text.RegularExpressions;
 
 namespace Communications.Can.LogReader
 {
@@ -12,11 +8,11 @@ namespace Communications.Can.LogReader
     {
         private Timer ReadTimer { get; set; }
 
-        public CanVirtualPort(String Name)
+        protected CanVirtualPort(String Name)
             : base(Name)
         {
             ReadTimer = new Timer(1000);
-            ReadTimer.Elapsed += new ElapsedEventHandler(ReadTimer_Elapsed);
+            ReadTimer.Elapsed += ReadTimer_Elapsed;
         }
 
         /// <summary>
@@ -40,14 +36,14 @@ namespace Communications.Can.LogReader
         void ReadTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var f = ReadNextFrame();
-            if (f != null) OnFrameRecieved(f);
+            if (f != null) OnFrameReceived(f);
             else ReadTimer.Stop();
         }
 
         protected override void SendImplementation(IList<CanFrame> Frames)
         {
             foreach (var fr in Frames)
-                Console.WriteLine(String.Format("{0}  <<-  {1}", Name, fr));
+                Console.WriteLine("{0}  <<-  {1}", Name, fr);
         }
 
         public virtual void Dispose()
@@ -56,15 +52,15 @@ namespace Communications.Can.LogReader
         }
 
 
-        private int _BaudRate;
+        private int _baudRate;
         public override int BaudRate
         {
-            get { return _BaudRate; }
+            get { return _baudRate; }
             set
             {
-                if (_BaudRate != value)
+                if (_baudRate != value)
                 {
-                    _BaudRate = value;
+                    _baudRate = value;
                     OnBaudRateChanged(value);
                 }
             }

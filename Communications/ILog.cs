@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 
 namespace Communications
 {
@@ -10,7 +7,7 @@ namespace Communications
         void PushTextEvent(string EventName, string EventDetails = null);
     }
 
-    public static class LogAgregatorHelper
+    public static class LogAggregatorHelper
     {
         public static void PushTextEvent(this IEnumerable<ILog> Logs, string EventName, string EventDetails = null)
         {

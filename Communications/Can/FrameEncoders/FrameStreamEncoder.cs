@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using System.IO;
 
 namespace Communications.Can.FrameEncoders
 {
     public abstract class FrameStreamEncoder
     {
-        public FrameStreamEncoder()
-        { }
-
         public abstract CanFrame DecodeNext(Stream DataStream);
         public abstract void Write(CanFrame Frame, Stream DataStream);
 

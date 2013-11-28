@@ -12,7 +12,7 @@ namespace Communications.Appi.Winusb
 
         public WinusbAppiDeviceSlot(USBDeviceInfo OnUsbDeviceInfo)
         {
-            this.DeviceInfo = OnUsbDeviceInfo;
+            DeviceInfo = OnUsbDeviceInfo;
         }
 
         public override bool IsFree

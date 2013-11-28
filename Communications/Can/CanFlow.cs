@@ -27,7 +27,7 @@ namespace Communications.Can
         public CanPort Port { get; private set; }
 
         /// <summary>Массив хэндлеров для отлова интересующих пакетов</summary>
-        private List<CanFrameHandler> Handlers = new List<CanFrameHandler>();
+        private readonly List<CanFrameHandler> _handlers = new List<CanFrameHandler>();
 
         /// <summary>
         /// Список дескрипторов, отлавливаемых в данный поток
@@ -46,18 +46,18 @@ namespace Communications.Can
             foreach (var d in this.Descriptors)
             {
                 var h = new CanFrameHandler(Port, d);
-                h.Recieved += new CanFramesReceiveEventHandler(Handler_MessageRecieved);
-                Handlers.Add(h);
+                h.Received += Handler_MessageReceived;
+                _handlers.Add(h);
             }
         }
 
-        void Handler_MessageRecieved(object sender, CanFramesReceiveEventArgs e)
+        void Handler_MessageReceived(object sender, CanFramesReceiveEventArgs e)
         {
             Enqueue(e.Frames);
         }
 
         /// <summary>Отправляет Can-сообщение в поток</summary>
-        public void Send(CanFrame Frame, bool ClearBeforeSend = false) { Send(new CanFrame[] { Frame }, ClearBeforeSend); }
+        public void Send(CanFrame Frame, bool ClearBeforeSend = false) { Send(new[] { Frame }, ClearBeforeSend); }
         /// <summary>Отправляет несколько Can-сообщений в поток</summary>
         public void Send(IList<CanFrame> Frames, bool ClearBeforeSend = false)
         {
@@ -70,7 +70,7 @@ namespace Communications.Can
         /// </summary>
         public void Dispose()
         {
-            foreach (var h in Handlers)
+            foreach (var h in _handlers)
                 h.Dispose();
         }
     }

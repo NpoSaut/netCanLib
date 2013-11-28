@@ -22,7 +22,7 @@ namespace CommunicationsTests.Stuff
                 SendBuffer.Enqueue(f);
         }
 
-        public void PushFrames(params CanFrame[] Frames) { OnFramesRecieved(Frames); }
+        public void PushFrames(params CanFrame[] Frames) { OnFramesReceived(Frames); }
 
         public Queue<CanFrame> SendBuffer { get; private set; }
     }

@@ -15,8 +15,8 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// GUID устройства
         /// </summary>
-        public readonly static List<string> DeviceGuids = new List<string>()
-        {
+        public readonly static List<string> DeviceGuids = new List<string>
+                                                          {
             "524cc09a-0a72-4d06-980e-afee3131196e",
             "3af3f480-41b5-4c24-b2a9-6aacf7de3d01"
         };
@@ -37,7 +37,7 @@ namespace Communications.Appi.Winusb
         private USBPipe WritePipe { get; set; }
 
         /// <summary>
-        /// Перечисляет все слоты подключенных устройств АППИ
+        /// Перечисляет все слоты подключённых устройств АППИ
         /// </summary>
         /// <returns></returns>
         public static IList<AppiDeviceSlot> GetDevices()
@@ -47,7 +47,6 @@ namespace Communications.Appi.Winusb
         }
 
         internal WinusbAppiDev(USBDeviceInfo di)
-            : base()
         {
             Device = new USBDevice(di);
             DevicePath = di.DevicePath;

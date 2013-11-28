@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Collections.Concurrent;
 using System.Collections.ObjectModel;
 
 namespace Communications.Can
@@ -30,7 +28,7 @@ namespace Communications.Can
         /// <summary>
         /// Событие приёма сообщения по линии
         /// </summary>
-        public event CanFramesReceiveEventHandler Recieved;
+        public event CanFramesReceiveEventHandler Received;
         /// <summary>
         /// Генерировать ли Loopback-пакеты для каждого отправленного пакета
         /// </summary>
@@ -39,7 +37,7 @@ namespace Communications.Can
         protected CanPort(String PortName)
             : base(PortName)
         {
-            this.GenerateLoopbackEcho = true;
+            GenerateLoopbackEcho = true;
         }
 
         #region Отправка сообщений
@@ -58,7 +56,7 @@ namespace Communications.Can
         /// <param name="Frame">Фрейм для отправки</param>
         public void Send(CanFrame Frame)
         {
-            Send(new List<CanFrame>() { Frame });
+            Send(new List<CanFrame> { Frame });
         }
         /// <summary>
         /// Внутренняя реализация отправки сообщений
@@ -73,7 +71,7 @@ namespace Communications.Can
         {
             LogFramesFlow(FramesFlowDirection.Out, Frames);
             if (GenerateLoopbackEcho)
-                this.OnFramesRecieved(Frames.Select(f => f.GetLoopbackFrame()).ToList());
+                OnFramesReceived(Frames.Select(f => f.GetLoopbackFrame()).ToList());
         }
         #endregion
 
@@ -81,7 +79,7 @@ namespace Communications.Can
         /// Обработка принятых фреймов
         /// </summary>
         /// <param name="Frames">Принятые фреймы</param>
-        protected void OnFramesRecieved(IList<CanFrame> Frames)
+        protected void OnFramesReceived(IList<CanFrame> Frames)
         {
             if (Frames.Any())
             {
@@ -89,34 +87,34 @@ namespace Communications.Can
 
                 LogFramesFlow(FramesFlowDirection.In, Frames);
 
-                if (Recieved != null) Recieved(this, new CanFramesReceiveEventArgs(Frames, this));
+                if (Received != null) Received(this, new CanFramesReceiveEventArgs(Frames, this));
 
-                lock (_Handlers)
+                lock (_handlers)
                 {
                     foreach (var d in Frames.GroupBy(f => f.Descriptor))
-                        foreach (var h in _Handlers.Where(hh => hh.Descriptor == d.Key))
-                            h.OnRecieved(d.ToList());
+                        foreach (var h in _handlers.Where(hh => hh.Descriptor == d.Key))
+                            h.OnReceived(d.ToList());
                 }
             }
         }
         /// <summary>
         /// Обработка одного принятого фрейма
         /// </summary>
-        /// <param name="Frames">Принятый фрейм</param>
-        protected void OnFrameRecieved(CanFrame Frame)
+        /// <param name="Frame">Принятый фрейм</param>
+        protected void OnFrameReceived(CanFrame Frame)
         {
-            OnFramesRecieved(new List<CanFrame>() { Frame });
+            OnFramesReceived(new List<CanFrame> { Frame });
         }
 
-        private List<CanFrameHandler> _Handlers = new List<CanFrameHandler>();
-        public ReadOnlyCollection<CanFrameHandler> Handlers { get { return _Handlers.ToList().AsReadOnly(); } }
+        private readonly List<CanFrameHandler> _handlers = new List<CanFrameHandler>();
+        public ReadOnlyCollection<CanFrameHandler> Handlers { get { return _handlers.ToList().AsReadOnly(); } }
         internal void Handle(CanFrameHandler h)
         {
-            lock (_Handlers) _Handlers.Add(h);
+            lock (_handlers) _handlers.Add(h);
         }
-        internal void Unandle(CanFrameHandler h)
+        internal void UnHandle(CanFrameHandler h)
         {
-            lock (_Handlers) _Handlers.Remove(h);
+            lock (_handlers) _handlers.Remove(h);
         }
 
         public override string ToString()
@@ -136,8 +134,8 @@ namespace Communications.Can
     public delegate void CanFramesReceiveEventHandler(object sender, CanFramesReceiveEventArgs e);
     public class CanFramesReceiveEventArgs : EventArgs
     {
-        public CanPort Port { get; set; }
-        public IList<CanFrame> Frames { get; set; }
+        public CanPort Port { get; private set; }
+        public IList<CanFrame> Frames { get; private set; }
 
         public CanFramesReceiveEventArgs(IList<CanFrame> Frames, CanPort Port)
         {
@@ -153,7 +151,7 @@ namespace Communications.Can
 
         public BaudRateChangedEventArgs(int NewValue)
         {
-            this.NewBaudRate = NewValue;
+            NewBaudRate = NewValue;
         }
     }
 }

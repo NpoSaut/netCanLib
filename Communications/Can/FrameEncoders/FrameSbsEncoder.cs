@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.IO;
 
 namespace Communications.Can.FrameEncoders
@@ -10,14 +7,15 @@ namespace Communications.Can.FrameEncoders
     {
         public override CanFrame DecodeNext(Stream DataStream)
         {
-            Byte[] HeaderBuffer = new Byte[8 + 2];
-            if (DataStream.Read(HeaderBuffer, 0, HeaderBuffer.Length) < HeaderBuffer.Length)
+            var headerBuffer = new Byte[8 + 2];
+            if (DataStream.Read(headerBuffer, 0, headerBuffer.Length) < headerBuffer.Length)
                 return null;
-            var dt = DateTime.FromBinary(BitConverter.ToInt64(HeaderBuffer, 0));
-            UInt16 descripter = BitConverter.ToUInt16(HeaderBuffer, 8);
+            var dt = DateTime.FromBinary(BitConverter.ToInt64(headerBuffer, 0));
+            UInt16 descriptor = BitConverter.ToUInt16(headerBuffer, 8);
 
-            var frame = CanFrame.NewWithDescriptor(descripter);
+            var frame = CanFrame.NewWithDescriptor(descriptor);
             DataStream.Read(frame.Data, 0, frame.Data.Length);
+            frame.Time = dt;
             return frame;
         }
 

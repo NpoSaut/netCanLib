@@ -53,17 +53,18 @@ namespace Communications.Serial
         #endregion
 
         public RsPort Port { get; set; }
-        private object IncomingBufferLocker { get; set; }
+        private readonly object _incomingBufferLocker = new object();
         private Queue<Byte> IncomingBuffer { get; set; }
 
         public RsStream(RsPort OnPort)
         {
             this.Port = OnPort;
+            IncomingBuffer = new Queue<byte>();
         }
 
         public override int Read(byte[] buffer, int offset, int count)
         {
-            lock (IncomingBufferLocker)
+            lock (_incomingBufferLocker)
             {
                 int len = Math.Min(count, IncomingBuffer.Count);
                 for (int i = 0; i < len; i++)

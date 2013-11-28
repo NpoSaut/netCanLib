@@ -9,8 +9,8 @@ namespace Communications.Can
 {
     public class CanBufferedBase
     {
-        private object BufferLocker = new object();
-        private ConcurrentQueue<CanFrame> FramesBuffer = new ConcurrentQueue<CanFrame>();
+        private object _bufferLocker = new object();
+        private readonly ConcurrentQueue<CanFrame> _framesBuffer = new ConcurrentQueue<CanFrame>();
 
         protected void Enqueue(IEnumerable<CanFrame> Frames)
         {
@@ -18,7 +18,7 @@ namespace Communications.Can
         }
         protected void Enqueue(CanFrame Frame)
         {
-            FramesBuffer.Enqueue(Frame);
+            _framesBuffer.Enqueue(Frame);
         }
 
         /// <summary>
@@ -33,7 +33,7 @@ namespace Communications.Can
         {
             CanFrame f = CanFrame.NewWithDescriptor(0);
             bool ok = false;
-            SpinWait.SpinUntil(() => ok = FramesBuffer.TryDequeue(out f), Timeout);
+            SpinWait.SpinUntil(() => ok = _framesBuffer.TryDequeue(out f), Timeout);
             if (ok) return f;
             else throw new TimeoutException("Превышено время ожидания пакета");
         }
@@ -83,7 +83,7 @@ namespace Communications.Can
         public void Clear()
         {
             CanFrame f;
-            while (FramesBuffer.TryDequeue(out f)) { }
+            while (_framesBuffer.TryDequeue(out f)) { }
         }
     }
 }

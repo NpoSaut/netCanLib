@@ -26,7 +26,7 @@ namespace Communications.Appi
 
         internal void OnAppiFramesRecieved(IList<CanFrame> Frames)
         {
-            OnFramesRecieved(Frames);
+            OnFramesReceived(Frames);
         }
 
         private int _BaudRate;

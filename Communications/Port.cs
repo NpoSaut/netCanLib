@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace Communications
 {
@@ -13,7 +10,7 @@ namespace Communications
         /// <summary>
         /// Имя порта
         /// </summary>
-        public String Name { get; set; }
+        public String Name { get; private set; }
 
         protected Port(String Name)
         {

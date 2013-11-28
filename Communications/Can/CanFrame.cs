@@ -41,7 +41,7 @@ namespace Communications.Can
         public bool IsLoopback { get; private set; }
 
         /// <summary>
-        /// Время получения или время создания фейма
+        /// Время получения или время создания фрейма
         /// </summary>
         public DateTime Time { get; set; }
 
@@ -64,7 +64,7 @@ namespace Communications.Can
         /// <param name="Data">Данные сообщения</param>
         public static CanFrame NewWithId(int Id, Byte[] Data)
         {
-            return new CanFrame() { Id = Id, Data = Data };
+            return new CanFrame { Id = Id, Data = Data };
         }
         /// <summary>
         /// Создаёт CAN-сообщение с заданным ID
@@ -75,9 +75,12 @@ namespace Communications.Can
         /// <param name="Length">Длинна данных в буфере</param>
         public static CanFrame NewWithId(int Id, Byte[] DataBuffer, int Offset, int Length)
         {
-            Byte[] Data = new Byte[Length];
-            Buffer.BlockCopy(DataBuffer, Offset, Data, 0, Length);
-            return new CanFrame() { Id = Id, Data = Data };
+            var data = new Byte[Length];
+            Buffer.BlockCopy(DataBuffer, Offset, data, 0, Length);
+            return new CanFrame
+                   {
+                       Id = Id, Data = data
+                   };
         }
         /// <summary>
         /// Создаёт пустое CAN-сообщение с заданными ID и длиной
@@ -99,7 +102,7 @@ namespace Communications.Can
         public static CanFrame NewWithDescriptor(int Descriptor, Byte[] DataBuffer, int Offset = 0)
         {
             int descriptedLength = Descriptor % 0x20;
-            Byte[] data = new Byte[descriptedLength];
+            var data = new Byte[descriptedLength];
             Array.Copy(DataBuffer, Offset, data, 0, Math.Min(descriptedLength, DataBuffer.Length));
             return new CanFrame { Id = Descriptor / 0x20, Data = data };
         }
@@ -117,8 +120,8 @@ namespace Communications.Can
         /// </summary>
         public CanFrame Clone()
         {
-            return new CanFrame()
-            {
+            return new CanFrame
+                   {
                 Id = this.Id,
                 Data = this.Data
             };

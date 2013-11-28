@@ -1,10 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Collections.Concurrent;
-using System.Threading;
-using System.Collections.ObjectModel;
 
 namespace Communications.Can
 {
@@ -28,10 +23,10 @@ namespace Communications.Can
         /// <summary>
         /// Событие, возникающее при приёме сообщений с заданным дескриптором
         /// </summary>
-        public event CanFramesReceiveEventHandler Recieved;
+        public event CanFramesReceiveEventHandler Received;
 
         /// <summary>
-        /// Устанавливает отслеживание сообщений с заданным дескприптором по указанному порту
+        /// Устанавливает отслеживание сообщений с заданным дескриптором по указанному порту
         /// </summary>
         /// <param name="Port">Прослушиваемый порт</param>
         /// <param name="Descriptor">Отлавливаемый дескриптор</param>
@@ -47,15 +42,15 @@ namespace Communications.Can
         /// Инициирует обработку событий приёма сообщений
         /// </summary>
         /// <param name="Frames">Принятые кадры</param>
-        internal void OnRecieved(IList<CanFrame> Frames)
+        internal void OnReceived(IList<CanFrame> Frames)
         {
-            if (Recieved != null)
-                Recieved(this, new CanFramesReceiveEventArgs(Frames, Port));
+            if (Received != null)
+                Received(this, new CanFramesReceiveEventArgs(Frames, Port));
         }
 
         public void Dispose()
         {
-            Port.Unandle(this);
+            Port.UnHandle(this);
         }
     }
 }
