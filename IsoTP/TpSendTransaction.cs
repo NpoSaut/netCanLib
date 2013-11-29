@@ -16,8 +16,8 @@ namespace Communications.Protocols.IsoTP
         public int BlockSize { get; private set; }
         public TimeSpan SeparationTime { get; set; }
 
-        public TpSendTransaction(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
-            : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
+        public TpSendTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowlegmentDescriptor)
+            : base(Socket, TransmitDescriptor, AcknowlegmentDescriptor)
         { }
 
         public void Send(TpPacket Packet)
@@ -34,11 +34,11 @@ namespace Communications.Protocols.IsoTP
 
         private void SendFlow()
         {
-            var AckStream = Flow.Read(Timeout, true).Where(f => f.Descriptor == AcknowlegmentDescriptor);
+            var AckStream = Socket.Read(Timeout, true).Where(f => f.Descriptor == AcknowlegmentDescriptor);
 
             try
             {
-                Flow.Send(GetFirstFrame().GetCanFrame(TransmitDescriptor));
+                Socket.Send(GetFirstFrame().GetCanFrame(TransmitDescriptor));
 
                 // Берём очередь для отправки
                 var PushingCanFrames = GetConsFrames().Select(cf => cf.GetCanFrame(TransmitDescriptor));
@@ -54,12 +54,12 @@ namespace Communications.Protocols.IsoTP
 
                     // Отправляем его либо сразу, либо с SeparationTime
                     if (SeparationTime == TimeSpan.Zero)
-                        Flow.Send(Block);
+                        Socket.Send(Block);
                     else
                     {
                         foreach (var f in Block)
                         {
-                            Flow.Send(f);
+                            Socket.Send(f);
                             System.Threading.Thread.Sleep(SeparationTime);
                         }
                     }
@@ -77,7 +77,7 @@ namespace Communications.Protocols.IsoTP
             try
             {
                 var f = new SingleFrame(Buff);
-                Flow.Send(f.GetCanFrame(TransmitDescriptor));
+                Socket.Send(f.GetCanFrame(TransmitDescriptor));
             }
             catch (Exception)
             {

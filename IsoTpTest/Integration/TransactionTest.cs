@@ -15,7 +15,8 @@ namespace IsoTpTest.Integration
         [TestMethod]
         public void SendTest()
         {
-            const int dataLength = 4000;
+            Assert.Fail("Тест загублен!");
+            /*const int dataLength = 4000;
 
             UInt16 descriptorA = CanFrame.GetDescriptorFor(r.Next(0, CanFrame.IdMaxValue), 8);
             UInt16 descriptorB;
@@ -33,7 +34,7 @@ namespace IsoTpTest.Integration
             IsoTp.Send(flows[1], descriptorA, descriptorB, data);
 
             recieveAction.Wait(1000);
-            CollectionAssert.AreEqual(data, recieveAction.Result.Data, "Данные были повреждены в ходе передачи");
+            CollectionAssert.AreEqual(data, recieveAction.Result.Data, "Данные были повреждены в ходе передачи");*/
         }
     }
 }

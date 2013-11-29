@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppiCanPort.cs" />
+    <Compile Include="AppiCanSocket.cs" />
     <Compile Include="AppiDev.cs" />
     <Compile Include="AppiDeviceSlot.cs" />
     <Compile Include="AppiMessages.cs" />

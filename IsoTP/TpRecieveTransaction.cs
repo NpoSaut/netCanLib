@@ -38,8 +38,8 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpReceiveTransaction(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
-            : base(Flow, TransmitDescriptor, AcknowlegmentDescriptor)
+        public TpReceiveTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowlegmentDescriptor)
+            : base(Socket, TransmitDescriptor, AcknowlegmentDescriptor)
         {
             this.SeparationTime = TimeSpan.Zero;
             this.BlockSize = 20;
@@ -56,7 +56,7 @@ namespace Communications.Protocols.IsoTP
             {
                 // Инициализируем чтение с заданным таймаутом,
                 // при истечении таймаута - выбрасываем ошибку.
-                var FramesStream = Flow.Read(Timeout, true).Where(f => f.Descriptor == TransmitDescriptor);
+                var FramesStream = Socket.Read(Timeout, true).Where(f => f.Descriptor == TransmitDescriptor);
 
                 try
                 {
@@ -98,7 +98,7 @@ namespace Communications.Protocols.IsoTP
                     this.Status = TpTransactionStatus.Error;
                     // Если в процессе передачи возникла ошибка, отправляем отмену
                     if (TransactionStarted)
-                        Flow.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
+                        Socket.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
                     throw;      // и пробрасываем ошибку дальше по стеку
                 }
             }
@@ -133,7 +133,7 @@ namespace Communications.Protocols.IsoTP
         }
         private void SendFlowControl()
         {
-            Flow.Send(GenerateFlowControl().GetCanFrame(AcknowlegmentDescriptor));
+            Socket.Send(GenerateFlowControl().GetCanFrame(AcknowlegmentDescriptor));
         }
         private FlowControlFrame GenerateFlowControl()
         {

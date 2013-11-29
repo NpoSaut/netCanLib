@@ -32,7 +32,7 @@ namespace Communications.Appi
         /// <summary>
         /// Размер буфера
         /// </summary>
-        public const int BufferSize = 2048;
+        protected const int BufferSize = 2048;
 
         private Dictionary<AppiLine, AppiSendBuffer> _sendBuffers;
 
@@ -45,9 +45,9 @@ namespace Communications.Appi
         protected abstract Byte[] ReadBufferImplement();
         protected abstract void WriteBufferImplement(Byte[] Buffer);
 
-        internal Byte[] ReadBuffer()
+        private Byte[] ReadBuffer()
         {
-            lock (DevLocker)
+            lock (_devLocker)
             {
                 return ReadBufferImplement();
             }
@@ -55,14 +55,14 @@ namespace Communications.Appi
 
         internal void WriteBuffer(Byte[] Buffer)
         {
-            lock (DevLocker)
+            lock (_devLocker)
             {
                 WriteBufferImplement(Buffer);
                 unchecked { _sendMessageCounter++; }
             }
         }
 
-        private readonly object DevLocker = new object();
+        private readonly object _devLocker = new object();
 
         public AppiRsPort WirelessPort { get; private set; }
         public IDictionary<AppiLine, AppiCanPort> CanPorts { get; private set; }
@@ -79,10 +79,11 @@ namespace Communications.Appi
         }
         public virtual void Dispose()
         {
-            lock (DevLocker)
+            lock (_devLocker)
             {
                 if (IsListening)
                     StopListening();
+                DisposeAllSockets();
                 OnDisconnected();
             }
         }
@@ -211,7 +212,7 @@ namespace Communications.Appi
 
         private void OnCanMessagesReceived(IDictionary<AppiLine, IList<CanFrame>> messages)
         {
-            if (AppiMessagesReceived != null) AppiMessagesReceived(this, new AppiMessageRecieveEventArgs(messages));
+            if (AppiMessagesReceived != null) AppiMessagesReceived(this, new AppiMessageReceiveEventArgs(messages));
 
             foreach (var kvp in messages.Where(kvp => kvp.Value.Any()))
             {
@@ -230,7 +231,7 @@ namespace Communications.Appi
         /// <remarks>Запускает отдельный поток для прослушивания линии</remarks>
         private void BeginListen()
         {
-            lock (DevLocker)
+            lock (_devLocker)
                 if (!IsListening)
                 {
                     _listeningThread = new Thread(ListeningLoop) { Name = "Поток прослушивания АППИ" };
@@ -281,7 +282,7 @@ namespace Communications.Appi
         /// </summary>
         protected virtual void OnDisconnected()
         {
-            lock (DevLocker)
+            lock (_devLocker)
             {
                 if (!_disconnectionProcessed)
                 {
@@ -345,14 +346,16 @@ namespace Communications.Appi
                     };
             }
         }
+
+
     }
 
-    public delegate void AppiReceiveEventHandler(object sender, AppiMessageRecieveEventArgs e);
-    public class AppiMessageRecieveEventArgs : EventArgs
+    public delegate void AppiReceiveEventHandler(object sender, AppiMessageReceiveEventArgs e);
+    public class AppiMessageReceiveEventArgs : EventArgs
     {
         public IDictionary<AppiLine, IList<CanFrame>> Messages { get; set; }
 
-        public AppiMessageRecieveEventArgs(IDictionary<AppiLine, IList<CanFrame>> Messages)
+        public AppiMessageReceiveEventArgs(IDictionary<AppiLine, IList<CanFrame>> Messages)
         {
             this.Messages = Messages;
         }
