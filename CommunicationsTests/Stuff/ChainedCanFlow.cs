@@ -7,7 +7,7 @@ using Communications.Can;
 
 namespace CommunicationsTests.Stuff
 {
-    public class ChainedCanFlow : CanBufferedBase, ICanFlow
+    public class ChainedCanFlow
     {
         private IList<ChainedCanFlow> Brothers { get; set; }
 
@@ -16,7 +16,7 @@ namespace CommunicationsTests.Stuff
         {
             foreach (var brother in Brothers)
             {
-                brother.Enqueue(Frame);
+                //brother.Enqueue(Frame);
             }
         }
 
@@ -25,7 +25,7 @@ namespace CommunicationsTests.Stuff
         {
             foreach (var brother in Brothers)
             {
-                brother.Enqueue(Frames);
+                //brother.Enqueue(Frames);
             }
         }
 

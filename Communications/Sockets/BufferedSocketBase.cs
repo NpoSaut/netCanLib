@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 
 namespace Communications.Sockets
@@ -8,12 +9,12 @@ namespace Communications.Sockets
     /// <summary>
     /// Абстракция сокета, буферизирующего все входящие дейтаграммы до момента их прочтения
     /// </summary>
-    public abstract class BufferedSockedBase<TDatagram> : SocketBase<TDatagram>, IBufferedStore<TDatagram>
+    public abstract class BufferedSocketBase<TDatagram> : SocketBase<TDatagram>, IBufferedStore<TDatagram>
     {
         private readonly IDatagramBuffer<TDatagram> _buffer;
 
-        protected BufferedSockedBase(string Name) : this(Name, new ConcurrentDatagramBuffer<TDatagram>()) { }
-        protected BufferedSockedBase(string Name, IDatagramBuffer<TDatagram> Buffer) : base(Name) { _buffer = Buffer; }
+        protected BufferedSocketBase(string Name) : this(Name, new ConcurrentDatagramBuffer<TDatagram>()) { }
+        protected BufferedSocketBase(string Name, IDatagramBuffer<TDatagram> Buffer) : base(Name) { _buffer = Buffer; }
 
         /// <summary>
         /// Добавляет датаграммы в очередь на обработку
@@ -50,14 +51,16 @@ namespace Communications.Sockets
                 _incomingDatagrams.Enqueue(datagram);
             }
         }
-        public IEnumerable<TDatagram> Read(TimeSpan Timeout = new TimeSpan(), bool ThrowExceptionOnTimeOut = false)
+        public IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false)
         {
+            if (Timeout == TimeSpan.Zero) Timeout = TimeSpan.FromMilliseconds(-1);
             while (true)
             {
                 TDatagram dtg = default(TDatagram);
                 var ok = SpinWait.SpinUntil(() => _incomingDatagrams.TryDequeue(out dtg), Timeout);
-                if (!ok) throw new TimeoutException("Превышено время ожидания дейтаграммы");
-                yield return dtg;
+                if (ok) yield return dtg;
+                else if (ThrowExceptionOnTimeOut) throw new TimeoutException("Превышено время ожидания дейтаграммы");
+                else yield break;
             }
         }
     }

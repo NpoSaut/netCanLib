@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using Communications;
 using Communications.Can;
 
 namespace CommunicationsTests.Stuff
@@ -22,7 +24,9 @@ namespace CommunicationsTests.Stuff
                 SendBuffer.Enqueue(f);
         }
 
-        public void PushFrames(params CanFrame[] Frames) { OnFramesReceived(Frames); }
+        protected override ISocket<CanFrame> CreateSocket() { throw new System.NotImplementedException(); }
+
+        public void PushFrames(params CanFrame[] Frames) { ProcessReceived(Frames); }
 
         public Queue<CanFrame> SendBuffer { get; private set; }
     }

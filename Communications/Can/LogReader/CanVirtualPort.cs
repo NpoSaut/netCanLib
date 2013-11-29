@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Timers;
 
 namespace Communications.Can.LogReader
@@ -36,7 +37,7 @@ namespace Communications.Can.LogReader
         void ReadTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var f = ReadNextFrame();
-            if (f != null) OnFrameReceived(f);
+            if (f != null) ProcessReceived(new[] { f });
             else ReadTimer.Stop();
         }
 
@@ -61,7 +62,7 @@ namespace Communications.Can.LogReader
                 if (_baudRate != value)
                 {
                     _baudRate = value;
-                    OnBaudRateChanged(value);
+                    OnBaudRateChanged();
                 }
             }
         }

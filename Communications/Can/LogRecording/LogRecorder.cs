@@ -1,35 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Threading;
 
 namespace Communications.Can.LogRecording
 {
     public abstract class LogRecorder : IDisposable
     {
         public FileInfo LogFile { get; set; }
-        public CanPort Port { get; set; }
         public Stream FileStream { get; set; }
+        public ISocket<CanFrame> Socket { get; private set; }
+
+        private readonly Thread writingThread;
+
+        private void WriteJob()
+        {
+            while (true)
+            {
+                WriteFrames(Socket.Read(TimeSpan.FromMilliseconds(100)));
+                FileStream.Flush();
+            }
+        }
 
         protected LogRecorder(CanPort Port, FileInfo LogFile)
         {
-            this.Port = Port;
             this.LogFile = LogFile;
             FileStream = LogFile.Open(FileMode.Append, FileAccess.Write);
 
-            Port.Received += PortReceived;
-        }
+            Socket = Port.OpenSocket();
+            
+            writingThread = new Thread(WriteJob) { IsBackground = true, Name = string.Format("Поток записи порта {0}", Port.Name), };
 
-        private void PortReceived(object sender, CanFramesReceiveEventArgs e)
-        {
-            WriteFrames(e.Frames);
-            FileStream.Flush();
         }
 
         public abstract void WriteFrames(IEnumerable<CanFrame> Frames);
 
         public virtual void Dispose()
         {
-            Port.Received -= PortReceived;
+            writingThread.Abort();
+            Socket.Dispose();
             FileStream.Close();
         }
     }

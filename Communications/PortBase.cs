@@ -5,23 +5,30 @@ using Communications.Sockets;
 
 namespace Communications
 {
-    public abstract class PortBase<TDatagram, TSocket> : IPort<TDatagram>
-        where TSocket : ISocket<TDatagram>, IBufferedStore<TDatagram>
+    public abstract class PortBase<TDatagram> : IPort<TDatagram>
     {
         public string Name { get; private set; }
+
+        public abstract int BaudRate { get; set; }
+        public event EventHandler BaudRateChanged;
+        protected virtual void OnBaudRateChanged()
+        {
+            var handler = BaudRateChanged;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
 
         protected PortBase(string Name) { this.Name = Name; }
 
         protected abstract void SendImplementation(IList<TDatagram> Data);
         public void Send(IList<TDatagram> Data)
         {
-            ObtainReceived(Data);
+            ProcessReceived(Data);
             SendImplementation(Data);
         }
 
-        public void ObtainReceived(IList<TDatagram> Datagrams)
+        public void ProcessReceived(IList<TDatagram> Datagrams)
         {
-            foreach (var socket in _openedSockets.Cast<IBufferedStore<TDatagram>>())
+            foreach (var socket in _openedSockets.OfType<IBufferedStore<TDatagram>>())
             {
                 socket.Enqueue(Datagrams);
             }
@@ -39,12 +46,13 @@ namespace Communications
             lock (_openedSocketsLocker)
             {
                 var socket = CreateSocket();
+                socket.Disposed += (Sender, Args) => OnSocketDisposed(Sender as ISocket<TDatagram>);
                 _openedSockets.Add(socket);
                 return socket;
             }
         }
 
-        internal void OnSocketDisposed(ISocket<TDatagram> Socket)
+        private void OnSocketDisposed(ISocket<TDatagram> Socket)
         {
             lock (_openedSocketsLocker)
             {

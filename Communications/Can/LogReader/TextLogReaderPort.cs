@@ -34,6 +34,8 @@ namespace Communications.Can.LogReader
             return CanFrame.NewWithDescriptor(desc, data);
         }
 
+        protected override ISocket<CanFrame> CreateSocket() { throw new NotImplementedException(); }
+
         public override void Dispose()
         {
             base.Dispose();

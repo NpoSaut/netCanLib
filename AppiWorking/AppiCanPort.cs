@@ -24,15 +24,17 @@ namespace Communications.Appi
             Device.SendFrames(Frames, Line);
         }
 
-        internal void OnAppiFramesRecieved(IList<CanFrame> Frames)
+        protected override ISocket<CanFrame> CreateSocket() { return new AppiCanSocket(string.Format("Appi{0}", Line), this); }
+
+        internal void OnAppiFramesReceived(IList<CanFrame> Frames)
         {
-            OnFramesReceived(Frames);
+            ProcessReceived(Frames);
         }
 
-        private int _BaudRate;
+        private int _baudRate;
         public override int BaudRate
         {
-            get { return _BaudRate; }
+            get { return _baudRate; }
             set
             {
                 Device.SetBaudRate(this.Line, value);
@@ -40,10 +42,10 @@ namespace Communications.Appi
         }
         internal void RenewBaudRate(int newValue)
         {
-            if (newValue != _BaudRate)
+            if (newValue != _baudRate)
             {
-                _BaudRate = newValue;
-                base.OnBaudRateChanged(newValue);
+                _baudRate = newValue;
+                base.OnBaudRateChanged();
             }
         }
     }

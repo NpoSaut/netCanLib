@@ -10,37 +10,19 @@ namespace Communications.Appi
     {
         private AppiDev Device { get; set; }
 
-        private object bufferLocker = new object();
-        private Queue<Byte> inBuffer { get; set; }
-
         internal AppiRsPort(AppiDev Device, String Name)
             : base(Name)
         {
             this.Device = Device;
-            this.inBuffer = new Queue<byte>();
         }
 
-        protected override byte[] ReadBufferImplementation()
+        public override int BaudRate
         {
-            lock (bufferLocker)
-            {
-                var res = inBuffer.ToArray();
-                inBuffer.Clear();
-                return res;
-            }
-        }
-        protected override void WriteBufferImplementation(byte[] buff)
-        {
-            Device.PushSerialData(buff);
+            get { return 9600; }
+            set { throw new NotImplementedException("Изменение скорости RS-485 линии не реализовано даже на стороне АППИ"); }
         }
 
-        internal void OnAppiRsBufferRead(Byte[] buff)
-        {
-            lock (bufferLocker)
-            {
-                foreach (var b in buff)
-                    inBuffer.Enqueue(b);
-            }
-        }
+        protected override void SendImplementation(IList<byte> Data) { Device.PushSerialData(Data.ToArray()); }
+        protected override ISocket<byte> CreateSocket() { throw new NotImplementedException(); }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 
 namespace Communications.Can.LogReader
 {
@@ -19,6 +20,8 @@ namespace Communications.Can.LogReader
         {
             return Encoder.DecodeNext(DataStream);
         }
+
+        protected override ISocket<CanFrame> CreateSocket() { throw new NotImplementedException(); }
 
         public override void Dispose()
         {

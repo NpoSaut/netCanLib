@@ -81,9 +81,11 @@ namespace Communications.Appi
         {
             lock (_devLocker)
             {
-                if (IsListening)
-                    StopListening();
-                DisposeAllSockets();
+                if (IsListening) StopListening();
+                foreach (var port in CanPorts.Values)
+                {
+                    port.Dispose();
+                }
                 OnDisconnected();
             }
         }
@@ -162,7 +164,7 @@ namespace Communications.Appi
 
         private void OnSerialDataReceived(byte[] serialData)
         {
-            WirelessPort.OnAppiRsBufferRead(serialData);
+            WirelessPort.ProcessReceived(serialData);
         }
 
         public const int FramesPerSendGroup = 20;
@@ -216,7 +218,7 @@ namespace Communications.Appi
 
             foreach (var kvp in messages.Where(kvp => kvp.Value.Any()))
             {
-                CanPorts[kvp.Key].OnAppiFramesRecieved(kvp.Value);
+                CanPorts[kvp.Key].OnAppiFramesReceived(kvp.Value);
             }
         }
 

@@ -16,6 +16,16 @@ namespace Communications.Sockets
         public void Send(params TDatagram[] Data) { Send(Data.AsEnumerable()); }
         public virtual void Send(TDatagram Data) { Send(); }
 
-        public virtual void Dispose() { }
+        public event EventHandler Disposed;
+        private void OnDisposed()
+        {
+            var handler = Disposed;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+        public virtual void Dispose()
+        {
+            OnDisposed();
+        }
     }
 }

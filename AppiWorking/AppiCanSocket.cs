@@ -1,24 +1,20 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Communications.Can;
+using Communications.Can.FrameEncoders;
 using Communications.Sockets;
 
 namespace Communications.Appi
 {
-    public class AppiCanSocket : BufferedSockedBase<CanFrame>, ICanSocket
+    public class AppiCanSocket : BufferedSocketBase<CanFrame>, ICanSocket
     {
-        public AppiLine Line { get; private set; }
-        public AppiDev Appi { get; private set; }
+        public AppiCanPort Port { get; private set; }
 
-        public AppiCanSocket(AppiDev Appi, AppiLine Line) : base(string.Format("Appi{0}", Line))
-        {
-            this.Line = Line;
-            this.Appi = Appi;
-        }
+        public AppiCanSocket(string Name, AppiCanPort Port) : base(Name) { this.Port = Port; }
 
         public override void Send(IEnumerable<CanFrame> Frames)
         {
-            Appi.SendFrames(Frames.ToList(), Line);
+            Port.Send(Frames.ToList());
         }
 
         private bool _disposed = false;
@@ -27,7 +23,6 @@ namespace Communications.Appi
             if (_disposed) return;
             _disposed = false;
 
-            Appi.OnSocketDisposed(this);
             base.Dispose();
         }
     }
