@@ -24,7 +24,7 @@ namespace CommunicationsTests.Stuff
                 SendBuffer.Enqueue(f);
         }
 
-        protected override ISocket<CanFrame> CreateSocket() { throw new System.NotImplementedException(); }
+        protected override ICanSocket CreateSocket() { throw new System.NotImplementedException(); }
 
         public void PushFrames(params CanFrame[] Frames) { (this as IReceivePipe<CanFrame>).ProcessReceived(Frames); }
 

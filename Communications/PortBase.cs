@@ -5,7 +5,8 @@ using Communications.Sockets;
 
 namespace Communications
 {
-    public abstract class PortBase<TDatagram> : IPort<TDatagram>, ISendPipe<TDatagram>, IReceivePipe<TDatagram>
+    public abstract class PortBase<TSocket, TDatagram> : IPort<TSocket>, ISendPipe<TDatagram>, IReceivePipe<TDatagram>
+        where TSocket : ISocket<TDatagram>
     {
         public string Name { get; private set; }
 
@@ -37,22 +38,22 @@ namespace Communications
         #region Работа с хранением сокетов
 
         private readonly object _openedSocketsLocker = new object();
-        private readonly List<ISocket<TDatagram>> _openedSockets = new List<ISocket<TDatagram>>();
+        private readonly List<TSocket> _openedSockets = new List<TSocket>();
 
-        protected abstract ISocket<TDatagram> CreateSocket();
+        protected abstract TSocket CreateSocket();
 
-        public ISocket<TDatagram> OpenSocket()
+        public TSocket OpenSocket()
         {
             lock (_openedSocketsLocker)
             {
                 var socket = CreateSocket();
-                socket.Disposed += (Sender, Args) => OnSocketDisposed(Sender as ISocket<TDatagram>);
+                socket.Disposed += (Sender, Args) => OnSocketDisposed((TSocket)Sender);
                 _openedSockets.Add(socket);
                 return socket;
             }
         }
 
-        private void OnSocketDisposed(ISocket<TDatagram> Socket)
+        private void OnSocketDisposed(TSocket Socket)
         {
             lock (_openedSocketsLocker)
             {

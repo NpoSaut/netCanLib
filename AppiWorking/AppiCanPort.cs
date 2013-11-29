@@ -24,7 +24,7 @@ namespace Communications.Appi
             Device.SendFrames(Frames, Line);
         }
 
-        protected override ISocket<CanFrame> CreateSocket() { return new AppiCanSocket(string.Format("Appi{0}", Line), this); }
+        protected override ICanSocket CreateSocket() { return new AppiCanSocket(string.Format("Appi{0}", Line), this); }
 
         private int _baudRate;
         public override int BaudRate

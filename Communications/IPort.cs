@@ -8,7 +8,8 @@ namespace Communications
     /// Абстрактный интерфейс порта заданный дейтаграмм
     /// </summary>
     /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface IPort<TDatagram> : ISocketSource<TDatagram>, IDisposable
+    public interface IPort<TSocket> : ISocketSource<TSocket>, IDisposable
+        where TSocket : ISocket
     {
         /// <summary>Имя порта</summary>
         string Name { get; }
@@ -33,12 +34,12 @@ namespace Communications
     /// <summary>
     /// Источник сокетов. Может открыть сокеты и вести учёт их закрытия
     /// </summary>
-    /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface ISocketSource<TDatagram> : ISocketContainer
+    public interface ISocketSource<TSocket> : ISocketContainer
+        where TSocket : ISocket
     {
         /// <summary>Открывает сокет на данном порту</summary>
         /// <returns>Свежеоткрытый сокет</returns>
-        ISocket<TDatagram> OpenSocket();
+        TSocket OpenSocket();
     }
 
     /// <summary>

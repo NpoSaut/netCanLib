@@ -8,7 +8,7 @@ namespace Communications.Can
     /// <summary>
     /// Абстракция CAN-порта
     /// </summary>
-    public abstract class CanPort : PortBase<CanFrame>
+    public abstract class CanPort : PortBase<ICanSocket, CanFrame>
     {
         protected CanPort(string Name) : base(Name) { }
     }
