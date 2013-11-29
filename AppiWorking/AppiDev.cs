@@ -19,7 +19,7 @@ namespace Communications.Appi
     /// <summary>
     /// Представление АППИ
     /// </summary>
-    public abstract class AppiDev : IDisposable
+    public abstract class AppiDev : ISocketContainer, IDisposable
     {
         public ILog BufferLog { get; set; }
         private enum BufferDirection { In, Out }
@@ -29,9 +29,7 @@ namespace Communications.Appi
                 BufferLog.PushTextEvent(String.Format("{0} {1}", Direction.ToString().PadRight(4), BitConverter.ToString(Buffer).Replace('-', ' ')));
         }
 
-        /// <summary>
-        /// Размер буфера
-        /// </summary>
+        /// <summary>Размер буфера</summary>
         protected const int BufferSize = 2048;
 
         private Dictionary<AppiLine, AppiSendBuffer> _sendBuffers;
@@ -67,6 +65,15 @@ namespace Communications.Appi
         public AppiRsPort WirelessPort { get; private set; }
         public IDictionary<AppiLine, AppiCanPort> CanPorts { get; private set; }
 
+        private IEnumerable<ISocketContainer> SocketContainers
+        {
+            get
+            {
+                foreach (var canPort in CanPorts.Values) yield return canPort;
+                yield return WirelessPort;
+            }
+        }
+
         public AppiDev()
         {
             CanPorts = new Dictionary<AppiLine, AppiCanPort>()
@@ -76,7 +83,16 @@ namespace Communications.Appi
             };
 
             WirelessPort = new AppiRsPort(this, "WRS");
+
+            foreach (var socketContainer in SocketContainers)
+                socketContainer.AllSocketsDisposed += SocketContainerOnAllSocketsDisposed;
         }
+
+        private void SocketContainerOnAllSocketsDisposed(object Sender, EventArgs Args)
+        {
+            if (!HaveOpenedSockets) OnAllSocketsDisposed();
+        }
+
         public virtual void Dispose()
         {
             lock (_devLocker)
@@ -97,7 +113,7 @@ namespace Communications.Appi
             if (handler != null) handler(this, e);
         }
 
-        private static int LastReadBufferId = -1;
+        private static int _lastReadBufferId = -1;
         /// <summary>
         /// Считывает текущее состояние и сообщения из АППИ
         /// </summary>
@@ -113,12 +129,12 @@ namespace Communications.Appi
             if (buffer == null) return;
             
             // Смотрим, не принимали ли мы это ранее
-            if (buffer.SequentNumber == LastReadBufferId)
+            if (buffer.SequentNumber == _lastReadBufferId)
             {
                 if (BufferLog != null) BufferLog.PushTextEvent("Повторяющийся буфер обнаружен и проигнорирован.");
                 return;
             }
-            else LastReadBufferId = buffer.SequentNumber;
+            else _lastReadBufferId = buffer.SequentNumber;
 
             OnBufferRead(new AppiBufferReadEventArgs(buffer));
 
@@ -164,7 +180,7 @@ namespace Communications.Appi
 
         private void OnSerialDataReceived(byte[] serialData)
         {
-            WirelessPort.ProcessReceived(serialData);
+            (WirelessPort as IReceivePipe<Byte>).ProcessReceived(serialData);
         }
 
         public const int FramesPerSendGroup = 20;
@@ -179,7 +195,7 @@ namespace Communications.Appi
             if (_sendBuffers == null) throw new AppiException("Не инициализированы средства отправки в CAN-линию");
             if (!_sendBuffers.ContainsKey(Line)) throw new AppiException("Не инициализировано средства отправки в линию {0}", Line);
             
-            _sendBuffers[Line].SyncronizedSend(Frames);
+            _sendBuffers[Line].SynchronizedSend(Frames);
         }
         /// <summary>
         /// Отправляет одно сообщение в канал
@@ -197,7 +213,7 @@ namespace Communications.Appi
             {
                 UInt16 len = (UInt16)Math.Min(buff.Length - pointer, UInt16.MaxValue);
 
-                MemoryStream ms = new MemoryStream(2048);
+                var ms = new MemoryStream(2048);
                 ms.WriteByte(0x01);
                 ms.WriteByte(0x02);
                 ms.Seek(8, SeekOrigin.Begin);
@@ -210,7 +226,7 @@ namespace Communications.Appi
             }
         }
 
-        public event AppiReceiveEventHandler AppiMessagesReceived;
+        internal event AppiReceiveEventHandler AppiMessagesReceived;
 
         private void OnCanMessagesReceived(IDictionary<AppiLine, IList<CanFrame>> messages)
         {
@@ -218,7 +234,7 @@ namespace Communications.Appi
 
             foreach (var kvp in messages.Where(kvp => kvp.Value.Any()))
             {
-                CanPorts[kvp.Key].OnAppiFramesReceived(kvp.Value);
+                (CanPorts[kvp.Key] as IReceivePipe<CanFrame>).ProcessReceived(kvp.Value);
             }
         }
 
@@ -349,7 +365,14 @@ namespace Communications.Appi
             }
         }
 
+        public event EventHandler AllSocketsDisposed;
+        private void OnAllSocketsDisposed()
+        {
+            var handler = AllSocketsDisposed;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
 
+        public bool HaveOpenedSockets { get { return SocketContainers.Any(c => c.HaveOpenedSockets); } }
     }
 
     public delegate void AppiReceiveEventHandler(object sender, AppiMessageReceiveEventArgs e);

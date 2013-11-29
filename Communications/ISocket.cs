@@ -6,12 +6,20 @@ namespace Communications
     /// <summary>
     /// Интерфейс сокета
     /// </summary>
-    /// <typeparam name="TDatagram">Тип дейтаграммы сокета</typeparam>
-    public interface ISocket<TDatagram> : IDisposable
+    public interface ISocket : IDisposable
     {
         /// <summary>Имя сокета</summary>
         String Name { get; }
+        /// <summary>Событие, возникающее при уничтожении сокета</summary>
+        event EventHandler Disposed;
+    }
 
+    /// <summary>
+    /// Интерфейс сокета
+    /// </summary>
+    /// <typeparam name="TDatagram">Тип дейтаграммы сокета</typeparam>
+    public interface ISocket<TDatagram> : ISocket
+    {
         /// <summary>Отправляет дейтаграмму в сокет</summary>
         void Send(TDatagram Data);
         /// <summary>Отправляет дейтаграммы в сокет</summary>
@@ -31,7 +39,5 @@ namespace Communications
         /// Параметр ThrowExceptionOnTimeout следует использовать, если сообщение гарантированно должно поступить и его задержка является признаком ошибки
         /// </remarks>
         IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false);
-
-        event EventHandler Disposed;
     }
 }

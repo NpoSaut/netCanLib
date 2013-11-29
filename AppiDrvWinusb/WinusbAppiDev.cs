@@ -40,10 +40,10 @@ namespace Communications.Appi.Winusb
         /// Перечисляет все слоты подключённых устройств АППИ
         /// </summary>
         /// <returns></returns>
-        public static IList<AppiDeviceSlot> GetDevices()
+        public static IEnumerable<AppiDeviceSlot> GetDevices()
         {
             return DeviceGuids.SelectMany(DeviceGuid =>
-                USBDevice.GetDevices(DeviceGuid).Select(di => new WinusbAppiDeviceSlot(di)).Cast<AppiDeviceSlot>()).ToList();
+                USBDevice.GetDevices(DeviceGuid).Select(di => new WinusbAppiDeviceSlot(di)).Cast<AppiDeviceSlot>());
         }
 
         internal WinusbAppiDev(USBDeviceInfo di)

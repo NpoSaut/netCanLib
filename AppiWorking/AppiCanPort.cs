@@ -26,11 +26,6 @@ namespace Communications.Appi
 
         protected override ISocket<CanFrame> CreateSocket() { return new AppiCanSocket(string.Format("Appi{0}", Line), this); }
 
-        internal void OnAppiFramesReceived(IList<CanFrame> Frames)
-        {
-            ProcessReceived(Frames);
-        }
-
         private int _baudRate;
         public override int BaudRate
         {

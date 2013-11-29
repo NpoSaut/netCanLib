@@ -26,7 +26,7 @@ namespace CommunicationsTests.Stuff
 
         protected override ISocket<CanFrame> CreateSocket() { throw new System.NotImplementedException(); }
 
-        public void PushFrames(params CanFrame[] Frames) { ProcessReceived(Frames); }
+        public void PushFrames(params CanFrame[] Frames) { (this as IReceivePipe<CanFrame>).ProcessReceived(Frames); }
 
         public Queue<CanFrame> SendBuffer { get; private set; }
     }

@@ -5,7 +5,7 @@ using Communications.Sockets;
 
 namespace Communications
 {
-    public abstract class PortBase<TDatagram> : IPort<TDatagram>
+    public abstract class PortBase<TDatagram> : IPort<TDatagram>, ISendPipe<TDatagram>, IReceivePipe<TDatagram>
     {
         public string Name { get; private set; }
 
@@ -20,13 +20,13 @@ namespace Communications
         protected PortBase(string Name) { this.Name = Name; }
 
         protected abstract void SendImplementation(IList<TDatagram> Data);
-        public void Send(IList<TDatagram> Data)
+        void ISendPipe<TDatagram>.Send(IList<TDatagram> Data)
         {
-            ProcessReceived(Data);
+            (this as IReceivePipe<TDatagram>).ProcessReceived(Data);
             SendImplementation(Data);
         }
 
-        public void ProcessReceived(IList<TDatagram> Datagrams)
+        void IReceivePipe<TDatagram>.ProcessReceived(IList<TDatagram> Datagrams)
         {
             foreach (var socket in _openedSockets.OfType<IBufferedStore<TDatagram>>())
             {
@@ -78,6 +78,17 @@ namespace Communications
         {
             var handler = AllSocketsDisposed;
             if (handler != null) handler(this, EventArgs.Empty);
+        }
+
+        /// <summary>Проверяет, есть ли у этого источника открытые сокеты</summary>
+        public bool HaveOpenedSockets
+        {
+            get {
+                lock (_openedSocketsLocker)
+                {
+                    return _openedSockets.Any();
+                }
+            }
         }
 
         #endregion

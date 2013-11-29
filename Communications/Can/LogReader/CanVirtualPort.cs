@@ -37,7 +37,7 @@ namespace Communications.Can.LogReader
         void ReadTimer_Elapsed(object sender, ElapsedEventArgs e)
         {
             var f = ReadNextFrame();
-            if (f != null) ProcessReceived(new[] { f });
+            if (f != null) (this as IReceivePipe<CanFrame>).ProcessReceived(new[] { f });
             else ReadTimer.Stop();
         }
 

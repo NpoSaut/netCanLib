@@ -8,13 +8,13 @@ namespace Communications.Appi
 {
     public class AppiCanSocket : BufferedSocketBase<CanFrame>, ICanSocket
     {
-        public AppiCanPort Port { get; private set; }
+        private ISendPipe<CanFrame> SendPipe { get; set; }
 
-        public AppiCanSocket(string Name, AppiCanPort Port) : base(Name) { this.Port = Port; }
+        public AppiCanSocket(string Name, ISendPipe<CanFrame> SendPipe) : base(Name) { this.SendPipe = SendPipe; }
 
         public override void Send(IEnumerable<CanFrame> Frames)
         {
-            Port.Send(Frames.ToList());
+            SendPipe.Send(Frames.ToList());
         }
 
         private bool _disposed = false;

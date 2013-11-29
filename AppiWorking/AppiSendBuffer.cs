@@ -45,7 +45,7 @@ namespace Communications.Appi
             }
         }
 
-        public abstract void SyncronizedSend(IList<CanFrame> Frames);
+        public abstract void SynchronizedSend(IList<CanFrame> Frames);
 
         private bool _transfersAborted = false;
         public void AbortAllTransfers()
@@ -68,7 +68,7 @@ namespace Communications.Appi
         private DateTime _nextSendAviableAt;
         public AppiTimeoutSendBuffer(AppiDev Device, AppiLine Line) : base(Device, Line) {}
 
-        public override void SyncronizedSend(IList<CanFrame> Frames)
+        public override void SynchronizedSend(IList<CanFrame> Frames)
         {
             int sent = 0;
             foreach (var buffer in EncodeBuffers(Frames))
@@ -109,7 +109,7 @@ namespace Communications.Appi
             }
         }
 
-        public override void SyncronizedSend(IList<CanFrame> Frames)
+        public override void SynchronizedSend(IList<CanFrame> Frames)
         {
             foreach (var buffer in EncodeBuffers(Frames))
             {

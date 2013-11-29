@@ -8,7 +8,7 @@ namespace Communications
     /// Абстрактный интерфейс порта заданный дейтаграмм
     /// </summary>
     /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface IPort<TDatagram> : ISocketSource<TDatagram>, ISendPipe<TDatagram>, IReceivePipe<TDatagram>, IDisposable
+    public interface IPort<TDatagram> : ISocketSource<TDatagram>, IDisposable
     {
         /// <summary>Имя порта</summary>
         string Name { get; }
@@ -19,17 +19,26 @@ namespace Communications
     }
 
     /// <summary>
+    /// Объект, имеющий в своём распоряжении некоторые сокеты
+    /// </summary>
+    public interface ISocketContainer : IDisposable
+    {
+        /// <summary>Все сокеты, открытые на этом порту были закрыты</summary>
+        event EventHandler AllSocketsDisposed;
+
+        /// <summary>Проверяет, есть ли у этого источника открытые сокеты</summary>
+        bool HaveOpenedSockets { get; }
+    }
+
+    /// <summary>
     /// Источник сокетов. Может открыть сокеты и вести учёт их закрытия
     /// </summary>
     /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface ISocketSource<TDatagram> : IDisposable
+    public interface ISocketSource<TDatagram> : ISocketContainer
     {
         /// <summary>Открывает сокет на данном порту</summary>
         /// <returns>Свежеоткрытый сокет</returns>
         ISocket<TDatagram> OpenSocket();
-        
-        /// <summary>Все сокеты, открытые на этом порту были закрыты</summary>
-        event EventHandler AllSocketsDisposed;
     }
 
     /// <summary>
