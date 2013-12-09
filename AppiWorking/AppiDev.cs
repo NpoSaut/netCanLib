@@ -176,7 +176,7 @@ namespace Communications.Appi
             if (_sendBuffers == null) throw new AppiException("Не инициализированы средства отправки в CAN-линию");
             if (!_sendBuffers.ContainsKey(Line)) throw new AppiException("Не инициализировано средства отправки в линию {0}", Line);
             
-            _sendBuffers[Line].SyncronizedSend(Frames);
+            _sendBuffers[Line].SynchronizedSend(Frames);
         }
         /// <summary>
         /// Отправляет одно сообщение в канал
