@@ -285,10 +285,10 @@ namespace Communications.Appi
             {
                 if (!_disconnectionProcessed)
                 {
-                    lock (_appiVersionLocker)
-                    {
-                        Monitor.PulseAll(_appiVersionLocker);
-                    }
+//                    lock (_appiVersionLocker)
+//                    {
+//                        Monitor.PulseAll(_appiVersionLocker);
+//                    }
                     if (_sendBuffers != null)
                         foreach (var appiSendBuffer in _sendBuffers.Values)
                         {
