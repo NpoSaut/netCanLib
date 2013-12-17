@@ -5,6 +5,7 @@ using System.Threading;
 using Communications.Appi.Buffers;
 using Communications.Appi.Exceptions;
 using Communications.Can;
+using Communications.Exceptions;
 
 namespace Communications.Appi
 {
@@ -45,7 +46,18 @@ namespace Communications.Appi
             }
         }
 
-        public abstract void SynchronizedSend(IList<CanFrame> Frames);
+        /// <summary>
+        /// Отправляет фреймы, обеспечивая защиту от переполнения исходящего буфера АППИ
+        /// </summary>
+        /// <param name="Frames">Фреймы для отправки</param>
+        public void SynchronizedSend(IList<CanFrame> Frames) { SynchronizedSend(Frames, TimeSpan.FromMilliseconds(-1)); }
+        /// <summary>
+        /// Отправляет фреймы, обеспечивая защиту от переполнения исходящего буфера АППИ и отслеживая таймаут операции
+        /// </summary>
+        /// <param name="Frames">Фреймы для отправки</param>
+        /// <param name="Timeout">Таймаут операции</param>
+        /// <exception cref="SocketSendTimeoutException">Выбрасывается при превышении таймаута ожидания готовности исходящего буфера</exception>
+        public abstract void SynchronizedSend(IList<CanFrame> Frames, TimeSpan Timeout);
 
         private bool _transfersAborted = false;
         public void AbortAllTransfers()
@@ -68,7 +80,7 @@ namespace Communications.Appi
         private DateTime _nextSendAviableAt;
         public AppiTimeoutSendBuffer(AppiDev Device, AppiLine Line) : base(Device, Line) {}
 
-        public override void SynchronizedSend(IList<CanFrame> Frames)
+        public override void SynchronizedSend(IList<CanFrame> Frames, TimeSpan Timeout)
         {
             int sent = 0;
             foreach (var buffer in EncodeBuffers(Frames))
@@ -100,7 +112,7 @@ namespace Communications.Appi
             PostCount(messagesBuffer.OutMessagesCount[Line]);
         }
 
-        public void PostCount(int OutMessagesCount)
+        private void PostCount(int OutMessagesCount)
         {
             if (OutMessagesCount > 40) return;
             lock (Locker)
@@ -109,15 +121,16 @@ namespace Communications.Appi
             }
         }
 
-        public override void SynchronizedSend(IList<CanFrame> Frames)
+        public override void SynchronizedSend(IList<CanFrame> Frames, TimeSpan Timeout)
         {
             foreach (var buffer in EncodeBuffers(Frames))
             {
                 lock (Locker)
                 {
                     CheckAborted();
-                    Monitor.Wait(Locker);
+                    var waitResult = Monitor.Wait(Locker, Timeout);
                     CheckAborted();
+                    if (!waitResult) throw new SocketSendTimeoutException("Превышено время ожидания готовности АППИ к приёму нового буфера сообщений");
                     Device.WriteBuffer(buffer);
                 }
             }
