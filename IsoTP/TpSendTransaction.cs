@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using Communications.Can;
@@ -16,8 +17,8 @@ namespace Communications.Protocols.IsoTP
         public int BlockSize { get; private set; }
         public TimeSpan SeparationTime { get; set; }
 
-        public TpSendTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowlegmentDescriptor)
-            : base(Socket, TransmitDescriptor, AcknowlegmentDescriptor)
+        public TpSendTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowledgmentDescriptor)
+            : base(Socket, TransmitDescriptor, AcknowledgmentDescriptor)
         { }
 
         public void Send(TpPacket Packet)
@@ -34,7 +35,7 @@ namespace Communications.Protocols.IsoTP
 
         private void SendFlow()
         {
-            var AckStream = Socket.Read(Timeout, true).Where(f => f.Descriptor == AcknowlegmentDescriptor);
+            var AckStream = Socket.Read(Timeout, true).Where(f => f.Descriptor == AcknowledgmentDescriptor);
 
             try
             {
@@ -90,22 +91,30 @@ namespace Communications.Protocols.IsoTP
         {
             try
             {
-                var FC = FramesStream
+                FlowControlFrame flowControl;
+                var stopWatch = new Stopwatch();
+                stopWatch.Start();
+
+                do
+                {
+                    stopWatch.Restart();
+                    flowControl = FramesStream
+                                .TakeWhile(f => stopWatch.Elapsed < Timeout)
                                 .Where(f => f.GetIsoTpFrameType() == IsoTpFrameType.FlowControl)
-                    //.Cast<FlowControlFrame>()
                                 .Select(f => (FlowControlFrame)f)
-                                .SkipWhile(fc => fc.Flag == FlowControlFlag.Wait)
-                                .First();
+                                .FirstOrDefault();
+                    if (flowControl == null) throw new IsoTpFlowControlTimeoutException();
+                } while (flowControl.Flag == FlowControlFlag.Wait);
 
                 // Считываем параметры отправки кадров
-                this.BlockSize = FC.BlockSize != 0 ? FC.BlockSize : int.MaxValue;
-                this.SeparationTime = FC.SeparationTime;
+                this.BlockSize = flowControl.BlockSize != 0 ? flowControl.BlockSize : int.MaxValue;
+                this.SeparationTime = flowControl.SeparationTime;
 
                 // Выбрасываем ошибку, если принимающая сторона отказывается от транзакции
-                if (FC.Flag == FlowControlFlag.Abort)
+                if (flowControl.Flag == FlowControlFlag.Abort)
                     throw new IsoTpTransactionAbortedException("Принимающая сторона ответила флагом отмены транзакции");
 
-                return FC.Flag;
+                return flowControl.Flag;
             }
             catch (TimeoutException timeoutException) { throw new IsoTpFlowControlTimeoutException(timeoutException); }
         }

@@ -53,10 +53,9 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="CanFlowTest.cs" />
+    <Compile Include="DatagramBuffersTestBase.cs" />
     <Compile Include="Stuff\CanFrameHelper.cs" />
-    <Compile Include="Stuff\ChainedCanFlow.cs" />
-    <Compile Include="Stuff\MockCanPort.cs" />
+    <Compile Include="Stuff\CanBrother.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

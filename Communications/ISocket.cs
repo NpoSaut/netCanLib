@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Communications.Exceptions;
 
 namespace Communications
 {
@@ -38,6 +39,7 @@ namespace Communications
         /// Можно использовать для отлова серий подряд идущих сообщений (когда другая серия отделяется по времени).
         /// Параметр ThrowExceptionOnTimeout следует использовать, если сообщение гарантированно должно поступить и его задержка является признаком ошибки
         /// </remarks>
+        /// <exception cref="SocketReadTimeoutException">При превышении времени ожидания сообщения (если <paramref name="ThrowExceptionOnTimeOut"/> == true)</exception>
         IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false);
     }
 }

@@ -14,7 +14,7 @@ namespace Communications.Sockets
         public abstract IEnumerable<TDatagram> Read(TimeSpan Timeout = new TimeSpan(), bool ThrowExceptionOnTimeOut = false);
 
         public void Send(params TDatagram[] Data) { Send(Data.AsEnumerable()); }
-        public virtual void Send(TDatagram Data) { Send(); }
+        public virtual void Send(TDatagram Data) { Send(new[] { Data }); }
 
         public event EventHandler Disposed;
         private void OnDisposed()

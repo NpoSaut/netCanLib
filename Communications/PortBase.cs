@@ -29,9 +29,12 @@ namespace Communications
 
         void IReceivePipe<TDatagram>.ProcessReceived(IList<TDatagram> Datagrams)
         {
-            foreach (var socket in _openedSockets.OfType<IBufferedStore<TDatagram>>())
+            lock (_openedSocketsLocker)
             {
-                socket.Enqueue(Datagrams);
+                foreach (var socket in _openedSockets.OfType<IBufferedStore<TDatagram>>())
+                {
+                    socket.Enqueue(Datagrams);
+                }
             }
         }
 
@@ -66,7 +69,7 @@ namespace Communications
         {
             lock (_openedSocketsLocker)
             {
-                foreach (var socket in _openedSockets)
+                foreach (var socket in _openedSockets.ToList())
                 {
                     socket.Dispose();
                 }

@@ -24,7 +24,7 @@ namespace Communications.Protocols.IsoTP
         /// <summary>
         /// Используемый дескриптор
         /// </summary>
-        public int AcknowlegmentDescriptor { get; private set; }
+        public int AcknowledgmentDescriptor { get; private set; }
         /// <summary>
         /// Время ожидания пакета
         /// </summary>
@@ -49,10 +49,10 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowlegmentDescriptor)
+        public TpTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowledgmentDescriptor)
         {
             this.TransmitDescriptor = TransmitDescriptor;
-            this.AcknowlegmentDescriptor = AcknowlegmentDescriptor;
+            this.AcknowledgmentDescriptor = AcknowledgmentDescriptor;
             this.Socket = Socket;
             this.Timeout = DefaultTimeout;
             this.Status = TpTransactionStatus.Ready;

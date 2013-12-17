@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading;
+using Communications.Exceptions;
 
 namespace Communications.Sockets
 {
@@ -16,13 +18,16 @@ namespace Communications.Sockets
         protected BufferedSocketBase(string Name) : this(Name, new ConcurrentDatagramBuffer<TDatagram>()) { }
         protected BufferedSocketBase(string Name, IDatagramBuffer<TDatagram> Buffer) : base(Name) { _buffer = Buffer; }
 
+        /// <summary>Проверяет, нужно ли помещать дейтаграмму в буфер. При необходимости можно заменить, чтобы не вызывать переполнение буфера лишними дейтаграммамаи</summary>
+        protected virtual bool CheckDatagramBeforeEnqueue(TDatagram Datagram) { return true; }
+
         /// <summary>
         /// Добавляет датаграммы в очередь на обработку
         /// </summary>
         /// <param name="Datagrams">Полученные датаграммы</param>
         void IBufferedStore<TDatagram>.Enqueue(IEnumerable<TDatagram> Datagrams)
         {
-            _buffer.Enqueue(Datagrams);
+            _buffer.Enqueue(Datagrams.Where(CheckDatagramBeforeEnqueue));
         }
 
         /// <summary>
@@ -33,7 +38,7 @@ namespace Communications.Sockets
             return _buffer.Read(Timeout, ThrowExceptionOnTimeOut);
         }
     }
-
+    
     public interface IDatagramBuffer<TDatagram>
     {
         void Enqueue(IEnumerable<TDatagram> Datagrams);
@@ -59,7 +64,7 @@ namespace Communications.Sockets
                 TDatagram dtg = default(TDatagram);
                 var ok = SpinWait.SpinUntil(() => _incomingDatagrams.TryDequeue(out dtg), Timeout);
                 if (ok) yield return dtg;
-                else if (ThrowExceptionOnTimeOut) throw new TimeoutException("Превышено время ожидания дейтаграммы");
+                else if (ThrowExceptionOnTimeOut) throw new SocketReadTimeoutException("Превышено время ожидания дейтаграммы");
                 else yield break;
             }
         }

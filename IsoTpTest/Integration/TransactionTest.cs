@@ -15,26 +15,28 @@ namespace IsoTpTest.Integration
         [TestMethod]
         public void SendTest()
         {
-            Assert.Fail("Тест загублен!");
-            /*const int dataLength = 4000;
+            //Assert.Fail("Тест загублен!");
+            const int dataLength = 4000;
 
+            var sockets = CanBrother.TakeBrothers(2);
+
+            #region Подбор дескрипторов
             UInt16 descriptorA = CanFrame.GetDescriptorFor(r.Next(0, CanFrame.IdMaxValue), 8);
             UInt16 descriptorB;
             do descriptorB = CanFrame.GetDescriptorFor(r.Next(0, CanFrame.IdMaxValue), 8);
             while (descriptorB == descriptorA);
+            #endregion
 
             Byte[] data = new byte[dataLength];
             r.NextBytes(data);
 
-            var flows = ChainedCanFlow.Take(2, descriptorA, descriptorB);
+            var receiveAction =
+                Task<TpReceiveTransaction>.Factory.StartNew(() => IsoTp.Receive(sockets[0], descriptorA, descriptorB));
 
-            var recieveAction =
-                Task<TpReceiveTransaction>.Factory.StartNew(() => IsoTp.Receive(flows[0], descriptorA, descriptorB));
+            IsoTp.Send(sockets[1], descriptorA, descriptorB, data);
 
-            IsoTp.Send(flows[1], descriptorA, descriptorB, data);
-
-            recieveAction.Wait(1000);
-            CollectionAssert.AreEqual(data, recieveAction.Result.Data, "Данные были повреждены в ходе передачи");*/
+            receiveAction.Wait(1000);
+            CollectionAssert.AreEqual(data, receiveAction.Result.Data, "Данные были повреждены в ходе передачи");
         }
     }
 }

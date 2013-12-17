@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using Communications.Can;
+using Communications.Exceptions;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 
@@ -38,8 +41,8 @@ namespace Communications.Protocols.IsoTP
             }
         }
 
-        public TpReceiveTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowlegmentDescriptor)
-            : base(Socket, TransmitDescriptor, AcknowlegmentDescriptor)
+        public TpReceiveTransaction(ICanSocket Socket, int TransmitDescriptor, int AcknowledgmentDescriptor)
+            : base(Socket, TransmitDescriptor, AcknowledgmentDescriptor)
         {
             this.SeparationTime = TimeSpan.Zero;
             this.BlockSize = 20;
@@ -50,24 +53,25 @@ namespace Communications.Protocols.IsoTP
             if (this.Status != TpTransactionStatus.Ready) throw new IsoTpTransactionReuseException(this);
             this.Status = TpTransactionStatus.Active;
 
-            bool TransactionStarted = false;
+            bool transactionStarted = false;
 
             try
             {
+                // ReSharper disable PossibleMultipleEnumeration
                 // Инициализируем чтение с заданным таймаутом,
                 // при истечении таймаута - выбрасываем ошибку.
-                var FramesStream = Socket.Read(Timeout, true).Where(f => f.Descriptor == TransmitDescriptor);
+                var framesStream = Socket.ReadWithTimeout(flow => flow.Where(f => f.Descriptor == TransmitDescriptor), Timeout, true);
 
                 try
                 {
                     // Ждём первого кадра передачи
-                    FirstFrame First = null;
-                    foreach (var f in FramesStream)
+                    FirstFrame firstFrame = null;
+                    foreach (var f in framesStream)
                     {
                         var ft = f.GetIsoTpFrameType();
                         if (ft == IsoTpFrameType.First)
                         {
-                            First = (FirstFrame)f;
+                            firstFrame = (FirstFrame)f;
                             break;
                         }
                         if (ft == IsoTpFrameType.Single)
@@ -77,12 +81,12 @@ namespace Communications.Protocols.IsoTP
                             return Data;
                         }
                     }
-                    TransactionStarted = true;
+                    transactionStarted = true;
 
                     // После того, как поймали первый кадр - подготавливаем буфер
-                    Buff = new Byte[First.PacketSize];
-                    Buffer.BlockCopy(First.Data, 0, Buff, 0, First.Data.Length);
-                    Pointer += First.Data.Length;
+                    Buff = new Byte[firstFrame.PacketSize];
+                    Buffer.BlockCopy(firstFrame.Data, 0, Buff, 0, firstFrame.Data.Length);
+                    Pointer += firstFrame.Data.Length;
 
                     ExpectingConsIndex = 1;
 
@@ -90,19 +94,20 @@ namespace Communications.Protocols.IsoTP
                     while (Pointer < Buff.Length)
                     {
                         SendFlowControl();          // Сообщаем о готовности
-                        ReadBlock(FramesStream);    // Читаем следующий блок
+                        ReadBlock(framesStream);    // Читаем следующий блок
                     }
                 }
                 catch
                 {
                     this.Status = TpTransactionStatus.Error;
                     // Если в процессе передачи возникла ошибка, отправляем отмену
-                    if (TransactionStarted)
-                        Socket.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowlegmentDescriptor));
+                    if (transactionStarted)
+                        Socket.Send(FlowControlFrame.AbortFrame.GetCanFrame(AcknowledgmentDescriptor));
                     throw;      // и пробрасываем ошибку дальше по стеку
                 }
+                // ReSharper restore PossibleMultipleEnumeration
             }
-            catch (TimeoutException timeoutException)
+            catch (SocketTimeoutException timeoutException)
             {
                 throw new IsoTpReceiveTimeoutException(timeoutException);
             }
@@ -115,7 +120,6 @@ namespace Communications.Protocols.IsoTP
         {
             var Consequence = FromStream
                     .Where(f => f.GetIsoTpFrameType() == IsoTpFrameType.Consecutive)
-                    //.Cast<ConsecutiveFrame>()
                     .Select(f => (ConsecutiveFrame)f)
                     .Take(BlockSize);
 
@@ -133,7 +137,7 @@ namespace Communications.Protocols.IsoTP
         }
         private void SendFlowControl()
         {
-            Socket.Send(GenerateFlowControl().GetCanFrame(AcknowlegmentDescriptor));
+            Socket.Send(GenerateFlowControl().GetCanFrame(AcknowledgmentDescriptor));
         }
         private FlowControlFrame GenerateFlowControl()
         {
