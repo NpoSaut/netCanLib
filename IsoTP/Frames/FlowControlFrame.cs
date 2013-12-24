@@ -114,5 +114,7 @@ namespace Communications.Protocols.IsoTP.Frames
         {
             get { return new FlowControlFrame(FlowControlFlag.Abort, 0, 0); }
         }
+
+        public override string ToString() { return string.Format("CF-{0}: BS={1} ST={2}", Flag, BlockSize, SeparationTime); }
     }
 }

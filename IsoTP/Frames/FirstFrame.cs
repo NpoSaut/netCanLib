@@ -66,5 +66,7 @@ namespace Communications.Protocols.IsoTP.Frames
         {
             return IsoTpFrame.ParsePacket<FirstFrame>(cFrame.Data);
         }
+
+        public override string ToString() { return string.Format("FF: {0}", BitConverter.ToString(Data, 0, Data.Length)); }
     }
 }
