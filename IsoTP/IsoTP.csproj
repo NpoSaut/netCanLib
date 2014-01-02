@@ -54,10 +54,12 @@
     <Compile Include="Exceptions\IsoTpProtocolException.cs" />
     <Compile Include="Exceptions\IsoTpSequenceException.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\IsoTpState.cs" />
     <Compile Include="TpPacket.cs" />
     <Compile Include="TpRecieveTransaction.cs" />
     <Compile Include="TpSendTransaction.cs" />
     <Compile Include="TpTransaction.cs" />
+    <Compile Include="TransactionContext.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communications\Communications.csproj">
