@@ -2,7 +2,6 @@
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Communications.Exceptions;
 
@@ -15,7 +14,7 @@ namespace Communications.Sockets
     /// Разделяет процессы накладывания сообщений в себя и изъятия. Не препятствует помещению дейтаграмм в буфер, позволяя сделать это как можно быстрее.
     /// При изъятии сообщений выдаёт сообщение из буфера либо блокирует вызов до появление в буфере сообщений.
     /// </remarks>
-    public abstract class BufferedSocketBase<TDatagram> : SocketBase<TDatagram>, IBufferedStore<TDatagram>
+    public abstract class BufferedSocketBase<TDatagram> : SocketBase<TDatagram>
     {
         private readonly IDatagramBuffer<TDatagram> _buffer;
 
@@ -25,14 +24,9 @@ namespace Communications.Sockets
         /// <summary>Проверяет, нужно ли помещать дейтаграмму в буфер. При необходимости можно заменить, чтобы не вызывать переполнение буфера лишними дейтаграммамаи</summary>
         protected virtual bool CheckDatagramBeforeEnqueue(TDatagram Datagram) { return true; }
 
-        /// <summary>
-        /// Добавляет датаграммы в очередь на обработку
-        /// </summary>
+        /// <summary>Добавляет датаграммы в очередь на обработку</summary>
         /// <param name="Datagrams">Полученные датаграммы</param>
-        void IBufferedStore<TDatagram>.Enqueue(IEnumerable<TDatagram> Datagrams)
-        {
-            _buffer.Enqueue(Datagrams.Where(CheckDatagramBeforeEnqueue));
-        }
+        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams) { _buffer.Enqueue(Datagrams.Where(CheckDatagramBeforeEnqueue)); }
 
         /// <summary>
         /// Выполняет блокирующее считывание дейтаграммы из входящего потока до тех пор, пока время между соседними дейтаграммами не превысит указанный таймаут

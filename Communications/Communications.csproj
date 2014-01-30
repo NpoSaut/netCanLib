@@ -55,6 +55,7 @@
     <Compile Include="Can\LogReader\TextLogReaderPort.cs" />
     <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
     <Compile Include="Can\LogRecording\LogRecorder.cs" />
+    <Compile Include="Exceptions\SocketClosedException.cs" />
     <Compile Include="Exceptions\SocketException.cs" />
     <Compile Include="Exceptions\SocketReadTimeoutException.cs" />
     <Compile Include="Exceptions\SocketSendTimeoutException.cs" />
@@ -62,6 +63,7 @@
     <Compile Include="ILog.cs" />
     <Compile Include="INamable.cs" />
     <Compile Include="IPort.cs" />
+    <Compile Include="ISocketBackend.cs" />
     <Compile Include="PortBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial\RsPort.cs" />

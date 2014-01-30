@@ -9,8 +9,11 @@ namespace Communications
     /// </summary>
     public interface ISocket : INamable, IDisposable
     {
-        /// <summary>Событие, возникающее при уничтожении сокета</summary>
-        event EventHandler Disposed;
+        /// <summary>Показывает, что сокет не был закрыт.</summary>
+        /// <remarks>Сокет открывается однажды при создании и закрывается однажды и навсегда.</remarks>
+        bool IsOpened { get; }
+        /// <summary>Событие, возникающее при уничтожении (закрытии) сокета</summary>
+        event EventHandler Closed;
     }
 
     /// <summary>

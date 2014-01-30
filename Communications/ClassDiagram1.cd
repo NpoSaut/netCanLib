@@ -45,7 +45,7 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Communications.Can.CanSocketBase">
-    <Position X="4.25" Y="19" Width="2.25" />
+    <Position X="4.25" Y="19.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Can\CanSocketBase.cs</FileName>
@@ -153,12 +153,11 @@
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Sockets.BufferedSocketBase&lt;TDatagram&gt;">
-    <Position X="4.25" Y="16.25" Width="2.25" />
+    <Position X="4.25" Y="16.5" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAAACAAAAAAAAAAAAAAAAYAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAgAAAAAACAAAAAAAAAAAAAAAAQAAgAAAAAAAA=</HashCode>
       <FileName>Sockets\BufferedSocketBase.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Communications.Sockets.ConcurrentDatagramBuffer&lt;TDatagram&gt;" Collapsed="true" BaseTypeListCollapsed="true">
     <Position X="16.75" Y="0.5" Width="1.5" />
@@ -171,7 +170,7 @@
   <Class Name="Communications.Sockets.SocketBase&lt;TDatagram&gt;">
     <Position X="4.25" Y="12.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAACAAAAAAAEAAAAQAAAAAAAAQAAAAAAACAAA=</HashCode>
+      <HashCode>IAAAgAAAACAAIAAAAEAAAAQAAAAAAAAQAAgAAACAAAA=</HashCode>
       <FileName>Sockets\SocketBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -239,13 +238,6 @@
       <FileName>Sockets\BufferedSocketBase.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Communications.Sockets.IBufferedStore&lt;TDatagram&gt;">
-    <Position X="13.25" Y="5.25" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Sockets\IBufferedStore.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Communications.ISocketOwner">
     <Position X="16.75" Y="8" Width="2.25" />
     <TypeIdentifier>
@@ -254,23 +246,19 @@
       <NewMemberFileName>ISocket.cs</NewMemberFileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Communications.ISocket" Collapsed="true">
-    <Position X="11.75" Y="9" Width="1.5" />
+  <Interface Name="Communications.ISocket">
+    <Position X="11.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAA=</HashCode>
+      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
       <FileName>ISocket.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Communications.INamable" Collapsed="true">
-    <Position X="13.75" Y="7.75" Width="1.5" />
+  <Interface Name="Communications.ISocketBackend&lt;TDatagram&gt;">
+    <Position X="14.25" Y="9" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>INamable.cs</FileName>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <FileName>ISocketBackend.cs</FileName>
     </TypeIdentifier>
-  </Interface>
-  <Interface Name="System.IDisposable" Collapsed="true">
-    <Position X="20" Y="7.75" Width="1.5" />
-    <TypeIdentifier />
   </Interface>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
