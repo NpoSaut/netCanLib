@@ -11,9 +11,9 @@ namespace Communications.Sockets
         protected SocketBase(string Name) { this.Name = Name; }
 
         public abstract void Send(IEnumerable<TDatagram> Data);
-        public abstract IEnumerable<TDatagram> Read(TimeSpan Timeout = new TimeSpan(), bool ThrowExceptionOnTimeOut = false);
+        public abstract IEnumerable<TDatagram> Receive(TimeSpan Timeout = new TimeSpan(), bool ThrowExceptionOnTimeout = false);
 
-        public void Send(params TDatagram[] Data) { Send(Data.AsEnumerable()); }
+        public virtual void Send(params TDatagram[] Data) { Send(Data.AsEnumerable()); }
         public virtual void Send(TDatagram Data) { Send(new[] { Data }); }
 
         public event EventHandler Disposed;

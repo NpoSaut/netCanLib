@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\SocketSendTimeoutException.cs" />
     <Compile Include="Exceptions\SocketTimeoutException.cs" />
     <Compile Include="ILog.cs" />
+    <Compile Include="INamable.cs" />
     <Compile Include="IPort.cs" />
     <Compile Include="PortBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,7 +71,9 @@
     <Compile Include="Sockets\IBufferedStore.cs" />
     <Compile Include="Sockets\SocketBase.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="ClassDiagram1.cd" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

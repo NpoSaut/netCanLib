@@ -7,10 +7,8 @@ namespace Communications
     /// <summary>
     /// Интерфейс сокета
     /// </summary>
-    public interface ISocket : IDisposable
+    public interface ISocket : INamable, IDisposable
     {
-        /// <summary>Имя сокета</summary>
-        String Name { get; }
         /// <summary>Событие, возникающее при уничтожении сокета</summary>
         event EventHandler Disposed;
     }
@@ -30,7 +28,7 @@ namespace Communications
         /// Производит блокирующее считывание данных из сокета
         /// </summary>
         /// <param name="Timeout">Таймаут на операцию считывания</param>
-        /// <param name="ThrowExceptionOnTimeOut">Указывает, следует ли вызывать исключение при превышении таймаута</param>
+        /// <param name="ThrowExceptionOnTimeout">Указывает, следует ли вызывать исключение при превышении таймаута</param>
         /// <returns>Последовательность считанных дейтаграмм</returns>
         /// <remarks>
         /// Поскольку функция блокирующая и считывает _все_ приходящие кадры, выход из этого перечисления не предусмотрен.
@@ -39,7 +37,7 @@ namespace Communications
         /// Можно использовать для отлова серий подряд идущих сообщений (когда другая серия отделяется по времени).
         /// Параметр ThrowExceptionOnTimeout следует использовать, если сообщение гарантированно должно поступить и его задержка является признаком ошибки
         /// </remarks>
-        /// <exception cref="SocketReadTimeoutException">При превышении времени ожидания сообщения (если <paramref name="ThrowExceptionOnTimeOut"/> == true)</exception>
-        IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false);
+        /// <exception cref="SocketReadTimeoutException">При превышении времени ожидания сообщения (если <paramref name="ThrowExceptionOnTimeout"/> == true)</exception>
+        IEnumerable<TDatagram> Receive(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeout = false);
     }
 }

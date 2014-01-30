@@ -11,6 +11,10 @@ namespace Communications.Sockets
     /// <summary>
     /// Абстракция сокета, буферизирующего все входящие дейтаграммы до момента их прочтения
     /// </summary>
+    /// <remarks>
+    /// Разделяет процессы накладывания сообщений в себя и изъятия. Не препятствует помещению дейтаграмм в буфер, позволяя сделать это как можно быстрее.
+    /// При изъятии сообщений выдаёт сообщение из буфера либо блокирует вызов до появление в буфере сообщений.
+    /// </remarks>
     public abstract class BufferedSocketBase<TDatagram> : SocketBase<TDatagram>, IBufferedStore<TDatagram>
     {
         private readonly IDatagramBuffer<TDatagram> _buffer;
@@ -33,9 +37,9 @@ namespace Communications.Sockets
         /// <summary>
         /// Выполняет блокирующее считывание дейтаграммы из входящего потока до тех пор, пока время между соседними дейтаграммами не превысит указанный таймаут
         /// </summary>
-        public override IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false)
+        public override IEnumerable<TDatagram> Receive(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeout = false)
         {
-            return _buffer.Read(Timeout, ThrowExceptionOnTimeOut);
+            return _buffer.Read(Timeout, ThrowExceptionOnTimeout);
         }
     }
     

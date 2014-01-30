@@ -19,7 +19,7 @@ namespace Communications.Appi
     /// <summary>
     /// Представление АППИ
     /// </summary>
-    public abstract class AppiDev : ISocketContainer, IDisposable
+    public abstract class AppiDev : ISocketOwner, IDisposable
     {
         public ILog BufferLog { get; set; }
         private enum BufferDirection { In, Out }
@@ -65,7 +65,7 @@ namespace Communications.Appi
         public AppiRsPort WirelessPort { get; private set; }
         public IDictionary<AppiLine, AppiCanPort> CanPorts { get; private set; }
 
-        private IEnumerable<ISocketContainer> SocketContainers
+        private IEnumerable<ISocketOwner> SocketContainers
         {
             get
             {

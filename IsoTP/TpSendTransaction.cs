@@ -35,7 +35,7 @@ namespace Communications.Protocols.IsoTP
 
         private void SendFlow()
         {
-            var AckStream = Socket.Read(Timeout, true).Where(f => f.Descriptor == AcknowledgmentDescriptor);
+            var AckStream = Socket.Receive(Timeout, true).Where(f => f.Descriptor == AcknowledgmentDescriptor);
 
             try
             {

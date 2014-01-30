@@ -49,7 +49,7 @@ namespace Communications
             {
                 var sw = new Stopwatch();
                 sw.Start();
-                var checkedInputs = FastCheck(Socket.Read(Timeout, ThrowExceptionOnTimeOut),
+                var checkedInputs = FastCheck(Socket.Receive(Timeout, ThrowExceptionOnTimeOut),
                                               sw, Timeout, ThrowExceptionOnTimeOut);
                 var outputs = OutputSelector(checkedInputs);
                 foreach (var output in outputs)

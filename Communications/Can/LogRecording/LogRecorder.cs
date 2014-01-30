@@ -17,7 +17,7 @@ namespace Communications.Can.LogRecording
         {
             while (true)
             {
-                WriteFrames(Socket.Read(TimeSpan.FromMilliseconds(100)));
+                WriteFrames(Socket.Receive(TimeSpan.FromMilliseconds(100)));
                 FileStream.Flush();
             }
         }

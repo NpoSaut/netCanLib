@@ -8,11 +8,9 @@ namespace Communications
     /// Абстрактный интерфейс порта заданный дейтаграмм
     /// </summary>
     /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface IPort<TSocket> : ISocketSource<TSocket>, IDisposable
+    public interface IPort<TSocket> : ISocketSource<TSocket>, INamable
         where TSocket : ISocket
     {
-        /// <summary>Имя порта</summary>
-        string Name { get; }
         /// <summary>Скорость порта</summary>
         int BaudRate { get; set; }
         /// <summary>Скорость порта была изменена</summary>
@@ -22,7 +20,7 @@ namespace Communications
     /// <summary>
     /// Объект, имеющий в своём распоряжении некоторые сокеты
     /// </summary>
-    public interface ISocketContainer : IDisposable
+    public interface ISocketOwner : IDisposable
     {
         /// <summary>Все сокеты, открытые на этом порту были закрыты</summary>
         event EventHandler AllSocketsDisposed;
@@ -34,7 +32,7 @@ namespace Communications
     /// <summary>
     /// Источник сокетов. Может открыть сокеты и вести учёт их закрытия
     /// </summary>
-    public interface ISocketSource<TSocket> : ISocketContainer
+    public interface ISocketSource<TSocket> : ISocketOwner
         where TSocket : ISocket
     {
         /// <summary>Открывает сокет на данном порту</summary>
