@@ -1,21 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+<ClassDiagram MajorVersion="1" MinorVersion="1" GroupingSetting="Access" MembersFormat="NameAndType">
   <Class Name="Communications.BaudRates" Collapsed="true">
-    <Position X="13.25" Y="0.5" Width="1.5" />
+    <Position X="17.75" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAACAAAAAAAEAAAAAAAAAAAAAAAAAABAAAAAAAAw=</HashCode>
       <FileName>BaudRates.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.LogAggregatorHelper" Collapsed="true">
-    <Position X="15" Y="1.5" Width="1.5" />
+    <Position X="19.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ILog.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.PortBase&lt;TSocket, TDatagram&gt;">
-    <Position X="6" Y="0.75" Width="2.75" />
+    <Position X="9.75" Y="7.25" Width="2.75" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAIAAAAAgCAAAAABEBAAEAUAgAAAAAAAEAACEAAAAAA=</HashCode>
       <FileName>PortBase.cs</FileName>
@@ -23,29 +26,28 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Communications.TimeoutReaderHelper" Collapsed="true">
-    <Position X="16.75" Y="1.5" Width="1.5" />
+    <Position X="21.25" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>TimeoutReaderHelper.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Can.CanFrame" Collapsed="true">
-    <Position X="15" Y="0.5" Width="1.5" />
+    <Position X="19.5" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACIAAABEAAAAhEAAAQAAAAAAAAABABAAAAAAAAARA=</HashCode>
       <FileName>Can\CanFrame.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Can.CanPort" Collapsed="true">
-    <Position X="4" Y="6.5" Width="1.5" />
+    <Position X="12" Y="12.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Can\CanPort.cs</FileName>
     </TypeIdentifier>
-    <Lollipop Position="0.2" />
   </Class>
   <Class Name="Communications.Can.CanSocketBase">
-    <Position X="4.25" Y="19.5" Width="2.25" />
+    <Position X="3.5" Y="16.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAACAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Can\CanSocketBase.cs</FileName>
@@ -53,35 +55,14 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Communications.Can.FrameEncoders.FrameEncoder&lt;TOut&gt;" Collapsed="true">
-    <Position X="13.25" Y="1.5" Width="1.5" />
+    <Position X="17.75" Y="7.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAA=</HashCode>
       <FileName>Can\FrameEncoders\FrameEncoder.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Communications.Can.FrameEncoders.FrameSbsEncoder" Collapsed="true">
-    <Position X="8.5" Y="6.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>Can\FrameEncoders\FrameSbsEncoder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Communications.Can.FrameEncoders.FrameStreamEncoder" Collapsed="true">
-    <Position X="9.75" Y="5.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAACACAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAA=</HashCode>
-      <FileName>Can\FrameEncoders\FrameStreamEncoder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Communications.Can.FrameEncoders.FrameTextEncoder" Collapsed="true">
-    <Position X="10.75" Y="6.75" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAIAAAACAAAAAAAAAAAAAAAAAAIAAAAAAAAEAAAA=</HashCode>
-      <FileName>Can\FrameEncoders\FrameTextEncoder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
   <Class Name="Communications.Can.LogReader.CanVirtualPort" Collapsed="true">
-    <Position X="4" Y="8" Width="1.5" />
+    <Position X="12" Y="14.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAIAAAAACAAAAAACAAAAAAAAAACAAAIAAEAAAAEAAA=</HashCode>
       <FileName>Can\LogReader\CanVirtualPort.cs</FileName>
@@ -89,78 +70,66 @@
     <Lollipop Position="0.2" />
   </Class>
   <Class Name="Communications.Can.LogReader.StreamEncoderPort&lt;TEncoder&gt;" Collapsed="true">
-    <Position X="3" Y="9.5" Width="1.5" />
+    <Position X="10.5" Y="16" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAECAAAAAACAAAAAAAAAAAAAABAAAAAgAAAAA=</HashCode>
       <FileName>Can\LogReader\StreamEncoderPort.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Can.LogReader.TextLogReaderPort" Collapsed="true">
-    <Position X="5.25" Y="9.5" Width="1.5" />
+    <Position X="13.5" Y="16" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAECAAAAAACAAAAAAQAAAAAAAAABAAAAAAAAA=</HashCode>
       <FileName>Can\LogReader\TextLogReaderPort.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="Communications.Can.LogRecording.LogEncodingRecorder&lt;TEncoder&gt;" Collapsed="true">
-    <Position X="8.75" Y="11.25" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIBAAAAAAAAAAA=</HashCode>
-      <FileName>Can\LogRecording\LogEncodingRecorder.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="Communications.Can.LogRecording.LogRecorder" Collapsed="true">
-    <Position X="8.75" Y="10" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAACAAAAAAgAAAAAAAAACAAQIAIAAAAAQAAAA=</HashCode>
-      <FileName>Can\LogRecording\LogRecorder.cs</FileName>
-    </TypeIdentifier>
-    <Lollipop Position="0.2" />
-  </Class>
   <Class Name="Communications.Exceptions.SocketException" Collapsed="true">
-    <Position X="1.75" Y="0.5" Width="1.5" />
+    <Position X="20" Y="1.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\SocketException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Exceptions.SocketReadTimeoutException" Collapsed="true">
-    <Position X="0.5" Y="3.5" Width="1.5" />
+    <Position X="18.75" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\SocketReadTimeoutException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Exceptions.SocketSendTimeoutException" Collapsed="true">
-    <Position X="2.75" Y="3.5" Width="1.5" />
+    <Position X="21" Y="4.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\SocketSendTimeoutException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Exceptions.SocketTimeoutException" Collapsed="true">
-    <Position X="1.75" Y="2" Width="1.5" />
+    <Position X="20" Y="2.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Exceptions\SocketTimeoutException.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Serial.RsPort" Collapsed="true">
-    <Position X="0.75" Y="6.5" Width="1.5" />
+    <Position X="8.25" Y="12.75" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Serial\RsPort.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Sockets.BufferedSocketBase&lt;TDatagram&gt;">
-    <Position X="4.25" Y="16.5" Width="2.25" />
+    <Position X="3.5" Y="13.25" Width="2.25" />
+    <Compartments>
+      <Compartment Name="Private" Collapsed="true" />
+    </Compartments>
     <TypeIdentifier>
       <HashCode>AAAAAAAgAAAAAACAAAAAAAAAAAAAAAAQAAgAAAAAAAA=</HashCode>
       <FileName>Sockets\BufferedSocketBase.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="Communications.Sockets.ConcurrentDatagramBuffer&lt;TDatagram&gt;" Collapsed="true" BaseTypeListCollapsed="true">
-    <Position X="16.75" Y="0.5" Width="1.5" />
+    <Position X="21.25" Y="6.75" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAgBAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Sockets\BufferedSocketBase.cs</FileName>
@@ -168,7 +137,7 @@
     <Lollipop Position="0.2" Collapsed="true" />
   </Class>
   <Class Name="Communications.Sockets.SocketBase&lt;TDatagram&gt;">
-    <Position X="4.25" Y="12.75" Width="2.25" />
+    <Position X="3.5" Y="9.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAgAgAAAACAAAAAAAEAAAAQAAAAAEAAQAAgAAACAAAA=</HashCode>
       <FileName>Sockets\SocketBase.cs</FileName>
@@ -176,70 +145,49 @@
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="Communications.ILog" Collapsed="true">
-    <Position X="16.75" Y="2.75" Width="1.5" />
+    <Position X="21.25" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ILog.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.IPort&lt;TSocket&gt;">
-    <Position X="15" Y="12.25" Width="2.25" />
+    <Position X="10" Y="5.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocketSource&lt;TSocket&gt;">
-    <Position X="16.75" Y="10.25" Width="2.25" />
+    <Position X="10" Y="3.5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Communications.ISendPipe&lt;TDatagram&gt;">
-    <Position X="23" Y="5.25" Width="2" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>IPort.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
-  <Interface Name="Communications.IReceivePipe&lt;TDatagram&gt;">
-    <Position X="19.5" Y="5.25" Width="2.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
-      <FileName>IPort.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Communications.ISocket&lt;TDatagram&gt;">
-    <Position X="11.25" Y="10.25" Width="2.5" />
+    <Position X="2.75" Y="5.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAQAAAAAAAAAAA=</HashCode>
       <FileName>ISocket.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.Can.ICanSocket">
-    <Position X="11.25" Y="12.25" Width="2.5" />
+    <Position X="2.75" Y="7.25" Width="2.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Can\ICanSocket.cs</FileName>
     </TypeIdentifier>
   </Interface>
-  <Interface Name="Communications.Can.ICanSocketSource">
-    <Position X="18.25" Y="12.25" Width="2.25" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Can\ICanSocketSource.cs</FileName>
-    </TypeIdentifier>
-  </Interface>
   <Interface Name="Communications.Sockets.IDatagramBuffer&lt;TDatagram&gt;" Collapsed="true">
-    <Position X="15" Y="2.75" Width="1.5" />
+    <Position X="19.5" Y="9" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AABAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Sockets\BufferedSocketBase.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocketOwner">
-    <Position X="16.75" Y="8" Width="2.25" />
+    <Position X="10" Y="1.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>
@@ -247,21 +195,21 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocket">
-    <Position X="11.75" Y="8.25" Width="1.5" />
+    <Position X="3.25" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ISocket.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocketBackend&lt;TDatagram&gt;">
-    <Position X="14.25" Y="8.25" Width="1.5" />
+    <Position X="5.75" Y="3.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
       <FileName>ISocketBackend.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.IClosable">
-    <Position X="13" Y="6" Width="1.5" />
+    <Position X="4.5" Y="1" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAA=</HashCode>
       <FileName>IClosable.cs</FileName>

@@ -33,22 +33,4 @@ namespace Communications
         /// <returns>Свежеоткрытый сокет</returns>
         TSocket OpenSocket();
     }
-
-    /// <summary>
-    /// Объект, способный обработать заказ на отправку дейтаграмм
-    /// </summary>
-    /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface ISendPipe<TDatagram>
-    {
-        void Send(IList<TDatagram> Data);
-    }
-
-    /// <summary>
-    /// Объект, способный обработать заказ на обработку принятых дейтаграмм
-    /// </summary>
-    /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public interface IReceivePipe<TDatagram>
-    {
-        void ProcessReceived(IList<TDatagram> Datagrams);
-    }
 }
