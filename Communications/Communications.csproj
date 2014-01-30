@@ -60,6 +60,7 @@
     <Compile Include="Exceptions\SocketReadTimeoutException.cs" />
     <Compile Include="Exceptions\SocketSendTimeoutException.cs" />
     <Compile Include="Exceptions\SocketTimeoutException.cs" />
+    <Compile Include="IClosable.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="INamable.cs" />
     <Compile Include="IPort.cs" />
@@ -70,7 +71,6 @@
     <Compile Include="ISocket.cs" />
     <Compile Include="TimeoutReaderHelper.cs" />
     <Compile Include="Sockets\BufferedSocketBase.cs" />
-    <Compile Include="Sockets\IBufferedStore.cs" />
     <Compile Include="Sockets\SocketBase.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -17,7 +17,7 @@
   <Class Name="Communications.PortBase&lt;TSocket, TDatagram&gt;">
     <Position X="6" Y="0.75" Width="2.75" />
     <TypeIdentifier>
-      <HashCode>AEIAAAAAkCAAAAAAABEAUAQAgAAAACAEEAEAEAAEAAA=</HashCode>
+      <HashCode>AAIAAAAAgCAAAAABEBAAEAUAgAAAAAAAEAACEAAAAAA=</HashCode>
       <FileName>PortBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -170,7 +170,7 @@
   <Class Name="Communications.Sockets.SocketBase&lt;TDatagram&gt;">
     <Position X="4.25" Y="12.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>IAAAgAAAACAAIAAAAEAAAAQAAAAAAAAQAAgAAACAAAA=</HashCode>
+      <HashCode>AAgAgAAAACAAAAAAAEAAAAQAAAAAEAAQAAgAAACAAAA=</HashCode>
       <FileName>Sockets\SocketBase.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
@@ -185,7 +185,7 @@
   <Interface Name="Communications.IPort&lt;TSocket&gt;">
     <Position X="15" Y="12.25" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>
     </TypeIdentifier>
   </Interface>
@@ -249,15 +249,22 @@
   <Interface Name="Communications.ISocket">
     <Position X="11.75" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>IAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>ISocket.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocketBackend&lt;TDatagram&gt;">
-    <Position X="14.25" Y="9" Width="1.5" />
+    <Position X="14.25" Y="8.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
+      <HashCode>AAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAA=</HashCode>
       <FileName>ISocketBackend.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Communications.IClosable">
+    <Position X="13" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAACAAAA=</HashCode>
+      <FileName>IClosable.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Font Name="Segoe UI" Size="9" />

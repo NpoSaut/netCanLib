@@ -7,14 +7,8 @@ namespace Communications
     /// <summary>
     /// Интерфейс сокета
     /// </summary>
-    public interface ISocket : INamable, IDisposable
-    {
-        /// <summary>Показывает, что сокет не был закрыт.</summary>
-        /// <remarks>Сокет открывается однажды при создании и закрывается однажды и навсегда.</remarks>
-        bool IsOpened { get; }
-        /// <summary>Событие, возникающее при уничтожении (закрытии) сокета</summary>
-        event EventHandler Closed;
-    }
+    public interface ISocket : INamable, IClosable
+    { }
 
     /// <summary>
     /// Интерфейс сокета

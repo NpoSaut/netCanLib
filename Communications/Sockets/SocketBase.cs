@@ -36,11 +36,11 @@ namespace Communications.Sockets
         }
         #endregion
 
-        public event EventHandler<SendRequestedEventArgs<TDatagram>> SendRequested;
+        public event EventHandler<SendRequestedEventArgs<TDatagram>> SendingRequested;
 
         protected void RequestSending(IEnumerable<TDatagram> Datagrams)
         {
-            var handler = SendRequested;
+            var handler = SendingRequested;
             if (handler != null) handler(this, new SendRequestedEventArgs<TDatagram>(Datagrams.ToList()));
         }
 
