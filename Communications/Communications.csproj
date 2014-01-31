@@ -43,7 +43,7 @@
     <Compile Include="BaudRates.cs" />
     <Compile Include="Can\CanFrame.cs" />
     <Compile Include="Can\CanPort.cs" />
-    <Compile Include="Can\CanSocketBase.cs" />
+    <Compile Include="Can\CanSocket.cs" />
     <Compile Include="Can\FrameEncoders\FrameTextEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameSbsEncoder.cs" />
@@ -63,8 +63,10 @@
     <Compile Include="IClosable.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="INamable.cs" />
+    <Compile Include="IPipes.cs" />
     <Compile Include="IPort.cs" />
     <Compile Include="ISocketBackend.cs" />
+    <Compile Include="PipedPortBase.cs" />
     <Compile Include="PortBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial\RsPort.cs" />

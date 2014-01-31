@@ -6,7 +6,7 @@ using Communications.Sockets;
 namespace CommunicationsTests.Stuff
 {
 
-    public class CanBrother : CanSocketBase
+    public class CanBrother : CanSocket
     {
         private Brotherhood Family { get; set; }
 

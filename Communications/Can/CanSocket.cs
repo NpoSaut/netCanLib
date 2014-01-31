@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Communications.Sockets;
 
 namespace Communications.Can
@@ -7,11 +8,16 @@ namespace Communications.Can
     /// <summary>
     /// Базовый класс для CAN-сокетов. Предоставляет функционал по фильтрации фреймов по дескрипторам на входе
     /// </summary>
-    public abstract class CanSocketBase : BufferedSocketBase<CanFrame>, ICanSocket
+    public class CanSocket : BufferedFilteredSocketBase<CanFrame>, ICanSocket
     {
-        public HashSet<int> Filter { get; set; }
+        /// <summary>Используемый фильтр</summary>
+        public HashSet<int> Filter { get; private set; }
 
-        protected CanSocketBase(string Name) : base(Name) { }
+        public CanSocket(string Name, IList<int> Filter) : base(Name)
+        {
+            if (Filter != null && Filter.Any())
+                this.Filter = new HashSet<int>(Filter);
+        }
 
         protected override bool CheckDatagramBeforeEnqueue(CanFrame Frame) { return Filter == null || Filter.Contains(Frame.Descriptor); }
     }

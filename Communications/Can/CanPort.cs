@@ -8,9 +8,18 @@ namespace Communications.Can
     /// <summary>
     /// Абстракция CAN-порта
     /// </summary>
-    public abstract class CanPort : PortBase<ICanSocket, CanFrame>, ICanSocketSource
+    public abstract class CanPort : PipedPortBase<ICanSocket, CanFrame>
     {
-        protected CanPort(string Name) : base(Name) { }
+        /// <summary>
+        /// Создаёт экземпляр порта CAN
+        /// </summary>
+        /// <param name="Name">Имя порта</param>
+        /// <param name="SendPipe">Труба, в которую будут переданы отправляемые сообщения из сокетов</param>
+        /// <param name="ReceivePipe">Труба, из которой ожидаются входящие сообщения</param>
+        protected CanPort(string Name, ISendPipe<CanFrame> SendPipe, IReceivePipe<CanFrame> ReceivePipe) : base(Name, SendPipe, ReceivePipe) { }
+
+        public int BaudRate { get; set; }
+        public int SamplePoint { get; set; }
 
         /// <summary>
         /// Открывает CAN-сокет, способный отфильтровывать на входе все фреймы с дескрипторами, не указанными в фильтре
@@ -18,9 +27,9 @@ namespace Communications.Can
         /// <param name="FilterDescriptors">Принимаемые дескрипторы. Остальные будут отфильтрованы</param>
         public ICanSocket OpenSocket(params int[] FilterDescriptors)
         {
-            var res = base.OpenSocket();
-            if (FilterDescriptors.Any()) res.Filter = new HashSet<int>(FilterDescriptors);
-            return res;
+            var socket = new CanSocket(Name, FilterDescriptors);
+            RegisterSocketBackend(socket);
+            return socket;
         }
     }
 }

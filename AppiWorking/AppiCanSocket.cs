@@ -6,7 +6,7 @@ using Communications.Sockets;
 
 namespace Communications.Appi
 {
-    public class AppiCanSocket : CanSocketBase
+    public class AppiCanSocket : CanSocket
     {
         private ISendPipe<CanFrame> SendPipe { get; set; }
 

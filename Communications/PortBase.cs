@@ -21,7 +21,7 @@ namespace Communications
         #region Взаимодействие с реализацией порта
 
         /// <summary>Реализует отправку принятых из сокета дейтаграмм.</summary>
-        protected abstract void SendingImplementation(IList<TDatagram> Data);
+        protected abstract void SendingImplementation(ISocketBackend<TDatagram> Source, IList<TDatagram> Data);
 
         /// <summary>Реализует действия, необходимые для рассылки принятых дейтаграмм по сокетам</summary>
         protected void OnDatagramsReceived(IList<TDatagram> Datagrams)
@@ -44,7 +44,7 @@ namespace Communications
         protected void RegisterSocketBackend(ISocketBackend<TDatagram> SocketBackend)
         {
             SocketBackend.Closed += (Sender, Args) => ReleaseSocketBackend(SocketBackend);
-            SocketBackend.SendingRequested += (Sender, Args) => SendingImplementation(Args.Datagrams);
+            SocketBackend.SendingRequested += (Sender, Args) => SendingImplementation((ISocketBackend<TDatagram>)Sender, Args.Datagrams);
             lock (_openedSocketsLocker)
             {
                 _openedSockets.Add(SocketBackend);

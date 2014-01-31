@@ -21,12 +21,9 @@ namespace Communications.Sockets
         protected BufferedSocketBase(string Name) : this(Name, new ConcurrentDatagramBuffer<TDatagram>()) { }
         protected BufferedSocketBase(string Name, IDatagramBuffer<TDatagram> Buffer) : base(Name) { _buffer = Buffer; }
 
-        /// <summary>Проверяет, нужно ли помещать дейтаграмму в буфер. При необходимости можно заменить, чтобы не вызывать переполнение буфера лишними дейтаграммамаи</summary>
-        protected virtual bool CheckDatagramBeforeEnqueue(TDatagram Datagram) { return true; }
-
         /// <summary>Добавляет датаграммы в очередь на обработку</summary>
         /// <param name="Datagrams">Полученные датаграммы</param>
-        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams) { _buffer.Enqueue(Datagrams.Where(CheckDatagramBeforeEnqueue)); }
+        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams) { _buffer.Enqueue(Datagrams); }
 
         /// <summary>
         /// Выполняет блокирующее считывание дейтаграммы из входящего потока до тех пор, пока время между соседними дейтаграммами не превысит указанный таймаут
@@ -36,7 +33,20 @@ namespace Communications.Sockets
             return _buffer.Read(Timeout, ThrowExceptionOnTimeout);
         }
     }
-    
+
+    public abstract class BufferedFilteredSocketBase<TDatagram> : BufferedSocketBase<TDatagram>
+    {
+        protected BufferedFilteredSocketBase(string Name) : base(Name) { }
+        protected BufferedFilteredSocketBase(string Name, IDatagramBuffer<TDatagram> Buffer) : base(Name, Buffer) { }
+
+        /// <summary>Проверяет, нужно ли помещать дейтаграмму в буфер. При необходимости можно заменить, чтобы не вызывать переполнение буфера лишними дейтаграммамаи</summary>
+        protected abstract bool CheckDatagramBeforeEnqueue(TDatagram Datagram);
+
+        /// <summary>Фильтрует и добавляет датаграммы в очередь на обработку</summary>
+        /// <param name="Datagrams">Полученные датаграммы</param>
+        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams) { base.ProcessReceivedDatagrams(Datagrams.Where(CheckDatagramBeforeEnqueue)); }
+    }
+
     public interface IDatagramBuffer<TDatagram>
     {
         void Enqueue(IEnumerable<TDatagram> Datagrams);

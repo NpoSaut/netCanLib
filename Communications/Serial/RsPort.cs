@@ -8,10 +8,14 @@ namespace Communications.Serial
     /// <summary>
     /// Абстрактный класс, представляющий работу с последовательными портами
     /// </summary>
-    public abstract class RsPort : PortBase<ISocket<Byte>, Byte>
+    public abstract class RsPort : PipedPortBase<ISocket<Byte>, Byte>
     {
-        protected RsPort(String Name)
-            : base(Name)
-        { }
+        /// <summary>
+        /// Создаёт экземпляр порта, работающего с нижнем уровнем посредством труб
+        /// </summary>
+        /// <param name="Name">Имя порта</param>
+        /// <param name="SendPipe">Труба, в которую будут переданы отправляемые сообщения из сокетов</param>
+        /// <param name="ReceivePipe">Труба, из которой ожидаются входящие сообщения</param>
+        protected RsPort(string Name, ISendPipe<byte> SendPipe, IReceivePipe<byte> ReceivePipe) : base(Name, SendPipe, ReceivePipe) { }
     }
 }
