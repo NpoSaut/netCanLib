@@ -12,7 +12,7 @@ namespace Communications
         /// <summary>
         /// Передаёт дейтаграммы на низлежащий уровень для его отправки
         /// </summary>
-        void Send(IList<TDatagram> Datagrams);
+        void Send(IList<TDatagram> Frames);
     }
 
     /// <summary>Труба на приём дейтаграмм</summary>

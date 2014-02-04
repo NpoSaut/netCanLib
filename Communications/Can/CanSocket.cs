@@ -18,7 +18,11 @@ namespace Communications.Can
             if (Filter != null && Filter.Any())
                 this.Filter = new HashSet<int>(Filter);
         }
+        public CanSocket(string Name, params int[] Filter) : this(Name, (IList<int>)Filter) { }
 
-        protected override bool CheckDatagramBeforeEnqueue(CanFrame Frame) { return Filter == null || Filter.Contains(Frame.Descriptor); }
+        protected override bool CheckDatagramBeforeEnqueue(CanFrame Frame)
+        {
+            return Filter == null || Filter.Contains(Frame.Descriptor);
+        }
     }
 }

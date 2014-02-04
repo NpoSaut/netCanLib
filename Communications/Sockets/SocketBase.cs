@@ -9,7 +9,11 @@ namespace Communications.Sockets
     {
         public virtual string Name { get; private set; }
 
-        protected SocketBase(string Name) { this.Name = Name; }
+        protected SocketBase(string Name)
+        {
+            this.Name = Name;
+            IsOpened = true;
+        }
 
         public void Send(IEnumerable<TDatagram> Data)
         {

@@ -44,7 +44,10 @@ namespace Communications.Sockets
 
         /// <summary>Фильтрует и добавляет датаграммы в очередь на обработку</summary>
         /// <param name="Datagrams">Полученные датаграммы</param>
-        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams) { base.ProcessReceivedDatagrams(Datagrams.Where(CheckDatagramBeforeEnqueue)); }
+        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams)
+        {
+            base.ProcessReceivedDatagrams(Datagrams.Where(CheckDatagramBeforeEnqueue));
+        }
     }
 
     public interface IDatagramBuffer<TDatagram>
@@ -66,11 +69,12 @@ namespace Communications.Sockets
         }
         public IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false)
         {
-            if (Timeout == TimeSpan.Zero) Timeout = TimeSpan.FromMilliseconds(-1);
+            if (Timeout == TimeSpan.Zero) Timeout = TimeSpan.MaxValue;
             while (true)
             {
                 TDatagram dtg = default(TDatagram);
                 var ok = SpinWait.SpinUntil(() => _incomingDatagrams.TryDequeue(out dtg), Timeout);
+
                 if (ok) yield return dtg;
                 else if (ThrowExceptionOnTimeOut) throw new SocketReadTimeoutException("Превышено время ожидания дейтаграммы");
                 else yield break;
