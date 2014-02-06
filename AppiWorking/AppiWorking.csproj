@@ -44,6 +44,7 @@
     <Compile Include="AppiCanSocket.cs" />
     <Compile Include="AppiDev.cs" />
     <Compile Include="AppiDeviceSlot.cs" />
+    <Compile Include="AppiEngine.cs" />
     <Compile Include="AppiMessages.cs" />
     <Compile Include="Exceptions\AppiBufferDecodeException.cs" />
     <Compile Include="Exceptions\AppiConnectoinException.cs" />
