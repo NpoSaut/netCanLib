@@ -9,12 +9,12 @@ namespace Communications.Appi.Buffers
     internal abstract class AppiBufferBase
     {
         public int SequentNumber { get; set; }
-        public byte BufferIdentifer { get { return GetIdentifer(this.GetType()); } }
+        public byte BufferIdentifier { get { return GetIdentifier(this.GetType()); } }
 
-        private static readonly Lazy<Dictionary<byte, Type>> _identifers = new Lazy<Dictionary<byte, Type>>(InitializeIdentifers, true);
-        public static Dictionary<byte, Type> Identifers
+        private static readonly Lazy<Dictionary<byte, Type>> _identifiers = new Lazy<Dictionary<byte, Type>>(InitializeIdentifiers, true);
+        public static Dictionary<byte, Type> Identifiers
         {
-            get { return _identifers.Value; }
+            get { return _identifiers.Value; }
         }
 
         public abstract Byte[] Encode();
@@ -32,33 +32,33 @@ namespace Communications.Appi.Buffers
         public static AppiBufferBase Decode(Byte[] Buffer)
         {
             byte id = Buffer[0];
-            if (!Identifers.ContainsKey(id)) return null;
-            var res = (AppiBufferBase)Activator.CreateInstance(Identifers[id]);
+            if (!Identifiers.ContainsKey(id)) return null;
+            var res = (AppiBufferBase)Activator.CreateInstance(Identifiers[id]);
             res.DecodeIt(Buffer);
             res.SequentNumber = Buffer[5];
             return res;
         }
 
-        private static Dictionary<byte, Type> InitializeIdentifers()
+        private static Dictionary<byte, Type> InitializeIdentifiers()
         {
             return
                 System.Reflection.Assembly.GetAssembly(typeof(AppiBufferBase))
                     .GetTypes()
                     .Where(T => T.IsSubclassOf(typeof(AppiBufferBase)))
-                    .ToDictionary(GetIdentifer);
+                    .ToDictionary(GetIdentifier);
         }
 
-        public static byte GetIdentifer<TBuffer>() { return GetIdentifer(typeof(TBuffer)); }
-        public static byte GetIdentifer(Type MessageType)
+        public static byte GetIdentifier<TBuffer>() { return GetIdentifier(typeof(TBuffer)); }
+        public static byte GetIdentifier(Type MessageType)
         {
             var attr = MessageType.GetCustomAttributes(typeof(AppiBufferIdentiferAttribute), false).OfType<AppiBufferIdentiferAttribute>().FirstOrDefault();
-            if (attr == null) throw new AppiBufferIdentiferAttributeNotSetException(MessageType);
+            if (attr == null) throw new AppiBufferIdentifierAttributeNotSetException(MessageType);
             return attr.Id;
         }
     }
 
-    internal class AppiBufferIdentiferAttributeNotSetException : Exception
+    internal class AppiBufferIdentifierAttributeNotSetException : Exception
     {
-        public AppiBufferIdentiferAttributeNotSetException(Type MessageType) { throw new NotImplementedException(); }
+        public AppiBufferIdentifierAttributeNotSetException(Type MessageType) { throw new NotImplementedException(); }
     }
 }

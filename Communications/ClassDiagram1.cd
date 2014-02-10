@@ -31,7 +31,7 @@
   <Class Name="Communications.Can.CanPort" Collapsed="true">
     <Position X="12.25" Y="14.75" Width="2.25" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAEAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAABAAAAAAQAAAAAAAAAAAAAAEAAA=</HashCode>
       <FileName>Can\CanPort.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -169,14 +169,14 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.IPort&lt;TSocket&gt;">
-    <Position X="10" Y="5.25" Width="2.25" />
+    <Position X="10" Y="5" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocketSource&lt;TSocket&gt;">
-    <Position X="10" Y="3.5" Width="2.25" />
+    <Position X="10" Y="3.25" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAAAAAAAAAABAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>
@@ -204,7 +204,7 @@
     </TypeIdentifier>
   </Interface>
   <Interface Name="Communications.ISocketOwner">
-    <Position X="10" Y="1.25" Width="2.25" />
+    <Position X="10" Y="1" Width="2.25" />
     <TypeIdentifier>
       <HashCode>AAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAA=</HashCode>
       <FileName>IPort.cs</FileName>

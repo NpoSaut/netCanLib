@@ -66,7 +66,7 @@ namespace Communications.Appi
 
         #endregion
 
-        public IDictionary<AppiLine, RedirectReceivePipe<CanFrame>> ReceivePipes { get; private set; };
+        public IDictionary<AppiLine, RedirectReceivePipe<CanFrame>> ReceivePipes { get; private set; }
 
         private void ProcessMessagesBuffer(MessagesReadAppiBuffer buffer)
         {
