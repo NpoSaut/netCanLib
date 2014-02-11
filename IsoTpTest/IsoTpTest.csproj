@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="FrameTests\ConsecutiveFrameTest.cs" />
     <Compile Include="FrameTests\FirstFrameTest.cs" />
+    <Compile Include="FrameTests\FlowControlFrameTest.cs" />
+    <Compile Include="FrameTests\SingleFrameTest.cs" />
     <Compile Include="Integration\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

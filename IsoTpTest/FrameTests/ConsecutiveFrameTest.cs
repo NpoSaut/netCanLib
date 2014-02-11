@@ -9,7 +9,7 @@ namespace IsoTpUnitTest.FramesTest
     {
         private Random _rnd;
         [TestMethod]
-        public void CreateConsecutiveFrameTest ()
+        public void Consecutive_CreateFrame ()
         {
             _rnd = new Random();
             var index = _rnd.Next(9);
@@ -23,7 +23,7 @@ namespace IsoTpUnitTest.FramesTest
 
         [TestMethod]
         [ExpectedException(typeof (ArgumentOutOfRangeException))]
-        public void CreateFrameTest_OutOfRangeException()
+        public void Consecutive_CreateFrame_OutOfRangeException()
         {
             _rnd = new Random();
             var data = new byte[_rnd.Next(8, 100)];
@@ -34,7 +34,7 @@ namespace IsoTpUnitTest.FramesTest
 
         [TestMethod]
         
-        public void GetCanFrameTest()
+        public void Consecutive_GetCanFrame()
         {
             _rnd = new Random();
             const int descriptor = 0xfc08;
@@ -48,12 +48,12 @@ namespace IsoTpUnitTest.FramesTest
 
             var result = string.Format("{0:X2}-{1}",(byte)((0x2 & 0x0f) << 4 | index & 0x0f), BitConverter.ToString(consecutiveFrame.Data));
 
-            Assert.AreEqual(descriptor, consCanFrame.Descriptor, "Ошибка при вычислении дескриптора");
-            Assert.AreEqual(result, BitConverter.ToString(consCanFrame.Data), "Ошибка при записи данных");
+            Assert.AreEqual(consCanFrame.Descriptor, descriptor, "Ошибка при вычислении дескриптора");
+            Assert.AreEqual(BitConverter.ToString(consCanFrame.Data), result, "Ошибка при записи данных");
         }
 
         [TestMethod]
-        public void FillWithBytesTest()
+        public void Consecutive_FillWithBytes()
         {
             _rnd = new Random();
             var index = _rnd.Next(9);
@@ -63,9 +63,9 @@ namespace IsoTpUnitTest.FramesTest
 
 
             var consecutiveFrame = IsoTpFrame.ParsePacket<ConsecutiveFrame>(data);
-            
-            Assert.AreEqual(BitConverter.ToString(consecutiveFrame.Data), BitConverter.ToString(data, 1), "Ошибка при заполнении данными");
-            Assert.AreEqual(index, consecutiveFrame.Index, "Ошибка при вычислени индекса");
+
+            Assert.AreEqual(BitConverter.ToString(data, 1), BitConverter.ToString(consecutiveFrame.Data), "Ошибка при заполнении данными");
+            Assert.AreEqual(consecutiveFrame.Index, index, "Ошибка при вычислени индекса");
         }
     }
 }
