@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Runtime.InteropServices;
+using Communications.Protocols.IsoTP.Frames.Fakes;
+using Microsoft.QualityTools.Testing.Fakes;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Communications.Protocols.IsoTP.Frames;
 
@@ -70,7 +70,8 @@ namespace IsoTpTest.FrameTests
             var buff = new byte[8];
             buff[0] = (byte)((0x0 & 0x0f) << 4 | Data.Length & 0x0f);
             Buffer.BlockCopy(Data, 0, buff, 1, Data.Length);
-
+            var sf = new ShimSingleFrame();
+            
             var frame = IsoTpFrame.ParsePacket<SingleFrame>(buff);
 
             Assert.AreEqual(Data.Length, frame.Data.Length, "Рзмер массива Data не соответствует перданным данным");

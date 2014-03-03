@@ -1,8 +1,8 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Communications.Protocols.IsoTP.Frames;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace IsoTpUnitTest.FramesTest
+namespace IsoTpTest.FrameTests
 {
     [TestClass]
     public class FirstFrameTest

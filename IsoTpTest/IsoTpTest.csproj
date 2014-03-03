@@ -35,6 +35,13 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CanLine.Fakes">
+      <HintPath>FakesAssemblies\CanLine.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="IsoTP.Fakes">
+      <HintPath>FakesAssemblies\IsoTP.Fakes.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.QualityTools.Testing.Fakes, Version=11.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -59,6 +66,8 @@
     <Compile Include="FrameTests\SingleFrameTest.cs" />
     <Compile Include="Integration\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="IsoTpTest.cs" />
+    <Compile Include="TpReceiveTransactionTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommunicationsTests\CommunicationsTests.csproj">
@@ -73,6 +82,12 @@
       <Project>{a45417b6-4547-4e98-b69e-4cb1cfe45f61}</Project>
       <Name>IsoTP</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Fakes Include="Fakes\IsoTP.fakes" />
+  </ItemGroup>
+  <ItemGroup>
+    <Fakes Include="Fakes\CanLine.fakes" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -1,0 +1,2018 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>IsoTP.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.DescriptorNotInFlowException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.#ctor(Communications.Protocols.IsoTP.Exceptions.DescriptorNotInFlowException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.Constructor">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.DescriptorNotInFlowException()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.ConstructorInt32">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.DescriptorNotInFlowException(Int32 Descriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.ConstructorSerializationInfoStreamingContext">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.DescriptorNotInFlowException(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.ConstructorString">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.DescriptorNotInFlowException(String message)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.ConstructorStringException">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.DescriptorNotInFlowException(String message, Exception inner)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.DescriptorGet">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.get_Descriptor()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.DescriptorSetNullableOfInt32">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.set_Descriptor(Nullable`1&lt;Int32&gt; value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.AllInstances.DescriptorGet">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.get_Descriptor()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimDescriptorNotInFlowException.AllInstances.DescriptorSetNullableOfInt32">
+            <summary>Задает оболочка совместимости DescriptorNotInFlowException.set_Descriptor(Nullable`1&lt;Int32&gt; value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.IsoTpFlowControlTimeoutException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.#ctor(Communications.Protocols.IsoTP.Exceptions.IsoTpFlowControlTimeoutException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.Constructor">
+            <summary>Задает оболочка совместимости IsoTpFlowControlTimeoutException.IsoTpFlowControlTimeoutException()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.ConstructorException">
+            <summary>Задает оболочка совместимости IsoTpFlowControlTimeoutException.IsoTpFlowControlTimeoutException(Exception inner)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.ConstructorSerializationInfoStreamingContext">
+            <summary>Задает оболочка совместимости IsoTpFlowControlTimeoutException.IsoTpFlowControlTimeoutException(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.ConstructorString">
+            <summary>Задает оболочка совместимости IsoTpFlowControlTimeoutException.IsoTpFlowControlTimeoutException(String message)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.ConstructorStringException">
+            <summary>Задает оболочка совместимости IsoTpFlowControlTimeoutException.IsoTpFlowControlTimeoutException(String message, Exception inner)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpFlowControlTimeoutException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.IsoTpProtocolException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.#ctor(Communications.Protocols.IsoTP.Exceptions.IsoTpProtocolException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.Constructor">
+            <summary>Задает оболочка совместимости IsoTpProtocolException.IsoTpProtocolException()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.ConstructorSerializationInfoStreamingContext">
+            <summary>Задает оболочка совместимости IsoTpProtocolException.IsoTpProtocolException(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.ConstructorString">
+            <summary>Задает оболочка совместимости IsoTpProtocolException.IsoTpProtocolException(String message)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.ConstructorStringException">
+            <summary>Задает оболочка совместимости IsoTpProtocolException.IsoTpProtocolException(String message, Exception inner)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpProtocolException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.IsoTpReceiveTimeoutException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.#ctor(Communications.Protocols.IsoTP.Exceptions.IsoTpReceiveTimeoutException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.Constructor">
+            <summary>Задает оболочка совместимости IsoTpReceiveTimeoutException.IsoTpReceiveTimeoutException()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.ConstructorException">
+            <summary>Задает оболочка совместимости IsoTpReceiveTimeoutException.IsoTpReceiveTimeoutException(Exception inner)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.ConstructorSerializationInfoStreamingContext">
+            <summary>Задает оболочка совместимости IsoTpReceiveTimeoutException.IsoTpReceiveTimeoutException(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.ConstructorString">
+            <summary>Задает оболочка совместимости IsoTpReceiveTimeoutException.IsoTpReceiveTimeoutException(String message)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.ConstructorStringException">
+            <summary>Задает оболочка совместимости IsoTpReceiveTimeoutException.IsoTpReceiveTimeoutException(String message, Exception inner)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpReceiveTimeoutException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.IsoTpSequenceException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.#ctor(Communications.Protocols.IsoTP.Exceptions.IsoTpSequenceException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ConstructorInt32Int32">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.IsoTpSequenceException(Int32 ExpectedIndex, Int32 ReceivedIndex)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ConstructorInt32Int32IsoTpFrame">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.IsoTpSequenceException(Int32 ExpectedIndex, Int32 ReceivedIndex, IsoTpFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ConstructorStringInt32Int32">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.IsoTpSequenceException(String Message, Int32 ExpectedIndex, Int32 ReceivedIndex)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ExpectedIndexGet">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.get_ExpectedIndex()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ExpectedIndexSetInt32">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.set_ExpectedIndex(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.FrameGet">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.get_Frame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.FrameSetIsoTpFrame">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.set_Frame(IsoTpFrame value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ReceivedIndexGet">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.get_ReceivedIndex()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.ReceivedIndexSetInt32">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.set_ReceivedIndex(Int32 value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances.ExpectedIndexGet">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.get_ExpectedIndex()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances.ExpectedIndexSetInt32">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.set_ExpectedIndex(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances.FrameGet">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.get_Frame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances.FrameSetIsoTpFrame">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.set_Frame(IsoTpFrame value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances.ReceivedIndexGet">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.get_ReceivedIndex()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpSequenceException.AllInstances.ReceivedIndexSetInt32">
+            <summary>Задает оболочка совместимости IsoTpSequenceException.set_ReceivedIndex(Int32 value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.IsoTpTransactionAbortedException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.#ctor(Communications.Protocols.IsoTP.Exceptions.IsoTpTransactionAbortedException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.Constructor">
+            <summary>Задает оболочка совместимости IsoTpTransactionAbortedException.IsoTpTransactionAbortedException()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.ConstructorString">
+            <summary>Задает оболочка совместимости IsoTpTransactionAbortedException.IsoTpTransactionAbortedException(String Message)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.ConstructorStringException">
+            <summary>Задает оболочка совместимости IsoTpTransactionAbortedException.IsoTpTransactionAbortedException(String Message, Exception InternalException)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionAbortedException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Exceptions.IsoTpTransactionReuseException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.#ctor(Communications.Protocols.IsoTP.Exceptions.IsoTpTransactionReuseException)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.Bind(System.Runtime.Serialization.ISerializable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.ConstructorTpTransaction">
+            <summary>Задает оболочка совместимости IsoTpTransactionReuseException.IsoTpTransactionReuseException(TpTransaction Transaction)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.TransactionGet">
+            <summary>Задает оболочка совместимости IsoTpTransactionReuseException.get_Transaction()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.TransactionSetTpTransaction">
+            <summary>Задает оболочка совместимости IsoTpTransactionReuseException.set_Transaction(TpTransaction value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.AllInstances.TransactionGet">
+            <summary>Задает оболочка совместимости IsoTpTransactionReuseException.get_Transaction()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.ShimIsoTpTransactionReuseException.AllInstances.TransactionSetTpTransaction">
+            <summary>Задает оболочка совместимости IsoTpTransactionReuseException.set_Transaction(TpTransaction value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.DescriptorNotInFlowException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.#ctor(System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.#ctor(System.String,System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubDescriptorNotInFlowException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubDescriptorNotInFlowException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubDescriptorNotInFlowException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubDescriptorNotInFlowException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.IsoTpFlowControlTimeoutException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.#ctor(System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.#ctor(System.String,System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpFlowControlTimeoutException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpFlowControlTimeoutException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpFlowControlTimeoutException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpFlowControlTimeoutException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.IsoTpProtocolException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.#ctor(System.String,System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpProtocolException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpProtocolException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpProtocolException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpProtocolException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.IsoTpReceiveTimeoutException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.#ctor(System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.#ctor(System.String,System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpReceiveTimeoutException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpReceiveTimeoutException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpReceiveTimeoutException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpReceiveTimeoutException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.IsoTpSequenceException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.#ctor(System.Int32,System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.#ctor(System.String,System.Int32,System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.#ctor(System.Int32,System.Int32,Communications.Protocols.IsoTP.Frames.IsoTpFrame)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpSequenceException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpSequenceException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpSequenceException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpSequenceException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.IsoTpTransactionAbortedException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.#ctor(System.String,System.Exception)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpTransactionAbortedException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpTransactionAbortedException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpTransactionAbortedException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionAbortedException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Exceptions.IsoTpTransactionReuseException</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.#ctor(Communications.Protocols.IsoTP.TpTransaction)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.AttachBackingFieldToHelpLink">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpTransactionReuseException.HelpLink как свойства с резервным полем.</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.AttachBackingFieldToSource">
+            <summary>Присоединение делегатов для эмуляции StubIsoTpTransactionReuseException.Source как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.DataGet">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.GetBaseException">
+            <summary>Задает заглушка Exception.GetBaseException()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.GetBaseException01">
+            <summary>Задает stub Exception.GetBaseException()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.GetObjectData(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>Задает заглушка Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.GetObjectDataSerializationInfoStreamingContext">
+            <summary>Задает stub Exception.GetObjectData(SerializationInfo info, StreamingContext context)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.HelpLinkGet">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.HelpLinkSetString">
+            <summary>Задает stub Exception.set_HelpLink(String value)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpTransactionReuseException</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.MessageGet">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.SourceGet">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.SourceSetString">
+            <summary>Задает stub Exception.set_Source(String value)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.StackTraceGet">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.ToString">
+            <summary>Задает заглушка Exception.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.ToString01">
+            <summary>Задает stub Exception.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.Data">
+            <summary>Задает stub Exception.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.HelpLink">
+            <summary>Задает stub Exception.get_HelpLink()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.Message">
+            <summary>Задает stub Exception.get_Message()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.Source">
+            <summary>Задает stub Exception.get_Source()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Exceptions.Fakes.StubIsoTpTransactionReuseException.StackTrace">
+            <summary>Задает stub Exception.get_StackTrace()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimIsoTp">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.IsoTp</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.ReceiveICanFlowInt32Int32NullableOfTimeSpan">
+            <summary>Задает оболочка совместимости IsoTp.Receive(ICanFlow Flow, Int32 TransmitDescriptor, Int32 AcknowlegmentDescriptor, Nullable`1&lt;TimeSpan&gt; Timeout)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.SendICanFlowInt32Int32ByteArrayNullableOfTimeSpan">
+            <summary>Задает оболочка совместимости IsoTp.Send(ICanFlow Flow, Int32 TransmitDescriptor, Int32 AcknowlegmentDescriptor, Byte[] Data, Nullable`1&lt;TimeSpan&gt; Timeout)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.SendRequestAndBeginReceiveCanFlowInt32Int32ByteArrayTimeSpan">
+            <summary>Задает оболочка совместимости IsoTp.SendRequestAndBeginReceive(CanFlow Flow, Int32 MasterDescriptor, Int32 SlaveDescriptor, Byte[] RequestData, TimeSpan Timeout)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimIsoTp.SendRequestAndBeginReceiveCanFlowInt32Int32Int32Int32ByteArrayTimeSpan">
+            <summary>Задает оболочка совместимости IsoTp.SendRequestAndBeginReceive(CanFlow Flow, Int32 RequestTransmitDescriptor, Int32 RequestAcknowlegmentDescriptor, Int32 AnsverTransmitDescriptor, Int32 AnsverAcknowlegmentDescriptor, Byte[] RequestData, TimeSpan Timeout)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpPacket">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.TpPacket</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.#ctor(Communications.Protocols.IsoTP.TpPacket)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.ConstructorByteArray">
+            <summary>Задает оболочка совместимости TpPacket.TpPacket(Byte[] Data)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.DataGet">
+            <summary>Задает оболочка совместимости TpPacket.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.DataSetByteArray">
+            <summary>Задает оболочка совместимости TpPacket.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.AllInstances.DataGet">
+            <summary>Задает оболочка совместимости TpPacket.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpPacket.AllInstances.DataSetByteArray">
+            <summary>Задает оболочка совместимости TpPacket.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.TpReceiveTransaction</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.#ctor(Communications.Protocols.IsoTP.TpReceiveTransaction)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.BlockSizeGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_BlockSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.BlockSizeSetByte">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_BlockSize(Byte value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.BuffGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_Buff()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.BuffSetByteArray">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_Buff(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.ConstructorICanFlowInt32Int32">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.TpReceiveTransaction(ICanFlow Flow, Int32 TransmitDescriptor, Int32 AcknowlegmentDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.DataGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.ExpectingConsIndexGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_ExpectingConsIndex()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.ExpectingConsIndexSetInt32">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_ExpectingConsIndex(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.GenerateFlowControl">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.GenerateFlowControl()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.PointerGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_Pointer()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.PointerSetInt32">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_Pointer(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.ReadBlockIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.ReadBlock(IEnumerable`1&lt;CanFrame&gt; FromStream)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.Receive">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.Receive()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.SendFlowControl">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.SendFlowControl()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.SeparationTimeGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_SeparationTime()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.SeparationTimeSetTimeSpan">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_SeparationTime(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction._ReadBlockb__3CanFrame">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.&lt;ReadBlock&gt;b__3(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction._ReadBlockb__4CanFrame">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.&lt;ReadBlock&gt;b__4(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction._Receiveb__1CanFrame">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.&lt;Receive&gt;b__1(CanFrame f)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.BlockSizeGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_BlockSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.BlockSizeSetByte">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_BlockSize(Byte value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.BuffGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_Buff()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.BuffSetByteArray">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_Buff(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.DataGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.ExpectingConsIndexGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_ExpectingConsIndex()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.ExpectingConsIndexSetInt32">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_ExpectingConsIndex(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.GenerateFlowControl">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.GenerateFlowControl()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.PointerGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_Pointer()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.PointerSetInt32">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_Pointer(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.ReadBlockIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.ReadBlock(IEnumerable`1&lt;CanFrame&gt; FromStream)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.Receive">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.Receive()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.SendFlowControl">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.SendFlowControl()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.SeparationTimeGet">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.get_SeparationTime()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances.SeparationTimeSetTimeSpan">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.set_SeparationTime(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpReceiveTransaction.AllInstances._Receiveb__1CanFrame">
+            <summary>Задает оболочка совместимости TpReceiveTransaction.&lt;Receive&gt;b__1(CanFrame f)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.TpSendTransaction</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.#ctor(Communications.Protocols.IsoTP.TpSendTransaction)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.BlockSizeGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_BlockSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.BlockSizeSetInt32">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_BlockSize(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.BuffGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_Buff()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.BuffSetByteArray">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_Buff(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.ConstructorICanFlowInt32Int32">
+            <summary>Задает оболочка совместимости TpSendTransaction.TpSendTransaction(ICanFlow Flow, Int32 TransmitDescriptor, Int32 AcknowlegmentDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.GetConsFrames">
+            <summary>Задает оболочка совместимости TpSendTransaction.GetConsFrames()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.GetFirstFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.GetFirstFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.PointerGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_Pointer()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.PointerSetInt32">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_Pointer(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.ProcessFlowControlIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.ProcessFlowControl(IEnumerable`1&lt;CanFrame&gt; FramesStream)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.SendFlow">
+            <summary>Задает оболочка совместимости TpSendTransaction.SendFlow()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.SendSingle">
+            <summary>Задает оболочка совместимости TpSendTransaction.SendSingle()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.SendTpPacket">
+            <summary>Задает оболочка совместимости TpSendTransaction.Send(TpPacket Packet)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.SeparationTimeGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_SeparationTime()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.SeparationTimeSetTimeSpan">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_SeparationTime(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction._ProcessFlowControlb__3CanFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;ProcessFlowControl&gt;b__3(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction._ProcessFlowControlb__4CanFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;ProcessFlowControl&gt;b__4(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction._ProcessFlowControlb__5FlowControlFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;ProcessFlowControl&gt;b__5(FlowControlFrame fc)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction._SendFlowb__0CanFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;SendFlow&gt;b__0(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction._SendFlowb__1ConsecutiveFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;SendFlow&gt;b__1(ConsecutiveFrame cf)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.BlockSizeGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_BlockSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.BlockSizeSetInt32">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_BlockSize(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.BuffGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_Buff()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.BuffSetByteArray">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_Buff(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.GetConsFrames">
+            <summary>Задает оболочка совместимости TpSendTransaction.GetConsFrames()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.GetFirstFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.GetFirstFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.PointerGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_Pointer()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.PointerSetInt32">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_Pointer(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.ProcessFlowControlIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.ProcessFlowControl(IEnumerable`1&lt;CanFrame&gt; FramesStream)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.SendFlow">
+            <summary>Задает оболочка совместимости TpSendTransaction.SendFlow()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.SendSingle">
+            <summary>Задает оболочка совместимости TpSendTransaction.SendSingle()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.SendTpPacket">
+            <summary>Задает оболочка совместимости TpSendTransaction.Send(TpPacket Packet)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.SeparationTimeGet">
+            <summary>Задает оболочка совместимости TpSendTransaction.get_SeparationTime()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances.SeparationTimeSetTimeSpan">
+            <summary>Задает оболочка совместимости TpSendTransaction.set_SeparationTime(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances._SendFlowb__0CanFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;SendFlow&gt;b__0(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpSendTransaction.AllInstances._SendFlowb__1ConsecutiveFrame">
+            <summary>Задает оболочка совместимости TpSendTransaction.&lt;SendFlow&gt;b__1(ConsecutiveFrame cf)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.TpTransaction</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.#ctor(Communications.Protocols.IsoTP.TpTransaction)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AcknowlegmentDescriptorGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_AcknowlegmentDescriptor()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AcknowlegmentDescriptorSetInt32">
+            <summary>Задает оболочка совместимости TpTransaction.set_AcknowlegmentDescriptor(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.ConstructorICanFlowInt32Int32">
+            <summary>Задает оболочка совместимости TpTransaction.TpTransaction(ICanFlow Flow, Int32 TransmitDescriptor, Int32 AcknowlegmentDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.FlowGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_Flow()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.FlowSetICanFlow">
+            <summary>Задает оболочка совместимости TpTransaction.set_Flow(ICanFlow value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.StaticConstructor">
+            <summary>Задает оболочка совместимости TpTransaction.TpTransaction()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.StatusChangedAddEventHandler">
+            <summary>Задает оболочка совместимости TpTransaction.add_StatusChanged(EventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.StatusChangedRemoveEventHandler">
+            <summary>Задает оболочка совместимости TpTransaction.remove_StatusChanged(EventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.StatusGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_Status()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.StatusSetTpTransactionStatus">
+            <summary>Задает оболочка совместимости TpTransaction.set_Status(TpTransactionStatus value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.TimeoutGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_Timeout()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.TimeoutSetTimeSpan">
+            <summary>Задает оболочка совместимости TpTransaction.set_Timeout(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.TransmitDescriptorGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_TransmitDescriptor()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.TransmitDescriptorSetInt32">
+            <summary>Задает оболочка совместимости TpTransaction.set_TransmitDescriptor(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.Wait">
+            <summary>Задает оболочка совместимости TpTransaction.Wait()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction._Waitb__0">
+            <summary>Задает оболочка совместимости TpTransaction.&lt;Wait&gt;b__0()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.AcknowlegmentDescriptorGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_AcknowlegmentDescriptor()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.AcknowlegmentDescriptorSetInt32">
+            <summary>Задает оболочка совместимости TpTransaction.set_AcknowlegmentDescriptor(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.FlowGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_Flow()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.FlowSetICanFlow">
+            <summary>Задает оболочка совместимости TpTransaction.set_Flow(ICanFlow value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.StatusChangedAddEventHandler">
+            <summary>Задает оболочка совместимости TpTransaction.add_StatusChanged(EventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.StatusChangedRemoveEventHandler">
+            <summary>Задает оболочка совместимости TpTransaction.remove_StatusChanged(EventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.StatusGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_Status()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.StatusSetTpTransactionStatus">
+            <summary>Задает оболочка совместимости TpTransaction.set_Status(TpTransactionStatus value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.TimeoutGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_Timeout()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.TimeoutSetTimeSpan">
+            <summary>Задает оболочка совместимости TpTransaction.set_Timeout(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.TransmitDescriptorGet">
+            <summary>Задает оболочка совместимости TpTransaction.get_TransmitDescriptor()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.TransmitDescriptorSetInt32">
+            <summary>Задает оболочка совместимости TpTransaction.set_TransmitDescriptor(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances.Wait">
+            <summary>Задает оболочка совместимости TpTransaction.Wait()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.ShimTpTransaction.AllInstances._Waitb__0">
+            <summary>Задает оболочка совместимости TpTransaction.&lt;Wait&gt;b__0()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.StubTpPacket">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.TpPacket</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpPacket.#ctor(System.Byte[])">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpPacket.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubTpPacket</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpPacket.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpPacket.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpPacket.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.StubTpReceiveTransaction">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.TpReceiveTransaction</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpReceiveTransaction.#ctor(Communications.Can.ICanFlow,System.Int32,System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpReceiveTransaction.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubTpReceiveTransaction</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpReceiveTransaction.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpReceiveTransaction.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpReceiveTransaction.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.StubTpSendTransaction">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.TpSendTransaction</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpSendTransaction.#ctor(Communications.Can.ICanFlow,System.Int32,System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpSendTransaction.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubTpSendTransaction</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpSendTransaction.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpSendTransaction.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpSendTransaction.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Fakes.StubTpTransaction">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.TpTransaction</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpTransaction.#ctor(Communications.Can.ICanFlow,System.Int32,System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Fakes.StubTpTransaction.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubTpTransaction</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpTransaction.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpTransaction.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Fakes.StubTpTransaction.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Frames.ConsecutiveFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.#ctor(Communications.Protocols.IsoTP.Frames.ConsecutiveFrame)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.Constructor">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.ConsecutiveFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.ConstructorByteArrayInt32">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.ConsecutiveFrame(Byte[] Data, Int32 Index)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.DataGet">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.DataSetByteArray">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.FrameTypeGet">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.ImplicitOpCanFrameConsecutiveFrame">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.op_Implicit(CanFrame cFrame)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.IndexGet">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.get_Index()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.IndexSetInt32">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.set_Index(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.ToString">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.DataGet">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.DataSetByteArray">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.FrameTypeGet">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.IndexGet">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.get_Index()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.IndexSetInt32">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.set_Index(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimConsecutiveFrame.AllInstances.ToString01">
+            <summary>Задает оболочка совместимости ConsecutiveFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Frames.FirstFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.#ctor(Communications.Protocols.IsoTP.Frames.FirstFrame)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.Constructor">
+            <summary>Задает оболочка совместимости FirstFrame.FirstFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.ConstructorByteArrayInt32">
+            <summary>Задает оболочка совместимости FirstFrame.FirstFrame(Byte[] Data, Int32 PacketSize)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.DataGet">
+            <summary>Задает оболочка совместимости FirstFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.DataSetByteArray">
+            <summary>Задает оболочка совместимости FirstFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости FirstFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.FrameTypeGet">
+            <summary>Задает оболочка совместимости FirstFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости FirstFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.ImplicitOpCanFrameFirstFrame">
+            <summary>Задает оболочка совместимости FirstFrame.op_Implicit(CanFrame cFrame)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.PacketSizeGet">
+            <summary>Задает оболочка совместимости FirstFrame.get_PacketSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.PacketSizeSetInt32">
+            <summary>Задает оболочка совместимости FirstFrame.set_PacketSize(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.ToString">
+            <summary>Задает оболочка совместимости FirstFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.DataGet">
+            <summary>Задает оболочка совместимости FirstFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.DataSetByteArray">
+            <summary>Задает оболочка совместимости FirstFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости FirstFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.FrameTypeGet">
+            <summary>Задает оболочка совместимости FirstFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости FirstFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.PacketSizeGet">
+            <summary>Задает оболочка совместимости FirstFrame.get_PacketSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.PacketSizeSetInt32">
+            <summary>Задает оболочка совместимости FirstFrame.set_PacketSize(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFirstFrame.AllInstances.ToString01">
+            <summary>Задает оболочка совместимости FirstFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Frames.FlowControlFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.#ctor(Communications.Protocols.IsoTP.Frames.FlowControlFrame)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AbortFrameGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_AbortFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.BlockSizeGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_BlockSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.BlockSizeSetByte">
+            <summary>Задает оболочка совместимости FlowControlFrame.set_BlockSize(Byte value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.Constructor">
+            <summary>Задает оболочка совместимости FlowControlFrame.FlowControlFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.ConstructorFlowControlFlagByteByte">
+            <summary>Задает оболочка совместимости FlowControlFrame.FlowControlFrame(FlowControlFlag Flag, Byte BlockSize, Byte SeparationTimeCode)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.ConstructorFlowControlFlagByteTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.FlowControlFrame(FlowControlFlag Flag, Byte BlockSize, TimeSpan SeparationTime)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости FlowControlFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.FlagGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_Flag()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.FlagSetFlowControlFlag">
+            <summary>Задает оболочка совместимости FlowControlFrame.set_Flag(FlowControlFlag value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.FrameTypeGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости FlowControlFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.ImplicitOpCanFrameFlowControlFrame">
+            <summary>Задает оболочка совместимости FlowControlFrame.op_Implicit(CanFrame cFrame)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.InitializeFlowControlFlagByteTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.Initialize(FlowControlFlag Flag, Byte BlockSize, TimeSpan SeparationTime)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.SeparationCodeFromTimeTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.SeparationCodeFromTime(TimeSpan Time)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.SeparationTimeFromCodeByte">
+            <summary>Задает оболочка совместимости FlowControlFrame.SeparationTimeFromCode(Byte Code)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.SeparationTimeGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_SeparationTime()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.SeparationTimeSetTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.set_SeparationTime(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.ToString">
+            <summary>Задает оболочка совместимости FlowControlFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.BlockSizeGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_BlockSize()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.BlockSizeSetByte">
+            <summary>Задает оболочка совместимости FlowControlFrame.set_BlockSize(Byte value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости FlowControlFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.FlagGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_Flag()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.FlagSetFlowControlFlag">
+            <summary>Задает оболочка совместимости FlowControlFrame.set_Flag(FlowControlFlag value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.FrameTypeGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости FlowControlFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.InitializeFlowControlFlagByteTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.Initialize(FlowControlFlag Flag, Byte BlockSize, TimeSpan SeparationTime)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.SeparationCodeFromTimeTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.SeparationCodeFromTime(TimeSpan Time)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.SeparationTimeFromCodeByte">
+            <summary>Задает оболочка совместимости FlowControlFrame.SeparationTimeFromCode(Byte Code)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.SeparationTimeGet">
+            <summary>Задает оболочка совместимости FlowControlFrame.get_SeparationTime()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.SeparationTimeSetTimeSpan">
+            <summary>Задает оболочка совместимости FlowControlFrame.set_SeparationTime(TimeSpan value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimFlowControlFrame.AllInstances.ToString01">
+            <summary>Задает оболочка совместимости FlowControlFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Frames.IsoTpFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.#ctor(Communications.Protocols.IsoTP.Frames.IsoTpFrame)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.ParsePacketOf1ByteArray``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{System.Byte[],``0})">
+            <summary>Задает оболочка совместимости IsoTpFrame.ParsePacket(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.Constructor">
+            <summary>Задает оболочка совместимости IsoTpFrame.IsoTpFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.GetFrameTypeByteArray">
+            <summary>Задает оболочка совместимости IsoTpFrame.GetFrameType(Byte[] buff)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFrame.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Frames.IsoTpFramesHelper</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper.ParseAsOf1CanFrame``1(Microsoft.QualityTools.Testing.Fakes.FakesDelegates.Func{Communications.Can.CanFrame,``0})">
+            <summary>Задает оболочка совместимости IsoTpFramesHelper.ParseAs(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimIsoTpFramesHelper.GetIsoTpFrameTypeCanFrame">
+            <summary>Задает оболочка совместимости IsoTpFramesHelper.GetIsoTpFrameType(CanFrame Frame)</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame">
+            <summary>Тип оболочки совместимости для Communications.Protocols.IsoTP.Frames.SingleFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.#ctor(Communications.Protocols.IsoTP.Frames.SingleFrame)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.Constructor">
+            <summary>Задает оболочка совместимости SingleFrame.SingleFrame()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.ConstructorByteArray">
+            <summary>Задает оболочка совместимости SingleFrame.SingleFrame(Byte[] Data)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.DataGet">
+            <summary>Задает оболочка совместимости SingleFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.DataSetByteArray">
+            <summary>Задает оболочка совместимости SingleFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости SingleFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.FrameTypeGet">
+            <summary>Задает оболочка совместимости SingleFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости SingleFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.ImplicitOpCanFrameSingleFrame">
+            <summary>Задает оболочка совместимости SingleFrame.op_Implicit(CanFrame cFrame)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.ToString">
+            <summary>Задает оболочка совместимости SingleFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances.DataGet">
+            <summary>Задает оболочка совместимости SingleFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances.DataSetByteArray">
+            <summary>Задает оболочка совместимости SingleFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances.FillWithBytesByteArray">
+            <summary>Задает оболочка совместимости SingleFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances.FrameTypeGet">
+            <summary>Задает оболочка совместимости SingleFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances.GetCanFrameInt32">
+            <summary>Задает оболочка совместимости SingleFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.ShimSingleFrame.AllInstances.ToString01">
+            <summary>Задает оболочка совместимости SingleFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Frames.ConsecutiveFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.#ctor(System.Byte[],System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.FillWithBytes(System.Byte[])">
+            <summary>Задает заглушка ConsecutiveFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.FillWithBytesByteArray">
+            <summary>Задает stub ConsecutiveFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.FrameTypeGet">
+            <summary>Задает stub ConsecutiveFrame.get_FrameType()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.GetCanFrame(System.Int32)">
+            <summary>Задает заглушка ConsecutiveFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.GetCanFrameInt32">
+            <summary>Задает stub ConsecutiveFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubConsecutiveFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.ToString">
+            <summary>Задает заглушка ConsecutiveFrame.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.ToString01">
+            <summary>Задает stub ConsecutiveFrame.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.FrameType">
+            <summary>Задает stub ConsecutiveFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubConsecutiveFrame.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Frames.FirstFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.#ctor(System.Byte[],System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.FillWithBytes(System.Byte[])">
+            <summary>Задает заглушка FirstFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.FillWithBytesByteArray">
+            <summary>Задает stub FirstFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.FrameTypeGet">
+            <summary>Задает stub FirstFrame.get_FrameType()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.GetCanFrame(System.Int32)">
+            <summary>Задает заглушка FirstFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.GetCanFrameInt32">
+            <summary>Задает stub FirstFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubFirstFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.ToString">
+            <summary>Задает заглушка FirstFrame.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.ToString01">
+            <summary>Задает stub FirstFrame.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.FrameType">
+            <summary>Задает stub FirstFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFirstFrame.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Frames.FlowControlFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.#ctor(Communications.Protocols.IsoTP.Frames.FlowControlFlag,System.Byte,System.Byte)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.#ctor(Communications.Protocols.IsoTP.Frames.FlowControlFlag,System.Byte,System.TimeSpan)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.FillWithBytes(System.Byte[])">
+            <summary>Задает заглушка FlowControlFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.FillWithBytesByteArray">
+            <summary>Задает stub FlowControlFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.FrameTypeGet">
+            <summary>Задает stub FlowControlFrame.get_FrameType()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.GetCanFrame(System.Int32)">
+            <summary>Задает заглушка FlowControlFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.GetCanFrameInt32">
+            <summary>Задает stub FlowControlFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubFlowControlFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.ToString">
+            <summary>Задает заглушка FlowControlFrame.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.ToString01">
+            <summary>Задает stub FlowControlFrame.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.FrameType">
+            <summary>Задает stub FlowControlFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubFlowControlFrame.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Frames.IsoTpFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.FillWithBytes(System.Byte[])">
+            <summary>Задает заглушка IsoTpFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.FillWithBytesByteArray">
+            <summary>Задает stub IsoTpFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.FrameTypeGet">
+            <summary>Задает stub IsoTpFrame.get_FrameType()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.GetCanFrame(System.Int32)">
+            <summary>Задает заглушка IsoTpFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.GetCanFrameInt32">
+            <summary>Задает stub IsoTpFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubIsoTpFrame</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.FrameType">
+            <summary>Задает stub IsoTpFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubIsoTpFrame.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame">
+            <summary>Тип заглушки Communications.Protocols.IsoTP.Frames.SingleFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.#ctor(System.Byte[])">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.FillWithBytes(System.Byte[])">
+            <summary>Задает заглушка SingleFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.FillWithBytesByteArray">
+            <summary>Задает stub SingleFrame.FillWithBytes(Byte[] buff)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.FrameTypeGet">
+            <summary>Задает stub SingleFrame.get_FrameType()</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.GetCanFrame(System.Int32)">
+            <summary>Задает заглушка SingleFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.GetCanFrameInt32">
+            <summary>Задает stub SingleFrame.GetCanFrame(Int32 WithDescriptor)</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubSingleFrame</summary>
+        </member>
+        <member name="M:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.ToString">
+            <summary>Задает заглушка SingleFrame.ToString()</summary>
+        </member>
+        <member name="F:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.ToString01">
+            <summary>Задает stub SingleFrame.ToString()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.FrameType">
+            <summary>Задает stub SingleFrame.get_FrameType()</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Protocols.IsoTP.Frames.Fakes.StubSingleFrame.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+    </members>
+</doc>

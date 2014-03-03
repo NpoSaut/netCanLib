@@ -1,0 +1,1763 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>CanLine.Fakes</name>
+    </assembly>
+    <members>
+        <member name="T:Communications.Can.Fakes.ShimBaudRateChangedEventArgs">
+            <summary>Тип оболочки совместимости для Communications.Can.BaudRateChangedEventArgs</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.#ctor(Communications.Can.BaudRateChangedEventArgs)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.ConstructorInt32">
+            <summary>Задает оболочка совместимости BaudRateChangedEventArgs.BaudRateChangedEventArgs(Int32 NewValue)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.NewBaudRateGet">
+            <summary>Задает оболочка совместимости BaudRateChangedEventArgs.get_NewBaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.NewBaudRateSetInt32">
+            <summary>Задает оболочка совместимости BaudRateChangedEventArgs.set_NewBaudRate(Int32 value)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.AllInstances.NewBaudRateGet">
+            <summary>Задает оболочка совместимости BaudRateChangedEventArgs.get_NewBaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimBaudRateChangedEventArgs.AllInstances.NewBaudRateSetInt32">
+            <summary>Задает оболочка совместимости BaudRateChangedEventArgs.set_NewBaudRate(Int32 value)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanBufferedBase">
+            <summary>Тип оболочки совместимости для Communications.Can.CanBufferedBase</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanBufferedBase.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanBufferedBase.#ctor(Communications.Can.CanBufferedBase)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanBufferedBase.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanBufferedBase.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.Clear">
+            <summary>Задает оболочка совместимости CanBufferedBase.Clear()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.Constructor">
+            <summary>Задает оболочка совместимости CanBufferedBase.CanBufferedBase()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.EnqueueCanFrame">
+            <summary>Задает оболочка совместимости CanBufferedBase.Enqueue(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.EnqueueIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости CanBufferedBase.Enqueue(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.Read">
+            <summary>Задает оболочка совместимости CanBufferedBase.Read()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.ReadFrame">
+            <summary>Задает оболочка совместимости CanBufferedBase.ReadFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.ReadFrameTimeSpan">
+            <summary>Задает оболочка совместимости CanBufferedBase.ReadFrame(TimeSpan Timeout)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.ReadTimeSpanBoolean">
+            <summary>Задает оболочка совместимости CanBufferedBase.Read(TimeSpan Timeout, Boolean ThrowExceptionOnTimeout)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.Clear">
+            <summary>Задает оболочка совместимости CanBufferedBase.Clear()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.EnqueueCanFrame">
+            <summary>Задает оболочка совместимости CanBufferedBase.Enqueue(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.EnqueueIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости CanBufferedBase.Enqueue(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.Read">
+            <summary>Задает оболочка совместимости CanBufferedBase.Read()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.ReadFrame">
+            <summary>Задает оболочка совместимости CanBufferedBase.ReadFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.ReadFrameTimeSpan">
+            <summary>Задает оболочка совместимости CanBufferedBase.ReadFrame(TimeSpan Timeout)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanBufferedBase.AllInstances.ReadTimeSpanBoolean">
+            <summary>Задает оболочка совместимости CanBufferedBase.Read(TimeSpan Timeout, Boolean ThrowExceptionOnTimeout)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFlow">
+            <summary>Тип оболочки совместимости для Communications.Can.CanFlow</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFlow.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFlow.#ctor(Communications.Can.CanFlow)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFlow.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFlow.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFlow.Bind(Communications.Can.ICanFlow)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFlow.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.ConstructorCanPortInt32Array">
+            <summary>Задает оболочка совместимости CanFlow.CanFlow(CanPort Port, Int32[] Descriptors)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.DescriptorsGet">
+            <summary>Задает оболочка совместимости CanFlow.get_Descriptors()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.DescriptorsSetReadOnlyCollectionOfInt32">
+            <summary>Задает оболочка совместимости CanFlow.set_Descriptors(ReadOnlyCollection`1&lt;Int32&gt; value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.Dispose">
+            <summary>Задает оболочка совместимости CanFlow.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.Handler_MessageReceivedObjectCanFramesReceiveEventArgs">
+            <summary>Задает оболочка совместимости CanFlow.Handler_MessageReceived(Object sender, CanFramesReceiveEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.PortGet">
+            <summary>Задает оболочка совместимости CanFlow.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.PortSetCanPort">
+            <summary>Задает оболочка совместимости CanFlow.set_Port(CanPort value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.SendCanFrameBoolean">
+            <summary>Задает оболочка совместимости CanFlow.Send(CanFrame Frame, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.SendIListOfCanFrameBoolean">
+            <summary>Задает оболочка совместимости CanFlow.Send(IList`1&lt;CanFrame&gt; Frames, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFlow.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.DescriptorsGet">
+            <summary>Задает оболочка совместимости CanFlow.get_Descriptors()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.DescriptorsSetReadOnlyCollectionOfInt32">
+            <summary>Задает оболочка совместимости CanFlow.set_Descriptors(ReadOnlyCollection`1&lt;Int32&gt; value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости CanFlow.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.Handler_MessageReceivedObjectCanFramesReceiveEventArgs">
+            <summary>Задает оболочка совместимости CanFlow.Handler_MessageReceived(Object sender, CanFramesReceiveEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.PortGet">
+            <summary>Задает оболочка совместимости CanFlow.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.PortSetCanPort">
+            <summary>Задает оболочка совместимости CanFlow.set_Port(CanPort value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.SendCanFrameBoolean">
+            <summary>Задает оболочка совместимости CanFlow.Send(CanFrame Frame, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFlow.AllInstances.SendIListOfCanFrameBoolean">
+            <summary>Задает оболочка совместимости CanFlow.Send(IList`1&lt;CanFrame&gt; Frames, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFrame">
+            <summary>Тип оболочки совместимости для Communications.Can.CanFrame</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrame.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrame.#ctor(Communications.Can.CanFrame)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrame.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrame.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.Clone">
+            <summary>Задает оболочка совместимости CanFrame.Clone()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.Constructor">
+            <summary>Задает оболочка совместимости CanFrame.CanFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.DataGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.DataSetByteArray">
+            <summary>Задает оболочка совместимости CanFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.DescriptorGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Descriptor()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.GetDescriptorForInt32Int32">
+            <summary>Задает оболочка совместимости CanFrame.GetDescriptorFor(Int32 Id, Int32 Length)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.GetLoopbackFrame">
+            <summary>Задает оболочка совместимости CanFrame.GetLoopbackFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.IdGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Id()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.IdSetInt32">
+            <summary>Задает оболочка совместимости CanFrame.set_Id(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.IsLoopbackGet">
+            <summary>Задает оболочка совместимости CanFrame.get_IsLoopback()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.IsLoopbackSetBoolean">
+            <summary>Задает оболочка совместимости CanFrame.set_IsLoopback(Boolean value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.NewWithDescriptorInt32">
+            <summary>Задает оболочка совместимости CanFrame.NewWithDescriptor(Int32 Descriptor)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.NewWithDescriptorInt32ByteArrayInt32">
+            <summary>Задает оболочка совместимости CanFrame.NewWithDescriptor(Int32 Descriptor, Byte[] DataBuffer, Int32 Offset)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.NewWithIdInt32ByteArray">
+            <summary>Задает оболочка совместимости CanFrame.NewWithId(Int32 Id, Byte[] Data)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.NewWithIdInt32ByteArrayInt32Int32">
+            <summary>Задает оболочка совместимости CanFrame.NewWithId(Int32 Id, Byte[] DataBuffer, Int32 Offset, Int32 Length)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.NewWithIdInt32Int32">
+            <summary>Задает оболочка совместимости CanFrame.NewWithId(Int32 Id, Int32 Length)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.ProcessedGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Processed()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.ProcessedSetBoolean">
+            <summary>Задает оболочка совместимости CanFrame.set_Processed(Boolean value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.TimeGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Time()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.TimeSetDateTime">
+            <summary>Задает оболочка совместимости CanFrame.set_Time(DateTime value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.ToString">
+            <summary>Задает оболочка совместимости CanFrame.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame._ToStringb__4Byte">
+            <summary>Задает оболочка совместимости CanFrame.&lt;ToString&gt;b__4(Byte b)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFrame.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.Clone">
+            <summary>Задает оболочка совместимости CanFrame.Clone()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.DataGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Data()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.DataSetByteArray">
+            <summary>Задает оболочка совместимости CanFrame.set_Data(Byte[] value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.DescriptorGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Descriptor()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.GetLoopbackFrame">
+            <summary>Задает оболочка совместимости CanFrame.GetLoopbackFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.IdGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Id()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.IdSetInt32">
+            <summary>Задает оболочка совместимости CanFrame.set_Id(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.IsLoopbackGet">
+            <summary>Задает оболочка совместимости CanFrame.get_IsLoopback()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.IsLoopbackSetBoolean">
+            <summary>Задает оболочка совместимости CanFrame.set_IsLoopback(Boolean value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.ProcessedGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Processed()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.ProcessedSetBoolean">
+            <summary>Задает оболочка совместимости CanFrame.set_Processed(Boolean value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.TimeGet">
+            <summary>Задает оболочка совместимости CanFrame.get_Time()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.TimeSetDateTime">
+            <summary>Задает оболочка совместимости CanFrame.set_Time(DateTime value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrame.AllInstances.ToString01">
+            <summary>Задает оболочка совместимости CanFrame.ToString()</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFrameHandler">
+            <summary>Тип оболочки совместимости для Communications.Can.CanFrameHandler</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrameHandler.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrameHandler.#ctor(Communications.Can.CanFrameHandler)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrameHandler.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrameHandler.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFrameHandler.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.ConstructorCanPortInt32">
+            <summary>Задает оболочка совместимости CanFrameHandler.CanFrameHandler(CanPort Port, Int32 Descriptor)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.DescriptorGet">
+            <summary>Задает оболочка совместимости CanFrameHandler.get_Descriptor()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.DescriptorSetInt32">
+            <summary>Задает оболочка совместимости CanFrameHandler.set_Descriptor(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.Dispose">
+            <summary>Задает оболочка совместимости CanFrameHandler.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.OnReceivedIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanFrameHandler.OnReceived(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.PortGet">
+            <summary>Задает оболочка совместимости CanFrameHandler.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.PortSetCanPort">
+            <summary>Задает оболочка совместимости CanFrameHandler.set_Port(CanPort value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.ReceivedAddCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanFrameHandler.add_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.ReceivedRemoveCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanFrameHandler.remove_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.DescriptorGet">
+            <summary>Задает оболочка совместимости CanFrameHandler.get_Descriptor()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.DescriptorSetInt32">
+            <summary>Задает оболочка совместимости CanFrameHandler.set_Descriptor(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости CanFrameHandler.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.OnReceivedIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanFrameHandler.OnReceived(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.PortGet">
+            <summary>Задает оболочка совместимости CanFrameHandler.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.PortSetCanPort">
+            <summary>Задает оболочка совместимости CanFrameHandler.set_Port(CanPort value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.ReceivedAddCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanFrameHandler.add_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFrameHandler.AllInstances.ReceivedRemoveCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanFrameHandler.remove_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFramesBuffer">
+            <summary>Тип оболочки совместимости для Communications.Can.CanFramesBuffer</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesBuffer.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesBuffer.#ctor(Communications.Can.CanFramesBuffer)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesBuffer.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesBuffer.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesBuffer.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.ConstructorCanPortInt32Array">
+            <summary>Задает оболочка совместимости CanFramesBuffer.CanFramesBuffer(CanPort OnPort, Int32[] Descriptors)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.ConstructorIEnumerableOfInt32CanPort">
+            <summary>Задает оболочка совместимости CanFramesBuffer.CanFramesBuffer(IEnumerable`1&lt;Int32&gt; Descriptors, CanPort OnPort)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.ConstructorIEnumerableOfInt32IEnumerableOfCanPort">
+            <summary>Задает оболочка совместимости CanFramesBuffer.CanFramesBuffer(IEnumerable`1&lt;Int32&gt; Descriptors, IEnumerable`1&lt;CanPort&gt; OnPorts)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.ConstructorInt32CanPort">
+            <summary>Задает оболочка совместимости CanFramesBuffer.CanFramesBuffer(Int32 Descriptor, CanPort OnPort)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.ConstructorInt32IEnumerableOfCanPort">
+            <summary>Задает оболочка совместимости CanFramesBuffer.CanFramesBuffer(Int32 Descriptor, IEnumerable`1&lt;CanPort&gt; OnPorts)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.DescriptorsGet">
+            <summary>Задает оболочка совместимости CanFramesBuffer.get_Descriptors()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.Dispose">
+            <summary>Задает оболочка совместимости CanFramesBuffer.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.Handler_FrameReceivedObjectCanFramesReceiveEventArgs">
+            <summary>Задает оболочка совместимости CanFramesBuffer.Handler_FrameReceived(Object sender, CanFramesReceiveEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.PortsGet">
+            <summary>Задает оболочка совместимости CanFramesBuffer.get_Ports()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.RegisterPortCanPort">
+            <summary>Задает оболочка совместимости CanFramesBuffer.RegisterPort(CanPort Port)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer._get_Portsb__0CanFrameHandler">
+            <summary>Задает оболочка совместимости CanFramesBuffer.&lt;get_Ports&gt;b__0(CanFrameHandler h)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFramesBuffer.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.AllInstances.DescriptorsGet">
+            <summary>Задает оболочка совместимости CanFramesBuffer.get_Descriptors()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости CanFramesBuffer.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.AllInstances.Handler_FrameReceivedObjectCanFramesReceiveEventArgs">
+            <summary>Задает оболочка совместимости CanFramesBuffer.Handler_FrameReceived(Object sender, CanFramesReceiveEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.AllInstances.PortsGet">
+            <summary>Задает оболочка совместимости CanFramesBuffer.get_Ports()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesBuffer.AllInstances.RegisterPortCanPort">
+            <summary>Задает оболочка совместимости CanFramesBuffer.RegisterPort(CanPort Port)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs">
+            <summary>Тип оболочки совместимости для Communications.Can.CanFramesReceiveEventArgs</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.#ctor(Communications.Can.CanFramesReceiveEventArgs)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.ConstructorIListOfCanFrameCanPort">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.CanFramesReceiveEventArgs(IList`1&lt;CanFrame&gt; Frames, CanPort Port)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.FramesGet">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.get_Frames()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.FramesSetIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.set_Frames(IList`1&lt;CanFrame&gt; value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.PortGet">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.PortSetCanPort">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.set_Port(CanPort value)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.AllInstances.FramesGet">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.get_Frames()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.AllInstances.FramesSetIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.set_Frames(IList`1&lt;CanFrame&gt; value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.AllInstances.PortGet">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanFramesReceiveEventArgs.AllInstances.PortSetCanPort">
+            <summary>Задает оболочка совместимости CanFramesReceiveEventArgs.set_Port(CanPort value)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanPort">
+            <summary>Тип оболочки совместимости для Communications.Can.CanPort</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanPort.#ctor(Communications.Can.CanPort)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanPort.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.ShimCanPort.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.BaudRateChangedAddBaudRateChangedEventHandler">
+            <summary>Задает оболочка совместимости CanPort.add_BaudRateChanged(BaudRateChangedEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.BaudRateChangedRemoveBaudRateChangedEventHandler">
+            <summary>Задает оболочка совместимости CanPort.remove_BaudRateChanged(BaudRateChangedEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.ConstructorString">
+            <summary>Задает оболочка совместимости CanPort.CanPort(String PortName)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.GenerateLoopbackEchoGet">
+            <summary>Задает оболочка совместимости CanPort.get_GenerateLoopbackEcho()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.GenerateLoopbackEchoSetBoolean">
+            <summary>Задает оболочка совместимости CanPort.set_GenerateLoopbackEcho(Boolean value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.HandleCanFrameHandler">
+            <summary>Задает оболочка совместимости CanPort.Handle(CanFrameHandler h)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.HandlersGet">
+            <summary>Задает оболочка совместимости CanPort.get_Handlers()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.LogsGet">
+            <summary>Задает оболочка совместимости CanPort.get_Logs()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.LogsSetIListOfILog">
+            <summary>Задает оболочка совместимости CanPort.set_Logs(IList`1&lt;ILog&gt; value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.OnBaudRateChangedInt32">
+            <summary>Задает оболочка совместимости CanPort.OnBaudRateChanged(Int32 newValue)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.OnFrameReceivedCanFrame">
+            <summary>Задает оболочка совместимости CanPort.OnFrameReceived(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.OnFramesReceivedIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanPort.OnFramesReceived(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.OnSentIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.ReceivedAddCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanPort.add_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.ReceivedRemoveCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanPort.remove_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.SendCanFrame">
+            <summary>Задает оболочка совместимости CanPort.Send(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.SendIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanPort.Send(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.ToString">
+            <summary>Задает оболочка совместимости CanPort.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.UnHandleCanFrameHandler">
+            <summary>Задает оболочка совместимости CanPort.UnHandle(CanFrameHandler h)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort._OnFramesReceivedb__4CanFrame">
+            <summary>Задает оболочка совместимости CanPort.&lt;OnFramesReceived&gt;b__4(CanFrame f)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort._OnSentb__1CanFrame">
+            <summary>Задает оболочка совместимости CanPort.&lt;OnSent&gt;b__1(CanFrame f)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.ShimCanPort.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.BaudRateChangedAddBaudRateChangedEventHandler">
+            <summary>Задает оболочка совместимости CanPort.add_BaudRateChanged(BaudRateChangedEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.BaudRateChangedRemoveBaudRateChangedEventHandler">
+            <summary>Задает оболочка совместимости CanPort.remove_BaudRateChanged(BaudRateChangedEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.GenerateLoopbackEchoGet">
+            <summary>Задает оболочка совместимости CanPort.get_GenerateLoopbackEcho()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.GenerateLoopbackEchoSetBoolean">
+            <summary>Задает оболочка совместимости CanPort.set_GenerateLoopbackEcho(Boolean value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.HandleCanFrameHandler">
+            <summary>Задает оболочка совместимости CanPort.Handle(CanFrameHandler h)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.HandlersGet">
+            <summary>Задает оболочка совместимости CanPort.get_Handlers()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.LogsGet">
+            <summary>Задает оболочка совместимости CanPort.get_Logs()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.LogsSetIListOfILog">
+            <summary>Задает оболочка совместимости CanPort.set_Logs(IList`1&lt;ILog&gt; value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.OnBaudRateChangedInt32">
+            <summary>Задает оболочка совместимости CanPort.OnBaudRateChanged(Int32 newValue)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.OnFrameReceivedCanFrame">
+            <summary>Задает оболочка совместимости CanPort.OnFrameReceived(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.OnFramesReceivedIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanPort.OnFramesReceived(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.OnSentIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.ReceivedAddCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanPort.add_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.ReceivedRemoveCanFramesReceiveEventHandler">
+            <summary>Задает оболочка совместимости CanPort.remove_Received(CanFramesReceiveEventHandler value)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.SendCanFrame">
+            <summary>Задает оболочка совместимости CanPort.Send(CanFrame Frame)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.SendIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanPort.Send(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.ToString01">
+            <summary>Задает оболочка совместимости CanPort.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.ShimCanPort.AllInstances.UnHandleCanFrameHandler">
+            <summary>Задает оболочка совместимости CanPort.UnHandle(CanFrameHandler h)</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubBaudRateChangedEventArgs">
+            <summary>Тип заглушки Communications.Can.BaudRateChangedEventArgs</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubBaudRateChangedEventArgs.#ctor(System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubBaudRateChangedEventArgs.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubBaudRateChangedEventArgs</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubBaudRateChangedEventArgs.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubBaudRateChangedEventArgs.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubBaudRateChangedEventArgs.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanBufferedBase">
+            <summary>Тип заглушки Communications.Can.CanBufferedBase</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanBufferedBase.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanBufferedBase.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanBufferedBase</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanBufferedBase.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanBufferedBase.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanBufferedBase.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanFlow">
+            <summary>Тип заглушки Communications.Can.CanFlow</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFlow.#ctor(Communications.Can.CanPort,System.Int32[])">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFlow.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanFlow</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFlow.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFlow.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFlow.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanFrame">
+            <summary>Тип заглушки Communications.Can.CanFrame</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFrame.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFrame.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanFrame</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFrame.ToString">
+            <summary>Задает заглушка CanFrame.ToString()</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubCanFrame.ToString01">
+            <summary>Задает stub CanFrame.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFrame.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFrame.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFrame.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanFrameHandler">
+            <summary>Тип заглушки Communications.Can.CanFrameHandler</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFrameHandler.#ctor(Communications.Can.CanPort,System.Int32)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFrameHandler.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanFrameHandler</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFrameHandler.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFrameHandler.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFrameHandler.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanFramesBuffer">
+            <summary>Тип заглушки Communications.Can.CanFramesBuffer</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesBuffer.#ctor(System.Collections.Generic.IEnumerable{System.Int32},Communications.Can.CanPort)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesBuffer.#ctor(System.Collections.Generic.IEnumerable{System.Int32},System.Collections.Generic.IEnumerable{Communications.Can.CanPort})">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesBuffer.#ctor(System.Int32,Communications.Can.CanPort)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesBuffer.#ctor(System.Int32,System.Collections.Generic.IEnumerable{Communications.Can.CanPort})">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesBuffer.#ctor(Communications.Can.CanPort,System.Int32[])">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesBuffer.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanFramesBuffer</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFramesBuffer.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFramesBuffer.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFramesBuffer.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanFramesReceiveEventArgs">
+            <summary>Тип заглушки Communications.Can.CanFramesReceiveEventArgs</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesReceiveEventArgs.#ctor(System.Collections.Generic.IList{Communications.Can.CanFrame},Communications.Can.CanPort)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanFramesReceiveEventArgs.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanFramesReceiveEventArgs</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFramesReceiveEventArgs.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFramesReceiveEventArgs.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanFramesReceiveEventArgs.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubCanPort">
+            <summary>Тип заглушки Communications.Can.CanPort</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanPort.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanPort.AttachBackingFieldToBaudRate">
+            <summary>Присоединение делегатов для эмуляции StubCanPort.BaudRate как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubCanPort.BaudRateGet">
+            <summary>Задает stub CanPort.get_BaudRate()</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubCanPort.BaudRateSetInt32">
+            <summary>Задает stub CanPort.set_BaudRate(Int32 value)</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanPort.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanPort</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanPort.OnSent(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubCanPort.OnSentIListOfCanFrame">
+            <summary>Задает stub CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanPort.SendImplementation(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubCanPort.SendImplementationIListOfCanFrame">
+            <summary>Задает stub CanPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubCanPort.ToString">
+            <summary>Задает заглушка CanPort.ToString()</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubCanPort.ToString01">
+            <summary>Задает stub CanPort.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanPort.BaudRate">
+            <summary>Задает stub CanPort.get_BaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanPort.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanPort.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubCanPort.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.Fakes.StubICanFlow">
+            <summary>Тип заглушки Communications.Can.ICanFlow</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubICanFlow.#ctor">
+            <summary>Инициализирует новый экземпляр type StubICanFlow</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubICanFlow.Clear">
+            <summary>Задает stub ICanFlow.Clear()</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubICanFlow.cl::Communications#Can#ICanFlow#Clear">
+            <summary>Задает заглушка ICanFlow.Clear()</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubICanFlow.cl::Communications#Can#ICanFlow#Read">
+            <summary>Задает заглушка ICanFlow.Read()</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubICanFlow.cl::Communications#Can#ICanFlow#Read(System.TimeSpan,System.Boolean)">
+            <summary>Задает заглушка ICanFlow.Read(TimeSpan Timeout, Boolean ThrowExceptionOnTimeout)</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubICanFlow.cl::Communications#Can#ICanFlow#Send(Communications.Can.CanFrame,System.Boolean)">
+            <summary>Задает заглушка ICanFlow.Send(CanFrame Frame, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="M:Communications.Can.Fakes.StubICanFlow.cl::Communications#Can#ICanFlow#Send(System.Collections.Generic.IList{Communications.Can.CanFrame},System.Boolean)">
+            <summary>Задает заглушка ICanFlow.Send(IList`1&lt;CanFrame&gt; Frames, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubICanFlow.DescriptorsGet">
+            <summary>Задает stub ICanFlow.get_Descriptors()</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubICanFlow.Read">
+            <summary>Задает stub ICanFlow.Read()</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubICanFlow.ReadTimeSpanBoolean">
+            <summary>Задает stub ICanFlow.Read(TimeSpan Timeout, Boolean ThrowExceptionOnTimeout)</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubICanFlow.SendCanFrameBoolean">
+            <summary>Задает stub ICanFlow.Send(CanFrame Frame, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="F:Communications.Can.Fakes.StubICanFlow.SendIListOfCanFrameBoolean">
+            <summary>Задает stub ICanFlow.Send(IList`1&lt;CanFrame&gt; Frames, Boolean ClearBeforeSend)</summary>
+        </member>
+        <member name="P:Communications.Can.Fakes.StubICanFlow.cl::Communications#Can#ICanFlow#Descriptors">
+            <summary>Задает stub ICanFlow.get_Descriptors()</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1">
+            <summary>Тип оболочки совместимости для Communications.Can.FrameEncoders.FrameEncoder`1</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1.#ctor(Communications.Can.FrameEncoders.FrameEncoder{`0})">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1.Constructor">
+            <summary>Задает оболочка совместимости FrameEncoder`1.FrameEncoder`1()</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameEncoder`1.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder">
+            <summary>Тип оболочки совместимости для Communications.Can.FrameEncoders.FrameSbsEncoder</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.#ctor(Communications.Can.FrameEncoders.FrameSbsEncoder)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.Constructor">
+            <summary>Задает оболочка совместимости FrameSbsEncoder.FrameSbsEncoder()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.DecodeNextStream">
+            <summary>Задает оболочка совместимости FrameSbsEncoder.DecodeNext(Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.WriteCanFrameStream">
+            <summary>Задает оболочка совместимости FrameSbsEncoder.Write(CanFrame Frame, Stream DataStream)</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.AllInstances.DecodeNextStream">
+            <summary>Задает оболочка совместимости FrameSbsEncoder.DecodeNext(Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameSbsEncoder.AllInstances.WriteCanFrameStream">
+            <summary>Задает оболочка совместимости FrameSbsEncoder.Write(CanFrame Frame, Stream DataStream)</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder">
+            <summary>Тип оболочки совместимости для Communications.Can.FrameEncoders.FrameStreamEncoder</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.#ctor(Communications.Can.FrameEncoders.FrameStreamEncoder)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.Constructor">
+            <summary>Задает оболочка совместимости FrameStreamEncoder.FrameStreamEncoder()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.DecodeStreamStream">
+            <summary>Задает оболочка совместимости FrameStreamEncoder.DecodeStream(Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.WriteIEnumerableOfCanFrameStream">
+            <summary>Задает оболочка совместимости FrameStreamEncoder.Write(IEnumerable`1&lt;CanFrame&gt; Frames, Stream DataStream)</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.AllInstances.DecodeStreamStream">
+            <summary>Задает оболочка совместимости FrameStreamEncoder.DecodeStream(Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameStreamEncoder.AllInstances.WriteIEnumerableOfCanFrameStream">
+            <summary>Задает оболочка совместимости FrameStreamEncoder.Write(IEnumerable`1&lt;CanFrame&gt; Frames, Stream DataStream)</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder">
+            <summary>Тип оболочки совместимости для Communications.Can.FrameEncoders.FrameTextEncoder</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.#ctor(Communications.Can.FrameEncoders.FrameTextEncoder)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.Constructor">
+            <summary>Задает оболочка совместимости FrameTextEncoder.FrameTextEncoder()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.DecodeNextStream">
+            <summary>Задает оболочка совместимости FrameTextEncoder.DecodeNext(Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.OutFormatGet">
+            <summary>Задает оболочка совместимости FrameTextEncoder.get_OutFormat()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.OutFormatSetString">
+            <summary>Задает оболочка совместимости FrameTextEncoder.set_OutFormat(String value)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.ReadPatternGet">
+            <summary>Задает оболочка совместимости FrameTextEncoder.get_ReadPattern()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.ReadPatternSetString">
+            <summary>Задает оболочка совместимости FrameTextEncoder.set_ReadPattern(String value)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.WriteCanFrameStream">
+            <summary>Задает оболочка совместимости FrameTextEncoder.Write(CanFrame Frame, Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder._Writeb__3Byte">
+            <summary>Задает оболочка совместимости FrameTextEncoder.&lt;Write&gt;b__3(Byte b)</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances.DecodeNextStream">
+            <summary>Задает оболочка совместимости FrameTextEncoder.DecodeNext(Stream DataStream)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances.OutFormatGet">
+            <summary>Задает оболочка совместимости FrameTextEncoder.get_OutFormat()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances.OutFormatSetString">
+            <summary>Задает оболочка совместимости FrameTextEncoder.set_OutFormat(String value)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances.ReadPatternGet">
+            <summary>Задает оболочка совместимости FrameTextEncoder.get_ReadPattern()</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances.ReadPatternSetString">
+            <summary>Задает оболочка совместимости FrameTextEncoder.set_ReadPattern(String value)</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.ShimFrameTextEncoder.AllInstances.WriteCanFrameStream">
+            <summary>Задает оболочка совместимости FrameTextEncoder.Write(CanFrame Frame, Stream DataStream)</summary>
+        </member>
+        <member name="T:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1">
+            <summary>Тип заглушки Communications.Can.FrameEncoders.FrameEncoder`1</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.#ctor">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.Decode(`0)">
+            <summary>Задает заглушка FrameEncoder`1.Decode(!0 serialization)</summary>
+        </member>
+        <member name="F:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.DecodeT0">
+            <summary>Задает stub FrameEncoder`1.Decode(!0 serialization)</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.Encode(Communications.Can.CanFrame)">
+            <summary>Задает заглушка FrameEncoder`1.Encode(CanFrame frame)</summary>
+        </member>
+        <member name="F:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.EncodeCanFrame">
+            <summary>Задает stub FrameEncoder`1.Encode(CanFrame frame)</summary>
+        </member>
+        <member name="M:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubFrameEncoder</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.FrameEncoders.Fakes.StubFrameEncoder`1.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.ShimCanVirtualPort">
+            <summary>Тип оболочки совместимости для Communications.Can.LogReader.CanVirtualPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.#ctor(Communications.Can.LogReader.CanVirtualPort)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.BaudRateGet">
+            <summary>Задает оболочка совместимости CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.BaudRateSetInt32">
+            <summary>Задает оболочка совместимости CanVirtualPort.set_BaudRate(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.ConstructorString">
+            <summary>Задает оболочка совместимости CanVirtualPort.CanVirtualPort(String Name)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.Dispose">
+            <summary>Задает оболочка совместимости CanVirtualPort.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.ReadTimerGet">
+            <summary>Задает оболочка совместимости CanVirtualPort.get_ReadTimer()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.ReadTimerSetTimer">
+            <summary>Задает оболочка совместимости CanVirtualPort.set_ReadTimer(Timer value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.ReadTimer_ElapsedObjectElapsedEventArgs">
+            <summary>Задает оболочка совместимости CanVirtualPort.ReadTimer_Elapsed(Object sender, ElapsedEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.SendImplementationIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.Start">
+            <summary>Задает оболочка совместимости CanVirtualPort.Start()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.StartDouble">
+            <summary>Задает оболочка совместимости CanVirtualPort.Start(Double interval)</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.BaudRateGet">
+            <summary>Задает оболочка совместимости CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.BaudRateSetInt32">
+            <summary>Задает оболочка совместимости CanVirtualPort.set_BaudRate(Int32 value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости CanVirtualPort.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.ReadTimerGet">
+            <summary>Задает оболочка совместимости CanVirtualPort.get_ReadTimer()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.ReadTimerSetTimer">
+            <summary>Задает оболочка совместимости CanVirtualPort.set_ReadTimer(Timer value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.ReadTimer_ElapsedObjectElapsedEventArgs">
+            <summary>Задает оболочка совместимости CanVirtualPort.ReadTimer_Elapsed(Object sender, ElapsedEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.SendImplementationIListOfCanFrame">
+            <summary>Задает оболочка совместимости CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.Start">
+            <summary>Задает оболочка совместимости CanVirtualPort.Start()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimCanVirtualPort.AllInstances.StartDouble">
+            <summary>Задает оболочка совместимости CanVirtualPort.Start(Double interval)</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1">
+            <summary>Тип оболочки совместимости для Communications.Can.LogReader.StreamEncoderPort`1</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.#ctor(Communications.Can.LogReader.StreamEncoderPort{`0})">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.ConstructorFileInfo">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.StreamEncoderPort`1(FileInfo LogFile)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.DataStreamGet">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.get_DataStream()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.DataStreamSetStream">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.set_DataStream(Stream value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.Dispose">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.EncoderGet">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.get_Encoder()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.EncoderSetT0">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.set_Encoder(!0 value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.ReadNextFrame">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.ReadNextFrame()</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances.DataStreamGet">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.get_DataStream()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances.DataStreamSetStream">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.set_DataStream(Stream value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances.EncoderGet">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.get_Encoder()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances.EncoderSetT0">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.set_Encoder(!0 value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimStreamEncoderPort`1.AllInstances.ReadNextFrame">
+            <summary>Задает оболочка совместимости StreamEncoderPort`1.ReadNextFrame()</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort">
+            <summary>Тип оболочки совместимости для Communications.Can.LogReader.TextLogReaderPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.#ctor(Communications.Can.LogReader.TextLogReaderPort)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.ConstructorFileInfo">
+            <summary>Задает оболочка совместимости TextLogReaderPort.TextLogReaderPort(FileInfo LogFile)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.Dispose">
+            <summary>Задает оболочка совместимости TextLogReaderPort.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.PatternGet">
+            <summary>Задает оболочка совместимости TextLogReaderPort.get_Pattern()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.PatternSetString">
+            <summary>Задает оболочка совместимости TextLogReaderPort.set_Pattern(String value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.ReadNextFrame">
+            <summary>Задает оболочка совместимости TextLogReaderPort.ReadNextFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.ReaderGet">
+            <summary>Задает оболочка совместимости TextLogReaderPort.get_Reader()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.ReaderSetTextReader">
+            <summary>Задает оболочка совместимости TextLogReaderPort.set_Reader(TextReader value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort._ReadNextFrameb__0Capture">
+            <summary>Задает оболочка совместимости TextLogReaderPort.&lt;ReadNextFrame&gt;b__0(Capture c)</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости TextLogReaderPort.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances.PatternGet">
+            <summary>Задает оболочка совместимости TextLogReaderPort.get_Pattern()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances.PatternSetString">
+            <summary>Задает оболочка совместимости TextLogReaderPort.set_Pattern(String value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances.ReadNextFrame">
+            <summary>Задает оболочка совместимости TextLogReaderPort.ReadNextFrame()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances.ReaderGet">
+            <summary>Задает оболочка совместимости TextLogReaderPort.get_Reader()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.ShimTextLogReaderPort.AllInstances.ReaderSetTextReader">
+            <summary>Задает оболочка совместимости TextLogReaderPort.set_Reader(TextReader value)</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.StubCanVirtualPort">
+            <summary>Тип заглушки Communications.Can.LogReader.CanVirtualPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.AttachBackingFieldToBaudRate">
+            <summary>Присоединение делегатов для эмуляции StubCanVirtualPort.BaudRate как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.BaudRateGet">
+            <summary>Задает stub CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.BaudRateSetInt32">
+            <summary>Задает stub CanVirtualPort.set_BaudRate(Int32 value)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.Dispose">
+            <summary>Задает заглушка CanVirtualPort.Dispose()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.Dispose01">
+            <summary>Задает stub CanVirtualPort.Dispose()</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubCanVirtualPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.OnSent(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.OnSentIListOfCanFrame">
+            <summary>Задает stub CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.ReadNextFrame">
+            <summary>Задает заглушка CanVirtualPort.ReadNextFrame()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.ReadNextFrame01">
+            <summary>Задает stub CanVirtualPort.ReadNextFrame()</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.SendImplementation(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.SendImplementationIListOfCanFrame">
+            <summary>Задает stub CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubCanVirtualPort.ToString">
+            <summary>Задает заглушка CanPort.ToString()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubCanVirtualPort.ToString01">
+            <summary>Задает stub CanPort.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubCanVirtualPort.BaudRate">
+            <summary>Задает stub CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubCanVirtualPort.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubCanVirtualPort.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubCanVirtualPort.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1">
+            <summary>Тип заглушки Communications.Can.LogReader.StreamEncoderPort`1</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.#ctor(System.IO.FileInfo)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.AttachBackingFieldToBaudRate">
+            <summary>Присоединение делегатов для эмуляции StubStreamEncoderPort.BaudRate как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.BaudRateGet">
+            <summary>Задает stub CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.BaudRateSetInt32">
+            <summary>Задает stub CanVirtualPort.set_BaudRate(Int32 value)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.Dispose">
+            <summary>Задает заглушка StreamEncoderPort`1.Dispose()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.Dispose01">
+            <summary>Задает stub StreamEncoderPort`1.Dispose()</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubStreamEncoderPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.OnSent(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.OnSentIListOfCanFrame">
+            <summary>Задает stub CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.ReadNextFrame">
+            <summary>Задает заглушка StreamEncoderPort`1.ReadNextFrame()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.ReadNextFrame01">
+            <summary>Задает stub StreamEncoderPort`1.ReadNextFrame()</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.SendImplementation(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.SendImplementationIListOfCanFrame">
+            <summary>Задает stub CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.ToString">
+            <summary>Задает заглушка CanPort.ToString()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.ToString01">
+            <summary>Задает stub CanPort.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.BaudRate">
+            <summary>Задает stub CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubStreamEncoderPort`1.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.LogReader.Fakes.StubTextLogReaderPort">
+            <summary>Тип заглушки Communications.Can.LogReader.TextLogReaderPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.#ctor(System.IO.FileInfo)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.AttachBackingFieldToBaudRate">
+            <summary>Присоединение делегатов для эмуляции StubTextLogReaderPort.BaudRate как свойства с резервным полем.</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.BaudRateGet">
+            <summary>Задает stub CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.BaudRateSetInt32">
+            <summary>Задает stub CanVirtualPort.set_BaudRate(Int32 value)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.Dispose">
+            <summary>Задает заглушка TextLogReaderPort.Dispose()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.Dispose01">
+            <summary>Задает stub TextLogReaderPort.Dispose()</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubTextLogReaderPort</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.OnSent(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.OnSentIListOfCanFrame">
+            <summary>Задает stub CanPort.OnSent(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.ReadNextFrame">
+            <summary>Задает заглушка TextLogReaderPort.ReadNextFrame()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.ReadNextFrame01">
+            <summary>Задает stub TextLogReaderPort.ReadNextFrame()</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.SendImplementation(System.Collections.Generic.IList{Communications.Can.CanFrame})">
+            <summary>Задает заглушка CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.SendImplementationIListOfCanFrame">
+            <summary>Задает stub CanVirtualPort.SendImplementation(IList`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="M:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.ToString">
+            <summary>Задает заглушка CanPort.ToString()</summary>
+        </member>
+        <member name="F:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.ToString01">
+            <summary>Задает stub CanPort.ToString()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.BaudRate">
+            <summary>Задает stub CanVirtualPort.get_BaudRate()</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.LogReader.Fakes.StubTextLogReaderPort.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1">
+            <summary>Тип оболочки совместимости для Communications.Can.LogRecording.LogEncodingRecorder`1</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.#ctor(Communications.Can.LogRecording.LogEncodingRecorder{`0})">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.ConstructorCanPortFileInfo">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.LogEncodingRecorder`1(CanPort Port, FileInfo LogFile)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.EncoderGet">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.get_Encoder()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.EncoderSetFrameStreamEncoder">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.set_Encoder(FrameStreamEncoder value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.WriteFramesIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.WriteFrames(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="T:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.AllInstances.EncoderGet">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.get_Encoder()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.AllInstances.EncoderSetFrameStreamEncoder">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.set_Encoder(FrameStreamEncoder value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogEncodingRecorder`1.AllInstances.WriteFramesIEnumerableOfCanFrame">
+            <summary>Задает оболочка совместимости LogEncodingRecorder`1.WriteFrames(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="T:Communications.Can.LogRecording.Fakes.ShimLogRecorder">
+            <summary>Тип оболочки совместимости для Communications.Can.LogRecording.LogRecorder</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogRecorder.#ctor(Communications.Can.LogRecording.LogRecorder)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogRecorder.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogRecorder.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.ShimLogRecorder.Bind(System.IDisposable)">
+            <summary>Привязка членов интерфейса к оболочке совместимости.</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.ConstructorCanPortFileInfo">
+            <summary>Задает оболочка совместимости LogRecorder.LogRecorder(CanPort Port, FileInfo LogFile)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.Dispose">
+            <summary>Задает оболочка совместимости LogRecorder.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.FileStreamGet">
+            <summary>Задает оболочка совместимости LogRecorder.get_FileStream()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.FileStreamSetStream">
+            <summary>Задает оболочка совместимости LogRecorder.set_FileStream(Stream value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.LogFileGet">
+            <summary>Задает оболочка совместимости LogRecorder.get_LogFile()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.LogFileSetFileInfo">
+            <summary>Задает оболочка совместимости LogRecorder.set_LogFile(FileInfo value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.PortGet">
+            <summary>Задает оболочка совместимости LogRecorder.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.PortReceivedObjectCanFramesReceiveEventArgs">
+            <summary>Задает оболочка совместимости LogRecorder.PortReceived(Object sender, CanFramesReceiveEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.PortSetCanPort">
+            <summary>Задает оболочка совместимости LogRecorder.set_Port(CanPort value)</summary>
+        </member>
+        <member name="T:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.Dispose">
+            <summary>Задает оболочка совместимости LogRecorder.Dispose()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.FileStreamGet">
+            <summary>Задает оболочка совместимости LogRecorder.get_FileStream()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.FileStreamSetStream">
+            <summary>Задает оболочка совместимости LogRecorder.set_FileStream(Stream value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.LogFileGet">
+            <summary>Задает оболочка совместимости LogRecorder.get_LogFile()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.LogFileSetFileInfo">
+            <summary>Задает оболочка совместимости LogRecorder.set_LogFile(FileInfo value)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.PortGet">
+            <summary>Задает оболочка совместимости LogRecorder.get_Port()</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.PortReceivedObjectCanFramesReceiveEventArgs">
+            <summary>Задает оболочка совместимости LogRecorder.PortReceived(Object sender, CanFramesReceiveEventArgs e)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.ShimLogRecorder.AllInstances.PortSetCanPort">
+            <summary>Задает оболочка совместимости LogRecorder.set_Port(CanPort value)</summary>
+        </member>
+        <member name="T:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1">
+            <summary>Тип заглушки Communications.Can.LogRecording.LogEncodingRecorder`1</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.#ctor(Communications.Can.CanPort,System.IO.FileInfo)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.Dispose">
+            <summary>Задает заглушка LogRecorder.Dispose()</summary>
+        </member>
+        <member name="F:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.Dispose01">
+            <summary>Задает stub LogRecorder.Dispose()</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubLogEncodingRecorder</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.WriteFrames(System.Collections.Generic.IEnumerable{Communications.Can.CanFrame})">
+            <summary>Задает заглушка LogEncodingRecorder`1.WriteFrames(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.WriteFramesIEnumerableOfCanFrame">
+            <summary>Задает stub LogEncodingRecorder`1.WriteFrames(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.StubLogEncodingRecorder`1.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Can.LogRecording.Fakes.StubLogRecorder">
+            <summary>Тип заглушки Communications.Can.LogRecording.LogRecorder</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogRecorder.#ctor(Communications.Can.CanPort,System.IO.FileInfo)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogRecorder.Dispose">
+            <summary>Задает заглушка LogRecorder.Dispose()</summary>
+        </member>
+        <member name="F:Communications.Can.LogRecording.Fakes.StubLogRecorder.Dispose01">
+            <summary>Задает stub LogRecorder.Dispose()</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogRecorder.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubLogRecorder</summary>
+        </member>
+        <member name="M:Communications.Can.LogRecording.Fakes.StubLogRecorder.WriteFrames(System.Collections.Generic.IEnumerable{Communications.Can.CanFrame})">
+            <summary>Задает заглушка LogRecorder.WriteFrames(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="F:Communications.Can.LogRecording.Fakes.StubLogRecorder.WriteFramesIEnumerableOfCanFrame">
+            <summary>Задает stub LogRecorder.WriteFrames(IEnumerable`1&lt;CanFrame&gt; Frames)</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.StubLogRecorder.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.StubLogRecorder.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Can.LogRecording.Fakes.StubLogRecorder.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Fakes.ShimBaudRates">
+            <summary>Тип оболочки совместимости для Communications.BaudRates</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimBaudRates.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimBaudRates.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimBaudRates.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimBaudRates.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="T:Communications.Fakes.ShimLogAggregatorHelper">
+            <summary>Тип оболочки совместимости для Communications.LogAggregatorHelper</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimLogAggregatorHelper.#ctor">
+            <summary>Инициализация нового экземпляра оболочки совместимости</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimLogAggregatorHelper.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimLogAggregatorHelper.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimLogAggregatorHelper.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimLogAggregatorHelper.PushTextEventIEnumerableOfILogStringString">
+            <summary>Задает оболочка совместимости LogAggregatorHelper.PushTextEvent(IEnumerable`1&lt;ILog&gt; Logs, String EventName, String EventDetails)</summary>
+        </member>
+        <member name="T:Communications.Fakes.ShimPort">
+            <summary>Тип оболочки совместимости для Communications.Port</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimPort.#ctor(Communications.Port)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimPort.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Fakes.ShimPort.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimPort.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimPort.ConstructorString">
+            <summary>Задает оболочка совместимости Port.Port(String Name)</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimPort.NameGet">
+            <summary>Задает оболочка совместимости Port.get_Name()</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimPort.NameSetString">
+            <summary>Задает оболочка совместимости Port.set_Name(String value)</summary>
+        </member>
+        <member name="T:Communications.Fakes.ShimPort.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimPort.AllInstances.NameGet">
+            <summary>Задает оболочка совместимости Port.get_Name()</summary>
+        </member>
+        <member name="P:Communications.Fakes.ShimPort.AllInstances.NameSetString">
+            <summary>Задает оболочка совместимости Port.set_Name(String value)</summary>
+        </member>
+        <member name="T:Communications.Fakes.StubILog">
+            <summary>Тип заглушки Communications.ILog</summary>
+        </member>
+        <member name="M:Communications.Fakes.StubILog.#ctor">
+            <summary>Инициализирует новый экземпляр type StubILog</summary>
+        </member>
+        <member name="M:Communications.Fakes.StubILog.cl::Communications#ILog#PushTextEvent(System.String,System.String)">
+            <summary>Задает заглушка ILog.PushTextEvent(String EventName, String EventDetails)</summary>
+        </member>
+        <member name="F:Communications.Fakes.StubILog.PushTextEventStringString">
+            <summary>Задает stub ILog.PushTextEvent(String EventName, String EventDetails)</summary>
+        </member>
+        <member name="T:Communications.Fakes.StubPort">
+            <summary>Тип заглушки Communications.Port</summary>
+        </member>
+        <member name="M:Communications.Fakes.StubPort.#ctor(System.String)">
+            <summary>Инициализирует новый экземпляр</summary>
+        </member>
+        <member name="M:Communications.Fakes.StubPort.InitializeStub">
+            <summary>Инициализирует новый экземпляр type StubPort</summary>
+        </member>
+        <member name="P:Communications.Fakes.StubPort.CallBase">
+            <summary>Получает или задает значение, указывающее, следует ли вызывать базовый метод вместо резервного поведения</summary>
+        </member>
+        <member name="P:Communications.Fakes.StubPort.InstanceBehavior">
+            <summary>Получает или задает поведение экземпляра.</summary>
+        </member>
+        <member name="P:Communications.Fakes.StubPort.InstanceObserver">
+            <summary>Получает или задает наблюдатель экземпляра.</summary>
+        </member>
+        <member name="T:Communications.Serial.Fakes.ShimRsPort">
+            <summary>Тип оболочки совместимости для Communications.Serial.RsPort</summary>
+        </member>
+        <member name="M:Communications.Serial.Fakes.ShimRsPort.#ctor(Communications.Serial.RsPort)">
+            <summary>Инициализация новой оболочки совместимости для заданного экземпляра</summary>
+        </member>
+        <member name="M:Communications.Serial.Fakes.ShimRsPort.BehaveAsCurrent">
+            <summary>Назначение поведения &quot;Current&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="M:Communications.Serial.Fakes.ShimRsPort.BehaveAsNotImplemented">
+            <summary>Назначение поведения &quot;NotImplemented&quot; всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.Behavior">
+            <summary>Назначение поведения всем методам типа с оболочкой совместимости</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.ConstructorString">
+            <summary>Задает оболочка совместимости RsPort.RsPort(String Name)</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.OpenStream">
+            <summary>Задает оболочка совместимости RsPort.OpenStream()</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.ReadAll">
+            <summary>Задает оболочка совместимости RsPort.ReadAll()</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.WriteByteArray">
+            <summary>Задает оболочка совместимости RsPort.Write(Byte[] buff)</summary>
+        </member>
+        <member name="T:Communications.Serial.Fakes.ShimRsPort.AllInstances">
+            <summary>Определение оболочек совместимости для всех членов экземпляров</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.AllInstances.OpenStream">
+            <summary>Задает оболочка совместимости RsPort.OpenStream()</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.AllInstances.ReadAll">
+            <summary>Задает оболочка совместимости RsPort.ReadAll()</summary>
+        </member>
+        <member name="P:Communications.Serial.Fakes.ShimRsPort.AllInstances.WriteByteArray">
+            <summary>Задает оболочка совместимости RsPort.Write(Byte[] buff)</summary>
+        </member>
+    </members>
+</doc>
