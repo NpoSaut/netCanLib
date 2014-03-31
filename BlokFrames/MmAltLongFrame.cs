@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 
 namespace BlokFrames
@@ -44,6 +41,16 @@ namespace BlokFrames
             set { Longitude = value * 180.0 / Math.PI; }
         } 
         #endregion
+
+        public MmAltLongFrame() { }
+
+        public MmAltLongFrame(Double Latitude, Double Longitude, Boolean IsReliable = true)
+            : this()
+        {
+            this.Latitude = Latitude;
+            this.Longitude = Longitude;
+            Reliable = IsReliable;
+        }
 
         protected override byte[] Encode()
         {
