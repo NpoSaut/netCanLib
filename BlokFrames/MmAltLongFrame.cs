@@ -55,8 +55,9 @@ namespace BlokFrames
         protected override byte[] Encode()
         {
             byte[] data = new byte[8];
-            BitConverter.GetBytes((UInt32)(Latitude  * 10e9 * Math.PI / 180)).CopyTo(data, 0);
-            BitConverter.GetBytes((UInt32)(Longitude * 10e9 * Math.PI / 180)).CopyTo(data, 4);
+            BitConverter.GetBytes((Int32)(Latitude  * 1e9 * Math.PI / 180)).CopyTo(data, 0);
+            BitConverter.GetBytes((Int32)(Longitude * 1e9 * Math.PI / 180)).CopyTo(data, 4);
+            data[7] &= 0x7f;
             data[7] |= (Byte)((Reliable ? 1 : 0) << 7);
             return data;
         }
