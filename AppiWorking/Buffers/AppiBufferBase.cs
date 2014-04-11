@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Communications.Appi.Buffers
 {
-    internal abstract class AppiBufferBase
+    public abstract class AppiBufferBase
     {
         public int SequentNumber { get; set; }
         public byte BufferIdentifier { get { return GetIdentifier(this.GetType()); } }
@@ -51,7 +51,7 @@ namespace Communications.Appi.Buffers
         public static byte GetIdentifier<TBuffer>() { return GetIdentifier(typeof(TBuffer)); }
         public static byte GetIdentifier(Type MessageType)
         {
-            var attr = MessageType.GetCustomAttributes(typeof(AppiBufferIdentiferAttribute), false).OfType<AppiBufferIdentiferAttribute>().FirstOrDefault();
+            var attr = MessageType.GetCustomAttributes(typeof(AppiBufferIdentifierAttribute), false).OfType<AppiBufferIdentifierAttribute>().FirstOrDefault();
             if (attr == null) throw new AppiBufferIdentifierAttributeNotSetException(MessageType);
             return attr.Id;
         }

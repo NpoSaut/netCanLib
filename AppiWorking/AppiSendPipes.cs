@@ -9,55 +9,33 @@ using Communications.Exceptions;
 
 namespace Communications.Appi
 {
-    abstract class AppiSendBuffer
+    public abstract class AppiSendPipe : ISendPipe<CanFrame>
     {
         protected const int FramesPerSendGroup = 20;
 
-        protected AppiDev Device { get; set; }
-        public AppiLine Line { get; set; }
         protected object Locker { get; set; }
 
-        protected AppiSendBuffer(AppiDev Device, AppiLine Line)
+        protected AppiSendPipe()
         {
-            this.Device = Device;
-            this.Line = Line;
             Locker = new object();
         }
 
         protected IEnumerable<Byte[]> EncodeBuffers(IEnumerable<CanFrame> Frames)
         {
-            var frameGroups = Frames
-                .Select((f, i) => new { f, i })
-                .GroupBy(fi => fi.i / FramesPerSendGroup, fi => fi.f)
-                .Select(fg => fg.ToList());
-
-            foreach (var fg in frameGroups)
-            {
-                Byte[] buff = new Byte[2048];
-                Buffer.SetByte(buff, 0, 0x02);
-                Buffer.SetByte(buff, 1, (byte)Line);
-                //Buffer.SetByte(Buff, 2, SendMessageCounter);
-                Buffer.SetByte(buff, 3, (byte)fg.Count);
-
-                var messagesBuffer = fg.SelectMany(m => m.ToBufferBytes()).ToArray();
-                Buffer.BlockCopy(messagesBuffer, 0, buff, 10, messagesBuffer.Length);
-
-                yield return buff;
-            }
         }
 
         /// <summary>
         /// Отправляет фреймы, обеспечивая защиту от переполнения исходящего буфера АППИ
         /// </summary>
         /// <param name="Frames">Фреймы для отправки</param>
-        public void SynchronizedSend(IList<CanFrame> Frames) { SynchronizedSend(Frames, TimeSpan.FromMilliseconds(-1)); }
+        public void Send(IList<CanFrame> Frames) { Send(Frames, TimeSpan.FromMilliseconds(-1)); }
         /// <summary>
         /// Отправляет фреймы, обеспечивая защиту от переполнения исходящего буфера АППИ и отслеживая таймаут операции
         /// </summary>
         /// <param name="Frames">Фреймы для отправки</param>
         /// <param name="Timeout">Таймаут операции</param>
         /// <exception cref="SocketSendTimeoutException">Выбрасывается при превышении таймаута ожидания готовности исходящего буфера</exception>
-        public abstract void SynchronizedSend(IList<CanFrame> Frames, TimeSpan Timeout);
+        public abstract void Send(IList<CanFrame> Frames, TimeSpan Timeout);
 
         private bool _transfersAborted = false;
         public void AbortAllTransfers()
@@ -75,12 +53,12 @@ namespace Communications.Appi
         }
     }
 
-    class AppiTimeoutSendBuffer : AppiSendBuffer
+    class AppiTimeoutSendPipe : AppiSendPipe
     {
         private DateTime _nextSendAviableAt;
-        public AppiTimeoutSendBuffer(AppiDev Device, AppiLine Line) : base(Device, Line) {}
+        public AppiTimeoutSendPipe(AppiDev Device, AppiLine Line) : base(Device, Line) {}
 
-        public override void SynchronizedSend(IList<CanFrame> Frames, TimeSpan Timeout)
+        public override void Send(IList<CanFrame> Frames, TimeSpan Timeout)
         {
             int sent = 0;
             foreach (var buffer in EncodeBuffers(Frames))
@@ -98,13 +76,8 @@ namespace Communications.Appi
         }
     }
 
-    class AppiFeedbackSendBuffer : AppiSendBuffer
+    class AppiFeedbackSendPipe : AppiSendPipe
     {
-        public AppiFeedbackSendBuffer(AppiDev Device, AppiLine Line) : base(Device, Line)
-        {
-            Device.BufferRead += DeviceOnBufferRead;
-        }
-
         private void DeviceOnBufferRead(object Sender, AppiBufferReadEventArgs AppiBufferReadEventArgs)
         {
             var messagesBuffer = AppiBufferReadEventArgs.Buffer as MessagesReadAppiBuffer;
@@ -121,7 +94,7 @@ namespace Communications.Appi
             }
         }
 
-        public override void SynchronizedSend(IList<CanFrame> Frames, TimeSpan Timeout)
+        public override void Send(IList<CanFrame> Frames, TimeSpan Timeout)
         {
             foreach (var buffer in EncodeBuffers(Frames))
             {

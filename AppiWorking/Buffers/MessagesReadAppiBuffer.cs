@@ -5,7 +5,7 @@ using Communications.Can;
 
 namespace Communications.Appi.Buffers
 {
-    [AppiBufferIdentifer(0x02)]
+    [AppiBufferIdentifier(0x02)]
     class MessagesReadAppiBuffer : AppiBufferBase 
     {
         public Dictionary<AppiLine, IList<CanFrame>> CanMessages { get; set; }

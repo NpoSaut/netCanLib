@@ -32,7 +32,7 @@ namespace Communications.Appi
         /// <summary>Размер буфера</summary>
         protected const int BufferSize = 2048;
 
-        private Dictionary<AppiLine, AppiSendBuffer> _sendBuffers;
+        private Dictionary<AppiLine, AppiSendPipe> _sendBuffers;
 
         // Это число, в некотором роде, является волшебным числом.
         // Почему-то, иногда после завершения работы с АППИ, оно начинает выдавать свой буфер с некоторым сдвигом.
@@ -348,19 +348,19 @@ namespace Communications.Appi
             if (AppiVersion < new Version(4, 0))
             {
                 _sendBuffers =
-                    new Dictionary<AppiLine, AppiSendBuffer>
+                    new Dictionary<AppiLine, AppiSendPipe>
                     {
-                        {AppiLine.Can1, new AppiTimeoutSendBuffer(this, AppiLine.Can1)},
-                        {AppiLine.Can2, new AppiTimeoutSendBuffer(this, AppiLine.Can2)}
+                        {AppiLine.Can1, new AppiTimeoutSendPipe(this, AppiLine.Can1)},
+                        {AppiLine.Can2, new AppiTimeoutSendPipe(this, AppiLine.Can2)}
                     };
             }
             else
             {
                 _sendBuffers =
-                    new Dictionary<AppiLine, AppiSendBuffer>
+                    new Dictionary<AppiLine, AppiSendPipe>
                     {
-                        {AppiLine.Can1, new AppiFeedbackSendBuffer(this, AppiLine.Can1)},
-                        {AppiLine.Can2, new AppiFeedbackSendBuffer(this, AppiLine.Can2)}
+                        {AppiLine.Can1, new AppiFeedbackSendPipe(this, AppiLine.Can1)},
+                        {AppiLine.Can2, new AppiFeedbackSendPipe(this, AppiLine.Can2)}
                     };
             }
         }

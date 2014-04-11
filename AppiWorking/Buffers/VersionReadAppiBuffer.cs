@@ -2,7 +2,7 @@ using System;
 
 namespace Communications.Appi.Buffers
 {
-    [AppiBufferIdentifer(0x09)]
+    [AppiBufferIdentifier(0x09)]
     class VersionReadAppiBuffer : AppiBufferBase
     {
         public Version AppiVersion { get; set; }
