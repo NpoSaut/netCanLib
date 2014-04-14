@@ -33,7 +33,7 @@ namespace Communications.Protocols.IsoTP
         /// <returns>Объект транзакции</returns>
         public static TpReceiveTransaction Receive(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor, TimeSpan? Timeout = null)
         {
-            var tr = new TpReceiveTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor);
+            var tr = new TpReceiveTransaction(Flow, TransmitDescriptor, AcknowlegmentDescriptor, TODO, TODO);
             if (Timeout.HasValue) tr.Timeout = Timeout.Value;
             tr.Receive();
             return tr;

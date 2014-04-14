@@ -1,23 +1,24 @@
 ﻿using System;
 using System.IO;
 using Communications.Can;
+using Communications.Protocols.IsoTP.Frames;
+using Communications.Protocols.IsoTP.States;
 
 namespace Communications.Protocols.IsoTP
 {
-    internal interface ITransactionContext
+    public interface ITransactionContext
     {
-        /// <summary>Задержка перед отправкой очередного фрейма</summary>
-        TimeSpan SeparationTime { get; }
         /// <summary>Размер одного блока</summary>
         int BlockSize { get; }
         /// <summary>Поток данных (входящих или исходящих)</summary>
         MemoryStream DataStream { get; }
-        /// <summary>Поток Can-сообщений</summary>
-        ICanFlow CanFlow { get; }
-        /// <summary>Дескриптор отправляющей стороны</summary>
-        int SenderDescriptor { get; }
-        /// <summary>Дескриптор принимающей стороны</summary>
-        int ReceiverDescriptor { get; }
+
+        void OnTransactionReady();
+        void SetNextState(IsoTpState NextState);
+        void SendControlFrame();
+        void CreateBuffer(int PacketSize);
+        void WriteToBuffer(byte[] Bytes);
+        bool IsBufferFull();
     }
 
     class MemoryTransactionContext : ITransactionContext
@@ -29,7 +30,7 @@ namespace Communications.Protocols.IsoTP
         public int SenderDescriptor { get; private set; }
         public int ReceiverDescriptor { get; private set; }
 
-        public MemoryTransactionContext(TimeSpan SeparationTime, int BlockSize, int DataLength, ICanFlow CanFlow,
+        public MemoryTransactionContext(TimeSpan SeparationTime, int BlockSize, ICanFlow CanFlow,
                                   int SenderDescriptor, int ReceiverDescriptor)
         {
             this.ReceiverDescriptor = ReceiverDescriptor;
@@ -37,7 +38,27 @@ namespace Communications.Protocols.IsoTP
             this.CanFlow = CanFlow;
             this.BlockSize = BlockSize;
             this.SeparationTime = SeparationTime;
-            DataStream = new MemoryStream(DataLength);
         }
+
+
+        public void SendControlFrame()
+        {
+            var flowControlFrame = new FlowControlFrame(FlowControlFlag.ClearToSend,
+                                                        (byte)BlockSize,
+                                                        SeparationTime);
+            CanFlow.Send(flowControlFrame.GetCanFrame(SenderDescriptor));
+        }
+
+
+        public void OnTransactionReady() { throw new NotImplementedException(); }
+        public void SetNextState(IsoTpState NextState) { throw new NotImplementedException(); }
+
+        public void CreateBuffer(int PacketSize)
+        {
+            DataStream = new MemoryStream();
+            DataStream.SetLength(PacketSize);
+        }
+        public void WriteToBuffer(byte[] Bytes) { DataStream.Write(Bytes, 0, Bytes.Length); }
+        public bool IsBufferFull() { return DataStream.Position == DataStream.Length - 1; }
     }
 }

@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="Integration\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatesTests\IsoTpStateTest.cs" />
+    <Compile Include="StatesTests\ReadyToReceiveStateTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommunicationsTests\CommunicationsTests.csproj">

@@ -61,6 +61,8 @@ namespace Communications.Protocols.IsoTP
             this.Status = TpTransactionStatus.Ready;
         }
 
+        protected TpTransaction(int Length) { throw new NotImplementedException(); }
+
         public void Wait()
         {
             //if (Status == TpTransactionStatus.Ready)

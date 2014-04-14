@@ -1,71 +1,82 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics.Eventing.Reader;
-using System.Linq;
-using System.Text;
+using System.IO;
+using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP.States
 {
-    abstract class IsoTpState
+    /// <summary>Базовый класс для состояния ISO-TP транзакции</summary>
+    public abstract class IsoTpState
     {
-        public ITransactionContext Context { get; private set; }
-        public IsoTpState(ITransactionContext Context) { this.Context = Context; }
+        protected IsoTpState(IIsoTpConnection Connection) { this.Connection = Connection; }
+        protected IIsoTpConnection Connection { get; private set; }
 
         public abstract void ProcessFrame(IsoTpFrame Frame);
-        
-        public event EventHandler<ChangeStateRequestEventArgs> StateChangetRequested;
-        protected virtual void OnStateChangetRequested(ChangeStateRequestEventArgs E)
-        {
-            var handler = StateChangetRequested;
-            if (handler != null) handler(this, E);
-        }
-
-        public event EventHandler<ExceptionHandledEventArgs> ExceptionHandeled;
-        protected virtual void OnExceptionHandeled(HandledEventArgs E)
-        {
-            var handler = ExceptionHandeled;
-            if (handler != null) handler(this, E);
-        }
     }
 
-    class ChangeStateRequestEventArgs : EventArgs
+    /// <summary>Состояние готовности к приёму первой транзакции</summary>
+    public class ReadyToReceiveState : IsoTpState
     {
-        public IsoTpState NextState { get; private set; }
-        public ChangeStateRequestEventArgs(IsoTpState NextState) { this.NextState = NextState; }
-    }
-
-    class ExceptionHandledEventArgs : EventArgs
-    {
-        public Exception HandeledException { get; private set; }
-        public ExceptionHandledEventArgs(Exception HandeledException) { this.HandeledException = HandeledException; }
-    }
-
-    /// <summary>
-    /// Состояние отправки последовательных фреймов
-    /// </summary>
-    class ConsecutiveReceiveState : IsoTpState
-    {
-        public ConsecutiveReceiveState(ITransactionContext Context) : base(Context) { }
-
-        private int BlocksCounter { get; set; }
+        public ReadyToReceiveState(IIsoTpConnection Connection) : base(Connection) { }
 
         public override void ProcessFrame(IsoTpFrame Frame)
         {
-            var cFrame = Frame as ConsecutiveFrame;
-            if (cFrame == null) throw new Exception();
-            Context.DataStream.Write(cFrame.Data, 0, cFrame.Data.Length);
-            BlocksCounter++;
-            if (BlocksCounter >= Context.BlockSize) SendControlFrame();
+            switch (Frame.FrameType)
+            {
+                case IsoTpFrameType.First:
+                    var ff = (FirstFrame)Frame;
+                    var longTransaction = new TpReceiveTransaction(ff.PacketSize);
+                    longTransaction.Write(ff.Data);
+                    Connection.SendControlFrame();
+                    Connection.SetNextState(new ConsecutiveReceiveState(Connection, longTransaction));
+                    break;
+
+                case IsoTpFrameType.Single:
+                    var sf = (SingleFrame)Frame;
+                    var shortTransaction = new TpReceiveTransaction(sf.Data.Length);
+                    shortTransaction.Write(sf.Data);
+                    Connection.OnTransactionReady(shortTransaction);
+                    break;
+            }
         }
-          
-        private void SendControlFrame()
+    }
+
+    /// <summary>Состояние отправки последовательных фреймов</summary>
+    public class ConsecutiveReceiveState : IsoTpState
+    {
+        public ConsecutiveReceiveState(IIsoTpConnection Connection, TpReceiveTransaction Transaction) : base(Connection)
         {
-            var flowControlFrame = new FlowControlFrame(FlowControlFlag.ClearToSend,
-                                                        (byte)Context.BlockSize,
-                                                        Context.SeparationTime);
-            Context.CanFlow.Send(flowControlFrame.GetCanFrame(Context.SenderDescriptor));
+            this.Transaction = Transaction;
+            BlockCounter = 0;
+        }
+
+        public TpReceiveTransaction Transaction { get; set; }
+        private int BlockCounter { get; set; }
+
+        public override void ProcessFrame(IsoTpFrame Frame)
+        {
+            switch (Frame.FrameType)
+            {
+                case IsoTpFrameType.Consecutive:
+                    var cf = (ConsecutiveFrame)Frame;
+
+                    if (cf.Index != Transaction.ExpectedFrameIndex) throw new IsoTpSequenceException(Transaction.ExpectedFrameIndex, cf.Index);
+                    Transaction.ExpectedFrameIndex++;
+
+                    Transaction.Write(cf.Data);
+                    BlockCounter++;
+
+                    if (BlockCounter == Connection.BlockSize) Connection.SendControlFrame();
+                    if (Transaction.Done) Connection.OnTransactionReady(Transaction);
+                    break;
+
+                case IsoTpFrameType.First:
+                case IsoTpFrameType.FlowControl:
+                case IsoTpFrameType.Single:
+                    throw new IsoTpProtocolException(
+                        String.Format("Было получено сообщение типа {0} в то время, как ожидалось {1}",
+                                      Frame.GetType().Name, typeof (ConsecutiveFrame).Name));
+            }
         }
     }
 }
