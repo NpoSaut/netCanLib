@@ -40,8 +40,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CanIsoTpConnection.cs" />
     <Compile Include="Exceptions\DescriptorNotInFlowException.cs" />
     <Compile Include="Exceptions\IsoTpFlowControlTimeoutException.cs" />
+    <Compile Include="Exceptions\IsoTpTimeoutException.cs" />
+    <Compile Include="Exceptions\IsoTpWrongFrameException.cs" />
     <Compile Include="Frames\ConsecutiveFrame.cs" />
     <Compile Include="Frames\FirstFrame.cs" />
     <Compile Include="Frames\FlowControlFrame.cs" />
@@ -55,7 +58,13 @@
     <Compile Include="Exceptions\IsoTpSequenceException.cs" />
     <Compile Include="IIsoTpConnection.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="States\BeginTransmitionState.cs" />
+    <Compile Include="States\ConsecutiveReceiveState.cs" />
+    <Compile Include="States\ConsecutiveSendState.cs" />
     <Compile Include="States\IsoTpState.cs" />
+    <Compile Include="States\ReadyToReceiveState.cs" />
+    <Compile Include="States\SendControlFrameState.cs" />
+    <Compile Include="States\WaitForControlFrameState.cs" />
     <Compile Include="TpPacket.cs" />
     <Compile Include="TpRecieveTransaction.cs" />
     <Compile Include="TpSendTransaction.cs" />

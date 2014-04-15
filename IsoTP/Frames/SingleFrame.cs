@@ -1,24 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using Communications.Can;
 
 namespace Communications.Protocols.IsoTP.Frames
 {
-    /// <summary>
-    /// Кадр единичной посылки
-    /// </summary>
-    /// <remarks>
-    /// Отправляется в виде одного сообщения, и может содержать максимум 7 байт данных
-    /// </remarks>
+    /// <summary>Кадр единичной посылки</summary>
+    /// <remarks>Отправляется в виде одного сообщения, и может содержать максимум 7 байт данных</remarks>
     public class SingleFrame : IsoTpFrame
     {
-        /// <summary>
-        /// Вместимость пакета
-        /// </summary>
+        /// <summary>Вместимость пакета</summary>
         public const int DataCapacity = 7;
 
+        public SingleFrame(Byte[] Data)
+        {
+            if (Data == null) throw new ArgumentNullException("Data");
+            if (Data.Length > DataCapacity)
+                throw new ArgumentOutOfRangeException("Data",
+                                                      string.Format("Размер данных, передаваемых в Single Frame режиме ограничен {0} байтами",
+                                                                    DataCapacity));
+
+            this.Data = Data;
+        }
+
+        public SingleFrame() { }
         public Byte[] Data { get; private set; }
 
         public override IsoTpFrameType FrameType
@@ -26,20 +29,9 @@ namespace Communications.Protocols.IsoTP.Frames
             get { return IsoTpFrameType.Single; }
         }
 
-        public SingleFrame(Byte[] Data)
-        {
-            if (Data == null) throw new ArgumentNullException("Data");
-            if (Data.Length > DataCapacity) throw new ArgumentOutOfRangeException("Data", string.Format("Размер данных, передаваемых в Single Frame режиме ограничен {0} байтами", DataCapacity));
-
-            this.Data = Data;
-        }
-        public SingleFrame()
-        {
-        }
-
         public override CanFrame GetCanFrame(int WithDescriptor)
         {
-            Byte[] buff = new Byte[8];
+            var buff = new Byte[8];
 
             buff[0] = (byte)(((byte)FrameType & 0x0f) << 4 | Data.Length & 0x0f);
             Buffer.BlockCopy(Data, 0, buff, 1, Data.Length);
@@ -55,11 +47,13 @@ namespace Communications.Protocols.IsoTP.Frames
             Buffer.BlockCopy(buff, 1, Data, 0, len);
         }
 
-        public static implicit operator SingleFrame(Communications.Can.CanFrame cFrame)
-        {
-            return IsoTpFrame.ParsePacket<SingleFrame>(cFrame.Data);
-        }
+        public static implicit operator SingleFrame(CanFrame cFrame) { return ParsePacket<SingleFrame>(cFrame.Data); }
 
-        public override string ToString() { return string.Format("SF: {0}", BitConverter.ToString(Data, 0, Data.Length)); }
+        public static int GetPayload(int SubframeLength) { return SubframeLength - 1; }
+
+        public override string ToString()
+        {
+            return string.Format("SF: {0}", BitConverter.ToString(Data, 0, Data.Length));
+        }
     }
 }

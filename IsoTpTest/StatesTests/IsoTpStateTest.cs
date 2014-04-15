@@ -1,26 +1,60 @@
-﻿using System.IO;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using Communications.Protocols.IsoTP;
-using Communications.Protocols.IsoTP.States;
+using Communications.Protocols.IsoTP.Exceptions;
+using Communications.Protocols.IsoTP.Frames;
 
 namespace IsoTpTest.StatesTests
 {
     public abstract class IsoTpStateTest
     {
-        protected class TestContext : ITransactionContext
+        protected readonly Random Rnd = new Random();
+
+        protected Byte[] GetRandomBytes(int Count)
         {
-            public TestContext(int BlockSize) { this.BlockSize = BlockSize; }
+            var res = new byte[Count];
+            Rnd.NextBytes(res);
+            return res;
+        }
 
-            /// <summary>Размер одного блока</summary>
-            public int BlockSize { get; private set; }
+        protected class TestIsoTpConnection : IsoTpConnectionBase
+        {
+            private readonly int _subframeLength;
 
-            /// <summary>Поток данных (входящих или исходящих)</summary>
-            public MemoryStream DataStream { get; private set; }
-            
-            public void OnTransactionReady() { throw new System.NotImplementedException(); }
-            public void SetNextState(IsoTpState NextState) { throw new System.NotImplementedException(); }
-            public void SendControlFrame() { throw new System.NotImplementedException(); }
-            public void CreateBuffer(int PacketSize) { throw new System.NotImplementedException(); }
-            public void WriteToBuffer(byte[] Bytes) { throw new System.NotImplementedException(); }
+            public TestIsoTpConnection(int SubframeLength = 8, int BlockLength = 128, int SeparationTimeMs = 0)
+                : base(BlockLength, SeparationTimeMs)
+            {
+                SentFrames = new Queue<IsoTpFrame>();
+                IncomingQueue = new Queue<IsoTpFrame>();
+                _subframeLength = SubframeLength;
+            }
+
+            public override int SubframeLength
+            {
+                get { return _subframeLength; }
+            }
+
+            public Queue<IsoTpFrame> IncomingQueue { get; private set; }
+            public Queue<IsoTpFrame> SentFrames { get; private set; }
+
+            public override void SendFrame(IsoTpFrame Frame) { SentFrames.Enqueue(Frame); }
+
+            public override IsoTpFrame ReadNextFrame(TimeSpan Timeout)
+            {
+                if (IncomingQueue.Count > 0)
+                    return IncomingQueue.Dequeue();
+                else
+                    throw new IsoTpTimeoutException();
+            }
+
+            public TpTransaction FinishedTransaction { get; private set; }
+
+            public override void OnTransactionReady(TpTransaction Transaction)
+            {
+                FinishedTransaction = Transaction;
+                base.OnTransactionReady(Transaction);
+            }
         }
     }
 }

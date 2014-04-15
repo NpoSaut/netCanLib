@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
-using System.Linq;
-using Communications.Can;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.States;
 
@@ -10,52 +6,68 @@ namespace Communications.Protocols.IsoTP
 {
     public interface IIsoTpConnection
     {
-        int BlockSize { get; }
+        int ReceiveBlockSize { get; }
+        TimeSpan ReceiveSeparationTime { get; }
+        int SubframeLength { get; }
 
-        void OnTransactionReady(TpReceiveTransaction Transaction);
+        void OnTransactionReady(TpTransaction Transaction);
         void SetNextState(IsoTpState NewState);
         void SendControlFrame();
+
+        IsoTpFrame ReadNextFrame(TimeSpan Timeout);
+        void SendFrame(IsoTpFrame Frame);
+
+        Byte[] Receive(TimeSpan Timeout);
     }
 
-    public class CanIsoTpConnection : IIsoTpConnection
+    public abstract class IsoTpConnectionBase : IIsoTpConnection
     {
-        public CanIsoTpConnection(CanFlow Flow, ushort TransmitDescriptor, ushort ReceiveDescriptor, int BlockSize = 128)
+        private TpTransaction _readyTransaction;
+
+        protected IsoTpConnectionBase(int ReceiveBlockSize = 128, int SeparationTimeMs = 0)
         {
-            this.BlockSize = BlockSize;
-            this.ReceiveDescriptor = ReceiveDescriptor;
-            this.TransmitDescriptor = TransmitDescriptor;
-            this.Flow = Flow;
+            this.ReceiveBlockSize = ReceiveBlockSize;
+            ReceiveSeparationTime = TimeSpan.FromMilliseconds(SeparationTimeMs);
         }
 
-        private CanFlow Flow { get; set; }
-        private ushort TransmitDescriptor { get; set; }
-        private ushort ReceiveDescriptor { get; set; }
-        public int BlockSize { get; private set; }
-
-        private IsoTpState ConnectionState { get; set; }
-
-        private TpTransaction _readyTransaction;
+        public IsoTpState ConnectionState { get; private set; }
+        public TimeSpan ReceiveSeparationTime { get; private set; }
+        public int ReceiveBlockSize { get; private set; }
+        public abstract int SubframeLength { get; }
 
         public Byte[] Receive(TimeSpan Timeout)
         {
             SetNextState(new ReadyToReceiveState(this));
             do
             {
-                var frame = Flow.Read(Timeout)
-                                .Where(f => f.Descriptor == ReceiveDescriptor)
-                                .Select(f => IsoTpFrame.ParsePacket(f.Data))
-                                .First();
-                ConnectionState.ProcessFrame(frame);
+                ConnectionState.Operate(Timeout);
             } while (_readyTransaction is TpReceiveTransaction);
 
             // ReSharper disable once PossibleInvalidCastException
-            var res = ((TpReceiveTransaction)_readyTransaction).Data;
+            byte[] res = ((TpReceiveTransaction)_readyTransaction).Data;
             _readyTransaction = null;
             return res;
         }
 
-        public void OnTransactionReady(TpReceiveTransaction Transaction) { _readyTransaction = Transaction; }
+        public void Send(Byte[] Data, TimeSpan Timeout)
+        {
+            SetNextState(new BeginTransmitionState(this, Data));
+            do
+            {
+                ConnectionState.Operate(Timeout);
+            } while (_readyTransaction is TpReceiveTransaction);
+        }
+
+        public void SendControlFrame()
+        {
+            var flowControlFrame = new FlowControlFrame(FlowControlFlag.ClearToSend, (byte)ReceiveBlockSize, ReceiveSeparationTime);
+            SendFrame(flowControlFrame);
+        }
+
+        public abstract IsoTpFrame ReadNextFrame(TimeSpan Timeout);
+        public abstract void SendFrame(IsoTpFrame Frame);
+
+        public virtual void OnTransactionReady(TpTransaction Transaction) { _readyTransaction = Transaction; }
         public void SetNextState(IsoTpState NewState) { ConnectionState = NewState; }
-        public void SendControlFrame() { throw new NotImplementedException(); }
     }
 }

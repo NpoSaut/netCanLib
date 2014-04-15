@@ -1,29 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Communications.Can;
 
 namespace Communications.Protocols.IsoTP.Frames
 {
-    /// <summary>
-    /// Первый кадр транзакции
-    /// </summary>
-    /// <remarks>
-    /// Этим кадром инициируется транзакция
-    /// </remarks>
+    /// <summary>Первый кадр транзакции</summary>
+    /// <remarks>Этим кадром инициируется транзакция</remarks>
     public class FirstFrame : IsoTpFrame
     {
-        /// <summary>
-        /// Вместимость пакета
-        /// </summary>
+        /// <summary>Вместимость пакета</summary>
         public const int DataCapacity = 6;
-        /// <summary>
-        /// Размер полного пакета
-        /// </summary>
+
+        public FirstFrame(Byte[] Data, int PacketSize)
+        {
+            if (Data.Length != DataCapacity)
+                throw new ArgumentOutOfRangeException("Data",
+                                                      string.Format("Первый фрейм должен содержать ровно {0} байт данных",
+                                                                    DataCapacity));
+
+            this.Data = Data;
+            this.PacketSize = PacketSize;
+        }
+
+        public FirstFrame() { }
+
+        /// <summary>Размер полного пакета</summary>
         public int PacketSize { get; private set; }
-        /// <summary>
-        /// Данные
-        /// </summary>
+
+        /// <summary>Данные</summary>
         public Byte[] Data { get; private set; }
 
         public override IsoTpFrameType FrameType
@@ -31,27 +34,16 @@ namespace Communications.Protocols.IsoTP.Frames
             get { return IsoTpFrameType.First; }
         }
 
-        public FirstFrame(Byte[] Data, int PacketSize)
+        public override CanFrame GetCanFrame(int WithDescriptor)
         {
-            if (Data.Length != DataCapacity) throw new ArgumentOutOfRangeException("Data", string.Format("Первый фрейм должен содержать ровно {0} байт данных", DataCapacity));
-
-            this.Data = Data;
-            this.PacketSize = PacketSize;
-        }
-        public FirstFrame()
-        {
-        }
-
-        public override Can.CanFrame GetCanFrame(int WithDescriptor)
-        {
-            Byte[] buff = new Byte[8];
+            var buff = new Byte[8];
 
             buff[0] = (byte)(((byte)FrameType & 0x0f) << 4 | (PacketSize & 0xf00) >> 8);
             buff[1] = (byte)(PacketSize & 0x0ff);
-            
+
             Buffer.BlockCopy(Data, 0, buff, 2, DataCapacity);
 
-            return Can.CanFrame.NewWithDescriptor(WithDescriptor, buff);
+            return CanFrame.NewWithDescriptor(WithDescriptor, buff);
         }
 
         protected override void FillWithBytes(byte[] buff)
@@ -62,11 +54,13 @@ namespace Communications.Protocols.IsoTP.Frames
             Buffer.BlockCopy(buff, 2, Data, 0, DataCapacity);
         }
 
-        public static implicit operator FirstFrame(Communications.Can.CanFrame cFrame)
-        {
-            return IsoTpFrame.ParsePacket<FirstFrame>(cFrame.Data);
-        }
+        public static implicit operator FirstFrame(CanFrame cFrame) { return ParsePacket<FirstFrame>(cFrame.Data); }
 
-        public override string ToString() { return string.Format("FF: {0}", BitConverter.ToString(Data, 0, Data.Length)); }
+        public static int GetPayload(int SubframeLength) { return SubframeLength - 2; }
+
+        public override string ToString()
+        {
+            return string.Format("FF: {0}", BitConverter.ToString(Data, 0, Data.Length));
+        }
     }
 }

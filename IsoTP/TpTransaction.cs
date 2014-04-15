@@ -1,74 +1,67 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Communications.Can;
-using Communications.Protocols.IsoTP.Exceptions;
+using System.IO;
+using System.Threading;
 
 namespace Communications.Protocols.IsoTP
 {
-    public enum TpTransactionStatus { Ready, Active, Done, Error }
-    /// <summary>
-    /// Представляет абстракцию ISO-TP-транзакции
-    /// </summary>
+    public enum TpTransactionStatus
+    {
+        Ready,
+        Active,
+        Done,
+        Error
+    }
+
+    /// <summary>Представляет абстракцию ISO-TP-транзакции</summary>
     public abstract class TpTransaction
     {
-        /// <summary>
-        /// Используемый порт
-        /// </summary>
-        public ICanFlow Flow { get; private set; }
-        /// <summary>
-        /// Используемый дескриптор
-        /// </summary>
-        public int TransmitDescriptor { get; private set; }
-        /// <summary>
-        /// Используемый дескриптор
-        /// </summary>
-        public int AcknowlegmentDescriptor { get; private set; }
-        /// <summary>
-        /// Время ожидания пакета
-        /// </summary>
-        public TimeSpan Timeout { get; set; }
-        public static TimeSpan DefaultTimeout = TimeSpan.FromSeconds(3);
+        public int Length
+        {
+            get { return (int)DataStream.Length; }
+        }
+        public int Position
+        {
+            get { return (int)DataStream.Position; }
+        }
 
-        private TpTransactionStatus _Status;
-        public event EventHandler StatusChanged;
-        /// <summary>
-        /// Статус транзакции
-        /// </summary>
+        public bool Done
+        {
+            get { return Position == Length; }
+        }
+
+        private TpTransactionStatus _status;
+
+        protected TpTransaction(byte[] Data)
+        {
+            this.Data = Data;
+            DataStream = new MemoryStream(Data);
+        }
+
+        public Byte[] Data { get; private set; }
+        public MemoryStream DataStream { get; private set; }
+
+        /// <summary>Статус транзакции</summary>
         public TpTransactionStatus Status
         {
-            get { return _Status; }
+            get { return _status; }
             set
             {
-                if (_Status != value)
+                if (_status != value)
                 {
-                    _Status = value;
+                    _status = value;
                     if (StatusChanged != null) StatusChanged(this, new EventArgs());
                 }
             }
         }
 
-        public TpTransaction(ICanFlow Flow, int TransmitDescriptor, int AcknowlegmentDescriptor)
-        {
-            if (!Flow.Descriptors.Contains(AcknowlegmentDescriptor))
-                throw new DescriptorNotInFlowException(AcknowlegmentDescriptor);
-
-            this.TransmitDescriptor = TransmitDescriptor;
-            this.AcknowlegmentDescriptor = AcknowlegmentDescriptor;
-            this.Flow = Flow;
-            this.Timeout = DefaultTimeout;
-            this.Status = TpTransactionStatus.Ready;
-        }
-
-        protected TpTransaction(int Length) { throw new NotImplementedException(); }
+        public event EventHandler StatusChanged;
 
         public void Wait()
         {
             //if (Status == TpTransactionStatus.Ready)
             //    throw new ApplicationException("Транзакция ещё не запущена");
 
-            System.Threading.SpinWait.SpinUntil(() => Status == TpTransactionStatus.Done || Status == TpTransactionStatus.Error);
+            SpinWait.SpinUntil(() => Status == TpTransactionStatus.Done || Status == TpTransactionStatus.Error);
         }
     }
 }

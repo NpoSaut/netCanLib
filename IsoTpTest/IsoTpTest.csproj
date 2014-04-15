@@ -55,8 +55,11 @@
   <ItemGroup>
     <Compile Include="Integration\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StatesTests\BeginTransmitionStateTest.cs" />
+    <Compile Include="StatesTests\ConsecutiveReceiveStateTest.cs" />
+    <Compile Include="StatesTests\ConsecutiveSendStateTest.cs" />
     <Compile Include="StatesTests\IsoTpStateTest.cs" />
-    <Compile Include="StatesTests\ReadyToReceiveStateTest.cs" />
+    <Compile Include="StatesTests\WaitForControlFrameStateTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\CommunicationsTests\CommunicationsTests.csproj">

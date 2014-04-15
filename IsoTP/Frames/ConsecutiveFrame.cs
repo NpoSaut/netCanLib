@@ -66,5 +66,6 @@ namespace Communications.Protocols.IsoTP.Frames
         }
 
         public override string ToString() { return string.Format("CF-{0}: {1}", Index, BitConverter.ToString(Data, 0, Data.Length)); }
+        public static int GetPayload(int SubframeLength) { return SubframeLength - 1; }
     }
 }
