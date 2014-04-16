@@ -1,4 +1,5 @@
 ﻿using System;
+using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.States;
 
@@ -19,27 +20,43 @@ namespace Communications.Protocols.IsoTP
         public int ReceiveBlockSize { get; private set; }
         public abstract int SubframeLength { get; }
 
+        private void Operate(TimeSpan Timeout)
+        {
+            try
+            {
+                ConnectionState.Operate(Timeout);
+            }
+            catch (Exception e)
+            {
+                ConnectionState.OnException(e);
+                throw;
+            }
+        }
+
+        private TTransaction OperateUntilTransactionFinished<TTransaction>(TimeSpan Timeout)
+            where TTransaction : TpTransaction
+        {
+            do
+            {
+                Operate(Timeout);
+            } while (_finishedTransaction == null);
+            if (!(_finishedTransaction is TTransaction)) throw new IsoTpProtocolException("Операция завершилась транзакцией неверного типа");
+            var transaction = (TTransaction)_finishedTransaction;
+            _finishedTransaction = null;
+            return transaction;
+        }
+
         public Byte[] Receive(TimeSpan Timeout)
         {
             SetNextState(new ReadyToReceiveState(this));
-            do
-            {
-                ConnectionState.Operate(Timeout);
-            } while (_finishedTransaction is TpReceiveTransaction);
-
-            byte[] res = _finishedTransaction.Data;
-            _finishedTransaction = null;
-            return res;
+            var transaction = OperateUntilTransactionFinished<TpReceiveTransaction>(Timeout);
+            return transaction.Data;
         }
 
         public void Send(Byte[] Data, TimeSpan Timeout)
         {
             SetNextState(new BeginTransmitionState(this, Data));
-            do
-            {
-                ConnectionState.Operate(Timeout);
-            } while (_finishedTransaction is TpReceiveTransaction);
-            _finishedTransaction = null;
+            OperateUntilTransactionFinished<TpSendTransaction>(Timeout);
         }
 
         public abstract IsoTpFrame ReadNextFrame(TimeSpan Timeout);

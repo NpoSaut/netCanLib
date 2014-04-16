@@ -43,5 +43,11 @@ namespace Communications.Protocols.IsoTP.States
         {
             ProcessFrame(Connection.ReadNextFrame(Timeout));
         }
+
+        public override void OnException(Exception e)
+        {
+            Connection.SendFrame(FlowControlFrame.AbortFrame);
+            base.OnException(e);
+        }
     }
 }

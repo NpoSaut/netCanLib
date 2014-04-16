@@ -9,5 +9,6 @@ namespace Communications.Protocols.IsoTP.States
         protected IIsoTpConnection Connection { get; private set; }
 
         public abstract void Operate(TimeSpan Timeout);
+        public virtual void OnException(Exception e) { }
     }
 }

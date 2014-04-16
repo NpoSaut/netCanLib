@@ -87,5 +87,22 @@ namespace IsoTpTest.StatesTests
 
             Assert.Fail("Не было выброшено исключение, говорящее об ошибке в последовательности");
         }
+
+        [TestMethod]
+        public void AbortTransactionOnExceptionTest()
+        {
+            var connection = new TestIsoTpConnection();
+            var transaction = new TpReceiveTransaction(1024);
+
+            var state = new ConsecutiveReceiveState(connection, transaction);
+            connection.SetNextState(state);
+
+            state.OnException(new Exception());
+
+            Assert.AreEqual(connection.SentFrames.Count, 1, "Должно было отправиться сообщение об отмене");
+            Assert.IsInstanceOfType(connection.SentFrames.Peek(), typeof(FlowControlFrame), "Неверный тип отправленного сообщения об отмене транзакции");
+            var frame = (FlowControlFrame)connection.SentFrames.Dequeue();
+            Assert.AreEqual(frame.Flag, FlowControlFlag.Abort, "Неверный флаг FlowControl сообщения");
+        }
     }
 }
