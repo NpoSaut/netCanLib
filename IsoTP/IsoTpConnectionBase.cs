@@ -27,8 +27,7 @@ namespace Communications.Protocols.IsoTP
                 ConnectionState.Operate(Timeout);
             } while (_finishedTransaction is TpReceiveTransaction);
 
-            // ReSharper disable once PossibleInvalidCastException
-            byte[] res = ((TpReceiveTransaction)_finishedTransaction).Data;
+            byte[] res = _finishedTransaction.Data;
             _finishedTransaction = null;
             return res;
         }
@@ -40,12 +39,7 @@ namespace Communications.Protocols.IsoTP
             {
                 ConnectionState.Operate(Timeout);
             } while (_finishedTransaction is TpReceiveTransaction);
-        }
-
-        public void SendControlFrame()
-        {
-            var flowControlFrame = new FlowControlFrame(FlowControlFlag.ClearToSend, (byte)ReceiveBlockSize, ReceiveSeparationTime);
-            SendFrame(flowControlFrame);
+            _finishedTransaction = null;
         }
 
         public abstract IsoTpFrame ReadNextFrame(TimeSpan Timeout);

@@ -12,7 +12,6 @@ namespace Communications.Protocols.IsoTP
 
         void OnTransactionReady(TpTransaction Transaction);
         void SetNextState(IsoTpState NewState);
-        void SendControlFrame();
 
         IsoTpFrame ReadNextFrame(TimeSpan Timeout);
         void SendFrame(IsoTpFrame Frame);
