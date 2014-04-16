@@ -59,6 +59,8 @@
     <Compile Include="StatesTests\ConsecutiveReceiveStateTest.cs" />
     <Compile Include="StatesTests\ConsecutiveSendStateTest.cs" />
     <Compile Include="StatesTests\IsoTpStateTest.cs" />
+    <Compile Include="StatesTests\ReadyToReceiveStateTest.cs" />
+    <Compile Include="TestIsoTpConnection.cs" />
     <Compile Include="StatesTests\WaitForControlFrameStateTest.cs" />
   </ItemGroup>
   <ItemGroup>

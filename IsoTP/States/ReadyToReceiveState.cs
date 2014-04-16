@@ -16,8 +16,7 @@ namespace Communications.Protocols.IsoTP.States
                     var ff = (FirstFrame)Frame;
                     var longTransaction = new TpReceiveTransaction(ff.PacketSize);
                     longTransaction.Write(ff.Data);
-                    Connection.SendControlFrame();
-                    Connection.SetNextState(new ConsecutiveReceiveState(Connection, longTransaction));
+                    Connection.SetNextState(new SendControlFrameState(Connection, longTransaction));
                     break;
 
                 case IsoTpFrameType.Single:
