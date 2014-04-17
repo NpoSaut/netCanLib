@@ -5,7 +5,7 @@ namespace Communications.Protocols.IsoTP
     public class TpSendTransaction : TpTransaction
     {
         public TpSendTransaction(Byte[] DataBytes) : base(DataBytes) { }
-        public int Index { get; set; }
+        public byte Index { get; set; }
         public int BlockSize { get; set; }
         public TimeSpan SeparationTime { get; set; }
 

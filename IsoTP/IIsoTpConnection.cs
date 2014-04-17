@@ -8,6 +8,7 @@ namespace Communications.Protocols.IsoTP
     {
         int ReceiveBlockSize { get; }
         TimeSpan ReceiveSeparationTime { get; }
+        int MaximumDatagramLength { get; }
         int SubframeLength { get; }
 
         void OnTransactionReady(TpTransaction Transaction);

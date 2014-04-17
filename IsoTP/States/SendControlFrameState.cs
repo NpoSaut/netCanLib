@@ -17,7 +17,7 @@ namespace Communications.Protocols.IsoTP.States
             var frame = new FlowControlFrame(FlowControlFlag.ClearToSend, (byte)Connection.ReceiveBlockSize,
                                              Connection.ReceiveSeparationTime);
             Connection.SendFrame(frame);
-            Connection.SetNextState(new SendControlFrameState(Connection, Transaction));
+            Connection.SetNextState(new ConsecutiveReceiveState(Connection, Transaction));
         }
     }
 }

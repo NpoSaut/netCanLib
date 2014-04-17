@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Communications.Can;
-using Communications.Protocols.IsoTP;
-using Communications.Protocols.IsoTP.Frames;
 using CommunicationsTests.Stuff;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -11,20 +10,32 @@ namespace IsoTpTest.Integration
     [TestClass]
     public class IntegrationTransactionTest
     {
-        private class PairedConnection : IsoTpConnectionBase
-        {
-            public override int SubframeLength
-            {
-                get { return 8; }
-            }
+        protected readonly Random Rnd = new Random();
 
-            public override IsoTpFrame ReadNextFrame(TimeSpan Timeout) { throw new NotImplementedException(); }
-            public override void SendFrame(IsoTpFrame Frame) { throw new NotImplementedException(); }
+        protected Byte[] GetRandomBytes(int Count)
+        {
+            var res = new byte[Count];
+            Rnd.NextBytes(res);
+            return res;
         }
 
         [TestMethod]
         public void SendReceiveTest()
         {
+            var connections = PairedConnection.Builder.Build();
+            var sender = connections[0];
+            var receiver = connections[1];
+
+            var data = GetRandomBytes(Math.Min(sender.MaximumDatagramLength, receiver.MaximumDatagramLength));
+
+            var receiverTask = Task.Run(() => receiver.Receive(TimeSpan.MaxValue));
+
+            sender.Send(data, TimeSpan.MaxValue);
+
+            receiverTask.Wait();
+            var receivedData = receiverTask.Result;
+
+            Assert.IsTrue(receivedData.SequenceEqual(data));
         }
     }
 }

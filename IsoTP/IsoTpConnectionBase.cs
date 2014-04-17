@@ -18,6 +18,8 @@ namespace Communications.Protocols.IsoTP
         public IsoTpState ConnectionState { get; private set; }
         public TimeSpan ReceiveSeparationTime { get; private set; }
         public int ReceiveBlockSize { get; private set; }
+
+        public int MaximumDatagramLength { get { return 4095; } }
         public abstract int SubframeLength { get; }
 
         private void Operate(TimeSpan Timeout)
