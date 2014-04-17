@@ -40,9 +40,9 @@ namespace IsoTpTest.Integration
 
             var data = GetRandomBytes(Math.Min(sender.MaximumDatagramLength, receiver.MaximumDatagramLength));
 
-            var receiverTask = Task.Run(() => receiver.Receive(TimeSpan.MaxValue));
+            var receiverTask = Task.Run(() => receiver.Receive(TimeSpan.FromSeconds(1)));
 
-            sender.Send(data, TimeSpan.MaxValue);
+            sender.Send(data, TimeSpan.FromSeconds(1));
 
             receiverTask.Wait();
             var receivedData = receiverTask.Result;
@@ -143,6 +143,10 @@ namespace IsoTpTest.Integration
                 var exc = (IsoTpSequenceException)e.InnerExceptions.First();
                 Assert.AreEqual(index + 1, exc.ExpectedIndex, "Ожидали сообщения с неправильным индексом");
                 Assert.AreEqual(index + 2, exc.ReceivedIndex, "Получили сообщение не с таким неправильным индексом, который хотели бы");
+
+                var abortFrame = (FlowControlFrame)TakeFrame(receiver, TimeSpan.FromSeconds(1));
+                Assert.AreEqual(FlowControlFlag.Abort, abortFrame.Flag);
+
                 return;
             }
 
