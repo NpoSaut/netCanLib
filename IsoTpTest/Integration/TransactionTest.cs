@@ -88,9 +88,9 @@ namespace IsoTpTest.Integration
             receiver.InputQueue.Enqueue(new FirstFrame(dataReader.ReadBytes(firstFramePayload), data.Length));
 
             var firstFlowControlFrame = (FlowControlFrame)TakeFrame(receiver, TimeSpan.FromSeconds(1));
-            Assert.AreEqual(firstFlowControlFrame.Flag, FlowControlFlag.ClearToSend);
-            Assert.AreEqual(firstFlowControlFrame.BlockSize, blockSize);
-            Assert.AreEqual(firstFlowControlFrame.SeparationTime, separationTime);
+            Assert.AreEqual(FlowControlFlag.ClearToSend, firstFlowControlFrame.Flag);
+            Assert.AreEqual(blockSize, firstFlowControlFrame.BlockSize);
+            Assert.AreEqual(separationTime, firstFlowControlFrame.SeparationTime);
 
             Assert.IsInstanceOfType(receiver.ConnectionState, typeof(ConsecutiveReceiveState), "Неверное состояние после получения FirstFrame");
 
@@ -99,9 +99,9 @@ namespace IsoTpTest.Integration
                 receiver.InputQueue.Enqueue(new ConsecutiveFrame(dataReader.ReadBytes(consecutiveFramePayload), index++));
 
             var secondFlowControlFrame = (FlowControlFrame)TakeFrame(receiver, TimeSpan.FromSeconds(1));
-            Assert.AreEqual(secondFlowControlFrame.Flag, FlowControlFlag.ClearToSend);
-            Assert.AreEqual(secondFlowControlFrame.BlockSize, blockSize);
-            Assert.AreEqual(secondFlowControlFrame.SeparationTime, separationTime);
+            Assert.AreEqual(FlowControlFlag.ClearToSend, secondFlowControlFrame.Flag);
+            Assert.AreEqual(blockSize, secondFlowControlFrame.BlockSize);
+            Assert.AreEqual(separationTime, secondFlowControlFrame.SeparationTime);
 
             for (int i = 0; i < blockSize-1; i++)
                 receiver.InputQueue.Enqueue(new ConsecutiveFrame(dataReader.ReadBytes(consecutiveFramePayload), index++));
@@ -138,7 +138,7 @@ namespace IsoTpTest.Integration
             }
             catch (AggregateException e)
             {
-                Assert.AreEqual(e.InnerExceptions.Count, 1);
+                Assert.AreEqual(1, e.InnerExceptions.Count);
                 Assert.IsInstanceOfType(e.InnerExceptions.First(), typeof(IsoTpSequenceException));
                 var exc = (IsoTpSequenceException)e.InnerExceptions.First();
                 Assert.AreEqual(index + 1, exc.ExpectedIndex, "Ожидали сообщения с неправильным индексом");

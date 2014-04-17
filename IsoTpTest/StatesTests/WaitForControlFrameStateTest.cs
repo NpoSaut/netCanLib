@@ -26,11 +26,11 @@ namespace IsoTpTest.StatesTests
             connection.SetNextState(state);
             state.Operate(TimeSpan.MaxValue);
 
-            Assert.AreEqual(connection.SentFrames.Count, 0);
+            Assert.AreEqual(0, connection.SentFrames.Count);
             Assert.IsInstanceOfType(connection.ConnectionState, typeof(ConsecutiveSendState));
-            Assert.AreEqual(transaction.BlockSize, BlockSize);
-            Assert.AreEqual(transaction.SeparationTime, SeparationTime);
-            Assert.AreEqual(transaction.Index, 0);
+            Assert.AreEqual(BlockSize, transaction.BlockSize);
+            Assert.AreEqual(SeparationTime, transaction.SeparationTime);
+            Assert.AreEqual(0, transaction.Index);
         }
 
         [TestMethod]
@@ -45,7 +45,7 @@ namespace IsoTpTest.StatesTests
             connection.SetNextState(state);
             state.Operate(TimeSpan.MaxValue);
 
-            Assert.AreEqual(connection.SentFrames.Count, 0);
+            Assert.AreEqual(0, connection.SentFrames.Count);
             Assert.IsInstanceOfType(connection.ConnectionState, typeof(WaitForControlFrameState));
         }
 

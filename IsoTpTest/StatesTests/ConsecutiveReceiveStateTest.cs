@@ -34,22 +34,16 @@ namespace IsoTpTest.StatesTests
                                                          .Take(consecutivePayload)
                                                          .ToArray(), i));
                 state.Operate(TimeSpan.MaxValue);
-                Assert.AreEqual(transaction.Position, (i + 1) * consecutivePayload,
-                                "Курсор транзакции указывает на неправильную позицию");
-                Assert.AreEqual(transaction.ExpectedFrameIndex, i + 1,
-                                "Транзакция ожидает неправильный индекс сообщения");
+                Assert.AreEqual((i + 1) * consecutivePayload, transaction.Position, "Курсор транзакции указывает на неправильную позицию");
+                Assert.AreEqual(i + 1, transaction.ExpectedFrameIndex, "Транзакция ожидает неправильный индекс сообщения");
 
-                Assert.IsInstanceOfType(connection.ConnectionState, typeof (ConsecutiveReceiveState),
-                                        "Соединение оказалось в неверном состоянии после приёма {0} кадра", i);
+                Assert.IsInstanceOfType(connection.ConnectionState, typeof (ConsecutiveReceiveState), "Соединение оказалось в неверном состоянии после приёма {0} кадра", i);
             }
-            connection.IncomingQueue.Enqueue(
-                                             new ConsecutiveFrame(
-                                                 data.Skip(i * consecutivePayload).Take(consecutivePayload).ToArray(), i));
+            connection.IncomingQueue.Enqueue(new ConsecutiveFrame(data.Skip(i * consecutivePayload).Take(consecutivePayload).ToArray(), i));
             state.Operate(TimeSpan.MaxValue);
-            Assert.IsInstanceOfType(connection.ConnectionState, typeof (SendControlFrameState),
-                                    "Соединение не переключилось в состояние отправки ControlFrame после завершения отправки блока");
+            Assert.IsInstanceOfType(connection.ConnectionState, typeof (SendControlFrameState), "Соединение не переключилось в состояние отправки ControlFrame после завершения отправки блока");
 
-            Assert.AreEqual(transaction.Done, true, "Транзакция не пометилась как завершённая");
+            Assert.AreEqual(true, transaction.Done, "Транзакция не пометилась как завершённая");
             Assert.IsInstanceOfType(connection.FinishedTransaction, typeof (TpReceiveTransaction),
                                     "Соединению не была присвоена завершённая транзакция");
             Assert.IsTrue(transaction.Data.SequenceEqual(data), "Данные были повреждены при передаче");
@@ -76,12 +70,6 @@ namespace IsoTpTest.StatesTests
             }
             catch (IsoTpSequenceException)
             {
-                //                Assert.AreEqual(connection.SentFrames.Count, 1, "Должно было быть отправлено сообщение с отменой транзакции");
-                //                Assert.IsInstanceOfType(connection.SentFrames.Peek(), typeof(FlowControlFrame), "Отправлено сообщение неправильного типа");
-                //                var cancelFrame = (FlowControlFrame)connection.SentFrames.Dequeue();
-                //                Assert.AreEqual(cancelFrame.Flag, FlowControlFlag.Abort, "Отправленное FlowControl сообщение должно было отменить транзакцию");
-                //                
-                //                Assert.IsInstanceOfType(connection.ConnectionState, typeof(ReadyToReceiveState), "Соединение должно было перейти в состояние ожидания подключения");
                 return;
             }
 
@@ -99,10 +87,10 @@ namespace IsoTpTest.StatesTests
 
             state.OnException(new Exception());
 
-            Assert.AreEqual(connection.SentFrames.Count, 1, "Должно было отправиться сообщение об отмене");
+            Assert.AreEqual(1, connection.SentFrames.Count, "Должно было отправиться сообщение об отмене");
             Assert.IsInstanceOfType(connection.SentFrames.Peek(), typeof(FlowControlFrame), "Неверный тип отправленного сообщения об отмене транзакции");
             var frame = (FlowControlFrame)connection.SentFrames.Dequeue();
-            Assert.AreEqual(frame.Flag, FlowControlFlag.Abort, "Неверный флаг FlowControl сообщения");
+            Assert.AreEqual(FlowControlFlag.Abort, frame.Flag, "Неверный флаг FlowControl сообщения");
         }
     }
 }

@@ -24,9 +24,9 @@ namespace IsoTpTest.StatesTests
 
             state.Operate(TimeSpan.MaxValue);
 
-            Assert.AreEqual(connection.SentFrames.Count, 0, "Не должно было отправиться ни одного пакета");
+            Assert.AreEqual(0, connection.SentFrames.Count, "Не должно было отправиться ни одного пакета");
             Assert.IsInstanceOfType(connection.FinishedTransaction, typeof(TpReceiveTransaction), "Транзакция не была передана в соединение");
-            Assert.AreEqual(connection.FinishedTransaction.Done, true, "Транзакция не была помечена как завершённая");
+            Assert.AreEqual(true, connection.FinishedTransaction.Done, "Транзакция не была помечена как завершённая");
             Assert.IsTrue(connection.FinishedTransaction.Data.SequenceEqual(data), "Данные были повреждены при передаче");
         }
 
@@ -44,14 +44,14 @@ namespace IsoTpTest.StatesTests
 
             state.Operate(TimeSpan.MaxValue);
 
-            Assert.AreEqual(connection.SentFrames.Count, 0, "Не должно было отправиться ни одного пакета");
+            Assert.AreEqual(0, connection.SentFrames.Count, "Не должно было отправиться ни одного пакета");
             Assert.IsNull(connection.FinishedTransaction, "В соединении оказалась ненулевая завершённая транзакция");
             Assert.IsInstanceOfType(connection.ConnectionState, typeof(SendControlFrameState), "Неверное состояние соединения после принятия FirstFrame");
 
             var transaction = (TpReceiveTransaction)((SendControlFrameState)connection.ConnectionState).Transaction;
-            Assert.AreEqual(transaction.Done, false, "Транзакция ошибочно пометилась как завершённая");
-            Assert.AreEqual(transaction.Length, data.Length, "Неправильно определился размер транзакции");
-            Assert.AreEqual(transaction.Position, firstFramePayload, "В транзакцию не были записаны данные из первого кадра");
+            Assert.AreEqual(false, transaction.Done, "Транзакция ошибочно пометилась как завершённая");
+            Assert.AreEqual(data.Length, transaction.Length, "Неправильно определился размер транзакции");
+            Assert.AreEqual(firstFramePayload, transaction.Position, "В транзакцию не были записаны данные из первого кадра");
             Assert.IsTrue(transaction.Data.Take(firstFramePayload).SequenceEqual(data.Take(firstFramePayload)), "Данные исказились при передаче");
         }
     }
