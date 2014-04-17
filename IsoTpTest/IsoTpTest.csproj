@@ -56,6 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="ConcurrentTestIsoTpConnection.cs" />
     <Compile Include="PairedConnection.cs" />
     <Compile Include="Integration\TransactionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

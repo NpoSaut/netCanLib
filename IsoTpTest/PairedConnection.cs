@@ -34,7 +34,7 @@ namespace IsoTpTest
         public override IsoTpFrame ReadNextFrame(TimeSpan Timeout)
         {
             IsoTpFrame frame = null;
-            SpinWait.SpinUntil(() => InputQueue.TryDequeue(out frame));
+            SpinWait.SpinUntil(() => InputQueue.TryDequeue(out frame), Timeout);
             return frame;
         }
 
