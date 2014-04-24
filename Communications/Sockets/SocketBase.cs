@@ -5,50 +5,53 @@ using Communications.Exceptions;
 
 namespace Communications.Sockets
 {
-    public abstract class SocketBase<TDatagram> : ISocket<TDatagram>, ISocketBackend<TDatagram>
+    /// <summary>Базовая абстракция сокета</summary>
+    /// <typeparam name="TDatagram">Тип дейтаграмм, которыми оперирует данный сокет</typeparam>
+    public abstract class SocketBase<TDatagram> : ISocket<TDatagram>
     {
-        public virtual string Name { get; private set; }
-
         protected SocketBase(string Name)
         {
             this.Name = Name;
             IsOpened = true;
         }
 
-        public void Send(IEnumerable<TDatagram> Data)
-        {
-            if (!IsOpened) throw new SocketClosedException();
-            RequestSending(Data);
-        }
-        public abstract IEnumerable<TDatagram> Receive(TimeSpan Timeout = new TimeSpan(), bool ThrowExceptionOnTimeout = false); // TODO: Проверка на закрытость сокета
+        /// <summary>Имя сокета</summary>
+        public string Name { get; private set; }
 
-        public virtual void Send(params TDatagram[] Data) { Send(Data.AsEnumerable()); }
+        /// <summary>Проверяет, является ли сокет открытым</summary>
+        public bool IsOpened { get; private set; }
+
+        /// <summary>Отправляет дейтаграммы в сокет</summary>
+        public abstract void Send(IEnumerable<TDatagram> Data); // TODO: Проверка на закрытость сокета
+
+        /// <summary>Отправляет дейтаграмму в сокет</summary>
         public virtual void Send(TDatagram Data) { Send(new[] { Data }); }
 
-        #region IDisposable
-        public event EventHandler Closed;
-        public bool IsOpened { get; private set; }
+        /// <summary>Возникает при закрытии сокета</summary>
+        public virtual event EventHandler Closed;
+
+        /// <summary>Выполняет чтение из сокета</summary>
+        /// <param name="Timeout">Таймаут чтения</param>
+        /// <param name="ThrowExceptionOnTimeout">
+        ///     Указывает, следует ли выбрасывать исключение
+        ///     <see cref="SocketTimeoutException" /> при превышении таймаута чтения, или просто прервать считывание
+        ///     последовательности
+        /// </param>
+        /// <returns>Последовательность считанных дейтаграмм</returns>
+        public abstract IEnumerable<TDatagram> Receive(TimeSpan Timeout = new TimeSpan(),
+                                                       bool ThrowExceptionOnTimeout = false);
 
         public virtual void Dispose()
         {
             if (IsOpened)
             {
                 IsOpened = false;
-                var handler = Closed;
+                EventHandler handler = Closed;
                 if (handler != null) handler(this, EventArgs.Empty);
             }
         }
-        #endregion
 
-        public event EventHandler<SendRequestedEventArgs<TDatagram>> SendingRequested;
-
-        protected void RequestSending(IEnumerable<TDatagram> Datagrams)
-        {
-            var handler = SendingRequested;
-            if (handler != null) handler(this, new SendRequestedEventArgs<TDatagram>(Datagrams.ToList()));
-        }
-
-        /// <summary>Сюда передавать принятые с нижлежащего уровня сообщения</summary>
-        public abstract void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams);
+        /// <summary>Отправляет дейтаграммы в сокет</summary>
+        public virtual void Send(params TDatagram[] Data) { Send(Data.AsEnumerable()); }
     }
 }

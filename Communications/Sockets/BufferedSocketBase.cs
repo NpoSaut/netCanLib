@@ -14,7 +14,7 @@ namespace Communications.Sockets
     /// Разделяет процессы накладывания сообщений в себя и изъятия. Не препятствует помещению дейтаграмм в буфер, позволяя сделать это как можно быстрее.
     /// При изъятии сообщений выдаёт сообщение из буфера либо блокирует вызов до появление в буфере сообщений.
     /// </remarks>
-    public abstract class BufferedSocketBase<TDatagram> : SocketBase<TDatagram>
+    public abstract class BufferedSocketBase<TDatagram> : BackendSocketBase<TDatagram>
     {
         private readonly IDatagramBuffer<TDatagram> _buffer;
 

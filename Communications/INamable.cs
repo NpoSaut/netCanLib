@@ -2,14 +2,10 @@
 
 namespace Communications
 {
-    /// <summary>
-    /// Объект, имеющий имя
-    /// </summary>
+    /// <summary>Объект, имеющий имя</summary>
     public interface INamable
     {
-        /// <summary>
-        /// Имя объекта
-        /// </summary>
+        /// <summary>Имя объекта</summary>
         String Name { get; }
     }
 }

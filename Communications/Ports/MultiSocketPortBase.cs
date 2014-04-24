@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Communications.Sockets;
 
-namespace Communications
+namespace Communications.Ports
 {
     /// <summary>
-    /// Базовый класс порта. Реализует работу с сокетами.
+    /// Абстракция порта, работающего с несколькими сокетами
     /// </summary>
     /// <typeparam name="TSocket">Тип сокета</typeparam>
     /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
     /// <remarks>Реализует хранение списка сокетов, сбор сообщений на отправку с сокетов и рассылку по сокетам принятых с низлежащего уровня сообщений.</remarks>
-    public abstract class PortBase<TSocket, TDatagram> : IPort<TSocket>
+    public abstract class MultiSocketPortBase<TSocket, TDatagram> : PortBase<TSocket, TDatagram>
         where TSocket : ISocket<TDatagram>
     {
-        public string Name { get; private set; }
-
-        protected PortBase(string Name) { this.Name = Name; }
+        protected MultiSocketPortBase(string Name) : base(Name) { }
 
         #region Взаимодействие с реализацией порта
 
@@ -51,10 +48,6 @@ namespace Communications
             }
         }
 
-        /// <summary>Открывает новый сокет</summary>
-        /// <remarks>Класс-наследник реализует создание сокета и вызывает его регистрацию</remarks>
-        public abstract TSocket OpenSocket();
-
         private void ReleaseSocketBackend(ISocketBackend<TDatagram> Socket)
         {
             lock (_openedSocketsLocker)
@@ -75,16 +68,8 @@ namespace Communications
             }
         }
 
-        public event EventHandler AllSocketsDisposed;
-
-        private void OnAllSocketsDisposed()
-        {
-            var handler = AllSocketsDisposed;
-            if (handler != null) handler(this, EventArgs.Empty);
-        }
-
         /// <summary>Проверяет, есть ли у этого источника открытые сокеты</summary>
-        public bool HaveOpenedSockets
+        public override bool HaveOpenedSockets
         {
             get
             {
@@ -97,7 +82,7 @@ namespace Communications
 
         #endregion
         
-        public void Dispose()
+        public override void Dispose()
         {
             DisposeAllSockets();
         }

@@ -1,14 +1,13 @@
-using System;
 using System.Collections.Generic;
 
-namespace Communications
+namespace Communications.Ports
 {
     /// <summary>
     /// Порт, связанный с низлежащими уровнями посредством труб
     /// </summary>
     /// <typeparam name="TSocket">Тип сокета</typeparam>
     /// <typeparam name="TDatagram">Тип дейтаграммы</typeparam>
-    public abstract class PipedPortBase<TSocket, TDatagram> : PortBase<TSocket, TDatagram>
+    public abstract class PipedPortBase<TSocket, TDatagram> : MultiSocketPortBase<TSocket, TDatagram>
         where TSocket : ISocket<TDatagram>
     {
         /// <summary>Труба для отправки дейтаграмм</summary>
