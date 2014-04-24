@@ -15,13 +15,13 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// GUID устройства
         /// </summary>
-        public readonly static List<string> DeviceGuids = new List<string>
+        public static readonly List<string> DeviceGuids =
+            new List<string>
                                                           {
             "524cc09a-0a72-4d06-980e-afee3131196e",
             "3af3f480-41b5-4c24-b2a9-6aacf7de3d01"
         };
-        //public const string DeviceGuid = "524cc09a-0a72-4d06-980e-afee3131196e";
-        //public const string DeviceGuid = "3af3f480-41b5-4c24-b2a9-6aacf7de3d01";
+
         private String DevicePath { get; set; }
         /// <summary>
         /// USB-устройство
@@ -39,7 +39,6 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// Перечисляет все слоты подключённых устройств АППИ
         /// </summary>
-        /// <returns></returns>
         public static IEnumerable<AppiDeviceSlot> GetDevices()
         {
             return DeviceGuids.SelectMany(DeviceGuid =>
@@ -48,6 +47,9 @@ namespace Communications.Appi.Winusb
 
         internal WinusbAppiDev(USBDeviceInfo di)
         {
+            // TODO: Отлавливать исключения WinUsbNet
+            try
+            {
             Device = new USBDevice(di);
             DevicePath = di.DevicePath;
             
@@ -64,6 +66,11 @@ namespace Communications.Appi.Winusb
                 OpenedDevices.Add(this);
             }
         }
+            catch (USBException e)
+            {
+                throw new AppiConnectoinException(e);
+            }
+        }
 
         #region Чтение и запись буфера
         /// <summary>
@@ -78,7 +85,7 @@ namespace Communications.Appi.Winusb
                 //return buff.SkipWhile(b => b == 0).ToArray();
                 return buff;
             }
-            catch (USBException usbExc)
+            catch (Exception usbExc)
             {
                 OnDisconnected();
                 throw new AppiConnectoinException("Ошибка при чтении буфера АППИ из USB", usbExc);
