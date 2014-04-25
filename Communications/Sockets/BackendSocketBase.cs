@@ -16,13 +16,13 @@ namespace Communications.Sockets
         /// <summary>Сюда передавать принятые с нижлежащего уровня сообщения</summary>
         public abstract void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams);
 
-        public override void Send(IEnumerable<TDatagram> Data)
+        public override void Send(IEnumerable<TDatagram> Data, TimeSpan Timeout = default(TimeSpan))
         {
             if (!IsOpened) throw new SocketClosedException();
-            RequestSending(Data);
+            RequestSending(Data, Timeout);
         }
 
-        protected void RequestSending(IEnumerable<TDatagram> Datagrams)
+        protected void RequestSending(IEnumerable<TDatagram> Datagrams, TimeSpan Timeout)
         {
             EventHandler<SendRequestedEventArgs<TDatagram>> handler = SendingRequested;
             if (handler != null) handler(this, new SendRequestedEventArgs<TDatagram>(Datagrams.ToList()));

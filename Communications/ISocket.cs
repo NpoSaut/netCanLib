@@ -17,9 +17,9 @@ namespace Communications
     public interface ISocket<TDatagram> : ISocket
     {
         /// <summary>Отправляет дейтаграмму в сокет</summary>
-        void Send(TDatagram Data);
+        void Send(TDatagram Data, TimeSpan Timeout = default(TimeSpan));
         /// <summary>Отправляет дейтаграммы в сокет</summary>
-        void Send(IEnumerable<TDatagram> Data);
+        void Send(IEnumerable<TDatagram> Data, TimeSpan Timeout = default(TimeSpan));
 
         /// <summary>
         /// Производит блокирующее считывание данных из сокета

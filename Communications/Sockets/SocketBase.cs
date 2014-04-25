@@ -22,10 +22,10 @@ namespace Communications.Sockets
         public bool IsOpened { get; private set; }
 
         /// <summary>Отправляет дейтаграммы в сокет</summary>
-        public abstract void Send(IEnumerable<TDatagram> Data); // TODO: Проверка на закрытость сокета
+        public abstract void Send(IEnumerable<TDatagram> Data, TimeSpan Timeout = default(TimeSpan)); // TODO: Проверка на закрытость сокета
 
         /// <summary>Отправляет дейтаграмму в сокет</summary>
-        public virtual void Send(TDatagram Data) { Send(new[] { Data }); }
+        public virtual void Send(TDatagram Data, TimeSpan Timeout = default(TimeSpan)) { Send(new[] { Data }); }
 
         /// <summary>Возникает при закрытии сокета</summary>
         public virtual event EventHandler Closed;
