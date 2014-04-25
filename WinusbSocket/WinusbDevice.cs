@@ -30,6 +30,8 @@ namespace WinusbSocket
             var device = new USBDevice(_deviceInfo);
             return new WinUsbSocket(Name, device, _readBufferSize);
         }
+
+        public static IEnumerable<WinusbDevice> GetDevices(Guid DeviceGuid) { return USBDevice.GetDevices(DeviceGuid).Select(di => new WinusbDevice(di)); }
     }
 
     public interface IWinusbSocket : IUsbBulkSocket { }
