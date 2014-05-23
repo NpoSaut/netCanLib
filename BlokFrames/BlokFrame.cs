@@ -31,6 +31,12 @@ namespace BlokFrames
             return GetDescriptors(typeof(T));
         }
 
+        public static HalfsetKind GetHalfset(int Descriptor)
+        {
+            var t = FrameTypes[Descriptor];
+            return GetDescriptors(t).Single(x => x.Value == Descriptor).Key;
+        }
+
         public int GetLengthOf<T>() where T : BlokFrame
         {
             return GetLengthOf(typeof(T));
