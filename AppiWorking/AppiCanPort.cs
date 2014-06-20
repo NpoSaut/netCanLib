@@ -46,5 +46,14 @@ namespace Communications.Appi
                 base.OnBaudRateChanged(newValue);
             }
         }
+
+        private bool _isClosed;
+
+        internal void Close()
+        {
+            if (_isClosed) return;
+            _isClosed = true;
+            OnClosed();
+        }
     }
 }
