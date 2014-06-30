@@ -57,6 +57,10 @@
     <Compile Include="Can\LogReader\TextLogReaderPort.cs" />
     <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
     <Compile Include="Can\LogRecording\LogRecorder.cs" />
+    <Compile Include="Exceptions\CommunicationException.cs" />
+    <Compile Include="Exceptions\PortException.cs" />
+    <Compile Include="Exceptions\PortWriteAbortedException.cs" />
+    <Compile Include="Exceptions\PortWriteExceptionException.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="Port.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
