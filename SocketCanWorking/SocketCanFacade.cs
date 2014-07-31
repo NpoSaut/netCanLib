@@ -27,9 +27,7 @@ namespace SocketCanWorking
         /// <summary>Реализует чтение дейтаграмм из SocketCan.</summary>
         protected override IList<CanFrame> ReadDatagrams()
         {
-            CanFrame frame = SocketCanLib.Read(SocketNumber);
-            if (frame != null) return new[] { frame };
-            return new CanFrame[0];
+            return SocketCanLib.Read(SocketNumber, TimeSpan.FromMilliseconds(50));
         }
 
         /// <summary>Производит закрытие SocketCan-сокета и остановку петли чтения.</summary>

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using Communications.Can;
@@ -11,7 +13,7 @@ namespace SocketCanWorking
     {
         /// <summary>Флаги CanFd фрейма.</summary>
         [Flags]
-        public enum CanFdFlags : byte
+        private enum CanFdFlags : byte
         {
             /// <summary>Bit rate switch (second bitrate for payload data).</summary>
             CanFdBrs = 0x01,
@@ -20,10 +22,33 @@ namespace SocketCanWorking
             CanFdEsi = 0x02
         }
 
-        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+        /// <summary>Структура передачи CAN-кадра из SocketCan библиотеки.</summary>
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        private struct FrameBag
+        {
+            /// <summary>Сообщение.</summary>
+            public readonly SocketCanFdFrame Frame;
 
-        /// <summary>Структура CAN-фрейма в формате SocketCan.</summary>
-        [StructLayout(LayoutKind.Sequential)]
+            /// <summary>Время принятия сообщения.</summary>
+            public readonly TimeVal ReceiveTime;
+
+            /// <summary>Флаги принятого сообщения.</summary>
+            public readonly FrameBagFlags Flags;
+
+            public override string ToString() { return string.Format("ReceiveTime: {1}, Flags: {2}, Frame: ({0})", Frame, ReceiveTime, Flags); }
+        }
+
+        /// <summary>Флаги в структуре передачи CAN-кадра из SocketCan библиотеки.</summary>
+        [Flags]
+        private enum FrameBagFlags : byte
+        {
+            /// <summary>Показывает, что пакет является Loopback-пакетом.</summary>
+            /// <remarks>Loopback-пакеты в SocketCan используются для подтверждения отправки сообщения.</remarks>
+            Loopback = 0x01
+        }
+
+        /// <summary>Структура CAN-фрейма в формате SocketCanFd.</summary>
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
         private struct SocketCanFdFrame
         {
             /// <remarks>
@@ -49,7 +74,6 @@ namespace SocketCanWorking
             ///             <description>Frame format flag (0 = standart 11 bit, 1 = extended 29 bit).</description>
             ///         </item>
             ///     </list>
-            ///     .
             /// </remarks>
             public readonly UInt32 Id;
 
@@ -94,10 +118,33 @@ namespace SocketCanWorking
             public override string ToString() { return string.Format("Id: {0:X3}, DataLength: {1}, Flags: {2}", Id, DataLength, Flags); }
         }
 
+        /// <summary>Сишная структура TimeVal.</summary>
+        [StructLayout(LayoutKind.Sequential, Pack = 1)]
+        private struct TimeVal
+        {
+            private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
+            public TimeVal(uint UnixTime, uint Microseconds)
+            {
+                this.UnixTime = UnixTime;
+                this.Microseconds = Microseconds;
+            }
+
+            /// <summary>Время приёма сообщения с точностью до секунды (в формате UNIX Time).</summary>
+            public readonly UInt32 UnixTime;
+
+            /// <summary>Время приёма сообщения в микросекундах с начала текущей секунды.</summary>
+            public readonly UInt32 Microseconds;
+
+            public static implicit operator DateTime(TimeVal tv) { return Epoch.AddSeconds(tv.UnixTime).AddMilliseconds((Double)tv.Microseconds / 1000); }
+
+            public override string ToString() { return string.Format("{0}.{1:000000}s", UnixTime, Microseconds); }
+        }
+
         #region Импорт функций из библиотеки
 
         /// <summary>Имя библиотеки-связки с SocketCan.</summary>
-        private const string SocketCanLibraryName = "libSocketCanLib.so.1";
+        public const string SocketCanLibraryName = "libSocketCanLib.so.1";
 
         /// <summary>Открывает сокет.</summary>
         /// <param name="InterfaceName">Имя сокета в виде c-строки.</param>
@@ -118,17 +165,38 @@ namespace SocketCanWorking
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
         private static extern int SocketWrite(int Number, SocketCanFdFrame* Frame);
 
-        /// <summary>Читает из сокета.</summary>
+        /// <summary>Читает сообщения из входящего буфера сокета.</summary>
         /// <param name="Number">Номер сокета.</param>
-        /// <param name="Frame">Фрейм для отправки.</param>
-        /// <returns>True, если что-то прочитано.</returns>
+        /// <param name="Bags">Указатель на место, в которое будут помещены прочитанные сообщения.</param>
+        /// <param name="BagsCount">Количество принимаемых сообщений.</param>
+        /// <param name="Timeout">Таймаут ожидания сообщений в милисекундах (0 - до конца времён).</param>
+        /// <remarks>При отсутствии сообщений в буфере блокируется до появления первого сообщения или истечения
+        ///     <paramref name="Timeout" />. При наличии сообщений читает их и записывает в <paramref name="Bags" />.</remarks>
+        /// <returns>
+        ///     Количество принятых сообщений или код ошибки (см. таблицу ниже)
+        ///     <list type="table">
+        ///         <item>
+        ///             <term>N >= 0</term>
+        ///             <description>Количество принятых сообщений (не больше BagsNumber).</description>
+        ///         </item>
+        ///         <item>
+        ///             <term>-1</term>
+        ///             <description>Сокет закрыт</description>
+        ///         </item>
+        ///         <item>
+        ///             <term>-255</term>
+        ///             <description>Неизвестная ошибка</description>
+        ///         </item>
+        ///     </list>
+        /// </returns>
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        private static extern int SocketRead(int Number, SocketCanFdFrame* Frame);
+        private static extern int SocketRead(int Number, FrameBag* Bags, uint BagsCount, int Timeout);
 
         #endregion
 
         #region Оборачивание библиотечных функций
 
+        public const int ReceiveBufferLength = 16;
         private static readonly Encoder Encoder = Encoding.ASCII.GetEncoder();
 
         private static byte[] GetCString(String str)
@@ -139,16 +207,15 @@ namespace SocketCanWorking
             return cString;
         }
 
-        private static CanFrame GetCanFrame(SocketCanFdFrame ScFrame) { return GetCanFrame(ScFrame, DateTime.Now); }
-
-        private static CanFrame GetCanFrame(SocketCanFdFrame ScFrame, int EpochTime) { return GetCanFrame(ScFrame, Epoch.AddSeconds(EpochTime)); }
-
-        private static CanFrame GetCanFrame(SocketCanFdFrame scFrame, DateTime ReceiveTime)
+        private static CanFrame GetCanFrame(FrameBag Bag)
         {
+            SocketCanFdFrame scFrame = Bag.Frame;
+
             var data = new byte[scFrame.DataLength];
             for (int i = 0; i < data.Length; i++) data[i] = scFrame.Data[i];
             CanFrame res = CanFrame.NewWithId((int)scFrame.Id, data);
-            res.Time = ReceiveTime;
+            res.Time = Bag.ReceiveTime;
+            res.IsLoopback = Bag.Flags.HasFlag(FrameBagFlags.Loopback);
             return res;
         }
 
@@ -176,22 +243,21 @@ namespace SocketCanWorking
             if (writeStatus < 0) throw new SocketCanWriteException(-writeStatus);
         }
 
-        /// <summary>Пытается прочитать фрейм.</summary>
+        /// <summary>Пытается прочитать фреймы из сокета.</summary>
         /// <param name="SocketNumber">Номер сокета для чтения.</param>
-        /// <returns>Прочитаный фрейм или null, если нет фреймов в буфере.</returns>
-        public static CanFrame Read(int SocketNumber)
+        /// <param name="Timeout">Таймаут ожидания получения сообщения в случае, если во входящем буфере не оказалось сообщений.</param>
+        /// <returns>Список фреймов, прочитанных из указанного сокета.</returns>
+        public static IList<CanFrame> Read(int SocketNumber, TimeSpan Timeout)
         {
-            var scFrame = new SocketCanFdFrame();
-            int readStatus = SocketRead(SocketNumber, &scFrame);
-            switch (readStatus)
+            var bags = new FrameBag[ReceiveBufferLength];
+            int result;
+            fixed (FrameBag* bagsPtr = bags)
             {
-                case 0:
-                    return null;
-                case 1:
-                    return GetCanFrame(scFrame);
-                default:
-                    throw new SocketCanReadException(-readStatus);
+                result = SocketRead(SocketNumber, bagsPtr, ReceiveBufferLength, (int)Timeout.TotalMilliseconds);
             }
+
+            if (result >= 0) return bags.Take(result).Select(GetCanFrame).ToList();
+            throw new SocketCanReadException(-result);
         }
 
         #endregion
