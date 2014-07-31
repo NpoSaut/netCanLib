@@ -9,6 +9,8 @@ namespace SocketCanWorking
     /// <summary>Оболочка над функциями, экспортируемыми из SocketCan.</summary>
     public static unsafe class SocketCanLib
     {
+        private static readonly DateTime Epoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
+
         /// <summary>Структура CAN-фрейма в формате SocketCan.</summary>
         [StructLayout(LayoutKind.Sequential)]
         private struct SocketCanFrame
@@ -103,12 +105,16 @@ namespace SocketCanWorking
             return cString;
         }
 
-        private static CanFrame GetCanFrame(SocketCanFrame scFrame)
+        private static CanFrame GetCanFrame(SocketCanFrame ScFrame) { return GetCanFrame(ScFrame, DateTime.Now); }
+
+        private static CanFrame GetCanFrame(SocketCanFrame ScFrame, int EpochTime) { return GetCanFrame(ScFrame, Epoch.AddSeconds(EpochTime)); }
+
+        private static CanFrame GetCanFrame(SocketCanFrame scFrame, DateTime ReceiveTime)
         {
             var data = new byte[scFrame.DataLength];
             for (int i = 0; i < data.Length; i++) data[i] = scFrame.Data[i];
             CanFrame res = CanFrame.NewWithId((int)scFrame.Id, data);
-            res.Time = DateTime.Now;
+            res.Time = ReceiveTime;
             return res;
         }
 
