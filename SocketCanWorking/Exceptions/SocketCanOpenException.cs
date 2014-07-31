@@ -3,9 +3,7 @@ using System.Runtime.Serialization;
 
 namespace SocketCanWorking.Exceptions
 {
-    /// <Summary>
-    /// Ошибка при попытке открыть сокет
-    /// </Summary>
+    /// <Summary>Ошибка при попытке открыть сокет.</Summary>
     [Serializable]
     public class SocketCanOpenException : SocketCanException
     {

@@ -1,32 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Remoting.Messaging;
 using Communications.Can;
 
 namespace SocketCanWorking
 {
-    /// <summary>
-    /// Содержит методы для работы с Linux-овым SocketCan
-    /// </summary>
+    /// <summary>Содержит методы для работы с Linux-овым SocketCan.</summary>
     public static class SocketCan
     {
         private static readonly Dictionary<String, CanPort> OpenedPorts = new Dictionary<string, CanPort>();
 
-        /// <summary>
-        /// Открывает SocketCan-порт
-        /// </summary>
-        /// <param name="InterfaceName">Системное имя порта</param>
+        /// <summary>Открывает SocketCan-порт.</summary>
+        /// <param name="InterfaceName">Системное имя порта.</param>
         public static CanPort OpenPort(String InterfaceName)
         {
             lock (OpenedPorts)
             {
                 if (OpenedPorts.ContainsKey(InterfaceName)) return OpenedPorts[InterfaceName];
-                else
-                {
-                    var res = OpenNewPort(InterfaceName);
-                    OpenedPorts.Add(InterfaceName, res);
-                    return res;
-                }
+                CanPort res = OpenNewPort(InterfaceName);
+                OpenedPorts.Add(InterfaceName, res);
+                return res;
             }
         }
 

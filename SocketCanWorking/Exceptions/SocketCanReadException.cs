@@ -3,13 +3,10 @@ using System.Runtime.Serialization;
 
 namespace SocketCanWorking.Exceptions
 {
-    /// <Summary>
-    /// Ошибка при чтении из SocketCan
-    /// </Summary>
+    /// <Summary>Ошибка при чтении из SocketCan.</Summary>
     [Serializable]
     public class SocketCanReadException : SocketCanException
     {
-         
         public SocketCanReadException() : base("Ошибка при чтении из SocketCan") { }
         public SocketCanReadException(int errorCode) : base(string.Format("Ошибка #{0} при чтении из SocketCan", errorCode)) { }
         public SocketCanReadException(Exception inner) : base("Ошибка при чтении из SocketCan", inner) { }
