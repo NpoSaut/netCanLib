@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Communications.Can;
+using SocketCanWorking.LinuxSockets;
 
 namespace SocketCanWorking.ReadersWriters
 {

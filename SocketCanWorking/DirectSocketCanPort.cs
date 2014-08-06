@@ -1,6 +1,7 @@
 ﻿using Communications;
 using Communications.Can;
 using Communications.Ports;
+using SocketCanWorking.LinuxSockets;
 using SocketCanWorking.ReadersWriters;
 
 namespace SocketCanWorking

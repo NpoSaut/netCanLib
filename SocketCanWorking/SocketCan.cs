@@ -2,6 +2,7 @@
 using Communications;
 using Communications.Can;
 using SocketCanWorking.Lib;
+using SocketCanWorking.LinuxSockets;
 
 namespace SocketCanWorking
 {

@@ -1,15 +1,8 @@
 ﻿using System;
 using SocketCanWorking.Lib;
 
-namespace SocketCanWorking
+namespace SocketCanWorking.LinuxSockets
 {
-    /// <summary>Фабрика по производству объектов типа <see cref="ILinuxSocket" />
-    /// </summary>
-    public interface ILinuxSocketFactory
-    {
-        ILinuxSocket OpenLinuxSocket(String InterfaceName);
-    }
-
     /// <summary>
     ///     Производит объекты типа <see cref="LinuxSocket" />, работающие через указанный интерфейс
     ///     <see cref="ISocketCanLibFacade" /> к библиотеке для работы с SocketCan

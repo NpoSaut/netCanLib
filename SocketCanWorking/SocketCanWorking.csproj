@@ -51,8 +51,10 @@
     <Compile Include="Lib\ISocketCanLibFacade.cs" />
     <Compile Include="Lib\SocketCanFdFrame.cs" />
     <Compile Include="Lib\TimeVal.cs" />
-    <Compile Include="LinuxSocket.cs" />
-    <Compile Include="LinuxSocketFactory.cs" />
+    <Compile Include="LinuxSockets\ILinuxSocket.cs" />
+    <Compile Include="LinuxSockets\ILinuxSocketFactory.cs" />
+    <Compile Include="LinuxSockets\LinuxSocket.cs" />
+    <Compile Include="LinuxSockets\LinuxSocketFactory.cs" />
     <Compile Include="ReadersWriters\DirectSocketCanReader.cs" />
     <Compile Include="ReadersWriters\DirectSocketCanWriter.cs" />
     <Compile Include="SocketCan.cs" />
