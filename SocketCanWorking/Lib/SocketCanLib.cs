@@ -6,7 +6,7 @@ namespace SocketCanWorking.Lib
     public static unsafe class SocketCanLib
     {
         /// <summary>Имя библиотеки-связки с SocketCan.</summary>
-        public const string SocketCanLibraryName = "libSocketCanLib.so.1";
+        public const string SocketCanLibraryName = "libSocketCanLib.so.2";
 
         /// <summary>Открывает сокет.</summary>
         /// <param name="InterfaceName">Имя сокета в виде c-строки.</param>
@@ -20,12 +20,14 @@ namespace SocketCanWorking.Lib
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SocketClose(int Number);
 
-        /// <summary>Отправляет в сокет.</summary>
-        /// <param name="Number">Номер сокета.</param>
-        /// <param name="Frame">Фрейм для отправки.</param>
-        /// <returns>True, если фрейм успешно отправлен.</returns>
+        /// <summary>Ставит сообщения в очередь SocketCan на отправку.</summary>
+        /// <remarks>Если очередь свободна, то не блокирует. Иначе блокируется до освобождения места в очереди.</remarks>
+        /// <param name="Number">Номер сокета</param>
+        /// <param name="Frame">Указатель на первое отправляемое сообщение</param>
+        /// <param name="FramesCount">Количество отправляемых сообщений</param>
+        /// <returns>Возвращает 1 в случае успеха и отрицательный код ошибки при ошибке.</returns>
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SocketWrite(int Number, SocketCanFdFrame* Frame);
+        public static extern int SocketWrite(int Number, SocketCanFdFrame* Frame, int FramesCount);
 
         /// <summary>Читает сообщения из входящего буфера сокета.</summary>
         /// <param name="Number">Номер сокета.</param>
@@ -53,5 +55,12 @@ namespace SocketCanWorking.Lib
         /// </returns>
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
         public static extern int SocketRead(int Number, FrameBag* Bags, uint BagsCount, int Timeout);
+
+        /// <summary>Очищает буфер принятых сообщений сокета</summary>
+        /// <remarks>Функция блокирующая</remarks>
+        /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>
+        /// <returns>При успехе возвращает 0, в случае ошибки отрицательный код ошибки</returns>
+        [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
+        public static extern int FlushInBuffer(int SocketNumber);
     }
 }

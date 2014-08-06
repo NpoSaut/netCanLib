@@ -27,5 +27,9 @@ namespace SocketCanWorking.Lib
         /// <param name="Timeout">Таймаут ожидания получения сообщения в случае, если во входящем буфере не оказалось сообщений.</param>
         /// <returns>Список фреймов, прочитанных из указанного сокета.</returns>
         IList<CanFrame> Read(int SocketNumber, TimeSpan Timeout);
+
+        /// <summary>Выполняет отчистку буфера входящих сообщений для указанного сокета</summary>
+        /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>
+        void FlushInBuffer(int SocketNumber);
     }
 }

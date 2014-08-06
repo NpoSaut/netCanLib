@@ -21,6 +21,9 @@ namespace SocketCanWorking.LinuxSockets
         /// <summary>Выполняет определяемые приложением задачи, связанные с высвобождением или сбросом неуправляемых ресурсов.</summary>
         public void Dispose() { _libFacade.Close(_socketNumber); }
 
+        /// <summary>Смывает буфер входящих сообщений</summary>
+        public void FlushInBuffer() { _libFacade.FlushInBuffer(_socketNumber); }
+
         /// <summary>Ставит сообщения в очередь на отправку в SocketCan</summary>
         /// <param name="Frames">Сообщения для отправки</param>
         public void Send(IList<CanFrame> Frames) { _libFacade.Write(_socketNumber, Frames); }

@@ -8,6 +8,9 @@ namespace SocketCanWorking.LinuxSockets
     /// <remarks>Реализует открытие сокета, получение и хранение его номера, а так же запись и чтение по своему номеру сокета</remarks>
     public interface ILinuxSocket : IDisposable
     {
+        /// <summary>Смывает буфер входящих сообщений</summary>
+        void FlushInBuffer();
+
         /// <summary>Ставит сообщения в очередь на отправку в SocketCan</summary>
         /// <param name="Frames">Сообщения для отправки</param>
         void Send(IList<CanFrame> Frames);

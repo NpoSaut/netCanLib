@@ -1,4 +1,5 @@
 ﻿using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -33,11 +34,11 @@ namespace SocketCanWorking.Lib
         /// <param name="Frame">Фрейм для отправки.</param>
         public void Write(int SocketNumber, IList<CanFrame> Frame)
         {
-            foreach (var frame in Frame)
+            var framesBuffer = Frame.Select(f => new SocketCanFdFrame(f)).ToArray();
+            fixed (SocketCanFdFrame* framesBufferPtr = framesBuffer)
             {
-                var scFrame = new SocketCanFdFrame(frame);
-                int writeStatus = SocketCanLib.SocketWrite(SocketNumber, &scFrame);
-                if (writeStatus < 0) throw new SocketCanWriteException(-writeStatus);
+                int res = SocketCanLib.SocketWrite(SocketNumber, framesBufferPtr, framesBuffer.Length);
+                if (res < 0) throw new SocketCanWriteException(-res);
             }
         }
 
@@ -54,11 +55,16 @@ namespace SocketCanWorking.Lib
                 result = SocketCanLib.SocketRead(SocketNumber, bagsPtr, ReceiveBufferLength, (int)Timeout.TotalMilliseconds);
             }
 
-            foreach (FrameBag bag in bags.Take(result))
-                Console.WriteLine("    -> BAG: {{ {0} }}", bag);
-
             if (result >= 0) return bags.Take(result).Select(GetCanFrame).ToList();
             throw new SocketCanReadException(-result);
+        }
+
+        /// <summary>Выполняет отчистку буфера входящих сообщений для указанного сокета</summary>
+        /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>
+        public void FlushInBuffer(int SocketNumber)
+        {
+            var res = SocketCanLib.FlushInBuffer(SocketNumber);
+            if (res < 0) throw new SocketCanFlushException(-res);
         }
 
         private static byte[] GetCString(String str)
