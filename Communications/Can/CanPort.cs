@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using Communications.Ports;
 
 namespace Communications.Can
 {
@@ -33,7 +34,7 @@ namespace Communications.Can
         }
 
         /// <summary>Открывает новый сокет</summary>
-        public override ICanSocket OpenSocket() { return OpenFilteredSocket(); }
+        protected override ICanSocket ImplementOpenSocket() { return OpenFilteredSocket(); }
 
         /// <summary>Открывает новый CAN-сокет с фильтром входящих сообщений по дескриптору</summary>
         /// <param name="Filter">Список принимаемых дескрипторов</param>

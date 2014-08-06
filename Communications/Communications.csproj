@@ -63,9 +63,10 @@
     <Compile Include="IPipes.cs" />
     <Compile Include="IPort.cs" />
     <Compile Include="ISocketBackend.cs" />
-    <Compile Include="PipedPortBase.cs" />
+    <Compile Include="Ports\PortBase.cs" />
+    <Compile Include="Ports\BackendPortBase.cs" />
+    <Compile Include="Ports\PipedPortBase.cs" />
     <Compile Include="Piping\LoopReadingPipeBase.cs" />
-    <Compile Include="PortBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial\RsPort.cs" />
     <Compile Include="ISocket.cs" />
