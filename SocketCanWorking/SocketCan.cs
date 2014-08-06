@@ -1,32 +1,19 @@
 ﻿using System;
-using System.Collections.Generic;
+using Communications;
 using Communications.Can;
+using SocketCanWorking.Lib;
 
 namespace SocketCanWorking
 {
     /// <summary>Содержит методы для работы с Linux-овым SocketCan.</summary>
     public static class SocketCan
     {
-        private static readonly Dictionary<String, CanPort> OpenedPorts = new Dictionary<string, CanPort>();
+        private static readonly ILinuxSocketFactory linuxSocketFactory;
+
+        static SocketCan() { linuxSocketFactory = new LinuxSocketFactory(new SocketCanLibFacade()); }
 
         /// <summary>Открывает SocketCan-порт.</summary>
-        /// <param name="InterfaceName">Системное имя порта.</param>
-        public static CanPort OpenPort(String InterfaceName)
-        {
-            lock (OpenedPorts)
-            {
-                if (OpenedPorts.ContainsKey(InterfaceName)) return OpenedPorts[InterfaceName];
-                CanPort res = OpenNewPort(InterfaceName);
-                OpenedPorts.Add(InterfaceName, res);
-                return res;
-            }
-        }
-
-        private static CanPort OpenNewPort(string InterfaceName)
-        {
-            var facade = new SocketCanFacade(InterfaceName);
-            var res = new CanPort(InterfaceName, facade, facade);
-            return res;
-        }
+        /// <param name="InterfaceName">Системное имя интерфейса.</param>
+        public static IPort<ICanSocket> OpenDirectPort(String InterfaceName) { return new DirectSocketCanPort(InterfaceName, linuxSocketFactory); }
     }
 }

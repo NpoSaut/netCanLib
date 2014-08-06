@@ -45,10 +45,18 @@
     <Compile Include="Exceptions\SocketCanOpenException.cs" />
     <Compile Include="Exceptions\SocketCanReadException.cs" />
     <Compile Include="Exceptions\SocketCanWriteException.cs" />
+    <Compile Include="Lib\FrameBag.cs" />
+    <Compile Include="Lib\ISocketCanLibFacade.cs" />
+    <Compile Include="Lib\SocketCanFdFrame.cs" />
+    <Compile Include="Lib\TimeVal.cs" />
+    <Compile Include="LinuxSocket.cs" />
+    <Compile Include="LinuxSocketFactory.cs" />
     <Compile Include="SocketCan.cs" />
-    <Compile Include="SocketCanFacade.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SocketCanLib.cs" />
+    <Compile Include="Lib\SocketCanLib.cs" />
+    <Compile Include="Lib\SocketCanLibFacade.cs" />
+    <Compile Include="DirectSocketCanPort.cs" />
+    <Compile Include="DirectSocketCanSocket.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communications\Communications.csproj">
