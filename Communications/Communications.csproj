@@ -69,6 +69,8 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial\RsPort.cs" />
     <Compile Include="ISocket.cs" />
+    <Compile Include="Sockets\BackendSocketBase.cs" />
+    <Compile Include="Tools\TryCatchEnumeration.cs" />
     <Compile Include="TimeoutReaderHelper.cs" />
     <Compile Include="Sockets\BufferedSocketBase.cs" />
     <Compile Include="Sockets\SocketBase.cs" />
