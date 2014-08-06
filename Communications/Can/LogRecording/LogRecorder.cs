@@ -22,7 +22,7 @@ namespace Communications.Can.LogRecording
             }
         }
 
-        protected LogRecorder(CanPort Port, FileInfo LogFile)
+        protected LogRecorder(ICanPort Port, FileInfo LogFile)
         {
             this.LogFile = LogFile;
             FileStream = LogFile.Open(FileMode.Append, FileAccess.Write);

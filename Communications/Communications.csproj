@@ -42,12 +42,12 @@
   <ItemGroup>
     <Compile Include="BaudRates.cs" />
     <Compile Include="Can\CanFrame.cs" />
-    <Compile Include="Can\CanPort.cs" />
     <Compile Include="Can\CanSocket.cs" />
     <Compile Include="Can\FrameEncoders\FrameTextEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameSbsEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameStreamEncoder.cs" />
+    <Compile Include="Can\ICanPort.cs" />
     <Compile Include="Can\ICanSocket.cs" />
     <Compile Include="Can\ICanSocketSource.cs" />
     <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
@@ -57,6 +57,7 @@
     <Compile Include="Exceptions\SocketReadTimeoutException.cs" />
     <Compile Include="Exceptions\SocketSendTimeoutException.cs" />
     <Compile Include="Exceptions\SocketTimeoutException.cs" />
+    <Compile Include="IBaudRateable.cs" />
     <Compile Include="IClosable.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="INamable.cs" />
@@ -66,10 +67,17 @@
     <Compile Include="Ports\PortBase.cs" />
     <Compile Include="Ports\BackendPortBase.cs" />
     <Compile Include="Ports\PipedPortBase.cs" />
+    <Compile Include="Piping\Packages\DirectiveOutgoingPack.cs" />
+    <Compile Include="Piping\Packages\IDirectiveOutgoingPack.cs" />
+    <Compile Include="Piping\Packages\IQueueOutgoingPack.cs" />
+    <Compile Include="Piping\Packages\IOutgoingPack.cs" />
     <Compile Include="Piping\LoopReadingPipeBase.cs" />
+    <Compile Include="Piping\PackageFeedbackSendingPipeBase.cs" />
+    <Compile Include="Piping\Packages\CounterOutgoingPack.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serial\RsPort.cs" />
     <Compile Include="ISocket.cs" />
+    <Compile Include="Serial\IRsPort.cs" />
+    <Compile Include="Serial\IRsSocket.cs" />
     <Compile Include="Sockets\BackendSocketBase.cs" />
     <Compile Include="Tools\TryCatchEnumeration.cs" />
     <Compile Include="TimeoutReaderHelper.cs" />

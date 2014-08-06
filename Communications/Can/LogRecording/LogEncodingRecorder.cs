@@ -9,7 +9,7 @@ namespace Communications.Can.LogRecording
     {
         public FrameStreamEncoder Encoder { get; private set; }
 
-        public LogEncodingRecorder(CanPort Port, FileInfo LogFile)
+        public LogEncodingRecorder(ICanPort Port, FileInfo LogFile)
             : base(Port, LogFile)
         {
             Encoder = new TEncoder();
