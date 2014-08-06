@@ -1,20 +1,18 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using Communications.Exceptions;
 
 namespace Communications.Sockets
 {
-    /// <summary>
-    /// Абстракция сокета, буферизирующего все входящие дейтаграммы до момента их прочтения
-    /// </summary>
+    /// <summary>Абстракция сокета, буферизирующего все входящие дейтаграммы до момента их прочтения</summary>
     /// <remarks>
-    /// Разделяет процессы накладывания сообщений в себя и изъятия. Не препятствует помещению дейтаграмм в буфер, позволяя сделать это как можно быстрее.
-    /// При изъятии сообщений выдаёт сообщение из буфера либо блокирует вызов до появление в буфере сообщений.
+    ///     Разделяет процессы накладывания сообщений в себя и изъятия. Не препятствует помещению дейтаграмм в буфер,
+    ///     позволяя сделать это как можно быстрее. При изъятии сообщений выдаёт сообщение из буфера либо блокирует вызов до
+    ///     появление в буфере сообщений.
     /// </remarks>
-    public abstract class BufferedSocketBase<TDatagram> : SocketBase<TDatagram>
+    public abstract class BufferedSocketBase<TDatagram> : BackendSocketBase<TDatagram>
     {
         private readonly IDatagramBuffer<TDatagram> _buffer;
 
@@ -23,37 +21,21 @@ namespace Communications.Sockets
 
         /// <summary>Добавляет датаграммы в очередь на обработку</summary>
         /// <param name="Datagrams">Полученные датаграммы</param>
-        public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams) { _buffer.Enqueue(Datagrams); }
-
-        /// <summary>
-        /// Выполняет блокирующее считывание дейтаграммы из входящего потока до тех пор, пока время между соседними дейтаграммами не превысит указанный таймаут
-        /// </summary>
-        public override IEnumerable<TDatagram> Receive(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeout = false)
-        {
-            return _buffer.Read(Timeout, ThrowExceptionOnTimeout);
-        }
-    }
-
-    public abstract class BufferedFilteredSocketBase<TDatagram> : BufferedSocketBase<TDatagram>
-    {
-        protected BufferedFilteredSocketBase(string Name) : base(Name) { }
-        protected BufferedFilteredSocketBase(string Name, IDatagramBuffer<TDatagram> Buffer) : base(Name, Buffer) { }
-
-        /// <summary>Проверяет, нужно ли помещать дейтаграмму в буфер. При необходимости можно заменить, чтобы не вызывать переполнение буфера лишними дейтаграммамаи</summary>
-        protected abstract bool CheckDatagramBeforeEnqueue(TDatagram Datagram);
-
-        /// <summary>Фильтрует и добавляет датаграммы в очередь на обработку</summary>
-        /// <param name="Datagrams">Полученные датаграммы</param>
         public override void ProcessReceivedDatagrams(IEnumerable<TDatagram> Datagrams)
         {
-            base.ProcessReceivedDatagrams(Datagrams.Where(CheckDatagramBeforeEnqueue));
+            _buffer.Enqueue(Datagrams);
+        }
+
+        protected override IEnumerable<TDatagram> ImplementReceive(TimeSpan Timeout)
+        {
+            return _buffer.Read(Timeout);
         }
     }
 
     public interface IDatagramBuffer<TDatagram>
     {
         void Enqueue(IEnumerable<TDatagram> Datagrams);
-        IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false);
+        IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan));
     }
 
     public class ConcurrentDatagramBuffer<TDatagram> : IDatagramBuffer<TDatagram>
@@ -62,22 +44,20 @@ namespace Communications.Sockets
 
         public void Enqueue(IEnumerable<TDatagram> Datagrams)
         {
-            foreach (var datagram in Datagrams)
-            {
+            foreach (TDatagram datagram in Datagrams)
                 _incomingDatagrams.Enqueue(datagram);
-            }
         }
-        public IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeOut = false)
+
+        public IEnumerable<TDatagram> Read(TimeSpan Timeout = default(TimeSpan))
         {
             if (Timeout == TimeSpan.Zero) Timeout = TimeSpan.MaxValue;
             while (true)
             {
                 TDatagram dtg = default(TDatagram);
-                var ok = SpinWait.SpinUntil(() => _incomingDatagrams.TryDequeue(out dtg), Timeout);
+                bool ok = SpinWait.SpinUntil(() => _incomingDatagrams.TryDequeue(out dtg), Timeout);
 
                 if (ok) yield return dtg;
-                else if (ThrowExceptionOnTimeOut) throw new SocketReadTimeoutException("Превышено время ожидания дейтаграммы");
-                else yield break;
+                else throw new SocketReadTimeoutException("Превышено время ожидания дейтаграммы");
             }
         }
     }
