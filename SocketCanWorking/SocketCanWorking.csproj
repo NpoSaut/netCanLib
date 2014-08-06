@@ -62,7 +62,7 @@
     <Compile Include="Lib\SocketCanLib.cs" />
     <Compile Include="Lib\SocketCanLibFacade.cs" />
     <Compile Include="DirectSocketCanPort.cs" />
-    <Compile Include="DirectSocketCanSocket.cs" />
+    <Compile Include="SocketCanSocket.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communications\Communications.csproj">
