@@ -36,6 +36,15 @@ namespace Communications
         ///     При превышении времени ожидания сообщения (если
         ///     <paramref name="ThrowExceptionOnTimeout" /> == true)
         /// </exception>
-        IEnumerable<TDatagram> Receive(TimeSpan Timeout = default(TimeSpan), bool ThrowExceptionOnTimeout = false);
+        IEnumerable<TDatagram> Receive(TimeSpan Timeout, bool ThrowExceptionOnTimeout = false);
+
+        /// <summary>Производит блокирующее считывание данных из сокета</summary>
+        /// <returns>Последовательность считанных дейтаграмм</returns>
+        /// <remarks>
+        ///     Поскольку функция блокирующая и считывает _все_ приходящие кадры, выход из этого перечисления не предусмотрен.
+        ///     Для правильной работы следует пользоваться лишь методами вроде методов, извлекающих N первых членов
+        ///     последовательности (First, Take, TakeWhile, ...)
+        /// </remarks>
+        IEnumerable<TDatagram> Receive();
     }
 }

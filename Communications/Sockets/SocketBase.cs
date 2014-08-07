@@ -26,12 +26,25 @@ namespace Communications.Sockets
         ///     прекращено
         /// </param>
         /// <exception cref="SocketReadTimeoutException">Превышено время ожидания очередного сообщения</exception>
-        public IEnumerable<TDatagram> Receive(TimeSpan Timeout = new TimeSpan(), bool ThrowExceptionOnTimeout = false)
+        public IEnumerable<TDatagram> Receive(TimeSpan Timeout, bool ThrowExceptionOnTimeout)
         {
             if (!IsOpened) throw new SocketClosedException();
             IEnumerable<TDatagram> datagramsFlow = ImplementReceive(Timeout);
             if (!ThrowExceptionOnTimeout) datagramsFlow = datagramsFlow.SuppressExceptions<TDatagram, SocketReadTimeoutException>();
             return datagramsFlow;
+        }
+
+        /// <summary>Производит блокирующее считывание данных из сокета</summary>
+        /// <returns>Последовательность считанных дейтаграмм</returns>
+        /// <remarks>
+        ///     Поскольку функция блокирующая и считывает _все_ приходящие кадры, выход из этого перечисления не предусмотрен.
+        ///     Для правильной работы следует пользоваться лишь методами вроде методов, извлекающих N первых членов
+        ///     последовательности (First, Take, TakeWhile, ...)
+        /// </remarks>
+        public IEnumerable<TDatagram> Receive()
+        {
+            if (!IsOpened) throw new SocketClosedException();
+            return ImplementReceive();
         }
 
         public virtual void Send(TDatagram Data) { Send(new[] { Data }); }
@@ -63,5 +76,6 @@ namespace Communications.Sockets
 
         protected abstract void ImplementSend(IEnumerable<TDatagram> Datagrams);
         protected abstract IEnumerable<TDatagram> ImplementReceive(TimeSpan Timeout);
+        protected virtual IEnumerable<TDatagram> ImplementReceive() { return ImplementReceive(TimeSpan.MaxValue); }
     }
 }
