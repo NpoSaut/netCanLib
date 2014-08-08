@@ -15,6 +15,6 @@ namespace SocketCanWorking
 
         /// <summary>Открывает SocketCan-порт.</summary>
         /// <param name="InterfaceName">Системное имя интерфейса.</param>
-        public static IPort<ICanSocket> OpenDirectPort(String InterfaceName) { return new DirectSocketCanPort(InterfaceName, linuxSocketFactory); }
+        public static IPort<ICanSocket> OpenDirectPort(String InterfaceName) { return new IndependedSocketCanPort(InterfaceName, linuxSocketFactory); }
     }
 }

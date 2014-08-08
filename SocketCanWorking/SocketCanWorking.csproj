@@ -46,6 +46,7 @@
     <Compile Include="Exceptions\SocketCanOpenException.cs" />
     <Compile Include="Exceptions\SocketCanReadException.cs" />
     <Compile Include="Exceptions\SocketCanWriteException.cs" />
+    <Compile Include="IndependedSocketCanPort.cs" />
     <Compile Include="ISocketCanReader.cs" />
     <Compile Include="ISocketCanWriter.cs" />
     <Compile Include="Lib\FrameBag.cs" />
@@ -56,8 +57,10 @@
     <Compile Include="LinuxSockets\ILinuxSocketFactory.cs" />
     <Compile Include="LinuxSockets\LinuxSocket.cs" />
     <Compile Include="LinuxSockets\LinuxSocketFactory.cs" />
+    <Compile Include="ReadersWriters\CanFrameComparer.cs" />
     <Compile Include="ReadersWriters\DirectSocketCanReader.cs" />
     <Compile Include="ReadersWriters\DirectSocketCanWriter.cs" />
+    <Compile Include="ReadersWriters\IndependentSocketCanWriter.cs" />
     <Compile Include="ReadersWriters\SlicedSocketCanWriterBase.cs" />
     <Compile Include="SocketCan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
