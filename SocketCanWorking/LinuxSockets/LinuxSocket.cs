@@ -34,7 +34,8 @@ namespace SocketCanWorking.LinuxSockets
 
         /// <summary>Ставит сообщения в очередь на отправку в SocketCan</summary>
         /// <param name="Frames">Сообщения для отправки</param>
-        public void Send(IList<CanFrame> Frames) { _libFacade.Write(_socketNumber, Frames); }
+        /// <returns>Количество сообщений, поставленых в буфер</returns>
+        public int Send(IList<CanFrame> Frames) { return _libFacade.Write(_socketNumber, Frames); }
 
         /// <summary>Выполняет чтение из сокета</summary>
         /// <param name="Timeout">Таймаут операции чтения</param>

@@ -22,7 +22,8 @@ namespace SocketCanWorking.Lib
         /// <summary>Отправляет CAN-фрейм.</summary>
         /// <param name="SocketNumber">Номер сокета для отправки.</param>
         /// <param name="Frames">Фрейм для отправки.</param>
-        void Write(int SocketNumber, IList<CanFrame> Frames);
+        /// <returns>Количество сообщений, поставленых в буфер</returns>
+        int Write(int SocketNumber, IList<CanFrame> Frames);
 
         /// <summary>Пытается прочитать фреймы из сокета.</summary>
         /// <param name="SocketNumber">Номер сокета для чтения.</param>

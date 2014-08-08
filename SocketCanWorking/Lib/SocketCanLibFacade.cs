@@ -32,13 +32,15 @@ namespace SocketCanWorking.Lib
         /// <summary>Отправляет CAN-фрейм.</summary>
         /// <param name="SocketNumber">Номер сокета для отправки.</param>
         /// <param name="Frames">Фрейм для отправки.</param>
-        public void Write(int SocketNumber, IList<CanFrame> Frames)
+        /// <returns>Количество сообщений, поставленых в буфер</returns>
+        public int Write(int SocketNumber, IList<CanFrame> Frames)
         {
             SocketCanFdFrame[] framesBuffer = Frames.Select(f => new SocketCanFdFrame(f)).ToArray();
             fixed (SocketCanFdFrame* framesBufferPtr = framesBuffer)
             {
                 int res = SocketCanLib.SocketWrite(SocketNumber, framesBufferPtr, framesBuffer.Length);
-                if (res < 0) throw new SocketCanWriteException(-res);
+                if (res >= 0) return res;
+                else throw new SocketCanWriteException(-res);
             }
         }
 
