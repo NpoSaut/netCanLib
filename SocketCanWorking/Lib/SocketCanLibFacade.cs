@@ -1,5 +1,4 @@
 ﻿using System;
-using System.CodeDom;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,14 +12,15 @@ namespace SocketCanWorking.Lib
     {
         public const int ReceiveBufferLength = 16;
         private static readonly Encoder Encoder = Encoding.ASCII.GetEncoder();
-        public SocketCanLibFacade() { }
 
         /// <summary>Открывает сокет.</summary>
-        /// <param name="InterfaceName">Имя сокета в виде c-строки.</param>
+        /// <param name="InterfaceName">Имя сокета</param>
+        /// <param name="RxBuffSize">Размер буфера входящих сообщений</param>
+        /// <param name="TxBuffSize">Размер буфера исходящих сообщений</param>
         /// <exception cref="SocketCanOpenException">Ошибка при попытке открыть сокет.</exception>
-        public int Open(String InterfaceName)
+        public int Open(string InterfaceName, int RxBuffSize, int TxBuffSize)
         {
-            int number = SocketCanLib.SocketOpen(GetCString(InterfaceName));
+            int number = SocketCanLib.SocketOpen(GetCString(InterfaceName), TxBuffSize, RxBuffSize);
             if (number <= 0) throw new SocketCanOpenException(-number);
             return number;
         }
@@ -31,10 +31,10 @@ namespace SocketCanWorking.Lib
 
         /// <summary>Отправляет CAN-фрейм.</summary>
         /// <param name="SocketNumber">Номер сокета для отправки.</param>
-        /// <param name="Frame">Фрейм для отправки.</param>
-        public void Write(int SocketNumber, IList<CanFrame> Frame)
+        /// <param name="Frames">Фрейм для отправки.</param>
+        public void Write(int SocketNumber, IList<CanFrame> Frames)
         {
-            var framesBuffer = Frame.Select(f => new SocketCanFdFrame(f)).ToArray();
+            SocketCanFdFrame[] framesBuffer = Frames.Select(f => new SocketCanFdFrame(f)).ToArray();
             fixed (SocketCanFdFrame* framesBufferPtr = framesBuffer)
             {
                 int res = SocketCanLib.SocketWrite(SocketNumber, framesBufferPtr, framesBuffer.Length);
@@ -63,7 +63,7 @@ namespace SocketCanWorking.Lib
         /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>
         public void FlushInBuffer(int SocketNumber)
         {
-            var res = SocketCanLib.FlushInBuffer(SocketNumber);
+            int res = SocketCanLib.FlushInBuffer(SocketNumber);
             if (res < 0) throw new SocketCanFlushException(-res);
         }
 

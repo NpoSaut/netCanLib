@@ -44,13 +44,13 @@ namespace Communications.Ports
         /// <summary>Открывает новый сокет</summary>
         public TSocket OpenSocket()
         {
-            TSocket socket = ImplementOpenSocket();
+            TSocket socket = CreateSocket();
             RegisterSocket(socket);
             return socket;
         }
 
         /// <summary>Создаёт новый сокет, который будет зарегистрирован в порту и возвращён функцией OpenSocket</summary>
-        protected abstract TSocket ImplementOpenSocket();
+        protected abstract TSocket CreateSocket();
 
         protected virtual void RegisterSocket(TSocket Socket)
         {

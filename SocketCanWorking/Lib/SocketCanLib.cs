@@ -10,9 +10,28 @@ namespace SocketCanWorking.Lib
 
         /// <summary>Открывает сокет.</summary>
         /// <param name="InterfaceName">Имя сокета в виде c-строки.</param>
-        /// <returns>Номер открытого сокета.</returns>
+        /// <param name="TxBuffSize">Размер буфера исходящих сообщений</param>
+        /// <param name="RxBuffSize">Размер буфера входящих сообщений</param>
+        /// <returns>
+        ///     <para>В случае успеха возвращает неотрицательный хендлер сокета.</para>
+        ///     <para>При ошибке возращает код ошибки в формате:</para>
+        ///     <list type="table">
+        ///         <item>
+        ///             <term>-100*errno</term>
+        ///             <description>для ошибок в socket()</description>
+        ///         </item>
+        ///         <item>
+        ///             <term>-10000*errno</term>
+        ///             <description>для ошибок в ioctl()</description>
+        ///         </item>
+        ///         <item>
+        ///             <term>-1000000*errno</term>
+        ///             <description>для ошибов в bind()</description>
+        ///         </item>
+        ///     </list>
+        /// </returns>
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int SocketOpen(byte[] InterfaceName);
+        public static extern int SocketOpen(byte[] InterfaceName, int TxBuffSize, int RxBuffSize);
 
         /// <summary>Закрывает сокет.</summary>
         /// <param name="Number">Номер сокета.</param>

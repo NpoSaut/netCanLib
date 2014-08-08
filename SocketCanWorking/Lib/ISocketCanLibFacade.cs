@@ -9,9 +9,11 @@ namespace SocketCanWorking.Lib
     public interface ISocketCanLibFacade
     {
         /// <summary>Открывает сокет.</summary>
-        /// <param name="InterfaceName">Имя сокета в виде c-строки.</param>
+        /// <param name="InterfaceName">Имя сокета</param>
+        /// <param name="RxBuffSize">Размер буфера входящих сообщений</param>
+        /// <param name="TxBuffSize">Размер буфера исходящих сообщений</param>
         /// <exception cref="SocketCanOpenException">Ошибка при попытке открыть сокет.</exception>
-        int Open(String InterfaceName);
+        int Open(string InterfaceName, int RxBuffSize, int TxBuffSize);
 
         /// <summary>Закрывает сокет.</summary>
         /// <param name="Number">Номер сокета.</param>
@@ -19,8 +21,8 @@ namespace SocketCanWorking.Lib
 
         /// <summary>Отправляет CAN-фрейм.</summary>
         /// <param name="SocketNumber">Номер сокета для отправки.</param>
-        /// <param name="Frame">Фрейм для отправки.</param>
-        void Write(int SocketNumber, IList<CanFrame> Frame);
+        /// <param name="Frames">Фрейм для отправки.</param>
+        void Write(int SocketNumber, IList<CanFrame> Frames);
 
         /// <summary>Пытается прочитать фреймы из сокета.</summary>
         /// <param name="SocketNumber">Номер сокета для чтения.</param>

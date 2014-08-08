@@ -12,14 +12,22 @@ namespace SocketCanWorking.LinuxSockets
         private readonly ISocketCanLibFacade _libFacade;
         private readonly int _socketNumber;
 
-        public LinuxSocket(String InterfaceName, ISocketCanLibFacade LibFacade)
+        public LinuxSocket(ISocketCanLibFacade LibFacade, string InterfaceName, int RxBuffSize, int TxBuffSize)
         {
             _libFacade = LibFacade;
-            _socketNumber = _libFacade.Open(InterfaceName);
+            RxBufferSize = RxBuffSize;
+            TxBufferSize = TxBuffSize;
+            _socketNumber = _libFacade.Open(InterfaceName, RxBuffSize, TxBuffSize);
         }
 
         /// <summary>Выполняет определяемые приложением задачи, связанные с высвобождением или сбросом неуправляемых ресурсов.</summary>
         public void Dispose() { _libFacade.Close(_socketNumber); }
+
+        /// <summary>Размер буфера входящих сообщений</summary>
+        public int RxBufferSize { get; private set; }
+
+        /// <summary>Размер буфера исходящих сообщений</summary>
+        public int TxBufferSize { get; private set; }
 
         /// <summary>Смывает буфер входящих сообщений</summary>
         public void FlushInBuffer() { _libFacade.FlushInBuffer(_socketNumber); }

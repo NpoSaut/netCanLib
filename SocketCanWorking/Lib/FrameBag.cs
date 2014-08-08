@@ -28,6 +28,6 @@ namespace SocketCanWorking.Lib
         /// <summary>Количество сообщений, потерянных между последним принятым сообщением и этим сообщением</summary>
         public readonly UInt32 DroppedMessagesCount;
 
-        public override string ToString() { return String.Format("ReceiveTime: {1}, Flags: {2}, Frame: ({0})", Frame, ReceiveTime, Flags); }
+        public override string ToString() { return String.Format("ReceiveTime: {1}, Flags: {2}, Dropped: {3}, Frame: ({0})", Frame, ReceiveTime, Flags, DroppedMessagesCount); }
     }
 }

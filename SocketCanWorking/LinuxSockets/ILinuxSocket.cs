@@ -8,6 +8,12 @@ namespace SocketCanWorking.LinuxSockets
     /// <remarks>Реализует открытие сокета, получение и хранение его номера, а так же запись и чтение по своему номеру сокета</remarks>
     public interface ILinuxSocket : IDisposable
     {
+        /// <summary>Размер буфера входящих сообщений</summary>
+        int RxBufferSize { get; }
+
+        /// <summary>Размер буфера исходящих сообщений</summary>
+        int TxBufferSize { get; }
+
         /// <summary>Смывает буфер входящих сообщений</summary>
         void FlushInBuffer();
 
