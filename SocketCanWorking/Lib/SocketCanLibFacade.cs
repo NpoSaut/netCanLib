@@ -63,7 +63,7 @@ namespace SocketCanWorking.Lib
         /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>
         public void FlushInBuffer(int SocketNumber)
         {
-            int res = SocketCanLib.FlushInBuffer(SocketNumber);
+            int res = SocketCanLib.SocketFlushInBuffer(SocketNumber);
             if (res < 0) throw new SocketCanFlushException(-res);
         }
 

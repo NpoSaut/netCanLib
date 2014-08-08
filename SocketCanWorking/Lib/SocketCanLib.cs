@@ -80,6 +80,6 @@ namespace SocketCanWorking.Lib
         /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>
         /// <returns>При успехе возвращает 0, в случае ошибки отрицательный код ошибки</returns>
         [DllImport(SocketCanLibraryName, CallingConvention = CallingConvention.Cdecl)]
-        public static extern int FlushInBuffer(int SocketNumber);
+        public static extern int SocketFlushInBuffer(int SocketNumber);
     }
 }
