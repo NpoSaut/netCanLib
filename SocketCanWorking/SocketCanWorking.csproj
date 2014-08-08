@@ -58,6 +58,7 @@
     <Compile Include="LinuxSockets\LinuxSocketFactory.cs" />
     <Compile Include="ReadersWriters\DirectSocketCanReader.cs" />
     <Compile Include="ReadersWriters\DirectSocketCanWriter.cs" />
+    <Compile Include="ReadersWriters\SlicedSocketCanWriterBase.cs" />
     <Compile Include="SocketCan.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Lib\SocketCanLib.cs" />
