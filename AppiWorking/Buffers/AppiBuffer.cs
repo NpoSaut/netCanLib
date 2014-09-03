@@ -6,7 +6,7 @@ using System.Text;
 
 namespace Communications.Appi.Buffers
 {
-    public abstract class AppiBufferBase
+    public abstract class AppiBuffer
     {
         public int SequentNumber { get; set; }
         public byte BufferIdentifier { get { return GetIdentifier(this.GetType()); } }
@@ -21,7 +21,7 @@ namespace Communications.Appi.Buffers
 
         protected abstract void DecodeIt(Byte[] Buffer);
 
-        public static TBuffer Decode<TBuffer>(Byte[] Buffer) where TBuffer : AppiBufferBase, new()
+        public static TBuffer Decode<TBuffer>(Byte[] Buffer) where TBuffer : AppiBuffer, new()
         {
             var res = new TBuffer();
             res.DecodeIt(Buffer);
@@ -29,11 +29,11 @@ namespace Communications.Appi.Buffers
             return res;
         }
 
-        public static AppiBufferBase Decode(Byte[] Buffer)
+        public static AppiBuffer Decode(Byte[] Buffer)
         {
             byte id = Buffer[0];
             if (!Identifiers.ContainsKey(id)) return null;
-            var res = (AppiBufferBase)Activator.CreateInstance(Identifiers[id]);
+            var res = (AppiBuffer)Activator.CreateInstance(Identifiers[id]);
             res.DecodeIt(Buffer);
             res.SequentNumber = Buffer[5];
             return res;
@@ -42,9 +42,9 @@ namespace Communications.Appi.Buffers
         private static Dictionary<byte, Type> InitializeIdentifiers()
         {
             return
-                System.Reflection.Assembly.GetAssembly(typeof(AppiBufferBase))
+                System.Reflection.Assembly.GetAssembly(typeof(AppiBuffer))
                     .GetTypes()
-                    .Where(T => T.IsSubclassOf(typeof(AppiBufferBase)))
+                    .Where(T => T.IsSubclassOf(typeof(AppiBuffer)))
                     .ToDictionary(GetIdentifier);
         }
 

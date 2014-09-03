@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using Communications.Appi.Buffers;
@@ -20,22 +21,21 @@ namespace Communications.Appi
             Locker = new object();
         }
 
-        protected IEnumerable<Byte[]> EncodeBuffers(IEnumerable<CanFrame> Frames)
-        {
-        }
+
+
 
         /// <summary>
         /// Отправляет фреймы, обеспечивая защиту от переполнения исходящего буфера АППИ
         /// </summary>
-        /// <param name="Frames">Фреймы для отправки</param>
-        public void Send(IList<CanFrame> Frames) { Send(Frames, TimeSpan.FromMilliseconds(-1)); }
+        /// <param name="Datagrams">Фреймы для отправки</param>
+        public void Send(IList<CanFrame> Datagrams) { Send(Datagrams, TimeSpan.FromMilliseconds(-1)); }
         /// <summary>
         /// Отправляет фреймы, обеспечивая защиту от переполнения исходящего буфера АППИ и отслеживая таймаут операции
         /// </summary>
-        /// <param name="Frames">Фреймы для отправки</param>
+        /// <param name="Datagrams">Фреймы для отправки</param>
         /// <param name="Timeout">Таймаут операции</param>
         /// <exception cref="SocketSendTimeoutException">Выбрасывается при превышении таймаута ожидания готовности исходящего буфера</exception>
-        public abstract void Send(IList<CanFrame> Frames, TimeSpan Timeout);
+        public abstract void Send(IList<CanFrame> Datagrams, TimeSpan Timeout);
 
         private bool _transfersAborted = false;
         public void AbortAllTransfers()
@@ -50,29 +50,6 @@ namespace Communications.Appi
         protected void CheckAborted()
         {
             if (_transfersAborted) throw new TransferAbortedException();
-        }
-    }
-
-    class AppiTimeoutSendPipe : AppiSendPipe
-    {
-        private DateTime _nextSendAviableAt;
-        public AppiTimeoutSendPipe(AppiDev Device, AppiLine Line) : base(Device, Line) {}
-
-        public override void Send(IList<CanFrame> Frames, TimeSpan Timeout)
-        {
-            int sent = 0;
-            foreach (var buffer in EncodeBuffers(Frames))
-            {
-                lock (Locker)
-                {
-                    SpinWait.SpinUntil(() => DateTime.Now >= _nextSendAviableAt);
-                    CheckAborted();
-                    Device.WriteBuffer(buffer);
-                    int nowSent = Math.Min(FramesPerSendGroup, Frames.Count - sent);
-                    _nextSendAviableAt = DateTime.Now.AddMilliseconds(nowSent*2);
-                    sent += nowSent;
-                }
-            }
         }
     }
 
@@ -94,9 +71,9 @@ namespace Communications.Appi
             }
         }
 
-        public override void Send(IList<CanFrame> Frames, TimeSpan Timeout)
+        public override void Send(IList<CanFrame> Datagrams, TimeSpan Timeout)
         {
-            foreach (var buffer in EncodeBuffers(Frames))
+            foreach (var buffer in EncodeBuffers(Datagrams))
             {
                 lock (Locker)
                 {
@@ -109,4 +86,33 @@ namespace Communications.Appi
             }
         }
     }
+
+    class AppiSendTask
+    {
+        public IList<CanFrame> Frames { get; private set; }
+        public TimeSpan Timeout { get; private set; }
+    }
+
+    /*class AppiTimeoutSendPipe : AppiSendPipe
+    {
+        private DateTime _nextSendAviableAt;
+        public AppiTimeoutSendPipe(AppiDev Device, AppiLine Line) : base(Device, Line) {}
+
+        public override void Send(IList<CanFrame> Datagrams, TimeSpan Timeout)
+        {
+            int sent = 0;
+            foreach (var buffer in EncodeBuffers(Datagrams))
+            {
+                lock (Locker)
+                {
+                    SpinWait.SpinUntil(() => DateTime.Now >= _nextSendAviableAt);
+                    CheckAborted();
+                    Device.WriteBuffer(buffer);
+                    int nowSent = Math.Min(FramesPerSendGroup, Datagrams.Count - sent);
+                    _nextSendAviableAt = DateTime.Now.AddMilliseconds(nowSent*2);
+                    sent += nowSent;
+                }
+            }
+        }
+    }*/
 }

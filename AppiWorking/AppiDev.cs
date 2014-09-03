@@ -7,6 +7,7 @@ using Communications.Appi.Buffers;
 using Communications.Appi.Exceptions;
 using Communications.Can;
 using System.IO;
+using Communications.Usb;
 
 namespace Communications.Appi
 {
@@ -19,8 +20,23 @@ namespace Communications.Appi
     /// <summary>
     /// Представление АППИ
     /// </summary>
-    public abstract class AppiDev : ISocketOwner, IDisposable
+    public class AppiDev : ISocketOwner, IDisposable
     {
+
+        public IUsbBulkSocket UsbSocket { get; private set; }
+
+
+
+        public AppiDev(IUsbBulkSocket UsbSocket)
+        {
+            if (UsbSocket == null) throw new ArgumentNullException("UsbSocket");
+            this.UsbSocket = UsbSocket;
+
+
+        }
+
+        // ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+        
         public ILog BufferLog { get; set; }
         private enum BufferDirection { In, Out }
         private void PushBufferToLog(BufferDirection Direction, Byte[] Buffer)
@@ -74,8 +90,9 @@ namespace Communications.Appi
             }
         }
 
-        public AppiDev()
+        public AppiDev(IUsbBulkSocket UsbSocket)
         {
+            this.UsbSocket = UsbSocket;
             CanPorts = new Dictionary<AppiLine, AppiCanPort>()
             {
                 { AppiLine.Can1, new AppiCanPort(this, AppiLine.Can1) },
@@ -123,7 +140,7 @@ namespace Communications.Appi
             var bufferBytes = ReadBuffer();
             PushBufferToLog(BufferDirection.In, bufferBytes);
 
-            var buffer = AppiBufferBase.Decode(bufferBytes);
+            var buffer = AppiBuffer.Decode(bufferBytes);
 
             // Если принят неопознанный буфер - выходим
             if (buffer == null) return;
@@ -388,12 +405,12 @@ namespace Communications.Appi
 
     internal class AppiBufferReadEventArgs : EventArgs
     {
-        public AppiBufferBase Buffer { get; private set; }
+        public AppiBuffer Buffer { get; private set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="T:System.EventArgs"/>.
         /// </summary>
-        public AppiBufferReadEventArgs(AppiBufferBase Buffer) { this.Buffer = Buffer; }
+        public AppiBufferReadEventArgs(AppiBuffer Buffer) { this.Buffer = Buffer; }
     }
 
     internal static class AppiCanFrameConstructor

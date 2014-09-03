@@ -6,7 +6,7 @@ using Communications.Can;
 namespace Communications.Appi.Buffers
 {
     [AppiBufferIdentifier(0x02)]
-    class MessagesReadAppiBuffer : AppiBufferBase 
+    class MessagesReadAppiBuffer : AppiBuffer 
     {
         public Dictionary<AppiLine, IList<CanFrame>> CanMessages { get; set; }
         private static readonly Dictionary<AppiLine, int> CanMessagesOffsets = 

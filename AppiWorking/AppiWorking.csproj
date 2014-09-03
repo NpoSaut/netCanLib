@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppiBufferSocket.cs" />
     <Compile Include="AppiDev.cs" />
     <Compile Include="AppiDeviceSlot.cs" />
     <Compile Include="AppiEngine.cs" />
@@ -49,7 +50,7 @@
     <Compile Include="Exceptions\AppiException.cs" />
     <Compile Include="AppiRsPort.cs" />
     <Compile Include="AppiSendPipes.cs" />
-    <Compile Include="Buffers\AppiBufferBase.cs" />
+    <Compile Include="Buffers\AppiBuffer.cs" />
     <Compile Include="Buffers\AppiBufferIdentifierAttribute.cs" />
     <Compile Include="Buffers\MessagesReadAppiBuffer.cs" />
     <Compile Include="Buffers\VersionReadAppiBuffer.cs" />

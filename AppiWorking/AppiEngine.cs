@@ -10,19 +10,24 @@ using Communications.Usb;
 
 namespace Communications.Appi
 {
-    public class AppiEngine : IDisposable
+    internal class AppiEngine : IDisposable
     {
-        public IUsbBulkSocket UsbSocket { get; private set; }
+        private delegate void AppiBufferHandler(AppiEngine Engine, AppiBuffer Message);
+
+        private static readonly Dictionary<Type, AppiBufferHandler> BufferHandlers =
+            new Dictionary<Type, AppiBufferHandler>
+            {
+                { typeof(MessagesReadAppiBuffer), ProcessMessagesBuffer }
+            };
+
+        public AppiBufferSocket AppiSocket { get; private set; }
 
         private readonly Thread _readingThread;
 
-        public AppiEngine(IUsbBulkSocket UsbSocket)
+        public AppiEngine(AppiBufferSocket AppiSocket)
         {
-            this.UsbSocket = UsbSocket;
-            _readingThread = new Thread(ReadLoop)
-                            {
-                                Name = "Поток прослушивания АППИ"
-                            };
+            this.AppiSocket = AppiSocket;
+            _readingThread = new Thread(ReadLoop) { Name = "Поток прослушивания АППИ" };
 
             ReceivePipes = new Dictionary<AppiLine, RedirectReceivePipe<CanFrame>>
                             {
@@ -30,30 +35,27 @@ namespace Communications.Appi
                                { AppiLine.Can2, new RedirectReceivePipe<CanFrame>() }
                            };
 
-            SendPipes = new Dictionary<AppiLine, AppiSendPipe>()
+            SendPipes = new Dictionary<AppiLine, AppiSendPipe>
                         {
-                            { AppiLine.Can1, new AppiFeedbackSendPipe()}
-                        }
-        }
-
-        private void ReadLoop()
-        {
-            foreach (var bulk in UsbSocket.Receive())
-            {
-                var buffer = AppiBufferBase.Decode(bulk.Data);
-                if (buffer != null) ProcessBuffer(buffer);
-            }
+                            { AppiLine.Can1, new AppiFeedbackSendPipe() },
+                            { AppiLine.Can2, new AppiFeedbackSendPipe() }
+                        };
         }
 
         private int _lastBufferId = -1;
 
-        private void ProcessBuffer(AppiBufferBase buffer)
+        /// <summary>Основная петля чтения из сокета АППИ</summary>
+        private void ReadLoop()
         {
-            if (buffer.SequentNumber == _lastBufferId) return;
-            _lastBufferId = buffer.SequentNumber;
+            foreach (AppiBuffer buffer in AppiSocket.Receive().Where(buffer => buffer != null))
+            {
+                if (buffer.SequentNumber == _lastBufferId) return;
+                _lastBufferId = buffer.SequentNumber;
 
-            if (buffer is MessagesReadAppiBuffer) ProcessMessagesBuffer((MessagesReadAppiBuffer)buffer);
-            if (buffer is VersionReadAppiBuffer) ParseVersionBuffer((VersionReadAppiBuffer)buffer);
+                Type bufferType = buffer.GetType();
+                if (BufferHandlers.ContainsKey(bufferType))
+                    BufferHandlers[bufferType](this, buffer);
+            }
         }
 
         #region Version
@@ -75,10 +77,11 @@ namespace Communications.Appi
         public IDictionary<AppiLine, RedirectReceivePipe<CanFrame>> ReceivePipes { get; private set; }
         public IDictionary<AppiLine, AppiSendPipe> SendPipes { get; private set; }
 
-        private void ProcessMessagesBuffer(MessagesReadAppiBuffer buffer)
+        private static void ProcessMessagesBuffer(AppiEngine Engine, AppiBuffer Message)
         {
-            foreach (var canMessagesBuffer in buffer.CanMessages)
-                ReceivePipes[canMessagesBuffer.Key].OnDatagramsReceived(new DatagramsReceivedEventArgs<CanFrame>(canMessagesBuffer.Value));
+            var messagesBuffer = (MessagesReadAppiBuffer)Message;
+            foreach (var canMessagesBuffer in messagesBuffer.CanMessages)
+                Engine.ReceivePipes[canMessagesBuffer.Key].OnDatagramsReceived(new DatagramsReceivedEventArgs<CanFrame>(canMessagesBuffer.Value));
         }
 
         private void DirectSendFrames(IEnumerable<CanFrame> Frames, AppiLine Line)
