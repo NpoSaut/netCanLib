@@ -28,12 +28,6 @@ namespace BlokFrames.Halfset
             return new HalfsetValue<T>(Extractor(ValueA), Extractor(ValueB));
         }
 
-        public static CanFramesBuffer OpenFramesBuffer(params CanPort[] Ports)
-        {
-            var FrameDescriptors = BlokFrame.GetDescriptors<FT>();
-            return new CanFramesBuffer(BlokFrame.GetDescriptors<FT>().Values, Ports);
-        }
-
         public static HalfsetFrame<FT> GetSet(IEnumerable<FT> frames)
         {
             var FrameDescriptors = BlokFrame.GetDescriptors<FT>();
