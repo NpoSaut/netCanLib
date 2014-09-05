@@ -11,6 +11,11 @@ namespace BlokFrames
     public abstract class BlokFrame
     {
         /// <summary>
+        /// Время получения сообщения
+        /// </summary>
+        public DateTime Time { get; set; }
+
+        /// <summary>
         /// Полукомплект
         /// </summary>
         public HalfsetKind FrameHalfset { get; set; }
@@ -53,7 +58,9 @@ namespace BlokFrames
         /// <returns>CAN-фрейм, содержащий данное сообщение</returns>
         public CanFrame GetCanFrame()
         {
-            return CanFrame.NewWithDescriptor(this.Descriptors[this.FrameHalfset], this.Encode());
+            var res = CanFrame.NewWithDescriptor(this.Descriptors[this.FrameHalfset], this.Encode());
+            res.Time = this.Time;
+            return res;
         }
 
         /// <summary>
@@ -70,7 +77,7 @@ namespace BlokFrames
             if (!GetDescriptors<T>().Values.Contains(f.Descriptor))
                 throw new DescriptorMismatchException("Дескриптор расшифровываемого фрейма не соответствует дескриптору  типа");
 
-            var res = new T() { FrameHalfset = hs ?? HalfsetKind.Uniset };
+            var res = new T() { FrameHalfset = hs ?? HalfsetKind.Uniset, Time = f.Time };
             res.Decode(f.Data);
             return res;
         }
@@ -81,6 +88,7 @@ namespace BlokFrames
 
             Type t = FrameTypes[f.Descriptor];
             var res = (BlokFrame)t.GetConstructor(new Type[0]).Invoke(new object[0]);
+            res.Time = f.Time;
             res.Decode(f.Data);
             return res;
         }
