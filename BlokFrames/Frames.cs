@@ -160,11 +160,11 @@ namespace BlokFrames
         }
         
     }
-    
-    [FrameDescriptor(0x1888)]
+
     /// <summary>
     /// Описание параметров движения
-    /// <summary>
+    /// </summary>
+    [FrameDescriptor(0x1888)]
     public class IpdState : BlokFrame
     {
         [System.ComponentModel.Description("Номер выполненного теста")]
