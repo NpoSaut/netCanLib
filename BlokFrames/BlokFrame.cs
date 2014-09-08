@@ -42,7 +42,7 @@ namespace BlokFrames
         }
         public int GetLengthOf(Type t)
         {
-            return GetDescriptors(t).Values.First() % 20;
+            return GetDescriptors(t).Values.First() % 0x20;
         }
         public int FrameLength
         {
