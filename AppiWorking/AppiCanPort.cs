@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Communications.Appi.Exceptions;
 using Communications.Can;
+using Communications.Exceptions;
 
 namespace Communications.Appi
 {
@@ -21,7 +23,14 @@ namespace Communications.Appi
 
         protected override void SendImplementation(IList<CanFrame> Frames)
         {
-            Device.SendFrames(Frames, Line);
+            try
+            {
+                Device.SendFrames(Frames, Line);
+            }
+            catch (TransferAbortedException e)
+            {
+                throw new PortWriteAbortedException(e);
+            }
         }
 
         protected override ICanSocket CreateSocket() { return new AppiCanSocket(string.Format("Appi{0}", Line), this); }
@@ -42,6 +51,15 @@ namespace Communications.Appi
                 _baudRate = newValue;
                 base.OnBaudRateChanged();
             }
+        }
+
+        private bool _isClosed;
+
+        internal void Close()
+        {
+            if (_isClosed) return;
+            _isClosed = true;
+            OnClosed();
         }
     }
 }

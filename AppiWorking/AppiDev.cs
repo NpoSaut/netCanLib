@@ -313,6 +313,10 @@ namespace Communications.Appi
                         {
                             appiSendBuffer.AbortAllTransfers();
                         }
+                    foreach (var port in CanPorts.Values)
+                    {
+                        port.Close();
+                    }
                     _disconnectionProcessed = true;
                     if (Disconnected != null) Disconnected(this, new EventArgs());
                 }

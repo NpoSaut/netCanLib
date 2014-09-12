@@ -15,13 +15,13 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// GUID устройства
         /// </summary>
-        public readonly static List<string> DeviceGuids = new List<string>
-                                                          {
-            "524cc09a-0a72-4d06-980e-afee3131196e",
-            "3af3f480-41b5-4c24-b2a9-6aacf7de3d01"
-        };
-        //public const string DeviceGuid = "524cc09a-0a72-4d06-980e-afee3131196e";
-        //public const string DeviceGuid = "3af3f480-41b5-4c24-b2a9-6aacf7de3d01";
+        public static readonly List<string> DeviceGuids =
+            new List<string>
+            {
+                "524cc09a-0a72-4d06-980e-afee3131196e",
+                "3af3f480-41b5-4c24-b2a9-6aacf7de3d01"
+            };
+
         private String DevicePath { get; set; }
         /// <summary>
         /// USB-устройство
@@ -48,20 +48,28 @@ namespace Communications.Appi.Winusb
 
         internal WinusbAppiDev(USBDeviceInfo di)
         {
-            Device = new USBDevice(di);
-            DevicePath = di.DevicePath;
-            
-            ReadPipe = Device.Pipes.First(p => p.IsIn);
-            ReadPipe.Policy.PipeTransferTimeout = 100;
-            ReadPipe.Policy.AutoClearStall = true;
-            ReadPipe.Flush();
-            
-            WritePipe = Device.Pipes.First(p => p.IsOut);
-            WritePipe.Policy.PipeTransferTimeout = 100;
-
-            lock (OpenedDevicesLocker)
+            // TODO: Отлавливать исключения WinUsbNet
+            try
             {
-                OpenedDevices.Add(this);
+                Device = new USBDevice(di);
+                DevicePath = di.DevicePath;
+            
+                ReadPipe = Device.Pipes.First(p => p.IsIn);
+                ReadPipe.Policy.PipeTransferTimeout = 100;
+                ReadPipe.Policy.AutoClearStall = true;
+                ReadPipe.Flush();
+            
+                WritePipe = Device.Pipes.First(p => p.IsOut);
+                WritePipe.Policy.PipeTransferTimeout = 100;
+
+                lock (OpenedDevicesLocker)
+                {
+                    OpenedDevices.Add(this);
+                }
+            }
+            catch (USBException e)
+            {
+                throw new AppiConnectoinException(e);
             }
         }
 
@@ -78,7 +86,7 @@ namespace Communications.Appi.Winusb
                 //return buff.SkipWhile(b => b == 0).ToArray();
                 return buff;
             }
-            catch (USBException usbExc)
+            catch (Exception usbExc)
             {
                 OnDisconnected();
                 throw new AppiConnectoinException("Ошибка при чтении буфера АППИ из USB", usbExc);
