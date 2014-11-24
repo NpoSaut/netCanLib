@@ -42,7 +42,9 @@
   <ItemGroup>
     <Compile Include="BlokFrame.cs" />
     <Compile Include="BlokHelper.cs" />
-    <Compile Include="DescriptorMismatchException.cs" />
+    <Compile Include="Exceptions\DescriptorMismatchException.cs" />
+    <Compile Include="Exceptions\BlokFrameException.cs" />
+    <Compile Include="Exceptions\BlokFrameProtocolException.cs" />
     <Compile Include="FrameDescriptorAttribute.cs" />
     <Compile Include="Frames.cs" />
     <Compile Include="Halfset\HalfsetFrame.cs" />

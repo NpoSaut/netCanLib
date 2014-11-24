@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BlokFrames.Exceptions;
 using Communications.Can;
 using System.Runtime.InteropServices;
 using System.Reflection;
@@ -59,27 +60,34 @@ namespace BlokFrames
         /// <returns>CAN-фрейм, содержащий данное сообщение</returns>
         public CanFrame GetCanFrame()
         {
-            return CanFrame.NewWithDescriptor(this.Descriptors[this.FrameHalfset], this.Encode());
+            try
+            {
+                var data = this.Encode();
+                return CanFrame.NewWithDescriptor(this.Descriptors[this.FrameHalfset], data);
+            }
+            catch (Exception e)
+            {
+                throw new BlokFrameProtocolException(e);
+            }
         }
 
-        /// <summary>
-        /// Расшифровывает CAN-фрейм в соответствии с указанным типом сообщения
-        /// </summary>
+        /// <summary>Расшифровывает CAN-фрейм в соответствии с указанным типом сообщения</summary>
         /// <typeparam name="T">Тип сообщения системы БЛОК</typeparam>
         /// <param name="f">CAN-фрейм</param>
         /// <returns>Расшифрованное сообщение системы БЛОК</returns>
         public static T GetBlokFrame<T>(CanFrame f)
-            where T: BlokFrame, new()
+            where T : BlokFrame, new()
         {
             HalfsetKind? hs = GetDescriptors<T>().Where(p => p.Value == f.Descriptor).Select(p => p.Key).FirstOrDefault();
 
             if (!GetDescriptors<T>().Values.Contains(f.Descriptor))
                 throw new DescriptorMismatchException("Дескриптор расшифровываемого фрейма не соответствует дескриптору  типа");
 
-            var res = new T() { FrameHalfset = hs ?? HalfsetKind.Uniset };
-            res.Decode(f.Data);
+            var res = new T { FrameHalfset = hs ?? HalfsetKind.Uniset };
+            FillWithData(res, f.Data);
             return res;
         }
+
         public static BlokFrame GetBlokFrame(CanFrame f)
         {
             if (!FrameTypes.ContainsKey(f.Descriptor))
@@ -87,8 +95,23 @@ namespace BlokFrames
 
             Type t = FrameTypes[f.Descriptor];
             var res = (BlokFrame)t.GetConstructor(new Type[0]).Invoke(new object[0]);
-            res.Decode(f.Data);
+            FillWithData(res, f.Data);
             return res;
+        }
+
+        private static void FillWithData(BlokFrame Frame, byte[] DataBytes)
+        {
+            try
+            {
+                Frame.Decode(DataBytes);
+            }
+            catch (Exception exc)
+            {
+                throw new BlokFrameProtocolException(String.Format("Ошибка при декодировании CAN-сообщения {0}: {1}",
+                                                                   Frame.GetType().Name,
+                                                                   exc.Message),
+                                                     exc);
+            }
         }
 
         public static implicit operator CanFrame(BlokFrame bf)
