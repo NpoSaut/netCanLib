@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.21005.1
+VisualStudioVersion = 12.0.30723.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppiDrvWinusb", "AppiDrvWinusb\AppiDrvWinusb.csproj", "{758C61BC-7BE1-4E25-BE05-3A17619199EE}"
 EndProject
@@ -118,5 +118,8 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{D6B9D8FF-66C3-4411-88D3-524A4A19DC03} = {896CC9E4-41EC-4B5E-A988-BEF6E2D6B98B}
 		{5545B567-9876-4F3B-B7DF-1F87FC34FF43} = {896CC9E4-41EC-4B5E-A988-BEF6E2D6B98B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.2\lib\NET35
 	EndGlobalSection
 EndGlobal

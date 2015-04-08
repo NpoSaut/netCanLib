@@ -2,71 +2,70 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.ComponentModel;
 
 namespace BlokFrames
 {
+    /// <summary>Сообщение формируется субмодулем B модуля МЦО нулевого комплекта каждые 500</summary>
     [FrameDescriptor(0x0803)]
-    /// <summary>
-    /// Сообщение формируется субмодулем B модуля МЦО нулевого комплекта каждые 500
-    /// <summary>
     public class McoMode : BlokFrame
     {
         ///<summary>Режим движения</summary>
         public enum DriveModeKind : int
         {
-            [System.ComponentModel.Description("Поездной")]
             ///<summary>Поездной</summary>
+            [Description("Поездной")]
             TrainMode = 0,
-            [System.ComponentModel.Description("Маневровый")]
             ///<summary>Маневровый</summary>
+            [Description("Маневровый")]
             ShuntingMode = 1,
-            [System.ComponentModel.Description("Рабочий (Для КЛУБ-УП)")]
             ///<summary>Рабочий (Для КЛУБ-УП)</summary>
+            [Description("Рабочий (Для КЛУБ-УП)")]
             WorkingMode = 2,
-            [System.ComponentModel.Description("Двойная тяга")]
             ///<summary>Двойная тяга</summary>
+            [Description("Двойная тяга")]
             DoublePowerMode = 3,
         }
         
-        [System.ComponentModel.Description("Режим движения")]
         /// <summary>Режим движения</summary>
+        [Description("Режим движения")]
         public DriveModeKind DriveMode { get; set; }
         
         ///<summary>Автоблокировочный режим движения</summary>
         public enum AutolockModeKind : int
         {
-            [System.ComponentModel.Description("Обычное движение")]
             ///<summary>Обычное движение</summary>
+            [Description("Обычное движение")]
             Normal = 0,
-            [System.ComponentModel.Description("Движение по ПАБу")]
             ///<summary>Движение по ПАБу</summary>
+            [Description("Движение по ПАБу")]
             HalfAutolock = 1,
-            [System.ComponentModel.Description("Движение по закрытой АБ")]
             ///<summary>Движение по закрытой АБ</summary>
+            [Description("Движение по закрытой АБ")]
             Autolock = 2,
-            [System.ComponentModel.Description("Запрещённая комбинация")]
             ///<summary>Запрещённая комбинация</summary>
-            Forbiddern = 3,
+            [Description("Запрещённая комбинация")]
+            Forbidden = 3,
         }
         
-        [System.ComponentModel.Description("Автоблокировочный режим движения")]
         /// <summary>Автоблокировочный режим движения</summary>
+        [Description("Автоблокировочный режим движения")]
         public AutolockModeKind AutolockMode { get; set; }
         
-        [System.ComponentModel.Description("Система многих единиц")]
         /// <summary>Система многих единиц</summary>
+        [Description("Система многих единиц")]
         public Boolean MultipleUnit { get; set; }
         
-        [System.ComponentModel.Description("Диагностика САУТа")]
         /// <summary>Диагностика САУТа</summary>
+        [Description("Диагностика САУТа")]
         public Boolean SautDiag { get; set; }
         
-        [System.ComponentModel.Description("Скорость движения по ПАБу или ЗАБу")]
         /// <summary>Скорость движения по ПАБу или ЗАБу</summary>
+        [Description("Скорость движения по ПАБу или ЗАБу")]
         public Byte RestrictedSpeed { get; set; }
         
-        [System.ComponentModel.Description("Режим движения с подвижными блок-участками")]
         /// <summary>Режим движения с подвижными блок-участками</summary>
+        [Description("Режим движения с подвижными блок-участками")]
         public Boolean SlippingSections { get; set; }
         
         
@@ -161,128 +160,126 @@ namespace BlokFrames
         
     }
     
+    /// <summary>Описание параметров движения</summary>
     [FrameDescriptor(0x1888)]
-    /// <summary>
-    /// Описание параметров движения
-    /// <summary>
     public class IpdState : BlokFrame
     {
-        [System.ComponentModel.Description("Номер выполненного теста")]
         /// <summary>Номер выполненного теста</summary>
+        [Description("Номер выполненного теста")]
         public int TestNumber { get; set; }
         
-        [System.ComponentModel.Description("Результат теста")]
         /// <summary>Результат теста</summary>
+        [Description("Результат теста")]
         public int TestResult { get; set; }
         
         ///<summary>Направление движения</summary>
         public enum DirectionKind : int
         {
-            [System.ComponentModel.Description("Вперёд")]
             ///<summary>Вперёд</summary>
+            [Description("Вперёд")]
             Ahead = 0,
-            [System.ComponentModel.Description("Назад")]
             ///<summary>Назад</summary>
+            [Description("Назад")]
             Back = 1,
         }
         
-        [System.ComponentModel.Description("Направление движения")]
         /// <summary>Направление движения</summary>
+        [Description("Направление движения")]
         public DirectionKind Direction { get; set; }
         
         ///<summary>Знак ускорения</summary>
         public enum AccelerationSignKind : int
         {
-            [System.ComponentModel.Description("Положительное")]
             ///<summary>Положительное</summary>
+            [Description("Положительное")]
             Positive = 0,
-            [System.ComponentModel.Description("Отрицательное")]
             ///<summary>Отрицательное</summary>
+            [Description("Отрицательное")]
             Negative = 1,
         }
         
-        [System.ComponentModel.Description("Знак ускорения")]
         /// <summary>Знак ускорения</summary>
+        [Description("Знак ускорения")]
         public AccelerationSignKind AccelerationSign { get; set; }
         
-        [System.ComponentModel.Description("Наличие импульсов ДПС")]
         /// <summary>Наличие импульсов ДПС</summary>
+        [Description("Наличие импульсов ДПС")]
         public Boolean SpeedPulsesAvailable { get; set; }
         
-        [System.ComponentModel.Description("Фактическая скорость")]
         /// <summary>Фактическая скорость</summary>
+        [Description("Фактическая скорость")]
         public int Speed { get; set; }
         
-        [System.ComponentModel.Description("Линейная ордината")]
         /// <summary>Линейная ордината</summary>
+        [Description("Линейная ордината")]
         public int LinearOrdinate { get; set; }
         
-        [System.ComponentModel.Description("Признак виртуальной кабины")]
         /// <summary>Признак виртуальной кабины</summary>
+        [Description("Признак виртуальной кабины")]
         public Boolean IsVirtualCabine { get; set; }
         
         ///<summary>Номер виртуальной кабины</summary>
         public enum VirtualCabineKind : int
         {
-            [System.ComponentModel.Description("1 кабина")]
             ///<summary>1 кабина</summary>
+            [Description("1 кабина")]
             Cabine1 = 0,
-            [System.ComponentModel.Description("2 кабина")]
             ///<summary>2 кабина</summary>
+            [Description("2 кабина")]
             Cabine2 = 1,
         }
         
-        [System.ComponentModel.Description("Номер виртуальной кабины")]
         /// <summary>Номер виртуальной кабины</summary>
+        [Description("Номер виртуальной кабины")]
         public VirtualCabineKind VirtualCabine { get; set; }
         
-        [System.ComponentModel.Description("Определение местоположения в ЭК")]
         /// <summary>Определение местоположения в ЭК</summary>
+        [Description("Определение местоположения в ЭК")]
         public Boolean EmapPosition { get; set; }
         
         ///<summary>Тест пассивного датчика по скорости</summary>
         public enum PassiveSensorSpeedTestStateKind : int
         {
-            [System.ComponentModel.Description("Исправен")]
             ///<summary>Исправен</summary>
+            [Description("Исправен")]
             Correct = 0,
-            [System.ComponentModel.Description("Сбой")]
             ///<summary>Сбой</summary>
+            [Description("Сбой")]
             Fault = 1,
         }
         
-        [System.ComponentModel.Description("Тест пассивного датчика по скорости")]
         /// <summary>Тест пассивного датчика по скорости</summary>
+        [Description("Тест пассивного датчика по скорости")]
         public PassiveSensorSpeedTestStateKind PassiveSensorSpeedTestState { get; set; }
         
         ///<summary>Номер активного датчика</summary>
         public enum ActiveSpeedSensorKind : int
         {
-            [System.ComponentModel.Description("Датчик 1")]
             ///<summary>Датчик 1</summary>
+            [Description("Датчик 1")]
             Sensor1 = 0,
-            [System.ComponentModel.Description("Датчик 2")]
             ///<summary>Датчик 2</summary>
+            [Description("Датчик 2")]
             Sensor2 = 1,
         }
         
-        [System.ComponentModel.Description("Номер активного датчика")]
         /// <summary>Номер активного датчика</summary>
+        [Description("Номер активного датчика")]
         public ActiveSpeedSensorKind ActiveSpeedSensor { get; set; }
         
         ///<summary>Тест пассивного датчика по количеству импульсов</summary>
         public enum PassiveSensorImpulseTestStateKind : int
         {
-            [System.ComponentModel.Description("Исправен")]
             ///<summary>Исправен</summary>
+            [Description("Исправен")]
             Correct = 0,
-            [System.ComponentModel.Description("Сбой")]
             ///<summary>Сбой</summary>
+            [Description("Сбой")]
             Fault = 1,
         }
         
-        [System.ComponentModel.Description("Тест пассивного датчика по количеству импульсов")]
         /// <summary>Тест пассивного датчика по количеству импульсов</summary>
+        [Description("Тест пассивного датчика по количеству импульсов")]
         public PassiveSensorImpulseTestStateKind PassiveSensorImpulseTestState { get; set; }
         
         

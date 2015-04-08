@@ -54,8 +54,8 @@ namespace BlokFramesCodegen.PropertyDescriptions
                         Values.Select(value =>
                             new CodeBlock()
                             {
-                                new CodeLine("[System.ComponentModel.Description(\"{0}\")]", value.Description),
                                 new CodeLine("///<summary>{0}</summary>", value.Description),
+                                new CodeLine("[Description(\"{0}\")]", value.Description),
                                 new CodeLine("{0} = {1},", value.Name, value.Key)
                             })
                     },

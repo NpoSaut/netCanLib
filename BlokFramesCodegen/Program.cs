@@ -28,6 +28,7 @@ namespace BlokFramesCodegen
                 new CodeLine("using System.Collections.Generic;"),
                 new CodeLine("using System.Linq;"),
                 new CodeLine("using System.Text;"),
+                new CodeLine("using System.ComponentModel;"),
                 new CodeLine(),
                 new CodeHeaderedBlock("namespace BlokFrames")
                 {

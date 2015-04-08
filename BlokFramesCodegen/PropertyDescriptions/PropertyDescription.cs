@@ -57,8 +57,8 @@ namespace BlokFramesCodegen.PropertyDescriptions
             {
                 return new CodeBlock()
                 {
-                    new CodeLine("[System.ComponentModel.Description(\"{0}\")]", Description),
                     new CodeLine("/// <summary>{0}</summary>", Description),
+                    new CodeLine("[Description(\"{0}\")]", Description),
                     new CodeLine("public {0} {1} {{ get; set; }}", TypeName, Name),
                     new CodeLine()
                 };

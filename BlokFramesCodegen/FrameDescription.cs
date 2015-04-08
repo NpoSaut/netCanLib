@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Xml.Linq;
-using BlokFramesCodegen.PropertyDescriptions;
 using BlokFramesCodegen.CodeGeneration;
+using BlokFramesCodegen.PropertyDescriptions;
 
 namespace BlokFramesCodegen
 {
@@ -34,46 +33,45 @@ namespace BlokFramesCodegen
         public static string GetClassName(String MessageName)
         {
             string res = "";
-            bool NextToUpper = true;
-            foreach (var c in MessageName.ToLower())
+            bool nextToUpper = true;
+            foreach (char c in MessageName.ToLower())
             {
                 if (c != '_')
                 {
-                    Char cc = NextToUpper ? c.ToString().ToUpper()[0] : c;
+                    Char cc = nextToUpper ? c.ToString().ToUpper()[0] : c;
                     res += cc;
-                    NextToUpper = false;
+                    nextToUpper = false;
                 }
-                else NextToUpper = true;
+                else nextToUpper = true;
             }
             return res;
         }
 
         public CodeElement GetCode()
         {
-            return new CodeBlock()
-            {
-                new CodeLine("[FrameDescriptor(0x{0:x4})]", Descriptor),
-                new CodeLine("/// <summary>"),
-                new CodeLine("/// {0}", Description),
-                new CodeLine("/// <summary>"),
-                new CodeLine("public class {0} : BlokFrame", GetClassName(Name)),
-                new CodeFramedBlock()
+            return
+                new CodeBlock
                 {
-                    Properties.Select(p => p.PropertyDefinition),
-                    new CodeLine(),
-                    new CodeHeaderedBlock("protected override void Decode(byte[] buff)")
+                    new CodeLine("/// <summary>{0}</summary>", Description),
+                    new CodeLine("[FrameDescriptor(0x{0:x4})]", Descriptor),
+                    new CodeLine("public class {0} : BlokFrame", GetClassName(Name)),
+                    new CodeFramedBlock
                     {
-                        Properties.Select(p => new CodeLine("this.{0} = Decode{0}(buff);", p.Name))
-                    },
-                    new CodeHeaderedBlock("protected override byte[] Encode()")
-                    {
-                        new CodeLine("var buff = new Byte[FrameLength];"),
-                        Properties.Select(p => new CodeLine("Encode{0}(buff, {0});", p.Name)),
-                        new CodeLine("return buff;")
-                    },
-                    Properties.Select(p => new CodeBlock() { p.PropertyDecoder, p.PropertyEncoder })
-                }
-            };
+                        Properties.Select(p => p.PropertyDefinition),
+                        new CodeLine(),
+                        new CodeHeaderedBlock("protected override void Decode(byte[] buff)")
+                        {
+                            Properties.Select(p => new CodeLine("this.{0} = Decode{0}(buff);", p.Name))
+                        },
+                        new CodeHeaderedBlock("protected override byte[] Encode()")
+                        {
+                            new CodeLine("var buff = new Byte[FrameLength];"),
+                            Properties.Select(p => new CodeLine("Encode{0}(buff, {0});", p.Name)),
+                            new CodeLine("return buff;")
+                        },
+                        Properties.Select(p => new CodeBlock { p.PropertyDecoder, p.PropertyEncoder })
+                    }
+                };
         }
     }
 }

@@ -14,7 +14,7 @@
       <Value Key="0" Name="Normal" Description="Обычное движение" />
       <Value Key="1" Name="HalfAutolock" Description="Движение по ПАБу" />
       <Value Key="2" Name="Autolock" Description="Движение по закрытой АБ" />
-      <Value Key="3" Name="Forbiddern" Description="Запрещённая комбинация" />
+      <Value Key="3" Name="Forbidden" Description="Запрещённая комбинация" />
     </Property>
     <Property Name="MultipleUnit" Description="Система многих единиц" Type="Boolean" Placement="1.1" />
     <Property Name="SautDiag" Description="Диагностика САУТа" Type="Boolean" Placement="1.0" />
