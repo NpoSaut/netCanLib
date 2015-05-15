@@ -5,6 +5,7 @@ using System.Threading;
 using Communications.Appi.Buffers;
 using Communications.Appi.Exceptions;
 using Communications.Can;
+using Buffer = System.Buffer;
 
 namespace Communications.Appi
 {
@@ -96,7 +97,7 @@ namespace Communications.Appi
 
         private void DeviceOnBufferRead(object Sender, AppiBufferReadEventArgs AppiBufferReadEventArgs)
         {
-            var messagesBuffer = AppiBufferReadEventArgs.Buffer as MessagesReadAppiBuffer;
+            var messagesBuffer = AppiBufferReadEventArgs.Buffer as MessagesAppiBuffer222;
             if (messagesBuffer == null) return;
             PostCount(messagesBuffer.OutMessagesCount[Line]);
         }

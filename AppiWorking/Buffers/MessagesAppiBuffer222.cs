@@ -6,7 +6,7 @@ using Communications.Can;
 namespace Communications.Appi.Buffers
 {
     [AppiBufferIdentifer(0x02)]
-    class MessagesReadAppiBuffer : AppiBufferBase 
+    class MessagesAppiBuffer222 : Buffer 
     {
         public Dictionary<AppiLine, IList<CanFrame>> CanMessages { get; set; }
         private static readonly Dictionary<AppiLine, int> CanMessagesOffsets = 
@@ -22,7 +22,7 @@ namespace Communications.Appi.Buffers
         public int SpeedA { get; set; }
         public int SpeedB { get; set; }
 
-        public MessagesReadAppiBuffer()
+        public MessagesAppiBuffer222()
         {
             CanMessages = new Dictionary<AppiLine, IList<CanFrame>>
                           {
@@ -58,7 +58,7 @@ namespace Communications.Appi.Buffers
 
             int bytesInSerial = buff[1024];
             SerialBuffer = new byte[bytesInSerial];
-            Buffer.BlockCopy(buff, 1025, SerialBuffer, 0, SerialBuffer.Length);
+            System.Buffer.BlockCopy(buff, 1025, SerialBuffer, 0, SerialBuffer.Length);
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Communications.Appi.Buffers
             Byte[] buff = new Byte[10];
             for (int i = 0; i < Count; i++)
             {
-                Buffer.BlockCopy(Buff, Offset + i * buff.Length, buff, 0, buff.Length);
+                System.Buffer.BlockCopy(Buff, Offset + i * buff.Length, buff, 0, buff.Length);
                 yield return AppiCanFrameConstructor.FromBufferBytes(buff);
             }
         }

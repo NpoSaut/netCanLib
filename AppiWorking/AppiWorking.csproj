@@ -42,18 +42,39 @@
   <ItemGroup>
     <Compile Include="AppiCanPort.cs" />
     <Compile Include="AppiDev.cs" />
+    <Compile Include="Buffers\AppiBlockMessagesBuffer.cs" />
+    <Compile Include="Buffers\AppiLineStatus.cs" />
+    <Compile Include="Buffers\AppiStandMessagesBuffer.cs" />
+    <Compile Include="Decoders\AppiBlockMessagesBufferDecoder.cs" />
+    <Compile Include="Decoders\AppiLineStatusLayout.cs" />
+    <Compile Include="Decoders\AppiStandMessagesBufferDecoder.cs" />
+    <Compile Include="Decoders\BufferDecoderBase.cs" />
+    <Compile Include="Decoders\KeyBasedCompositeBufferDecoder.cs" />
+    <Compile Include="Decoders\VersionBufferDecoder.cs" />
+    <Compile Include="Devices\AppiBlock.cs" />
+    <Compile Include="Devices\AppiDevice.cs" />
     <Compile Include="AppiDeviceSlot.cs" />
+    <Compile Include="Decoders\AppiLineStatusDecoder.cs" />
     <Compile Include="AppiMessages.cs" />
+    <Compile Include="Decoders\IAppiBufferDecoder.cs" />
+    <Compile Include="Decoders\MessagesBufferDecoder.cs" />
+    <Compile Include="Devices\AppiStand.cs" />
     <Compile Include="Exceptions\AppiBufferDecodeException.cs" />
     <Compile Include="Exceptions\AppiConnectoinException.cs" />
     <Compile Include="Exceptions\AppiException.cs" />
     <Compile Include="AppiRsPort.cs" />
     <Compile Include="AppiSendBuffer.cs" />
-    <Compile Include="Buffers\AppiBufferBase.cs" />
+    <Compile Include="Buffers\Buffer.cs" />
     <Compile Include="Buffers\AppiBufferIdentiferAttribute.cs" />
-    <Compile Include="Buffers\MessagesReadAppiBuffer.cs" />
+    <Compile Include="Buffers\MessagesAppiBuffer222.cs" />
     <Compile Include="Buffers\VersionReadAppiBuffer.cs" />
     <Compile Include="Exceptions\TransferAbortedException.cs" />
+    <Compile Include="Factories\AppiBlockFactory.cs" />
+    <Compile Include="Factories\AppiStandFactory.cs" />
+    <Compile Include="Factories\IAppiFactory.cs" />
+    <Compile Include="IAppiBufferProcessor.cs" />
+    <Compile Include="Decoders\IAppiLineStatusDecoder.cs" />
+    <Compile Include="IUsbDevice.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

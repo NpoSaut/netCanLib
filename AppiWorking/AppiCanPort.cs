@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Collections.Generic;
 using Communications.Can;
 
 namespace Communications.Appi
 {
     public class AppiCanPort : CanPort
     {
-        public AppiLine Line { get; private set; }
-
-        private AppiDev Device { get; set; }
+        private int _BaudRate;
 
         internal AppiCanPort(AppiDev Device, AppiLine Line)
             : base(Line.ToString())
@@ -19,25 +14,20 @@ namespace Communications.Appi
             this.Line = Line;
         }
 
-        protected override void SendImplementation(IList<CanFrame> Frames)
-        {
-            Device.SendFrames(Frames, Line);
-        }
+        public AppiLine Line { get; private set; }
 
-        internal void OnAppiFramesRecieved(IList<CanFrame> Frames)
-        {
-            OnFramesReceived(Frames);
-        }
+        private AppiDev Device { get; set; }
 
-        private int _BaudRate;
         public override int BaudRate
         {
             get { return _BaudRate; }
-            set
-            {
-                Device.SetBaudRate(this.Line, value);
-            }
+            set { Device.SetBaudRate(Line, value); }
         }
+
+        protected override void SendImplementation(IList<CanFrame> Frames) { Device.SendFrames(Frames, Line); }
+
+        internal void OnAppiFramesRecieved(IList<CanFrame> Frames) { OnFramesReceived(Frames); }
+
         internal void RenewBaudRate(int newValue)
         {
             if (newValue != _BaudRate)

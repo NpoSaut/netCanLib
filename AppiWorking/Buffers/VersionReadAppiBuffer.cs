@@ -3,12 +3,9 @@ using System;
 namespace Communications.Appi.Buffers
 {
     [AppiBufferIdentifer(0x09)]
-    class VersionReadAppiBuffer : AppiBufferBase
+    public class VersionReadAppiBuffer : Buffer
     {
-        public Version AppiVersion { get; set; }
-        
-        public override byte[] Encode() { throw new System.NotImplementedException(); }
-
-        protected override void DecodeIt(byte[] Buffer) { AppiVersion = new Version(Buffer[6], 0); }
+        public VersionReadAppiBuffer(int SequentialNumber, Version AppiVersion) : base(SequentialNumber) { this.AppiVersion = AppiVersion; }
+        public Version AppiVersion { get; private set; }
     }
 }

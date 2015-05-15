@@ -7,6 +7,7 @@ using Communications.Appi.Buffers;
 using Communications.Appi.Exceptions;
 using Communications.Can;
 using System.IO;
+using Buffer = Communications.Appi.Buffers.Buffer;
 
 namespace Communications.Appi
 {
@@ -104,7 +105,7 @@ namespace Communications.Appi
             var bufferBytes = ReadBuffer();
             PushBufferToLog(BufferDirection.In, bufferBytes);
 
-            var buffer = AppiBufferBase.Decode(bufferBytes);
+            var buffer = Buffer.Decode(bufferBytes);
 
             // Если принят неопознанный буфер - выходим
             if (buffer == null) return;
@@ -119,11 +120,11 @@ namespace Communications.Appi
 
             OnBufferRead(new AppiBufferReadEventArgs(buffer));
 
-            if (buffer is MessagesReadAppiBuffer) ProcessMessagesBuffer((MessagesReadAppiBuffer)buffer);
+            if (buffer is MessagesAppiBuffer222) ProcessMessagesBuffer((MessagesAppiBuffer222)buffer);
             if (buffer is VersionReadAppiBuffer) ParseVersionBuffer((VersionReadAppiBuffer)buffer);
         }
 
-        private void ProcessMessagesBuffer(MessagesReadAppiBuffer buff)
+        private void ProcessMessagesBuffer(MessagesAppiBuffer222 buff)
         {
             OnCanMessagesReceived(buff.CanMessages);
             if (buff.SerialBuffer.Length > 0)
@@ -360,12 +361,12 @@ namespace Communications.Appi
 
     internal class AppiBufferReadEventArgs : EventArgs
     {
-        public AppiBufferBase Buffer { get; private set; }
+        public Buffer Buffer { get; private set; }
 
         /// <summary>
         /// Инициализирует новый экземпляр класса <see cref="T:System.EventArgs"/>.
         /// </summary>
-        public AppiBufferReadEventArgs(AppiBufferBase Buffer) { this.Buffer = Buffer; }
+        public AppiBufferReadEventArgs(Buffer Buffer) { this.Buffer = Buffer; }
     }
 
     internal static class AppiCanFrameConstructor
