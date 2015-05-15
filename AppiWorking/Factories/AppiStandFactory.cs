@@ -5,7 +5,7 @@ using Communications.Appi.Devices;
 
 namespace Communications.Appi.Factories
 {
-    public class AppiStandFactory : IAppiFactory<AppiLine>
+    public class AppiStandFactory : IAppiFactory<AppiStandLine>
     {
         private const int SequentialNumberOffset = 5;
 
@@ -43,9 +43,9 @@ namespace Communications.Appi.Factories
                 }
             };
 
-        public AppiDevice<AppiLine> OpenDevice(IUsbSlot Slot)
+        public AppiDevice<AppiStandLine> OpenDevice(IUsbSlot Slot)
         {
-            return new AppiBlock(Slot.OpenDevice(),
+            return new AppiStand(Slot.OpenDevice(),
                                  new KeyBasedCompositeBufferDecoder(
                                      new Dictionary<byte, IAppiBufferDecoder>
                                      {

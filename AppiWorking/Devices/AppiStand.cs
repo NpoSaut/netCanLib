@@ -1,4 +1,6 @@
-﻿namespace Communications.Appi.Devices
+﻿using Communications.Appi.Decoders;
+
+namespace Communications.Appi.Devices
 {
     public enum AppiStandLine
     {
@@ -17,8 +19,7 @@
 
     public class AppiStand : AppiDevice<AppiStandLine>
     {
-        public AppiStand(IUsbDevice UsbDevice) : base(UsbDevice) { }
-
+        public AppiStand(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder) : base(UsbDevice, Decoder) { }
         public AppiStandCanCommutationState CommutationState { get; set; }
     }
 }
