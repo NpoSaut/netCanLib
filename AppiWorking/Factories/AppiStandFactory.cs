@@ -43,9 +43,9 @@ namespace Communications.Appi.Factories
                 }
             };
 
-        public AppiDevice<AppiLine> OpenDevice()
+        public AppiDevice<AppiLine> OpenDevice(IUsbSlot Slot)
         {
-            return new AppiBlock(usb,
+            return new AppiBlock(Slot.OpenDevice(),
                                  new KeyBasedCompositeBufferDecoder(
                                      new Dictionary<byte, IAppiBufferDecoder>
                                      {

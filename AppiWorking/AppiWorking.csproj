@@ -75,6 +75,7 @@
     <Compile Include="IAppiBufferProcessor.cs" />
     <Compile Include="Decoders\IAppiLineStatusDecoder.cs" />
     <Compile Include="IUsbDevice.cs" />
+    <Compile Include="IUsbSlot.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

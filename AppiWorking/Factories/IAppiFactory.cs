@@ -5,6 +5,6 @@ namespace Communications.Appi.Factories
 {
     public interface IAppiFactory<TLineKey> where TLineKey : struct, IConvertible
     {
-        AppiDevice<TLineKey> OpenDevice();
+        AppiDevice<TLineKey> OpenDevice(IUsbSlot Slot);
     }
 }
