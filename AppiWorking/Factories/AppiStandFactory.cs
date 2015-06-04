@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Communications.Appi.Decoders;
 using Communications.Appi.Devices;
+using Communications.Usb;
 
 namespace Communications.Appi.Factories
 {

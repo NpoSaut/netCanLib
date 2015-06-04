@@ -20,7 +20,10 @@ namespace Communications.Appi.Decoders
         public Buffer DecodeBuffer(byte[] Buff)
         {
             byte packageType = Buff[0];
-            return _decoders[packageType].DecodeBuffer(Buff);
+            IAppiBufferDecoder value;
+            if (_decoders.TryGetValue(packageType, out value))
+                return value.DecodeBuffer(Buff);
+            return null;
         }
     }
 }

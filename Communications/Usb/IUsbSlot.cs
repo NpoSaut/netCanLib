@@ -1,4 +1,4 @@
-﻿namespace Communications.Appi
+﻿namespace Communications.Usb
 {
     public interface IUsbSlot
     {

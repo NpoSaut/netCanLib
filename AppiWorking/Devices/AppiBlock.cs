@@ -1,17 +1,11 @@
-using System.Collections.Generic;
 using Communications.Appi.Decoders;
+using Communications.Usb;
 
 namespace Communications.Appi.Devices
 {
     public class AppiBlock : AppiDevice<AppiLine>
     {
         public AppiBlock(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder)
-            : base(UsbDevice, Decoder)
-        {
-            CanPorts = new Dictionary<AppiLine, AppiCanPort>
-                            {
-                                { AppiLine.Can1, new AppiCanPort(this, AppiLine.Can1) }
-                            };
-        }
+            : base(UsbDevice, Decoder, new[] { AppiLine.Can1, AppiLine.Can2 }) { }
     }
 }

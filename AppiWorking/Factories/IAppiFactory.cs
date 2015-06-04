@@ -1,5 +1,6 @@
 ﻿using System;
 using Communications.Appi.Devices;
+using Communications.Usb;
 
 namespace Communications.Appi.Factories
 {

@@ -1,7 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Reactive.Linq;
 using Communications.Appi.Buffers;
 using Communications.Appi.Decoders;
+using Communications.Appi.Ports;
+using Communications.Can;
+using Communications.Usb;
 using Buffer = Communications.Appi.Buffers.Buffer;
 
 namespace Communications.Appi.Devices
@@ -13,39 +18,36 @@ namespace Communications.Appi.Devices
         private readonly IUsbDevice _usbDevice;
         private int _lastReceivedBuffer = -1;
 
-        public AppiDevice(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder)
+        public AppiDevice(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder, ICollection<TLineKey> LineKeys)
         {
-            _usbDevice = UsbDevice;
             _decoder = Decoder;
+            _usbDevice = UsbDevice;
+
+            IObservable<Buffer> buffersStream = _usbDevice.Rx.Select(frame => _decoder.DecodeBuffer(frame.Data));
+
+            IObservable<MessagesBuffer<TLineKey>> messageBuffersStream = buffersStream.OfType<MessagesBuffer<TLineKey>>();
+
+            var fac = new AppiCanPortFactory();
+            CanPorts =
+                LineKeys.ToDictionary(key => key,
+                                      key => (ICanPort)fac.produceCanPort(messageBuffersStream.Select(buffer => buffer.LineStatuses[key])));
         }
 
-        public IDictionary<TLineKey, AppiCanPort> CanPorts { get; protected set; }
+        public IDictionary<TLineKey, ICanPort> CanPorts { get; private set; }
 
-        private void Do()
-        {
-            // Чтение и расшифровка буфера
-            byte[] buff = _usbDevice.ReadBuffer();
-            Buffer buffer = _decoder.DecodeBuffer(buff);
-
-            // Проверка сквозного номера
-            if (buffer.SequentialNumber == _lastReceivedBuffer)
-                return;
-            _lastReceivedBuffer = buffer.SequentialNumber;
-
-            // Обработка расшифрованного буфера
-            ProcessAppiBuffer(buffer);
-        }
-
-        private void ProcessAppiBuffer(Buffer AppiBuffer)
-        {
-            if (AppiBuffer is MessagesBuffer<TLineKey>)
-                ProcessMessagesAppiBuffer((MessagesBuffer<TLineKey>)AppiBuffer);
-        }
-
-        private void ProcessMessagesAppiBuffer(MessagesBuffer<TLineKey> AppiBuffer)
-        {
-            foreach (var lineStatus in AppiBuffer.LineStatuses)
-                CanPorts[lineStatus.Key].UpdateStatus(lineStatus.Value);
-        }
+        //        private void Do()
+        //        {
+        //            // Чтение и расшифровка буфера
+        //            byte[] buff = _usbDevice.ReadBuffer();
+        //            Buffer buffer = _decoder.DecodeBuffer(buff);
+        //
+        //            // Проверка сквозного номера
+        //            if (buffer.SequentialNumber == _lastReceivedBuffer)
+        //                return;
+        //            _lastReceivedBuffer = buffer.SequentialNumber;
+        //
+        //            // Обработка расшифрованного буфера
+        //            ProcessAppiBuffer(buffer);
+        //        }
     }
 }

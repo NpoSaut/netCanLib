@@ -10,7 +10,7 @@ namespace Communications.Appi.Winusb
     /// <summary>
     /// Связь с АППИ через WinUSB
     /// </summary>
-    public class WinusbAppiDev : AppiDev
+    public class WinusbAppiDev : IDisposable
     {
         /// <summary>
         /// GUID устройства
@@ -76,7 +76,7 @@ namespace Communications.Appi.Winusb
         /// <summary>
         /// Чтение буфера
         /// </summary>
-        protected override byte[] ReadBufferImplement()
+        protected virtual byte[] ReadBufferImplement()
         {
             try
             {
@@ -95,7 +95,7 @@ namespace Communications.Appi.Winusb
         /// Запись буфера
         /// </summary>
         /// <param name="Buffer">Данные для записи</param>
-        protected override void WriteBufferImplement(byte[] Buffer)
+        protected virtual void WriteBufferImplement(byte[] Buffer)
         {
             try
             {
@@ -117,7 +117,7 @@ namespace Communications.Appi.Winusb
             OpenedDevices = new List<WinusbAppiDev>();
         }
 
-        public override void Dispose()
+        public virtual void Dispose()
         {
             lock (OpenedDevicesLocker)
             {
