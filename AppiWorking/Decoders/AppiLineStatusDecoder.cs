@@ -29,13 +29,16 @@ namespace Communications.Appi.Decoders
         {
             int count = Buff[_layout.FramesCountOffset];
             for (int i = 0; i < count; i++)
-            {
-                int id = BitConverter.ToUInt16(Buff.Take(2).Reverse().ToArray(), 0) >> 4;
-                int len = Buff[1 + _layout.FramesBodyOffset] & 0x0f;
-                if (len > 8)
-                    throw new AppiBufferDecodeException("Расшифрована неправильная длина CAN-сообщения ({0} байт)", len);
-                yield return CanFrame.NewWithId(id, Buff, 2 + _layout.FramesBodyOffset, len);
-            }
+                yield return DecodeCanFrame(Buff, _layout.FramesBodyOffset + i * 10);
+        }
+
+        private CanFrame DecodeCanFrame(byte[] Buff, int Offset)
+        {
+            int id = BitConverter.ToUInt16(Buff.Skip(Offset).Take(2).Reverse().ToArray(), 0) >> 4;
+            int len = Buff[1 + Offset] & 0x0f;
+            if (len > 8)
+                throw new AppiBufferDecodeException("Расшифрована неправильная длина CAN-сообщения ({0} байт)", len);
+            return CanFrame.NewWithId(id, Buff, 2 + Offset, len);
         }
     }
 }
