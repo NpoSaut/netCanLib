@@ -18,6 +18,7 @@ namespace ReactiveWinUsb
         private readonly USBPipe _writePipe;
 
         private ConcurrentBag<IDisposable> _senders;
+        private EventLoopScheduler _scheduler;
 
         public WinUsbDevice(USBDevice Device, int BufferSize)
         {
@@ -32,13 +33,13 @@ namespace ReactiveWinUsb
             _writePipe = _device.Pipes.First(p => p.IsOut);
             _writePipe.Policy.PipeTransferTimeout = 100;
 
-            var scheduler = new EventLoopScheduler();
+            _scheduler = new EventLoopScheduler();
 
-            Rx = Observable.Interval(TimeSpan.Zero, scheduler)
+            Rx = Observable.Interval(TimeSpan.Zero, _scheduler)
                            .Select(x => Read());
 
             _tx = new Subject<UsbFrame>();
-            _tx.SubscribeOn(scheduler).Subscribe(Write);
+            _tx.SubscribeOn(_scheduler).Subscribe(Write);
         }
 
         public IObservable<UsbFrame> Rx { get; private set; }
@@ -49,6 +50,7 @@ namespace ReactiveWinUsb
         /// </summary>
         public void Dispose()
         {
+            _scheduler.Dispose();
             _device.Dispose();
             foreach (IDisposable sender in _senders.ToArray())
                 sender.Dispose();
