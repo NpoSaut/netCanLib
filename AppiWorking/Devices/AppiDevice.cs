@@ -11,8 +11,7 @@ using Buffer = Communications.Appi.Buffers.Buffer;
 
 namespace Communications.Appi.Devices
 {
-    public abstract class AppiDevice<TLineKey>
-        where TLineKey : struct, IConvertible
+    public abstract class AppiDevice<TLineKey> : IDisposable where TLineKey : struct, IConvertible
     {
         private readonly IAppiBufferDecoder _decoder;
         private readonly IUsbDevice _usbDevice;
@@ -49,5 +48,7 @@ namespace Communications.Appi.Devices
         //            // Обработка расшифрованного буфера
         //            ProcessAppiBuffer(buffer);
         //        }
+
+        public void Dispose() { _usbDevice.Dispose(); }
     }
 }
