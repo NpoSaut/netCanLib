@@ -56,6 +56,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encoders\AppiSendFramesBuffer.cs" />
+    <Compile Include="Encoders\DictionaryInterfaceCodeProvider.cs" />
+    <Compile Include="Encoders\IAppiBufferEncoder.cs" />
+    <Compile Include="Encoders\IInterfaceCodeProvider.cs" />
     <Compile Include="Ports\AppiCanPort.cs" />
     <Compile Include="AppiDev.cs" />
     <Compile Include="Buffers\AppiBlockMessagesBuffer.cs" />
@@ -70,7 +74,6 @@
     <Compile Include="Devices\AppiBlock.cs" />
     <Compile Include="Devices\AppiDevice.cs" />
     <Compile Include="Decoders\AppiLineStatusDecoder.cs" />
-    <Compile Include="AppiMessages.cs" />
     <Compile Include="Decoders\IAppiBufferDecoder.cs" />
     <Compile Include="Decoders\MessagesBufferDecoder.cs" />
     <Compile Include="Devices\AppiStand.cs" />
@@ -84,7 +87,6 @@
     <Compile Include="Factories\AppiBlockFactory.cs" />
     <Compile Include="Factories\AppiStandFactory.cs" />
     <Compile Include="Factories\IAppiFactory.cs" />
-    <Compile Include="IAppiBufferProcessor.cs" />
     <Compile Include="Decoders\IAppiLineStatusDecoder.cs" />
     <Compile Include="Ports\AppiCanPortFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

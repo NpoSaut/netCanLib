@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Communications.Appi.Decoders;
 using Communications.Appi.Devices;
+using Communications.Appi.Encoders;
 using Communications.Usb;
 
 namespace Communications.Appi.Factories
@@ -9,6 +10,8 @@ namespace Communications.Appi.Factories
     public class AppiStandFactory : IAppiFactory<AppiStandLine>
     {
         private const int SequentialNumberOffset = 5;
+
+        private static readonly AppiSendFramesBufferLayout _sendFramesBufferLayout = new AppiSendFramesBufferLayout(0, 1, 3, 10);
 
         private static readonly IDictionary<int, AppiLineStatusLayout> _buffersLayouts =
             new Dictionary<int, AppiLineStatusLayout>
@@ -57,7 +60,16 @@ namespace Communications.Appi.Factories
                                                                                                       x => GetLayouts(x.Value)))
                                          },
                                          { 0x09, new VersionBufferDecoder(SequentialNumberOffset, 6) }
-                                     }));
+                                     }),
+                                 new AppiSendFramesBufferEncoder<AppiStandLine>(
+                                     new DictionaryInterfaceCodeProvider<AppiStandLine>(new Dictionary<AppiStandLine, byte>
+                                                                                        {
+                                                                                            { AppiStandLine.CanA, 0x02 },
+                                                                                            { AppiStandLine.CanB, 0x03 },
+                                                                                            { AppiStandLine.CanBusA, 0x22 },
+                                                                                            { AppiStandLine.CanBusB, 0x23 },
+                                                                                            { AppiStandLine.CanTech, 0x12 },
+                                                                                        }), _sendFramesBufferLayout));
         }
 
         private static IDictionary<AppiStandLine, AppiLineStatusDecoder> GetLayouts(IDictionary<AppiStandLine, AppiLineStatusLayout> x)

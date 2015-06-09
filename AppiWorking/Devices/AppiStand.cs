@@ -1,4 +1,5 @@
 ﻿using Communications.Appi.Decoders;
+using Communications.Appi.Encoders;
 using Communications.Usb;
 
 namespace Communications.Appi.Devices
@@ -20,8 +21,8 @@ namespace Communications.Appi.Devices
 
     public class AppiStand : AppiDevice<AppiStandLine>
     {
-        public AppiStand(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder)
-            : base(UsbDevice, Decoder, new[] { AppiStandLine.CanA, AppiStandLine.CanB, AppiStandLine.CanBusA, AppiStandLine.CanBusB, AppiStandLine.CanTech }) { }
+        public AppiStand(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder, AppiSendFramesBufferEncoder<AppiStandLine> SendBufferEncoder)
+            : base(UsbDevice, new[] { AppiStandLine.CanA, AppiStandLine.CanB, AppiStandLine.CanBusA, AppiStandLine.CanBusB, AppiStandLine.CanTech }, Decoder, SendBufferEncoder) { }
 
         public AppiStandCanCommutationState CommutationState { get; set; }
     }

@@ -20,8 +20,14 @@ namespace Communications.Appi.Ports
 
         public IObservable<CanFrame> Rx { get; private set; }
 
-        public void Send(CanFrame Frame) { _tx.OnNext(Frame); }
+        public IObserver<CanFrame> Tx
+        {
+            get { return _tx; }
+        }
 
-        public void SubscribeSend(IObservable<CanFrame> FramesFlow) { FramesFlow.Subscribe(_tx); }
+        public IObservable<CanFrame> TxOutput
+        {
+            get { return _tx; }
+        }
     }
 }

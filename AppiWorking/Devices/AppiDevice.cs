@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Linq;
 using Communications.Appi.Buffers;
 using Communications.Appi.Decoders;
+using Communications.Appi.Encoders;
 using Communications.Appi.Ports;
 using Communications.Can;
 using Communications.Usb;
@@ -14,12 +15,14 @@ namespace Communications.Appi.Devices
     public abstract class AppiDevice<TLineKey> : IDisposable where TLineKey : struct, IConvertible
     {
         private readonly IAppiBufferDecoder _decoder;
+        private readonly AppiSendFramesBufferEncoder<TLineKey> _sendFramesBufferEncoder;
         private readonly IUsbDevice _usbDevice;
-        private int _lastReceivedBuffer = -1;
 
-        public AppiDevice(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder, ICollection<TLineKey> LineKeys)
+        public AppiDevice(IUsbDevice UsbDevice, IEnumerable<TLineKey> LineKeys, IAppiBufferDecoder Decoder,
+                          AppiSendFramesBufferEncoder<TLineKey> SendFramesBufferEncoder)
         {
             _decoder = Decoder;
+            _sendFramesBufferEncoder = SendFramesBufferEncoder;
             _usbDevice = UsbDevice;
 
             IObservable<Buffer> buffersStream = _usbDevice.Rx.Select(frame => _decoder.DecodeBuffer(frame.Data));
@@ -29,7 +32,16 @@ namespace Communications.Appi.Devices
             var fac = new AppiCanPortFactory();
             CanPorts =
                 LineKeys.ToDictionary(key => key,
-                                      key => (ICanPort)fac.produceCanPort(messageBuffersStream.Select(buffer => buffer.LineStatuses[key])));
+                                      key =>
+                                      {
+                                          AppiCanPort port = fac.produceCanPort(messageBuffersStream.Select(buffer => buffer.LineStatuses[key]));
+                                          port.TxOutput
+                                              .Select(x => new AppiSendFramesBuffer<TLineKey>(key, x))
+                                              .Select(m => _sendFramesBufferEncoder.Encode(m))
+                                              .Select(data => new UsbFrame(data))
+                                              .Subscribe(_usbDevice.Tx);
+                                          return (ICanPort)port;
+                                      });
         }
 
         public IDictionary<TLineKey, ICanPort> CanPorts { get; private set; }

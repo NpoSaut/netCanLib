@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using Communications.Appi;
 using Communications.Appi.Devices;
 using Communications.Appi.Factories;
+using Communications.Can;
 using MadWizard.WinUSBNet;
 using ReactiveWinUsb;
 
@@ -24,13 +25,17 @@ namespace Test
             USBDeviceInfo d = _deviceGuids.SelectMany(USBDevice.GetDevices).First();
 
             var appiFactory = new AppiBlockFactory();
-            AppiDevice<AppiLine> appi = appiFactory.OpenDevice(new WinUsbDeviceSlot(new USBDevice(d), 2048));
+            using (AppiDevice<AppiLine> appi = appiFactory.OpenDevice(new WinUsbDeviceSlot(new USBDevice(d), 2048)))
+            {
+                appi.CanPorts[AppiLine.Can1].Rx
+                                            .Where(f => f.Descriptor == 0x1888)
+                                            .Select(f => CanFrame.NewWithDescriptor(0x1088, f.Data))
+                                            .Do(Console.WriteLine)
+                                            .Subscribe(appi.CanPorts[AppiLine.Can1].Tx);
+                //.Subscribe(Console.WriteLine);
 
-            appi.CanPorts[AppiLine.Can1].Rx
-                                        //.Where(f => f.Descriptor == 0x1888)
-                                        .Subscribe(Console.WriteLine);
-
-            Console.ReadLine();
+                Console.ReadLine();
+            }
         }
     }
 }
