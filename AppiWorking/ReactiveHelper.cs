@@ -5,7 +5,7 @@ using System.Reactive.Subjects;
 
 namespace Communications.Appi
 {
-    public static class ReactiveHelper
+    internal static class ReactiveHelper
     {
         public static IObservable<IList<T>> Limit<T>(this IObservable<T> source, IObservable<int> limitations) { return new Buffered<T>(source, limitations); }
 

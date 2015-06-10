@@ -61,7 +61,6 @@
     <Compile Include="Encoders\IAppiBufferEncoder.cs" />
     <Compile Include="Encoders\IInterfaceCodeProvider.cs" />
     <Compile Include="Ports\AppiCanPort.cs" />
-    <Compile Include="AppiDev.cs" />
     <Compile Include="Buffers\AppiBlockMessagesBuffer.cs" />
     <Compile Include="Buffers\AppiLineStatus.cs" />
     <Compile Include="Buffers\AppiStandMessagesBuffer.cs" />

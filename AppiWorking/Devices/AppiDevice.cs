@@ -17,20 +17,18 @@ namespace Communications.Appi.Devices
     {
         private readonly IDisposable _buffersStreamConnection;
         private readonly IAppiBufferDecoder _decoder;
-        private readonly AppiSendFramesBufferEncoder<TLineKey> _sendFramesBufferEncoder;
         private readonly IUsbDevice _usbDevice;
 
         public AppiDevice(IUsbDevice UsbDevice, IEnumerable<TLineKey> LineKeys, IAppiBufferDecoder Decoder,
                           AppiSendFramesBufferEncoder<TLineKey> SendFramesBufferEncoder)
         {
             _decoder = Decoder;
-            _sendFramesBufferEncoder = SendFramesBufferEncoder;
             _usbDevice = UsbDevice;
 
             IConnectableObservable<Buffer> buffersStream = _usbDevice.Rx.Select(frame => _decoder.DecodeBuffer(frame.Data)).Publish();
             _buffersStreamConnection = buffersStream.Connect();
 
-            var fac = new AppiCanPortFactory<TLineKey>(_sendFramesBufferEncoder);
+            var fac = new AppiCanPortFactory<TLineKey>(SendFramesBufferEncoder);
             CanPorts =
                 LineKeys.ToDictionary(key => key,
                                       key => fac.ProduceCanPort(key,
