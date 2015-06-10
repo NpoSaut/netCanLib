@@ -90,6 +90,7 @@
     <Compile Include="Decoders\IAppiLineStatusDecoder.cs" />
     <Compile Include="Ports\AppiCanPortFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReactiveHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communications\Communications.csproj">

@@ -11,8 +11,6 @@ namespace Communications.Appi.Encoders
             this.Frames = Frames;
         }
 
-        public AppiSendFramesBuffer(TLineKey Interface, params CanFrame[] Frames) : this(Interface, (ICollection<CanFrame>)Frames) { }
-
         public ICollection<CanFrame> Frames { get; private set; }
         public TLineKey Interface { get; private set; }
     }
