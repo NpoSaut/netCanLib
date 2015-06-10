@@ -61,17 +61,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CommunicationsTests\CommunicationsTests.csproj">
+    <ProjectReference Include="..\Communications.Tests\Communications.Tests.csproj">
       <Project>{d6b9d8ff-66c3-4411-88d3-524a4a19dc03}</Project>
-      <Name>CommunicationsTests</Name>
+      <Name>Communications.Tests</Name>
     </ProjectReference>
     <ProjectReference Include="..\Communications\Communications.csproj">
       <Project>{6c5b1eca-5187-4f63-8cf1-c17df50d0f65}</Project>
       <Name>Communications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\IsoTP\IsoTP.csproj">
+    <ProjectReference Include="..\Communications.Protocols.IsoTP\Communications.Protocols.IsoTP.csproj">
       <Project>{a45417b6-4547-4e98-b69e-4cb1cfe45f61}</Project>
-      <Name>IsoTP</Name>
+      <Name>Communications.Protocols.IsoTP</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

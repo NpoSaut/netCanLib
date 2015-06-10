@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using Communications.Can;
 
-namespace CommunicationsTests.Stuff
+namespace Communications.Tests.Stuff
 {
     public class ChainedCanFlow : CanBufferedBase, ICanFlow
     {

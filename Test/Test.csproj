@@ -61,17 +61,17 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AppiWorking\AppiWorking.csproj">
+    <ProjectReference Include="..\Communications.Appi\Communications.Appi.csproj">
       <Project>{5A812723-E98B-4B82-AE7B-8E2747D8541F}</Project>
-      <Name>AppiWorking</Name>
+      <Name>Communications.Appi</Name>
     </ProjectReference>
     <ProjectReference Include="..\Communications\Communications.csproj">
       <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
       <Name>Communications</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ReactiveWinUsb\ReactiveWinUsb.csproj">
+    <ProjectReference Include="..\Communications.Usb.WinUsb\Communications.Usb.WinUsb.csproj">
       <Project>{93A2A4AF-029B-4320-AE8E-DC38CD3F3C85}</Project>
-      <Name>ReactiveWinUsb</Name>
+      <Name>Communications.Usb.WinUsb</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

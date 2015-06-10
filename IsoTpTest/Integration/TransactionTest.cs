@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Communications.Can;
 using Communications.Protocols.IsoTP;
-using CommunicationsTests.Stuff;
+using Communications.Tests.Stuff;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace IsoTpTest.Integration

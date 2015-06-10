@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Communications.Can;
 
-namespace CommunicationsTests.Stuff
+namespace Communications.Tests.Stuff
 {
     class MockCanPort : CanPort
     {

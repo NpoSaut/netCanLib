@@ -1,14 +1,15 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{93A2A4AF-029B-4320-AE8E-DC38CD3F3C85}</ProjectGuid>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{5A812723-E98B-4B82-AE7B-8E2747D8541F}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ReactiveWinUsb</RootNamespace>
-    <AssemblyName>ReactiveWinUsb</AssemblyName>
+    <RootNamespace>Communications.Appi</RootNamespace>
+    <AssemblyName>Communications.Appi</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -53,24 +54,51 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
-    <Reference Include="WinUSBNet, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\WinUSBNet.1.0\lib\net40\WinUSBNet.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Encoders\AppiSendFramesBuffer.cs" />
+    <Compile Include="Encoders\DictionaryInterfaceCodeProvider.cs" />
+    <Compile Include="Encoders\IAppiBufferEncoder.cs" />
+    <Compile Include="Encoders\IInterfaceCodeProvider.cs" />
+    <Compile Include="Ports\AppiCanPort.cs" />
+    <Compile Include="Buffers\AppiBlockMessagesBuffer.cs" />
+    <Compile Include="Buffers\AppiLineStatus.cs" />
+    <Compile Include="Buffers\AppiStandMessagesBuffer.cs" />
+    <Compile Include="Decoders\AppiBlockMessagesBufferDecoder.cs" />
+    <Compile Include="Decoders\AppiLineStatusLayout.cs" />
+    <Compile Include="Decoders\AppiStandMessagesBufferDecoder.cs" />
+    <Compile Include="Decoders\BufferDecoderBase.cs" />
+    <Compile Include="Decoders\KeyBasedCompositeBufferDecoder.cs" />
+    <Compile Include="Decoders\VersionBufferDecoder.cs" />
+    <Compile Include="Devices\AppiBlock.cs" />
+    <Compile Include="Devices\AppiDevice.cs" />
+    <Compile Include="Decoders\AppiLineStatusDecoder.cs" />
+    <Compile Include="Decoders\IAppiBufferDecoder.cs" />
+    <Compile Include="Decoders\MessagesBufferDecoder.cs" />
+    <Compile Include="Devices\AppiStand.cs" />
+    <Compile Include="Exceptions\AppiBufferDecodeException.cs" />
+    <Compile Include="Exceptions\AppiConnectoinException.cs" />
+    <Compile Include="Exceptions\AppiException.cs" />
+    <Compile Include="Buffers\Buffer.cs" />
+    <Compile Include="Buffers\AppiBufferIdentiferAttribute.cs" />
+    <Compile Include="Buffers\VersionReadAppiBuffer.cs" />
+    <Compile Include="Exceptions\TransferAbortedException.cs" />
+    <Compile Include="Factories\AppiBlockFactory.cs" />
+    <Compile Include="Factories\AppiStandFactory.cs" />
+    <Compile Include="Factories\IAppiFactory.cs" />
+    <Compile Include="Decoders\IAppiLineStatusDecoder.cs" />
+    <Compile Include="Ports\AppiCanPortFactory.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="WinUsbDevice.cs" />
-    <Compile Include="WinUsbDeviceSlot.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+    <Compile Include="ReactiveHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communications\Communications.csproj">
       <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
       <Name>Communications</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

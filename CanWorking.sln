@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.31101.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppiDrvWinusb", "AppiDrvWinusb\AppiDrvWinusb.csproj", "{758C61BC-7BE1-4E25-BE05-3A17619199EE}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AppiWorking", "AppiWorking\AppiWorking.csproj", "{5A812723-E98B-4B82-AE7B-8E2747D8541F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications.Appi", "Communications.Appi\Communications.Appi.csproj", "{5A812723-E98B-4B82-AE7B-8E2747D8541F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlokFrames", "BlokFrames\BlokFrames.csproj", "{405B0F26-46EE-4D8C-9267-652F7D4C4AB0}"
 EndProject
@@ -13,15 +11,17 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlokFramesCodegen", "BlokFr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications", "Communications\Communications.csproj", "{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsoTP", "IsoTP\IsoTP.csproj", "{A45417B6-4547-4E98-B69E-4CB1CFE45F61}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications.Protocols.IsoTP", "Communications.Protocols.IsoTP\Communications.Protocols.IsoTP.csproj", "{A45417B6-4547-4E98-B69E-4CB1CFE45F61}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "IsoTpTest", "IsoTpTest\IsoTpTest.csproj", "{5545B567-9876-4F3B-B7DF-1F87FC34FF43}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommunicationsTests", "CommunicationsTests\CommunicationsTests.csproj", "{D6B9D8FF-66C3-4411-88D3-524A4A19DC03}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications.Tests", "Communications.Tests\Communications.Tests.csproj", "{D6B9D8FF-66C3-4411-88D3-524A4A19DC03}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ReactiveWinUsb", "ReactiveWinUsb\ReactiveWinUsb.csproj", "{93A2A4AF-029B-4320-AE8E-DC38CD3F3C85}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications.Usb.WinUsb", "Communications.Usb.WinUsb\Communications.Usb.WinUsb.csproj", "{93A2A4AF-029B-4320-AE8E-DC38CD3F3C85}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{3CC8456A-84FD-4ED6-BCF7-FEBEB7E799B3}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{173B6752-E5B9-4E23-9BC9-3245EF84CAE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,16 +33,6 @@ Global
 		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Debug|Mixed Platforms.Build.0 = Debug|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{758C61BC-7BE1-4E25-BE05-3A17619199EE}.Release|x86.ActiveCfg = Release|Any CPU
 		{5A812723-E98B-4B82-AE7B-8E2747D8541F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5A812723-E98B-4B82-AE7B-8E2747D8541F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5A812723-E98B-4B82-AE7B-8E2747D8541F}.Debug|Mixed Platforms.ActiveCfg = Debug|Any CPU
@@ -136,5 +126,9 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{5545B567-9876-4F3B-B7DF-1F87FC34FF43} = {173B6752-E5B9-4E23-9BC9-3245EF84CAE5}
+		{D6B9D8FF-66C3-4411-88D3-524A4A19DC03} = {173B6752-E5B9-4E23-9BC9-3245EF84CAE5}
 	EndGlobalSection
 EndGlobal
