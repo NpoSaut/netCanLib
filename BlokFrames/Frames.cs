@@ -160,147 +160,148 @@ namespace BlokFrames
         }
         
     }
-    
-    [FrameDescriptor(0x1888)]
+
     /// <summary>
     /// Описание параметров движения
-    /// <summary>
+    /// </summary>
+    [FrameDescriptor(0x1888, HalfsetKind.SetA)]
+    [FrameDescriptor(0x1A88, HalfsetKind.SetB)]
     public class IpdState : BlokFrame
     {
-        [System.ComponentModel.Description("Номер выполненного теста")]
         /// <summary>Номер выполненного теста</summary>
+        [System.ComponentModel.Description("Номер выполненного теста")]
         public int TestNumber { get; set; }
-        
-        [System.ComponentModel.Description("Результат теста")]
+
         /// <summary>Результат теста</summary>
+        [System.ComponentModel.Description("Результат теста")]
         public int TestResult { get; set; }
         
         ///<summary>Направление движения</summary>
         public enum DirectionKind : int
         {
-            [System.ComponentModel.Description("Вперёд")]
             ///<summary>Вперёд</summary>
+            [System.ComponentModel.Description("Вперёд")]
             Ahead = 0,
-            [System.ComponentModel.Description("Назад")]
             ///<summary>Назад</summary>
+            [System.ComponentModel.Description("Назад")]
             Back = 1,
         }
-        
-        [System.ComponentModel.Description("Направление движения")]
+
         /// <summary>Направление движения</summary>
+        [System.ComponentModel.Description("Направление движения")]
         public DirectionKind Direction { get; set; }
         
         ///<summary>Знак ускорения</summary>
         public enum AccelerationSignKind : int
         {
-            [System.ComponentModel.Description("Положительное")]
             ///<summary>Положительное</summary>
+            [System.ComponentModel.Description("Положительное")]
             Positive = 0,
-            [System.ComponentModel.Description("Отрицательное")]
             ///<summary>Отрицательное</summary>
+            [System.ComponentModel.Description("Отрицательное")]
             Negative = 1,
         }
-        
-        [System.ComponentModel.Description("Знак ускорения")]
+
         /// <summary>Знак ускорения</summary>
+        [System.ComponentModel.Description("Знак ускорения")]
         public AccelerationSignKind AccelerationSign { get; set; }
-        
-        [System.ComponentModel.Description("Наличие импульсов ДПС")]
+
         /// <summary>Наличие импульсов ДПС</summary>
+        [System.ComponentModel.Description("Наличие импульсов ДПС")]
         public Boolean SpeedPulsesAvailable { get; set; }
-        
-        [System.ComponentModel.Description("Фактическая скорость")]
+
         /// <summary>Фактическая скорость</summary>
+        [System.ComponentModel.Description("Фактическая скорость")]
         public int Speed { get; set; }
-        
-        [System.ComponentModel.Description("Линейная ордината")]
+
         /// <summary>Линейная ордината</summary>
+        [System.ComponentModel.Description("Линейная ордината")]
         public int LinearOrdinate { get; set; }
-        
-        [System.ComponentModel.Description("Признак виртуальной кабины")]
+
         /// <summary>Признак виртуальной кабины</summary>
-        public Boolean IsVirtualCabine { get; set; }
+        [System.ComponentModel.Description("Признак виртуальной кабины")]
+        public Boolean IsVirtualCabin { get; set; }
         
         ///<summary>Номер виртуальной кабины</summary>
-        public enum VirtualCabineKind : int
+        public enum VirtualCabinKind : int
         {
-            [System.ComponentModel.Description("1 кабина")]
             ///<summary>1 кабина</summary>
-            Cabine1 = 0,
-            [System.ComponentModel.Description("2 кабина")]
+            [System.ComponentModel.Description("1 кабина")]
+            Cabin1 = 0,
             ///<summary>2 кабина</summary>
-            Cabine2 = 1,
+            [System.ComponentModel.Description("2 кабина")]
+            Cabin2 = 1,
         }
-        
-        [System.ComponentModel.Description("Номер виртуальной кабины")]
+
         /// <summary>Номер виртуальной кабины</summary>
-        public VirtualCabineKind VirtualCabine { get; set; }
-        
-        [System.ComponentModel.Description("Определение местоположения в ЭК")]
+        [System.ComponentModel.Description("Номер виртуальной кабины")]
+        public VirtualCabinKind VirtualCabin { get; set; }
+
         /// <summary>Определение местоположения в ЭК</summary>
+        [System.ComponentModel.Description("Определение местоположения в ЭК")]
         public Boolean EmapPosition { get; set; }
         
         ///<summary>Тест пассивного датчика по скорости</summary>
         public enum PassiveSensorSpeedTestStateKind : int
         {
-            [System.ComponentModel.Description("Исправен")]
             ///<summary>Исправен</summary>
+            [System.ComponentModel.Description("Исправен")]
             Correct = 0,
-            [System.ComponentModel.Description("Сбой")]
             ///<summary>Сбой</summary>
+            [System.ComponentModel.Description("Сбой")]
             Fault = 1,
         }
-        
-        [System.ComponentModel.Description("Тест пассивного датчика по скорости")]
+
         /// <summary>Тест пассивного датчика по скорости</summary>
+        [System.ComponentModel.Description("Тест пассивного датчика по скорости")]
         public PassiveSensorSpeedTestStateKind PassiveSensorSpeedTestState { get; set; }
         
         ///<summary>Номер активного датчика</summary>
         public enum ActiveSpeedSensorKind : int
         {
-            [System.ComponentModel.Description("Датчик 1")]
             ///<summary>Датчик 1</summary>
+            [System.ComponentModel.Description("Датчик 1")]
             Sensor1 = 0,
-            [System.ComponentModel.Description("Датчик 2")]
             ///<summary>Датчик 2</summary>
+            [System.ComponentModel.Description("Датчик 2")]
             Sensor2 = 1,
         }
-        
-        [System.ComponentModel.Description("Номер активного датчика")]
+
         /// <summary>Номер активного датчика</summary>
+        [System.ComponentModel.Description("Номер активного датчика")]
         public ActiveSpeedSensorKind ActiveSpeedSensor { get; set; }
         
         ///<summary>Тест пассивного датчика по количеству импульсов</summary>
         public enum PassiveSensorImpulseTestStateKind : int
         {
-            [System.ComponentModel.Description("Исправен")]
             ///<summary>Исправен</summary>
+            [System.ComponentModel.Description("Исправен")]
             Correct = 0,
-            [System.ComponentModel.Description("Сбой")]
             ///<summary>Сбой</summary>
+            [System.ComponentModel.Description("Сбой")]
             Fault = 1,
         }
-        
-        [System.ComponentModel.Description("Тест пассивного датчика по количеству импульсов")]
+
         /// <summary>Тест пассивного датчика по количеству импульсов</summary>
+        [System.ComponentModel.Description("Тест пассивного датчика по количеству импульсов")]
         public PassiveSensorImpulseTestStateKind PassiveSensorImpulseTestState { get; set; }
         
         
         protected override void Decode(byte[] buff)
         {
-            this.TestNumber = DecodeTestNumber(buff);
-            this.TestResult = DecodeTestResult(buff);
-            this.Direction = DecodeDirection(buff);
-            this.AccelerationSign = DecodeAccelerationSign(buff);
-            this.SpeedPulsesAvailable = DecodeSpeedPulsesAvailable(buff);
-            this.Speed = DecodeSpeed(buff);
-            this.LinearOrdinate = DecodeLinearOrdinate(buff);
-            this.IsVirtualCabine = DecodeIsVirtualCabine(buff);
-            this.VirtualCabine = DecodeVirtualCabine(buff);
-            this.EmapPosition = DecodeEmapPosition(buff);
-            this.PassiveSensorSpeedTestState = DecodePassiveSensorSpeedTestState(buff);
-            this.ActiveSpeedSensor = DecodeActiveSpeedSensor(buff);
-            this.PassiveSensorImpulseTestState = DecodePassiveSensorImpulseTestState(buff);
+            TestNumber = DecodeTestNumber(buff);
+            TestResult = DecodeTestResult(buff);
+            Direction = DecodeDirection(buff);
+            AccelerationSign = DecodeAccelerationSign(buff);
+            SpeedPulsesAvailable = DecodeSpeedPulsesAvailable(buff);
+            Speed = DecodeSpeed(buff);
+            LinearOrdinate = DecodeLinearOrdinate(buff);
+            IsVirtualCabin = DecodeIsVirtualCabine(buff);
+            VirtualCabin = DecodeVirtualCabine(buff);
+            EmapPosition = DecodeEmapPosition(buff);
+            PassiveSensorSpeedTestState = DecodePassiveSensorSpeedTestState(buff);
+            ActiveSpeedSensor = DecodeActiveSpeedSensor(buff);
+            PassiveSensorImpulseTestState = DecodePassiveSensorImpulseTestState(buff);
         }
         
         protected override byte[] Encode()
@@ -313,8 +314,8 @@ namespace BlokFrames
             EncodeSpeedPulsesAvailable(buff, SpeedPulsesAvailable);
             EncodeSpeed(buff, Speed);
             EncodeLinearOrdinate(buff, LinearOrdinate);
-            EncodeIsVirtualCabine(buff, IsVirtualCabine);
-            EncodeVirtualCabine(buff, VirtualCabine);
+            EncodeIsVirtualCabine(buff, IsVirtualCabin);
+            EncodeVirtualCabine(buff, VirtualCabin);
             EncodeEmapPosition(buff, EmapPosition);
             EncodePassiveSensorSpeedTestState(buff, PassiveSensorSpeedTestState);
             EncodeActiveSpeedSensor(buff, ActiveSpeedSensor);
@@ -413,13 +414,13 @@ namespace BlokFrames
             buff[6] = (byte)((buff[6] & ~0x80) | ((value ? 1 : 0) & 0x80));
         }
         
-        private VirtualCabineKind DecodeVirtualCabine(Byte[] buff)
+        private VirtualCabinKind DecodeVirtualCabine(Byte[] buff)
         {
             int raw = ((buff[6] & 0x40) >> 6);
-            return (VirtualCabineKind)raw;
+            return (VirtualCabinKind)raw;
         }
         
-        private void EncodeVirtualCabine(Byte[] buff, VirtualCabineKind value)
+        private void EncodeVirtualCabine(Byte[] buff, VirtualCabinKind value)
         {
             buff[6] = (byte)((buff[6] & ~0x40) | ((int)value & 0x40));
         }

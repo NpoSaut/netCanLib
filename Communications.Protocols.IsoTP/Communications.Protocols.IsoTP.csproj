@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</ProjectGuid>
+    <ProjectGuid>{A45417B6-4547-4E98-B69E-4CB1CFE45F61}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Communications</RootNamespace>
-    <AssemblyName>CanLine</AssemblyName>
+    <RootNamespace>Communications.Protocols.IsoTP</RootNamespace>
+    <AssemblyName>Communications.Protocols.IsoTP</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -40,32 +40,41 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaudRates.cs" />
-    <Compile Include="Can\CanBufferedBase.cs" />
-    <Compile Include="Can\CanFlow.cs" />
-    <Compile Include="Can\CanFrame.cs" />
-    <Compile Include="Can\CanFrameHandler.cs" />
-    <Compile Include="Can\CanFramesBuffer.cs" />
-    <Compile Include="Can\CanPort.cs" />
-    <Compile Include="Can\FrameEncoders\FrameTextEncoder.cs" />
-    <Compile Include="Can\FrameEncoders\FrameEncoder.cs" />
-    <Compile Include="Can\FrameEncoders\FrameSbsEncoder.cs" />
-    <Compile Include="Can\FrameEncoders\FrameStreamEncoder.cs" />
-    <Compile Include="Can\ICanFlow.cs" />
-    <Compile Include="Can\ICanPort.cs" />
-    <Compile Include="Can\LogReader\CanVirtualPort.cs" />
-    <Compile Include="Can\LogReader\StreamEncoderPort.cs" />
-    <Compile Include="Can\LogReader\TextLogReaderPort.cs" />
-    <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
-    <Compile Include="Can\LogRecording\LogRecorder.cs" />
-    <Compile Include="ILog.cs" />
-    <Compile Include="Port.cs" />
+    <Compile Include="CanIsoTpConnection.cs" />
+    <Compile Include="Exceptions\DescriptorNotInFlowException.cs" />
+    <Compile Include="Exceptions\IsoTpFlowControlTimeoutException.cs" />
+    <Compile Include="Exceptions\IsoTpTimeoutException.cs" />
+    <Compile Include="Exceptions\IsoTpWrongFrameException.cs" />
+    <Compile Include="Frames\ConsecutiveFrame.cs" />
+    <Compile Include="Frames\FirstFrame.cs" />
+    <Compile Include="Frames\FlowControlFrame.cs" />
+    <Compile Include="IsoTp.cs" />
+    <Compile Include="Exceptions\IsoTpReceiveTimeoutException.cs" />
+    <Compile Include="Exceptions\IsoTpTransactionAbortedException.cs" />
+    <Compile Include="Exceptions\IsoTpTransactionReuseException.cs" />
+    <Compile Include="Frames\SingleFrame.cs" />
+    <Compile Include="Frames\IsoTpFrame.cs" />
+    <Compile Include="Exceptions\IsoTpProtocolException.cs" />
+    <Compile Include="Exceptions\IsoTpSequenceException.cs" />
+    <Compile Include="IIsoTpConnection.cs" />
+    <Compile Include="IsoTpConnectionBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serial\RsPort.cs" />
-    <Compile Include="Serial\RsStream.cs" />
-    <Compile Include="Usb\IUsbSlot.cs" />
-    <Compile Include="Usb\IUsbDevice.cs" />
-    <Compile Include="Usb\UsbFrame.cs" />
+    <Compile Include="States\BeginTransmitionState.cs" />
+    <Compile Include="States\ConsecutiveReceiveState.cs" />
+    <Compile Include="States\ConsecutiveSendState.cs" />
+    <Compile Include="States\IsoTpState.cs" />
+    <Compile Include="States\ReadyToReceiveState.cs" />
+    <Compile Include="States\SendControlFrameState.cs" />
+    <Compile Include="States\WaitForControlFrameState.cs" />
+    <Compile Include="TpRecieveTransaction.cs" />
+    <Compile Include="TpSendTransaction.cs" />
+    <Compile Include="TpTransaction.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Communications\Communications.csproj">
+      <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
+      <Name>Communications</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

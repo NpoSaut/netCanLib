@@ -7,6 +7,7 @@ using Communications.Can;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.States;
+using Communications.Protocols.IsoTP;
 using CommunicationsTests.Stuff;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
