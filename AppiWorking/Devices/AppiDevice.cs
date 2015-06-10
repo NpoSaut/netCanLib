@@ -30,26 +30,12 @@ namespace Communications.Appi.Devices
             IConnectableObservable<Buffer> buffersStream = _usbDevice.Rx.Select(frame => _decoder.DecodeBuffer(frame.Data)).Publish();
             _buffersStreamConnection = buffersStream.Connect();
 
-            var fac = new AppiCanPortFactory();
+            var fac = new AppiCanPortFactory<TLineKey>(_sendFramesBufferEncoder);
             CanPorts =
                 LineKeys.ToDictionary(key => key,
-                                      key =>
-                                      {
-                                          IConnectableObservable<AppiLineStatus> statuses =
-                                              buffersStream.OfType<MessagesBuffer<TLineKey>>().Select(buffer => buffer.LineStatuses[key]).Publish();
-                                          statuses.Connect();
-
-                                          AppiCanPort port = fac.produceCanPort(statuses);
-                                          port.TxOutput
-                                              .Limit(statuses.Select(status => 30 - status.SendQueueSize))
-                                              .Do(list => Console.WriteLine("pushing {0} elements", list.Count))
-                                              .Select(x => new AppiSendFramesBuffer<TLineKey>(key, x))
-                                              .Select(m => _sendFramesBufferEncoder.Encode(m))
-                                              .Select(data => new UsbFrame(data))
-                                              .Subscribe(_usbDevice.Tx);
-
-                                          return (ICanPort)port;
-                                      });
+                                      key => fac.ProduceCanPort(key,
+                                                                buffersStream.OfType<MessagesBuffer<TLineKey>>().Select(buffer => buffer.LineStatuses[key]),
+                                                                _usbDevice.Tx));
         }
 
         public IDictionary<TLineKey, ICanPort> CanPorts { get; private set; }
