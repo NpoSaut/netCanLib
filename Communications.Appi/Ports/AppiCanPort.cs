@@ -12,7 +12,7 @@ namespace Communications.Appi.Ports
         public AppiCanPort(IObservable<CanFrame> Rx)
         {
             _tx = new Subject<CanFrame>();
-            this.Rx = Rx.Merge(_tx.Select(f => f.GetLoopbackFrame()));
+            this.Rx = Rx.Merge(_tx.Select(f => f.GetLoopbackFrame())).Publish().RefCount();
         }
 
         public IObservable<CanFrame> TxOutput
