@@ -2,6 +2,6 @@
 {
     public interface IUsbSlot
     {
-        IUsbDevice OpenDevice();
+        IUsbDevice OpenDevice(int BufferSize);
     }
 }

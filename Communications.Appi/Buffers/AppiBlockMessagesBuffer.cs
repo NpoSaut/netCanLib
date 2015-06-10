@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Communications.Appi.Devices;
 
 namespace Communications.Appi.Buffers
 {

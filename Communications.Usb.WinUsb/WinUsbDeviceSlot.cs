@@ -5,15 +5,10 @@ namespace ReactiveWinUsb
 {
     public class WinUsbDeviceSlot : IUsbSlot
     {
-        private readonly int _bufferSize;
-        private readonly USBDevice _device;
+        private readonly USBDeviceInfo _deviceInfo;
 
-        public WinUsbDeviceSlot(USBDevice Device, int BufferSize)
-        {
-            _device = Device;
-            _bufferSize = BufferSize;
-        }
+        public WinUsbDeviceSlot(USBDeviceInfo DeviceInfo) { _deviceInfo = DeviceInfo; }
 
-        public IUsbDevice OpenDevice() { return new WinUsbDevice(_device, _bufferSize); }
+        public IUsbDevice OpenDevice(int BufferSize) { return new WinUsbDevice(new USBDevice(_deviceInfo), BufferSize); }
     }
 }

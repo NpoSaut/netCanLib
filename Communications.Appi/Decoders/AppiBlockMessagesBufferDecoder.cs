@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Communications.Appi.Buffers;
+using Communications.Appi.Devices;
 
 namespace Communications.Appi.Decoders
 {

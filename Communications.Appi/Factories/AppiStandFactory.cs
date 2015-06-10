@@ -7,7 +7,7 @@ using Communications.Usb;
 
 namespace Communications.Appi.Factories
 {
-    public class AppiStandFactory : IAppiFactory<AppiStandLine>
+    public class AppiStandFactory : AppiFactoryBase<AppiStandLine>
     {
         private const int SequentialNumberOffset = 5;
 
@@ -47,9 +47,11 @@ namespace Communications.Appi.Factories
                 }
             };
 
-        public AppiDevice<AppiStandLine> OpenDevice(IUsbSlot Slot)
+        public AppiStandFactory(IUsbFacade UsbFacade) : base("3af3f480-41b5-4c24-b2a9-6aacf7de3d01", UsbFacade) { }
+
+        protected override AppiDevice<AppiStandLine> OpenDeviceImplementation(IAppiDeviceInfo DeviceInfo)
         {
-            return new AppiStand(Slot.OpenDevice(),
+            return new AppiStand(DeviceInfo.UsbSlot.OpenDevice(2048),
                                  new KeyBasedCompositeBufferDecoder(
                                      new Dictionary<byte, IAppiBufferDecoder>
                                      {
