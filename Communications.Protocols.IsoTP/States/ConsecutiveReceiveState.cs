@@ -23,8 +23,10 @@ namespace Communications.Protocols.IsoTP.States
                 case IsoTpFrameType.Consecutive:
                     var cf = (ConsecutiveFrame)Frame;
 
-                    if (cf.Index != Transaction.ExpectedFrameIndex++) throw new IsoTpSequenceException(Transaction.ExpectedFrameIndex, cf.Index);
+                    if (cf.Index != Transaction.ExpectedFrameIndex)
+                        throw new IsoTpSequenceException(Transaction.ExpectedFrameIndex, cf.Index);
 
+                    Transaction.ExpectedFrameIndex = (byte)((Transaction.ExpectedFrameIndex + 1) & 0x0f);
                     Transaction.Write(cf.Data);
                     Counter++;
 

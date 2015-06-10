@@ -19,8 +19,25 @@ namespace Communications.Protocols.IsoTP
         public TimeSpan ReceiveSeparationTime { get; private set; }
         public int ReceiveBlockSize { get; private set; }
 
-        public int MaximumDatagramLength { get { return 4095; } }
+        public int MaximumDatagramLength
+        {
+            get { return 4095; }
+        }
+
         public abstract int SubframeLength { get; }
+
+        public Byte[] Receive(TimeSpan Timeout)
+        {
+            SetNextState(new ReadyToReceiveState(this));
+            var transaction = OperateUntilTransactionFinished<TpReceiveTransaction>(Timeout);
+            return transaction.Data;
+        }
+
+        public abstract IsoTpFrame ReadNextFrame(TimeSpan Timeout);
+        public abstract void SendFrame(IsoTpFrame Frame);
+
+        public virtual void OnTransactionReady(TpTransaction Transaction) { _finishedTransaction = Transaction; }
+        public void SetNextState(IsoTpState NewState) { ConnectionState = NewState; }
 
         private void Operate(TimeSpan Timeout)
         {
@@ -42,17 +59,13 @@ namespace Communications.Protocols.IsoTP
             {
                 Operate(Timeout);
             } while (_finishedTransaction == null);
-            if (!(_finishedTransaction is TTransaction)) throw new IsoTpProtocolException("Операция завершилась транзакцией неверного типа");
+            
+            if (!(_finishedTransaction is TTransaction))
+                throw new IsoTpProtocolException("Операция завершилась транзакцией неверного типа");
+            
             var transaction = (TTransaction)_finishedTransaction;
             _finishedTransaction = null;
             return transaction;
-        }
-
-        public Byte[] Receive(TimeSpan Timeout)
-        {
-            SetNextState(new ReadyToReceiveState(this));
-            var transaction = OperateUntilTransactionFinished<TpReceiveTransaction>(Timeout);
-            return transaction.Data;
         }
 
         public void Send(Byte[] Data, TimeSpan Timeout)
@@ -60,11 +73,5 @@ namespace Communications.Protocols.IsoTP
             SetNextState(new BeginTransmitionState(this, Data));
             OperateUntilTransactionFinished<TpSendTransaction>(Timeout);
         }
-
-        public abstract IsoTpFrame ReadNextFrame(TimeSpan Timeout);
-        public abstract void SendFrame(IsoTpFrame Frame);
-
-        public virtual void OnTransactionReady(TpTransaction Transaction) { _finishedTransaction = Transaction; }
-        public void SetNextState(IsoTpState NewState) { ConnectionState = NewState; }
     }
 }

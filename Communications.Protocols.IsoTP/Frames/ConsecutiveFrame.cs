@@ -36,9 +36,11 @@ namespace Communications.Protocols.IsoTP.Frames
         }
         public ConsecutiveFrame(Byte[] Data, int Index)
         {
-            if (Data.Length > DataCapacity) throw new ArgumentOutOfRangeException("Data", string.Format("Размер данных, передаваемых в каждом Consecutive режиме ограничен {0} байтами", DataCapacity));
+            if (Data.Length > DataCapacity)
+                throw new ArgumentOutOfRangeException("Data", string.Format("Размер данных, передаваемых в каждом Consecutive режиме ограничен {0} байтами", DataCapacity));
 
-            this.Data = Data;
+            this.Data = new Byte[DataCapacity];
+            Buffer.BlockCopy(Data, 0, this.Data, 0, Data.Length);
             this.Index = Index;
         }
 

@@ -6,13 +6,10 @@ namespace Communications.Protocols.IsoTP.States
 {
     public class WaitForControlFrameState : IsoTpState
     {
-        public TpSendTransaction Transaction { get; private set; }
-
         public WaitForControlFrameState(IIsoTpConnection Connection, TpSendTransaction Transaction)
-            : base(Connection)
-        {
-            this.Transaction = Transaction;
-        }
+            : base(Connection) { this.Transaction = Transaction; }
+
+        public TpSendTransaction Transaction { get; private set; }
 
         private void ProcessFrame(IsoTpFrame Frame)
         {
@@ -37,13 +34,10 @@ namespace Communications.Protocols.IsoTP.States
                 case IsoTpFrameType.First:
                 case IsoTpFrameType.Single:
                 case IsoTpFrameType.Consecutive:
-                    throw new IsoTpWrongFrameException(Frame, typeof(ConsecutiveFrame));
+                    throw new IsoTpWrongFrameException(Frame, typeof (ConsecutiveFrame));
             }
         }
 
-        public override void Operate(TimeSpan Timeout)
-        {
-            ProcessFrame(Connection.ReadNextFrame(Timeout));
-        }
+        public override void Operate(TimeSpan Timeout) { ProcessFrame(Connection.ReadNextFrame(Timeout)); }
     }
 }
