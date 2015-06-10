@@ -60,6 +60,10 @@
     <Compile Include="Encoders\DictionaryInterfaceCodeProvider.cs" />
     <Compile Include="Encoders\IAppiBufferEncoder.cs" />
     <Compile Include="Encoders\IInterfaceCodeProvider.cs" />
+    <Compile Include="Exceptions\AppiDeviceOccupiedException.cs" />
+    <Compile Include="Factories\AppiDeviceInfo.cs" />
+    <Compile Include="Factories\AppiFactoryBase.cs" />
+    <Compile Include="Factories\IAppiDeviceInfo.cs" />
     <Compile Include="Ports\AppiCanPort.cs" />
     <Compile Include="Buffers\AppiBlockMessagesBuffer.cs" />
     <Compile Include="Buffers\AppiLineStatus.cs" />

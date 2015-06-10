@@ -7,22 +7,24 @@ using Communications.Usb;
 
 namespace Communications.Appi.Factories
 {
-    public class AppiBlockFactory : IAppiFactory<AppiLine>
+    public class AppiBlockFactory : AppiFactoryBase<AppiLine>
     {
         private const int SequentialNumberOffset = 5;
 
-        private static readonly IDictionary<AppiLine, AppiLineStatusLayout> _layouts =
+        private static readonly AppiSendFramesBufferLayout _sendFramesBufferLayout = new AppiSendFramesBufferLayout(0, 1, 3, 10);
+
+        private readonly IDictionary<AppiLine, AppiLineStatusLayout> _layouts =
             new Dictionary<AppiLine, AppiLineStatusLayout>
             {
                 { AppiLine.Can1, new AppiLineStatusLayout(24, 6, 7, 17, 0, 0) },
                 { AppiLine.Can2, new AppiLineStatusLayout(524, 2, 9, 19, 0, 0) }
             };
 
-        private static readonly AppiSendFramesBufferLayout _sendFramesBufferLayout = new AppiSendFramesBufferLayout(0, 1, 3, 10);
+        public AppiBlockFactory(IUsbFacade UsbFacade) : base("524cc09a-0a72-4d06-980e-afee3131196e", UsbFacade) { }
 
-        public AppiDevice<AppiLine> OpenDevice(IUsbSlot Slot)
+        protected override AppiDevice<AppiLine> OpenDeviceImplementation(IAppiDeviceInfo DeviceInfo)
         {
-            return new AppiBlock(Slot.OpenDevice(),
+            return new AppiBlock(DeviceInfo.UsbSlot.OpenDevice(2048),
                                  new KeyBasedCompositeBufferDecoder(
                                      new Dictionary<byte, IAppiBufferDecoder>
                                      {
