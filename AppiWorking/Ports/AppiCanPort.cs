@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Communications.Can;
 
@@ -10,8 +11,8 @@ namespace Communications.Appi.Ports
 
         public AppiCanPort(IObservable<CanFrame> Rx)
         {
-            this.Rx = Rx;
             _tx = new Subject<CanFrame>();
+            this.Rx = Rx.Merge(_tx.Select(f => f.GetLoopbackFrame()));
         }
 
         public IObservable<CanFrame> TxOutput
