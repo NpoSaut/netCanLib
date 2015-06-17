@@ -4,7 +4,7 @@ using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP.States
 {
-    public class WaitForControlFrameState : IsoTpState
+    public class WaitForControlFrameState : IsoTpStateBase
     {
         public WaitForControlFrameState(IIsoTpConnection Connection, TpSendTransaction Transaction)
             : base(Connection) { this.Transaction = Transaction; }

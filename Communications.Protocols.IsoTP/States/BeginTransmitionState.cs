@@ -3,7 +3,7 @@ using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP.States
 {
-    public class BeginTransmitionState : IsoTpState
+    public class BeginTransmitionState : IsoTpStateBase
     {
         public byte[] SendData { get; private set; }
 

@@ -12,7 +12,7 @@ namespace Communications.Protocols.IsoTP
         int SubframeLength { get; }
 
         void OnTransactionReady(TpTransaction Transaction);
-        void SetNextState(IsoTpState NewState);
+        void SetNextState(IsoTpStateBase NewState);
 
         IsoTpFrame ReadNextFrame(TimeSpan Timeout);
         void SendFrame(IsoTpFrame Frame);

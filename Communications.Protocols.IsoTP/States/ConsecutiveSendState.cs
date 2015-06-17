@@ -3,7 +3,7 @@ using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP.States
 {
-    public class ConsecutiveSendState : IsoTpState
+    public class ConsecutiveSendState : IsoTpStateBase
     {
         public TpSendTransaction Transaction { get; private set; }
         private int Counter { get; set; }

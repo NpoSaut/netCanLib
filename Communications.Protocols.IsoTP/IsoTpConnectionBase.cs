@@ -2,6 +2,7 @@
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.States;
+using Communications.Protocols.IsoTP.States.Receive;
 
 namespace Communications.Protocols.IsoTP
 {
@@ -15,7 +16,7 @@ namespace Communications.Protocols.IsoTP
             ReceiveSeparationTime = TimeSpan.FromMilliseconds(SeparationTimeMs);
         }
 
-        public IsoTpState ConnectionState { get; private set; }
+        public IsoTpStateBase ConnectionState { get; private set; }
         public TimeSpan ReceiveSeparationTime { get; private set; }
         public int ReceiveBlockSize { get; private set; }
 
@@ -37,13 +38,13 @@ namespace Communications.Protocols.IsoTP
         public abstract void SendFrame(IsoTpFrame Frame);
 
         public virtual void OnTransactionReady(TpTransaction Transaction) { _finishedTransaction = Transaction; }
-        public void SetNextState(IsoTpState NewState) { ConnectionState = NewState; }
+        public void SetNextState(IsoTpStateBase NewState) { ConnectionState = NewState; }
 
         private void Operate(TimeSpan Timeout)
         {
             try
             {
-                ConnectionState.Operate(Timeout);
+                ConnectionState.Operate();
             }
             catch (Exception e)
             {

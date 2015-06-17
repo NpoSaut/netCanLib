@@ -1,16 +1,14 @@
 using System;
+using Communications.Protocols.IsoTP.Contexts;
 using Communications.Protocols.IsoTP.Frames;
+using Communications.Protocols.IsoTP.States.Receive;
 
 namespace Communications.Protocols.IsoTP.States
 {
-    public class SendControlFrameState : IsoTpState
+    public class SendControlFrameState : IsoTpStateBase
     {
-        public TpReceiveTransaction Transaction { get; set; }
-
-        public SendControlFrameState(IIsoTpConnection Connection, TpReceiveTransaction Transaction) : base(Connection)
-        {
-            this.Transaction = Transaction;
-        }
+        private readonly IsoTpReceiveTransactionContext _transactionContext;
+        public SendControlFrameState(IsoTpReceiveTransactionContext TransactionContext) { _transactionContext = TransactionContext; }
 
         public override void Operate(TimeSpan Timeout)
         {
@@ -18,6 +16,11 @@ namespace Communications.Protocols.IsoTP.States
                                              Connection.ReceiveSeparationTime);
             Connection.SendFrame(frame);
             Connection.SetNextState(new ConsecutiveReceiveState(Connection, Transaction));
+        }
+
+        public override IIsoTpState Operate(IsoTpFrame Frame)
+        {
+            
         }
     }
 }
