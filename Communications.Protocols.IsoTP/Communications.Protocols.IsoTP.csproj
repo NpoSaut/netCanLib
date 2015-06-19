@@ -33,6 +33,10 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Interactive, Version=1.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ix-Main.1.2.3\lib\net40\System.Interactive.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Reactive.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Rx-Core.2.3.0-beta2\lib\net40\System.Reactive.Core.dll</HintPath>
       <Private>True</Private>
@@ -59,6 +63,7 @@
     <Compile Include="CanIsoTpConnection.cs" />
     <Compile Include="CanIsoTpConnectionForRxHelper.cs" />
     <Compile Include="Contexts\IsoTpReceiveTransactionContext.cs" />
+    <Compile Include="Contexts\IsoTpTransmitTransactionContext.cs" />
     <Compile Include="Exceptions\DescriptorNotInFlowException.cs" />
     <Compile Include="Exceptions\IsoTpFlowControlTimeoutException.cs" />
     <Compile Include="Exceptions\IsoTpTimeoutException.cs" />
@@ -77,14 +82,18 @@
     <Compile Include="IsoTpConnectionBase.cs" />
     <Compile Include="IsoReceiveObservable.cs" />
     <Compile Include="IsoTpPacket.cs" />
+    <Compile Include="IsoTpSendObserver.cs" />
+    <Compile Include="IsoTpTransmitTransaction.cs" />
     <Compile Include="IUnderlayerFrame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="States\BeginTransmitionState.cs" />
     <Compile Include="States\Receive\ConsecutiveReceiveState.cs" />
     <Compile Include="States\ConsecutiveSendState.cs" />
     <Compile Include="States\IsoTpStateBase.cs" />
     <Compile Include="States\Receive\ReadyToReceiveState.cs" />
     <Compile Include="States\SendControlFrameState.cs" />
+    <Compile Include="States\Send\BeginTransmitionState.cs" />
+    <Compile Include="States\Send\IdleSendState.cs" />
+    <Compile Include="States\Send\WaitForAcknowledgmentState.cs" />
     <Compile Include="States\WaitForControlFrameState.cs" />
     <Compile Include="TpRecieveTransaction.cs" />
     <Compile Include="TpSendTransaction.cs" />
@@ -99,6 +108,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

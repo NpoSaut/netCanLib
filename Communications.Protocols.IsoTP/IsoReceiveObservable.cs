@@ -1,5 +1,7 @@
 using System;
 using System.Reactive;
+using System.Reactive.Concurrency;
+using System.Reactive.Linq;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.States;
 using Communications.Protocols.IsoTP.States.Receive;
@@ -36,6 +38,7 @@ namespace Communications.Protocols.IsoTP
     {
         private readonly IDisposable _rxConnection;
 
+        private readonly EventLoopScheduler _scheduler = new EventLoopScheduler();
         private IIsoTpState _currentState;
 
         public IsoTpReceiveTransaction(IObserver<IsoTpPacket> Observer,
@@ -44,7 +47,8 @@ namespace Communications.Protocols.IsoTP
         {
             _currentState = new ReadyToReceiveState(Observer, Tx, ReceiveBlockSize, SeparationTime);
 
-            _rxConnection = Rx.Subscribe(f => _currentState = _currentState.Operate(f),
+            _rxConnection = Rx.ObserveOn(_scheduler)
+                              .Subscribe(f => _currentState = _currentState.Operate(f),
                                          e => _currentState.OnException(e));
         }
 
@@ -52,6 +56,10 @@ namespace Communications.Protocols.IsoTP
         ///     ¬ыполн€ет определ€емые приложением задачи, св€занные с удалением, высвобождением или сбросом неуправл€емых
         ///     ресурсов.
         /// </summary>
-        public void Dispose() { _rxConnection.Dispose(); }
+        public void Dispose()
+        {
+            _rxConnection.Dispose();
+            _scheduler.Dispose();
+        }
     }
 }

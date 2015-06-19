@@ -31,12 +31,27 @@ namespace Communications.Protocols.IsoTP.Contexts
             get { return _dataStream.Position == _packetSize; }
         }
 
-        public void Write(byte[] Data) { _dataStream.Write(Data, 0, Data.Length); }
+        public void Write(byte[] Data)
+        {
+            _dataStream.Write(Data, 0, Data.Length);
+        }
 
         public void IncreaseFrameIndex() { ExpectedFrameIndex = (byte)((ExpectedFrameIndex + 1) & 0x0f); }
 
-        public void Submit() { Observer.OnNext(new IsoTpPacket(_dataStream.ToArray())); }
+        public void Submit()
+        {
+            Observer.OnNext(new IsoTpPacket(_dataStream.ToArray()));
+        }
 
         public void OnError(Exception e) { Observer.OnError(e); }
+
+        /// <summary>Возвращает объект <see cref="T:System.String" />, который представляет текущий объект
+        ///     <see cref="T:System.Object" />.</summary>
+        /// <returns>Объект <see cref="T:System.String" />, представляющий текущий объект <see cref="T:System.Object" />.</returns>
+        public override string ToString()
+        {
+            return string.Format("RECEIVE  {4}/{5} IsDone: {0}, ExpectedFrameIndex: {1}, BlockSize: {2}, SeparationTime: {3}", IsDone, ExpectedFrameIndex,
+                                 BlockSize, SeparationTime, _dataStream.Position, _packetSize);
+        }
     }
 }

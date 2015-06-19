@@ -50,7 +50,7 @@ namespace Communications.Protocols.IsoTP.States.Receive
                 case IsoTpFrameType.First:
                 case IsoTpFrameType.FlowControl:
                 case IsoTpFrameType.Single:
-                    _transactionContext.OnError(new IsoTpWrongFrameException(Frame, typeof (ConsecutiveFrame));
+                    _transactionContext.OnError(new IsoTpWrongFrameException(Frame, typeof (ConsecutiveFrame)));
                     break;
             }
             return this;
