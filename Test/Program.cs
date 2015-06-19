@@ -15,8 +15,8 @@ namespace Test
 {
     internal class Program
     {
-        private const int D1 = 0x1488;
-        private const int D2 = 0x1448;
+        private const int D1 = 0x1448;
+        private const int D2 = 0x1488;
         private static readonly byte[] _data;
 
         private static readonly IDictionary<int, ConsoleColor> _printColors =
@@ -26,7 +26,7 @@ namespace Test
                 { D2, ConsoleColor.Yellow }
             };
 
-        private static EventLoopScheduler _consoleScheduler;
+        private static readonly EventLoopScheduler _consoleScheduler;
 
         static Program()
         {
@@ -45,12 +45,13 @@ namespace Test
 
                 port.Rx
                     .Where(f => f.Descriptor == D1 || f.Descriptor == D2)
+                    .TimeInterval()
                     .SubscribeOn(_consoleScheduler)
                     .Subscribe(PrintCanFrame);
 
                 Console.WriteLine("Starting Receive...");
                 port.Rx
-                    .IsoTpReceive(port.Tx, D2, D1)
+                    .IsoTpReceive(port.Tx, D1, D2, 10)
                     .SubscribeOn(_consoleScheduler)
                     .Subscribe(Print);
                 Console.WriteLine("Receiving started.");
@@ -58,18 +59,6 @@ namespace Test
                 if (args.Any(p => p.ToLower() == "s"))
                 {
                     Console.WriteLine("Creating Sender...");
-                    //                    using (var sender = new IsoTpSendObserver(port.Rx
-                    //                                                                  .Where(f => f.Descriptor == d2)
-                    //                                                                  .Select(f => IsoTpFrame.ParsePacket(f.Data)),
-                    //                                                              Observer.Create<IsoTpFrame>(frame => port.Tx.OnNext(frame.GetCanFrame(d1))), 8))
-                    //                    {
-                    //                        Console.WriteLine("Sender created.");
-                    //                        Console.WriteLine("Sending Packet...");
-                    //                        sender.OnNext(new IsoTpPacket(_data));
-                    //                        Console.WriteLine("Packet sent!");
-                    //                        Console.ReadLine();
-                    //                    }
-
                     var transaction = new IsoTpTransmitTransaction();
                     IObservable<IsoTpFrame> isotpRx = port.Rx
                                                           .Where(f => f.Descriptor == D2)
@@ -87,16 +76,18 @@ namespace Test
             }
         }
 
-        private static void PrintCanFrame(CanFrame CanFrame)
+        private static void PrintCanFrame(TimeInterval<CanFrame> CanFrameTI)
         {
-            Console.ForegroundColor = _printColors[CanFrame.Descriptor];
-            Console.WriteLine(CanFrame);
+            Console.ForegroundColor = ConsoleColor.DarkGray;
+            Console.Write("{0:ss\\.fff}: ", CanFrameTI.Interval);
+            Console.ForegroundColor = _printColors[CanFrameTI.Value.Descriptor];
+            Console.WriteLine(CanFrameTI.Value);
             Console.ResetColor();
         }
 
         private static void Print(IsoTpPacket Packet)
         {
-            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.ForegroundColor = ConsoleColor.Magenta;
             Console.WriteLine("ISO-TP Packet ({0} Bytes) Received", Packet.Data.Length);
             Console.ResetColor();
             //            Console.WriteLine(BitConverter.ToString(Packet.Data));
