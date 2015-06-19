@@ -25,7 +25,7 @@ namespace Communications.Protocols.IsoTP
                                                          .Where(fc => fc.Flag == FlowControlFlag.ClearToSend)
                                                          .SelectMany(fc => cfFlow.Take(fc.BlockSize)
                                                                                  .ToObservable()
-                                                                                 .Delay(fc.SeparationTime)
+                                                                                 .Do(cf => Thread.Sleep(fc.SeparationTime))   // TODO: Сделать задержку лучше
                                                                                  .Do(cf => sent[0] += cf.Data.Length));
 
             using (sendEngine.Subscribe(Tx))
