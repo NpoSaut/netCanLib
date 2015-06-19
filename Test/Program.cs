@@ -76,11 +76,10 @@ namespace Test
                                                           .Select(f => IsoTpFrame.ParsePacket(f.Data));
                     IObserver<IsoTpFrame> isoTpTx = Observer.Create<IsoTpFrame>(frame => port.Tx.OnNext(frame.GetCanFrame(D1)));
 
-                    using (transaction.Begin(new IsoTpPacket(_data), isotpRx, isoTpTx, TimeSpan.FromSeconds(20)))
-                    {
-                        Console.WriteLine("Sending Packet...");
-                        Console.ReadLine();
-                    }
+                    _consoleScheduler.Schedule(() => Console.WriteLine("Sending Packet..."));
+                    transaction.Begin(new IsoTpPacket(_data), isotpRx, isoTpTx, TimeSpan.FromMilliseconds(2000));
+                    _consoleScheduler.Schedule(() => Console.WriteLine("Packet Sent!"));
+                    Console.ReadLine();
                 }
 
                 Console.WriteLine("press enter to exit...");
