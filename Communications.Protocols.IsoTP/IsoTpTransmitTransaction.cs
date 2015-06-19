@@ -15,7 +15,8 @@ namespace Communications.Protocols.IsoTP
             int[] sent = { 0 };
             IBuffer<byte> dataFlow = Packet.Data.Share();
             IEnumerable<ConsecutiveFrame> cfFlow = dataFlow.Buffer(ConsecutiveFrame.GetPayload(8))
-                                                           .Select((d, i) => new ConsecutiveFrame(d.ToArray(), i & 0x0f));
+                                                           .Select((d, i) => new ConsecutiveFrame(d.ToArray(), i & 0x0f))
+                                                           .Share();
 
             IObservable<ConsecutiveFrame> sendEngine = Rx.Do(ValidateFrameType)
                                                          .Cast<FlowControlFrame>()
