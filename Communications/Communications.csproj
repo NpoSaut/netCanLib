@@ -33,6 +33,22 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Reactive.Core, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rx-Core.2.3.0-beta2\lib\net40\System.Reactive.Core.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Interfaces, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rx-Interfaces.2.3.0-beta2\lib\net40\System.Reactive.Interfaces.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.Linq, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rx-Linq.2.3.0-beta2\lib\net40\System.Reactive.Linq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Reactive.PlatformServices, Version=2.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\..\packages\Rx-PlatformServices.2.3.0-beta2\lib\net40\System.Reactive.PlatformServices.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +63,8 @@
     <Compile Include="Can\CanFrameHandler.cs" />
     <Compile Include="Can\CanFramesBuffer.cs" />
     <Compile Include="Can\CanPort.cs" />
+    <Compile Include="Can\CanPortOptions.cs" />
+    <Compile Include="Can\CanPortLoopbackInspector.cs" />
     <Compile Include="Can\FrameEncoders\FrameTextEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameSbsEncoder.cs" />
@@ -59,7 +77,12 @@
     <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
     <Compile Include="Can\LogRecording\LogRecorder.cs" />
     <Compile Include="ILog.cs" />
+    <Compile Include="ILoopbackInspector.cs" />
+    <Compile Include="IPort.cs" />
+    <Compile Include="LambdaLoopbackInspector.cs" />
     <Compile Include="Port.cs" />
+    <Compile Include="PortHelper.cs" />
+    <Compile Include="PortOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Serial\RsPort.cs" />
     <Compile Include="Serial\RsStream.cs" />
@@ -67,6 +90,9 @@
     <Compile Include="Usb\IUsbSlot.cs" />
     <Compile Include="Usb\IUsbDevice.cs" />
     <Compile Include="Usb\UsbFrame.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

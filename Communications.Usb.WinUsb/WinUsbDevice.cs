@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Communications;
 using Communications.Usb;
 using MadWizard.WinUSBNet;
 
@@ -21,6 +22,8 @@ namespace ReactiveWinUsb
 
         public WinUsbDevice(USBDevice Device, int BufferSize)
         {
+            Options = new PortOptions<UsbFrame>();
+
             _device = Device;
 
             _buffer = new byte[BufferSize];
@@ -45,6 +48,8 @@ namespace ReactiveWinUsb
         {
             get { return _tx; }
         }
+
+        public PortOptions<UsbFrame> Options { get; private set; }
 
         public IObservable<UsbFrame> Rx { get; private set; }
 

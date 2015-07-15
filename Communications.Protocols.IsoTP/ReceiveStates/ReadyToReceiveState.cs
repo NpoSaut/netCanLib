@@ -1,8 +1,7 @@
 ﻿using System;
-using Communications.Protocols.IsoTP.Contexts;
 using Communications.Protocols.IsoTP.Frames;
 
-namespace Communications.Protocols.IsoTP.States.Receive
+namespace Communications.Protocols.IsoTP.ReceiveStates
 {
     /// <summary>Состояние готовности к приёму первой транзакции</summary>
     public class ReadyToReceiveState : IsoTpStateBase

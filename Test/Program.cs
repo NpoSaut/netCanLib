@@ -4,11 +4,13 @@ using System.Linq;
 using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
+using System.Threading;
 using Communications.Appi.Devices;
 using Communications.Appi.Factories;
 using Communications.Can;
 using Communications.Protocols.IsoTP;
 using Communications.Protocols.IsoTP.Frames;
+using Communications.Protocols.IsoTP.Transactions;
 using ReactiveWinUsb;
 
 namespace Test
@@ -36,6 +38,19 @@ namespace Test
 
         private static void Main(string[] args)
         {
+            var x = Observable.Interval(TimeSpan.FromMilliseconds(500))
+                              .Do(i => Console.WriteLine("+ Pushed {0}", i));
+            //    .Publish();
+            //x.Connect();
+            var y = x.Replay();
+            y.Connect();
+
+            Console.ReadLine();
+            Console.WriteLine(y.First());
+
+            Console.ReadLine();
+            return;
+
             var appiFactory = new AppiBlockFactory(new WinUsbFacade());
             IAppiDeviceInfo deviceInfo = appiFactory.EnumerateDevices().First();
 
@@ -59,14 +74,14 @@ namespace Test
                 if (args.Any(p => p.ToLower() == "s"))
                 {
                     Console.WriteLine("Creating Sender...");
-                    var transaction = new IsoTpTransmitTransaction();
                     IObservable<IsoTpFrame> isotpRx = port.Rx
                                                           .Where(f => f.Descriptor == D2)
                                                           .Select(f => IsoTpFrame.ParsePacket(f.Data));
                     IObserver<IsoTpFrame> isoTpTx = Observer.Create<IsoTpFrame>(frame => port.Tx.OnNext(frame.GetCanFrame(D1)));
 
+                    var transaction = new IsoTpTransmitTransaction(isotpRx, isoTpTx, 8);
                     _consoleScheduler.Schedule(() => Console.WriteLine("Sending Packet..."));
-                    transaction.Begin(new IsoTpPacket(_data), isotpRx, isoTpTx, TimeSpan.FromMilliseconds(2000));
+                    transaction.Send(new IsoTpPacket(_data), TimeSpan.FromMilliseconds(2000));
                     _consoleScheduler.Schedule(() => Console.WriteLine("Packet Sent!"));
                     Console.ReadLine();
                 }

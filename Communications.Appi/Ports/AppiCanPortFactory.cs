@@ -16,7 +16,7 @@ namespace Communications.Appi.Ports
         {
             IObservable<AppiLineStatus> statusFlow = LineStatusFlow.Publish().RefCount();
 
-            var port = new AppiCanPort(statusFlow.SelectMany(line => line.Frames));
+            var port = new AppiCanPort(statusFlow.SelectMany(line => line.Frames), new CanPortOptions());
 
             port.TxOutput
                 .Limit(statusFlow.Select(status => 30 - status.SendQueueSize))

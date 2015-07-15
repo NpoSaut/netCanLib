@@ -1,7 +1,7 @@
 ﻿using System;
 using Communications.Protocols.IsoTP.Frames;
 
-namespace Communications.Protocols.IsoTP.States
+namespace Communications.Protocols.IsoTP.ReceiveStates
 {
     public interface IIsoTpState
     {

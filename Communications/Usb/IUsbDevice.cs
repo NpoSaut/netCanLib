@@ -1,10 +1,5 @@
-﻿using System;
-
-namespace Communications.Usb
+﻿namespace Communications.Usb
 {
-    public interface IUsbDevice : IDisposable
-    {
-        IObservable<UsbFrame> Rx { get; }
-        IObserver<UsbFrame> Tx { get; }
-    }
+    /// <summary>USB-порт</summary>
+    public interface IUsbDevice : IPort<UsbFrame> { }
 }

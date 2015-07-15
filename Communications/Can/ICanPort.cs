@@ -1,10 +1,5 @@
-﻿using System;
-
-namespace Communications.Can
+﻿namespace Communications.Can
 {
-    public interface ICanPort
-    {
-        IObservable<CanFrame> Rx { get; }
-        IObserver<CanFrame> Tx { get; }
-    }
+    /// <summary>CAN-порт</summary>
+    public interface ICanPort : IPort<CanFrame, CanPortOptions> { }
 }

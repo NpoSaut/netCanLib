@@ -1,9 +1,8 @@
 using System;
-using Communications.Protocols.IsoTP.Contexts;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 
-namespace Communications.Protocols.IsoTP.States.Receive
+namespace Communications.Protocols.IsoTP.ReceiveStates
 {
     /// <summary>Состояние отправки последовательных фреймов</summary>
     public class ConsecutiveReceiveState : IsoTpStateBase

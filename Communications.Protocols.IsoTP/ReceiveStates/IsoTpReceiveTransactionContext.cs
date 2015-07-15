@@ -2,7 +2,7 @@
 using System.IO;
 using Communications.Protocols.IsoTP.Frames;
 
-namespace Communications.Protocols.IsoTP.Contexts
+namespace Communications.Protocols.IsoTP.ReceiveStates
 {
     public class IsoTpReceiveTransactionContext
     {

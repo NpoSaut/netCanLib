@@ -9,8 +9,9 @@ namespace Communications.Appi.Ports
     {
         private readonly Subject<CanFrame> _tx;
 
-        public AppiCanPort(IObservable<CanFrame> Rx)
+        public AppiCanPort(IObservable<CanFrame> Rx, CanPortOptions Options)
         {
+            this.Options = Options;
             _tx = new Subject<CanFrame>();
             this.Rx = Rx.Merge(_tx.Select(f => f.GetLoopbackFrame())).Publish().RefCount();
         }
@@ -26,5 +27,9 @@ namespace Communications.Appi.Ports
         {
             get { return _tx; }
         }
+
+        public CanPortOptions Options { get; private set; }
+
+        public void Dispose() { }
     }
 }
