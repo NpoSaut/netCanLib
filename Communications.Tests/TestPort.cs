@@ -9,7 +9,7 @@ namespace Communications.Tests
     {
         private readonly IDisposable _connection;
 
-        public TestPort(Func<TFrame, TFrame> AnswerSelector, bool Loopback)
+        public TestPort(Func<IObservable<TFrame>, IObservable<TFrame>> AnswerSelector, bool Loopback)
         {
             Options = Loopback
                           ? new PortOptions<TFrame>(new LambdaLoopbackInspector<TFrame>((a, b) => Equals(a, b)))
@@ -17,7 +17,7 @@ namespace Communications.Tests
 
             var subject = new Subject<TFrame>();
             Tx = subject;
-            IObservable<TFrame> x = subject.Select(AnswerSelector);
+            IObservable<TFrame> x = AnswerSelector(subject);
             if (Loopback)
                 x = subject.Merge(x);
             IConnectableObservable<TFrame> p = x.Publish();
