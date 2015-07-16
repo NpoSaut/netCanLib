@@ -76,6 +76,10 @@
     <Compile Include="Can\LogReader\TextLogReaderPort.cs" />
     <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
     <Compile Include="Can\LogRecording\LogRecorder.cs" />
+    <Compile Include="DataPortOptions.cs" />
+    <Compile Include="IDataFrame.cs" />
+    <Compile Include="IDataPort.cs" />
+    <Compile Include="IDataPortOptions.cs" />
     <Compile Include="ILog.cs" />
     <Compile Include="ILoopbackInspector.cs" />
     <Compile Include="IPort.cs" />

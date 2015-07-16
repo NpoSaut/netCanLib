@@ -8,7 +8,7 @@ namespace Communications.Can
     /// <summary>
     /// CAN-сообщение
     /// </summary>
-    public class CanFrame
+    public class CanFrame : IDataFrame
     {
         /// <summary>
         /// Максимальное значение идентификатора CAN-фрейма

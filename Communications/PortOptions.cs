@@ -14,6 +14,7 @@ namespace Communications
 
         /// <summary>Создаёт новые опции порта с поддержкой Loopback и указанным <see cref="ILoopbackInspector{TFrame}" />
         /// </summary>
+        /// <param name="LoopbackInspector">Инструмент проверки на Loopback-пакет</param>
         public PortOptions(ILoopbackInspector<TFrame> LoopbackInspector)
         {
             ProducesLoopback = true;

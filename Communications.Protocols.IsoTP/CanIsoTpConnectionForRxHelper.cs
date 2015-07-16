@@ -18,8 +18,8 @@ namespace Communications.Protocols.IsoTP
                                    ReceiveBlockSize, SeparationTimeMs);
         }
 
-        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor, byte ReceiveBlockSize,
-                                                           TimeSpan SeparationTime, TimeSpan Timeout)
+        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor,
+                                                           byte ReceiveBlockSize, TimeSpan SeparationTime, TimeSpan Timeout)
         {
             return new IsoTpConnection(
                 Port.Rx
@@ -31,21 +31,16 @@ namespace Communications.Protocols.IsoTP
 
         #region Overloads
 
-        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor, TimeSpan Timeout)
+        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor,
+                                                           TimeSpan Timeout)
         {
             return OpenIsoTpConnection(Port, TransmitDescriptor, ReceiveDescriptor, 128, Timeout);
         }
 
-        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor, byte ReceiveBlockSize,
-                                                           TimeSpan Timeout)
+        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor,
+                                                           byte ReceiveBlockSize, TimeSpan Timeout)
         {
             return OpenIsoTpConnection(Port, TransmitDescriptor, ReceiveDescriptor, ReceiveBlockSize, TimeSpan.Zero, Timeout);
-        }
-
-        public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, byte ReceiveBlockSize,
-                                                           TimeSpan SeparationTime, TimeSpan Timeout)
-        {
-            return OpenIsoTpConnection(Port, TransmitDescriptor, 128, ReceiveBlockSize, SeparationTime, Timeout);
         }
 
         #endregion

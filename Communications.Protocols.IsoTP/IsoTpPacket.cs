@@ -2,7 +2,7 @@
 
 namespace Communications.Protocols.IsoTP
 {
-    public class IsoTpPacket
+    public class IsoTpPacket : IDataFrame
     {
         public IsoTpPacket(byte[] Data) { this.Data = Data; }
         public Byte[] Data { get; private set; } 

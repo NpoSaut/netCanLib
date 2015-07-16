@@ -12,6 +12,8 @@ namespace Communications.Protocols.IsoTP
         public IsoTpConnection(IObservable<IsoTpFrame> Rx, IObserver<IsoTpFrame> Tx, byte ReceiveBlockSize, TimeSpan SeparationTime, TimeSpan Timeout,
                                int FrameLayerCapacity)
         {
+            Options = new DataPortOptions<IsoTpPacket>(4095);
+
             IObservable<IsoTpFrame> sharedRx = Rx.Publish().RefCount();
             _receiver = new IsoReceiveObservable(sharedRx, Tx, ReceiveBlockSize, SeparationTime);
             _sender = new IsoTpSendObserver(sharedRx, Tx, Timeout, FrameLayerCapacity);
@@ -26,5 +28,10 @@ namespace Communications.Protocols.IsoTP
         {
             get { return _sender; }
         }
+
+        /// <summary>Опции порта</summary>
+        public DataPortOptions<IsoTpPacket> Options { get; private set; }
+
+        public void Dispose() { }
     }
 }
