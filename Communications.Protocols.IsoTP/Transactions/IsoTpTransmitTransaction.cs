@@ -23,6 +23,16 @@ namespace Communications.Protocols.IsoTP.Transactions
 
         public void Send(IsoTpPacket Packet, TimeSpan Timeout)
         {
+            if (Packet.Data.Length <= _subframeCapacity)
+                SendShort(Packet);
+            else
+                SendLong(Packet, Timeout);
+        }
+
+        private void SendShort(IsoTpPacket Packet) { _tx.OnNext(new SingleFrame(Packet.Data)); }
+
+        private void SendLong(IsoTpPacket Packet, TimeSpan Timeout)
+        {
             int[] sent = { 0 };
             IBuffer<byte> dataFlow = Packet.Data.Share();
             IEnumerable<ConsecutiveFrame> cfFlow = dataFlow.Buffer(ConsecutiveFrame.GetPayload(_subframeCapacity))
