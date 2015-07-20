@@ -10,14 +10,16 @@ namespace Communications.Protocols.IsoTP.ReceiveStates
 
         private readonly int _packetSize;
 
-        public IsoTpReceiveTransactionContext(int PacketSize, IObserver<IsoTpPacket> Observer, IObserver<IsoTpFrame> Tx, byte BlockSize, TimeSpan SeparationTime)
+        public IsoTpReceiveTransactionContext(int PacketSize, IObserver<IsoTpPacket> Observer, IObserver<IsoTpFrame> Tx, byte BlockSize, TimeSpan SeparationTime, TimeSpan Timeout)
         {
             _packetSize = PacketSize;
+            this.Timeout = Timeout;
             this.Observer = Observer;
             this.Tx = Tx;
             this.BlockSize = BlockSize;
             this.SeparationTime = SeparationTime;
             _dataStream = new MemoryStream();
+            ExpectedFrameIndex = 1;
         }
 
         public IObserver<IsoTpPacket> Observer { get; private set; }
@@ -30,6 +32,8 @@ namespace Communications.Protocols.IsoTP.ReceiveStates
         {
             get { return _dataStream.Position == _packetSize; }
         }
+
+        public TimeSpan Timeout { get; private set; }
 
         public void Write(byte[] Data)
         {

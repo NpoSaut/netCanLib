@@ -55,16 +55,62 @@ namespace Communications
                                                                  Func<IObservable<TFrame>, TResult> ResultSelector)
             where TOptions : PortOptions<TFrame>
         {
-            IConnectableObservable<TFrame> flow = Port.Rx.Replay();
+            return Request(Port.Rx, Port.Tx, Port.Options.ProducesLoopback, Port.Options.LoopbackInspector, RequestFrame, ResultSelector);
+        }
+
+        /// <summary>
+        ///     Делает запрос через указанные потоки входящих (<paramref name="Rx" />) и исходящий сообщений (
+        ///     <paramref name="Tx" />)
+        /// </summary>
+        /// <typeparam name="TFrame">Тип сообщения</typeparam>
+        /// <param name="LoopbackInspector">
+        ///     Инспектор Loopback-сообщений. Не используется, если <paramref name="Loopbacked" /> ==
+        ///     null
+        /// </param>
+        /// <param name="RequestFrame">Запрос</param>
+        /// <param name="Rx">Поток приёма</param>
+        /// <param name="Tx">Поток отправки</param>
+        /// <param name="Loopbacked">Идут ли Loopback сообщения в <paramref name="Rx" /> поток.</param>
+        /// <param name="Timeout">Время ожидания ответа  на запрос</param>
+        /// <returns>Ответ на запрос</returns>
+        public static TFrame Request<TFrame>(IObservable<TFrame> Rx, IObserver<TFrame> Tx,
+                                             bool Loopbacked, ILoopbackInspector<TFrame> LoopbackInspector,
+                                             TFrame RequestFrame, TimeSpan Timeout)
+        {
+            return Request(Rx, Tx, Loopbacked, LoopbackInspector, RequestFrame, flow => flow.Timeout(Timeout).First());
+        }
+
+        /// <summary>
+        ///     Делает запрос через указанные потоки входящих (<paramref name="Rx" />) и исходящий сообщений (
+        ///     <paramref name="Tx" />)
+        /// </summary>
+        /// <remarks>На вход <paramref name="ResultSelector" /> подаётся поток сообщений, полученных после отправки запроса</remarks>
+        /// <typeparam name="TFrame">Тип сообщения</typeparam>
+        /// <typeparam name="TResult">Тип возвращаемого результата</typeparam>
+        /// <param name="LoopbackInspector">
+        ///     Инспектор Loopback-сообщений. Не используется, если <paramref name="Loopbacked" /> ==
+        ///     null
+        /// </param>
+        /// <param name="RequestFrame">Запрос</param>
+        /// <param name="ResultSelector">Селектор результата запроса</param>
+        /// <param name="Rx">Поток приёма</param>
+        /// <param name="Tx">Поток отправки</param>
+        /// <param name="Loopbacked">Идут ли Loopback сообщения в <paramref name="Rx" /> поток.</param>
+        /// <returns>Ответ на запрос, обработанный селектором <paramref name="ResultSelector" /></returns>
+        public static TResult Request<TFrame, TResult>(IObservable<TFrame> Rx, IObserver<TFrame> Tx,
+                                                       bool Loopbacked, ILoopbackInspector<TFrame> LoopbackInspector,
+                                                       TFrame RequestFrame, Func<IObservable<TFrame>, TResult> ResultSelector)
+        {
+            IConnectableObservable<TFrame> flow = Rx.Replay();
             using (flow.Connect())
             {
-                Port.Send(RequestFrame);
+                Tx.OnNext(RequestFrame);
                 IObservable<TFrame> flowAfterRequest;
 
-                if (Port.Options.ProducesLoopback)
+                if (Loopbacked)
                 {
                     // Если портом поддерживаются Loopback-пакеты, пропускаем всё, что успели принять до запроса
-                    ILoopbackInspector<TFrame> loopbackInspector = Port.Options.LoopbackInspector;
+                    ILoopbackInspector<TFrame> loopbackInspector = LoopbackInspector;
                     flowAfterRequest = flow.SkipWhile(f => !loopbackInspector.IsLoopback(f, RequestFrame))
                                            .Skip(1);
                 }

@@ -10,12 +10,11 @@ namespace Communications.Protocols.IsoTP
     {
         public static IObservable<IsoTpPacket> IsoTpReceive(this IObservable<CanFrame> Rx, IObserver<CanFrame> Tx,
                                                             ushort TransmitDescriptor, ushort ReceiveDescriptor,
-                                                            byte ReceiveBlockSize = 128, int SeparationTimeMs = 0)
+                                                            TimeSpan Timeout, byte ReceiveBlockSize = 128, int SeparationTimeMs = 0)
         {
             return Rx.Where(f => f.Descriptor == ReceiveDescriptor)
                      .Select(f => IsoTpFrame.ParsePacket(f.Data))
-                     .IsoTpReceive(Observer.Create<IsoTpFrame>(f => Tx.OnNext(f.GetCanFrame(TransmitDescriptor))),
-                                   ReceiveBlockSize, SeparationTimeMs);
+                     .IsoTpReceive(Observer.Create<IsoTpFrame>(f => Tx.OnNext(f.GetCanFrame(TransmitDescriptor))), Timeout, ReceiveBlockSize, SeparationTimeMs);
         }
 
         public static IIsoTpConnection OpenIsoTpConnection(this ICanPort Port, ushort TransmitDescriptor, ushort ReceiveDescriptor,

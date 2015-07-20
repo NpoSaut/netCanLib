@@ -13,15 +13,14 @@ namespace Communications.Protocols.IsoTP.Transactions
         private readonly EventLoopScheduler _scheduler = new EventLoopScheduler();
         private IIsoTpState _currentState;
 
-        public IsoTpReceiveTransaction(IObserver<IsoTpPacket> Observer,
-                                       IObservable<IsoTpFrame> Rx, IObserver<IsoTpFrame> Tx,
-                                       byte ReceiveBlockSize, TimeSpan SeparationTime)
+        public IsoTpReceiveTransaction(IObserver<IsoTpPacket> Observer, IObservable<IsoTpFrame> Rx, IObserver<IsoTpFrame> Tx, byte ReceiveBlockSize,
+                                       TimeSpan SeparationTime, TimeSpan Timeout)
         {
-            _currentState = new ReadyToReceiveState(Observer, Tx, ReceiveBlockSize, SeparationTime);
+            _currentState = new ReadyToReceiveState(Observer, Tx, ReceiveBlockSize, SeparationTime, Timeout);
 
             _rxConnection = Rx.ObserveOn(_scheduler)
-                              .Subscribe(f => _currentState = _currentState.Operate(f),
-                                         e => _currentState.OnException(e));
+                              .Subscribe(f => SetState(_currentState.Operate(f)),
+                                         e => SetState(_currentState.OnException(e)));
         }
 
         /// <summary>
@@ -32,6 +31,15 @@ namespace Communications.Protocols.IsoTP.Transactions
         {
             _rxConnection.Dispose();
             _scheduler.Dispose();
+        }
+
+        private void SetState(IIsoTpState NewState)
+        {
+            if (_currentState != NewState)
+            {
+                _currentState.Dispose();
+                _currentState = NewState;
+            }
         }
     }
 }

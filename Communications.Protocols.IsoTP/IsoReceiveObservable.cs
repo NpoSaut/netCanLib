@@ -11,14 +11,16 @@ namespace Communications.Protocols.IsoTP
         private readonly IObservable<IsoTpFrame> _rx;
         private readonly TimeSpan _separationTime;
         private readonly IObserver<IsoTpFrame> _tx;
+        private readonly TimeSpan _timeout;
 
         public IsoReceiveObservable(IObservable<IsoTpFrame> Rx, IObserver<IsoTpFrame> Tx,
-                                    byte ReceiveBlockSize, TimeSpan SeparationTime)
+                                    byte ReceiveBlockSize, TimeSpan SeparationTime, TimeSpan Timeout)
         {
             _rx = Rx;
             _tx = Tx;
             _receiveBlockSize = ReceiveBlockSize;
             _separationTime = SeparationTime;
+            _timeout = Timeout;
         }
 
         /// <summary>Implement this method with the core subscription logic for the observable sequence.</summary>
@@ -26,7 +28,7 @@ namespace Communications.Protocols.IsoTP
         /// <returns>Disposable object representing an observer's subscription to the observable sequence.</returns>
         protected override IDisposable SubscribeCore(IObserver<IsoTpPacket> observer)
         {
-            var connection = new IsoTpReceiveTransaction(observer, _rx, _tx, _receiveBlockSize, _separationTime);
+            var connection = new IsoTpReceiveTransaction(observer, _rx, _tx, _receiveBlockSize, _separationTime, _timeout);
             return connection;
         }
     }
