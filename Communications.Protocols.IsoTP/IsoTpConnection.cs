@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Communications.Protocols.IsoTP.Frames;
 
 namespace Communications.Protocols.IsoTP
 {
+    [Obsolete("don't use it", true)]
     public class IsoTpConnection : IIsoTpConnection
     {
         private static int _counter;
@@ -25,6 +27,7 @@ namespace Communications.Protocols.IsoTP
             IConnectableObservable<IsoTpFrame> sharedRx = Rx.Publish();
 
             _receiver = new IsoReceiveObservable(sharedRx, Tx, ReceiveBlockSize, SeparationTime, Timeout);
+
             _sender = new IsoTpSendObserver(sharedRx, Tx, Timeout, FrameLayerCapacity);
 
             sharedRx.Subscribe(f => Debug.Print("ISO-TP {1}:          <-- {0}", f, _index));

@@ -61,9 +61,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CanIsoTpConnectionForRxHelper.cs" />
+    <Compile Include="Exceptions\IsoTpPortIsBusyException.cs" />
     <Compile Include="IIsoTpConnection.cs" />
+    <Compile Include="IIsoTpFramesPort.cs" />
     <Compile Include="IsoTpConnection.cs" />
     <Compile Include="IsoTpConnectionForRxHelper.cs" />
+    <Compile Include="IsoTpConnectionParameters.cs" />
+    <Compile Include="IsoTpFramesPortOptions.cs" />
+    <Compile Include="IsoTpOverCanPort.cs" />
     <Compile Include="Transactions\IsoTpReceiveTransaction.cs" />
     <Compile Include="ReceiveStates\IsoTpReceiveTransactionContext.cs" />
     <Compile Include="Exceptions\DescriptorNotInFlowException.cs" />
@@ -87,6 +92,7 @@
     <Compile Include="ReceiveStates\ConsecutiveReceiveState.cs" />
     <Compile Include="ReceiveStates\IsoTpStateBase.cs" />
     <Compile Include="ReceiveStates\ReadyToReceiveState.cs" />
+    <Compile Include="CanToIsoTpFramesPort.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Communications\Communications.csproj">

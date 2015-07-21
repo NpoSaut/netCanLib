@@ -5,55 +5,57 @@ using System.Reactive.Linq;
 using System.Threading;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
+using Communications.Protocols.IsoTP.ReceiveStates;
 
 namespace Communications.Protocols.IsoTP.Transactions
 {
-    public class IsoTpTransmitTransaction
+    internal class TransmitState : IIsoTpState
     {
-        private readonly IObservable<IsoTpFrame> _rx;
-        private readonly int _subframeCapacity;
-        private readonly IObserver<IsoTpFrame> _tx;
+        private readonly IsoTpPacket _packet;
+        private readonly IIsoTpFramesPort _port;
+        private readonly IsoTpConnectionParameters _connectionParameters;
+        
+        private IBuffer<byte> _dataFlow;
 
-        public IsoTpTransmitTransaction(IObservable<IsoTpFrame> Rx, IObserver<IsoTpFrame> Tx, int SubframeCapacity)
+        public void Activate()
         {
-            _rx = Rx;
-            _tx = Tx;
-            _subframeCapacity = SubframeCapacity;
+            _dataFlow = _packet.Data.Share();
+            var firstFrame = new FirstFrame(_dataFlow.Take(FirstFrame.GetPayload(_port.Options.SublayerFrameCapacity)).ToArray(), _packet.Data.Length);
         }
 
-        public void Send(IsoTpPacket Packet, TimeSpan Timeout)
-        {
-            if (Packet.Data.Length <= _subframeCapacity)
-                SendShort(Packet);
-            else
-                SendLong(Packet, Timeout);
-        }
+        void SendFirstFrame()
 
-        private void SendShort(IsoTpPacket Packet) { _tx.OnNext(new SingleFrame(Packet.Data)); }
+
+        public TransmitState(IsoTpPacket Packet, IIsoTpFramesPort Port, IsoTpConnectionParameters ConnectionParameters)
+        {
+            _packet = Packet;
+            _port = Port;
+            _connectionParameters = ConnectionParameters;
+        }
 
         private void SendLong(IsoTpPacket Packet, TimeSpan Timeout)
         {
             int[] sent = { 0 };
             IBuffer<byte> dataFlow = Packet.Data.Share();
-            IEnumerable<ConsecutiveFrame> cfFlow = dataFlow.Buffer(ConsecutiveFrame.GetPayload(_subframeCapacity))
+            IEnumerable<ConsecutiveFrame> cfFlow = dataFlow.Buffer(ConsecutiveFrame.GetPayload(_port.Options.SublayerFrameCapacity))
                                                            .Select((d, i) => new ConsecutiveFrame(d.ToArray(), (i + 1) & 0x0f))
                                                            .Share();
 
-            IObservable<ConsecutiveFrame> sendEngine = _rx.Do(ValidateFrameType)
-                                                          .Cast<FlowControlFrame>()
-                                                          .Do(CheckForAbort)
-                                                          .Timeout(Timeout)
-                                                          .Where(fc => fc.Flag == FlowControlFlag.ClearToSend)
-                                                          .SelectMany(fc => cfFlow.Take(fc.BlockSize)
-                                                                                  .ToObservable()
-                                                                                  .Do(cf => Thread.Sleep(fc.SeparationTime)) // TODO: Сделать задержку лучше
-                                                                                  .Do(cf => sent[0] += cf.Data.Length));
+            IObservable<ConsecutiveFrame> sendEngine = _port.Rx.Do(ValidateFrameType)
+                                                            .Cast<FlowControlFrame>()
+                                                            .Do(CheckForAbort)
+                                                            .Timeout(Timeout)
+                                                            .Where(fc => fc.Flag == FlowControlFlag.ClearToSend)
+                                                            .SelectMany(fc => cfFlow.Take(fc.BlockSize)
+                                                                                    .ToObservable()
+                                                                                    .Do(cf => Thread.Sleep(fc.SeparationTime)) // TODO: Сделать задержку лучше
+                                                                                    .Do(cf => sent[0] += cf.Data.Length));
 
-            using (sendEngine.Subscribe(_tx))
+            using (sendEngine.Subscribe(_port.Tx))
             {
-                var firstFrame = new FirstFrame(dataFlow.Take(FirstFrame.GetPayload(_subframeCapacity)).ToArray(), Packet.Data.Length);
+                var firstFrame = new FirstFrame(dataFlow.Take(FirstFrame.GetPayload(_port.Options.SublayerFrameCapacity)).ToArray(), Packet.Data.Length);
                 sent[0] += firstFrame.Data.Length;
-                _tx.OnNext(firstFrame);
+                _port.Tx.OnNext(firstFrame);
                 SpinWait.SpinUntil(() => sent[0] == Packet.Data.Length);
             }
         }
@@ -69,5 +71,15 @@ namespace Communications.Protocols.IsoTP.Transactions
             if (Frame.Flag == FlowControlFlag.Abort)
                 throw new IsoTpTransactionAbortedException();
         }
+
+        /// <summary>
+        /// Выполняет определяемые приложением задачи, связанные с удалением, высвобождением или сбросом неуправляемых ресурсов.
+        /// </summary>
+        public void Dispose() { throw new NotImplementedException(); }
+
+        public IIsoTpState Operate(IsoTpFrame Frame) { throw new NotImplementedException(); }
+        public IIsoTpState OnException(Exception e) { throw new NotImplementedException(); }
+        public void Abort() { throw new NotImplementedException(); }
+        public event EventHandler<WannaSendEventArgs> WannaSend;
     }
 }
