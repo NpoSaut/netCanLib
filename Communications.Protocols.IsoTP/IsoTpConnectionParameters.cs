@@ -4,6 +4,14 @@ namespace Communications.Protocols.IsoTP
 {
     public class IsoTpConnectionParameters
     {
+        public IsoTpConnectionParameters()
+        {
+            BlockSize = 128;
+            SeparationTime = TimeSpan.Zero;
+            FirstResponseTimeout = TimeSpan.FromMilliseconds(100);
+            ConsecutiveTimeout = TimeSpan.FromMilliseconds(500);
+        }
+
         /// <summary>Размер блока при передаче длинных пакетов</summary>
         public int BlockSize { get; private set; }
 

@@ -1,4 +1,5 @@
 using System;
+using System.Diagnostics;
 using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -21,8 +22,14 @@ namespace Communications.Protocols.IsoTP
                                                            .Publish();
             Rx = rx;
 
-            Observer.Create<IsoTpFrame>(f => CanPort.Send(f.GetCanFrame(TransmitDescriptor)),
-                                        e => CanPort.Tx.OnError(e));
+            rx.Subscribe(f => Debug.Print("FUDP:        <-- {0}", f));
+
+            Tx = Observer.Create<IsoTpFrame>(f =>
+                                             {
+                                                 Debug.Print("FUDP:        --> {0}", f);
+                                                 CanPort.Send(f.GetCanFrame(TransmitDescriptor));
+                                             },
+                                             e => CanPort.Tx.OnError(e));
 
             _rxConnection = rx.Connect();
         }
@@ -40,9 +47,6 @@ namespace Communications.Protocols.IsoTP
         ///     ¬ыполн€ет определ€емые приложением задачи, св€занные с удалением, высвобождением или сбросом неуправл€емых
         ///     ресурсов.
         /// </summary>
-        public void Dispose()
-        {
-            _rxConnection.Dispose();
-        }
+        public void Dispose() { _rxConnection.Dispose(); }
     }
 }

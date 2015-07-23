@@ -16,10 +16,10 @@ namespace Communications.Protocols.IsoTP.Exceptions
         /// <summary>Кадр с неожиданным индексом</summary>
         public IsoTpFrame Frame { get; private set; }
 
-        public IsoTpSequenceException(int ExpectedIndex, int ReceivedIndex, IsoTpFrame Frame)
-            : this(string.Format("Получено сообщение с индексом {0}, в то время как ожидалось сообщение с индексом {1} (Сообщение, содержащие неожиданный индекс: {2})",
-                                 ReceivedIndex, ExpectedIndex, Frame),
-                   ExpectedIndex, ReceivedIndex)
+        public IsoTpSequenceException(int ExpectedIndex, ConsecutiveFrame Frame)
+            : this(string.Format("Получено сообщение с индексом {1}, в то время как ожидалось сообщение с индексом {0} (Сообщение, содержащие неожиданный индекс: {2})",
+                                 ExpectedIndex, Frame.Index, Frame),
+                   ExpectedIndex, Frame.Index)
         { }
 
         public IsoTpSequenceException(int ExpectedIndex, int ReceivedIndex)
