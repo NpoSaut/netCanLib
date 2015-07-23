@@ -8,9 +8,10 @@ namespace Communications.Protocols.IsoTP.Transactions
     public class TransmitTransaction
     {
         private readonly BinaryReader _reader;
-        private readonly MemoryStream _stream;
 
-        private AutoResetEvent _resetEvent = new AutoResetEvent(false);
+        private readonly AutoResetEvent _resetEvent = new AutoResetEvent(false);
+        private readonly MemoryStream _stream;
+        private Exception _transactionException;
 
         public TransmitTransaction(byte[] Data)
         {
@@ -26,13 +27,31 @@ namespace Communications.Protocols.IsoTP.Transactions
 
         public int Index { get; private set; }
 
-        public byte[] GetDataSlice(int Size)
+        public long Length
         {
-            return _reader.ReadBytes((int)Math.Min(Size, _stream.Length - _stream.Position));
+            get { return _stream.Length; }
         }
 
+        public byte[] GetDataSlice(long Size) { return _reader.ReadBytes((int)Math.Min(Size, _stream.Length - _stream.Position)); }
+
         public void IncreaseIndex() { Index = (byte)(Index + 1); }
-        public void Submit() { _resetEvent.Reset(); }
-        public void Wait() { _resetEvent.WaitOne(); }
+
+        public void Submit()
+        {
+            _resetEvent.Set();
+        }
+
+        public void Fail(Exception Exception)
+        {
+            _transactionException = Exception;
+            _resetEvent.Set();
+        }
+
+        public void Wait()
+        {
+            _resetEvent.WaitOne();
+            if (_transactionException != null)
+                throw _transactionException;
+        }
     }
 }
