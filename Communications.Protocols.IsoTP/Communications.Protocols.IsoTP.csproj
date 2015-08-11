@@ -33,15 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.AsyncModule">
+    <Reference Include="Appccelerate.AsyncModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Appccelerate.AsyncModule.1.0.16-alpha\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Appccelerate.Fundamentals">
+    <Reference Include="Appccelerate.Fundamentals, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Appccelerate.Fundamentals.1.0.3-alpha\lib\Net40\Appccelerate.Fundamentals.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Appccelerate.StateMachine">
+    <Reference Include="Appccelerate.StateMachine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
       <HintPath>..\..\..\packages\Appccelerate.StateMachine.1.0.84\lib\Net40\Appccelerate.StateMachine.dll</HintPath>
       <Private>True</Private>
     </Reference>
