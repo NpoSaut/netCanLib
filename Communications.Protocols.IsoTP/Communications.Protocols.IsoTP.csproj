@@ -33,15 +33,15 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Appccelerate.AsyncModule, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Appccelerate.AsyncModule.1.0.16-alpha\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
+    <Reference Include="Appccelerate.AsyncModule">
+      <HintPath>..\..\..\packages\Appccelerate.AsyncModule.1.0.29\lib\Net40\Appccelerate.AsyncModule.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Appccelerate.Fundamentals, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
-      <HintPath>..\..\..\packages\Appccelerate.Fundamentals.1.0.3-alpha\lib\Net40\Appccelerate.Fundamentals.dll</HintPath>
+    <Reference Include="Appccelerate.Fundamentals">
+      <HintPath>..\..\..\packages\Appccelerate.Fundamentals.1.0.29\lib\Net40\Appccelerate.Fundamentals.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Appccelerate.StateMachine, Version=1.0.0.0, Culture=neutral, PublicKeyToken=917bca444d1f2b4c, processorArchitecture=MSIL">
+    <Reference Include="Appccelerate.StateMachine">
       <HintPath>..\..\..\packages\Appccelerate.StateMachine.1.0.84\lib\Net40\Appccelerate.StateMachine.dll</HintPath>
       <Private>True</Private>
     </Reference>
@@ -49,6 +49,7 @@
     <Reference Include="System.Core" />
     <Reference Include="System.Interactive">
       <HintPath>..\..\..\packages\Ix-Main.1.2.3\lib\net40\System.Interactive.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System.Reactive.Core">
       <HintPath>..\..\..\packages\Rx-Core.2.3.0-beta2\lib\net40\System.Reactive.Core.dll</HintPath>
