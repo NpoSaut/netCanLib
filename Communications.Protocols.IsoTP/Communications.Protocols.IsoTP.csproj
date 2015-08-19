@@ -14,6 +14,7 @@
     <FileAlignment>512</FileAlignment>
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\..\</SolutionDir>
     <RestorePackages>true</RestorePackages>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -78,6 +79,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppccelerateSourceTemplates\Log4Net\StateMachineLogExtension.cs" />
     <Compile Include="CanIsoTpConnectionForRxHelper.cs" />
     <Compile Include="Exceptions\IsoTpPortIsBusyException.cs" />
     <Compile Include="Exceptions\IsoTpTransactionLostException.cs" />
