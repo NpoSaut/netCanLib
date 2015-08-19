@@ -53,5 +53,7 @@ namespace Communications.Protocols.IsoTP.Transactions
             if (_transactionException != null)
                 throw _transactionException;
         }
+
+        public override string ToString() { return string.Format("ISO-TP Transaction [Done: {0}, Index: {1}, Length: {2} Bytes]", Done, Index, Length); }
     }
 }

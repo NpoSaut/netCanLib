@@ -14,7 +14,7 @@ namespace Communications.Protocols.IsoTP
 
         public CanToIsoTpFramesPort(ICanPort CanPort, ushort TransmitDescriptor, ushort ReceiveDescriptor)
         {
-            Options = new IsoTpFramesPortOptions(8);
+            Options = new IsoTpFramesPortOptions(8, TransmitDescriptor, ReceiveDescriptor);
 
             IConnectableObservable<IsoTpFrame> rx = CanPort.Rx
                                                            .Where(f => f.Descriptor == ReceiveDescriptor)

@@ -92,6 +92,11 @@ namespace Communications.Protocols.IsoTP
             //_rx.OnError(e.Exception);
         }
 
+        public override string ToString()
+        {
+            return String.Format("ISO-TP [R{0:X4}/T{1:X4}] Port", _port.Options.ReceiveDescriptor, _port.Options.TransmitDescriptor);
+        }
+
         #region IPort Members
 
         /// <summary>Поток входящих сообщений</summary>

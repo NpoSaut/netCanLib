@@ -4,9 +4,9 @@ namespace Communications.Protocols.IsoTP
 {
     public class IsoTpConnectionParameters
     {
-        public IsoTpConnectionParameters()
+        public IsoTpConnectionParameters(int BlockSize = 128)
         {
-            BlockSize = 128;
+            this.BlockSize = BlockSize;
             SeparationTime = TimeSpan.Zero;
             FirstResponseTimeout = TimeSpan.FromMilliseconds(100);
             ConsecutiveTimeout = TimeSpan.FromMilliseconds(500);
