@@ -26,8 +26,8 @@ namespace Communications.Protocols.IsoTP.Transactions
 
         public void PushDataSlice(byte[] Data)
         {
-            _writer.Write(Data);
-            ExpectedCounter = (byte)(ExpectedCounter + 1);
+            _writer.Write(Data, 0, Math.Min(Data.Length, _packetSize - (int)_stream.Position));
+            ExpectedCounter = 0x0f & (ExpectedCounter + 1);
         }
 
         public IsoTpPacket GetPacket()
