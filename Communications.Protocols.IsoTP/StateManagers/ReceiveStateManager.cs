@@ -115,7 +115,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
         private void WhenFirstFrameComes(FirstFrame Frame)
         {
-            _receiveTransaction = new ReceiveTransaction(Frame.PacketSize);
+            _receiveTransaction = new ReceiveTransaction(Frame.PacketSize, _connectionParameters.BlockSize);
             _receiveTransaction.PushDataSlice(Frame.Data);
             SendFlowControl();
         }
@@ -124,13 +124,12 @@ namespace Communications.Protocols.IsoTP.StateManagers
         {
             _receiveTransaction.PushDataSlice(Frame.Data);
 
+            _receiveTransaction.BlockCounter--;
             if (_receiveTransaction.BlockCounter == 0)
             {
                 SendFlowControl();
                 _receiveTransaction.BlockCounter = _connectionParameters.BlockSize;
             }
-            else
-                _receiveTransaction.BlockCounter--;
 
             if (_receiveTransaction.Done)
                 _stateMachine.Fire(IsoTpEvent.PackageReceived, _receiveTransaction.GetPacket());

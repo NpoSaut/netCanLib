@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using Communications.Protocols.IsoTP.Exceptions;
 
 namespace Communications.Protocols.IsoTP.Transactions
@@ -9,11 +10,12 @@ namespace Communications.Protocols.IsoTP.Transactions
         private readonly MemoryStream _stream;
         private readonly BinaryWriter _writer;
 
-        public ReceiveTransaction(int PacketSize)
+        public ReceiveTransaction(int PacketSize, int BlockSize)
         {
             _packetSize = PacketSize;
             _stream = new MemoryStream(PacketSize);
             _writer = new BinaryWriter(_stream);
+            BlockCounter = BlockSize;
         }
 
         public int ExpectedCounter { get; private set; }
