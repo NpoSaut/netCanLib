@@ -1,14 +1,14 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Communications.Protocols.IsoTP.Frames;
+using NUnit.Framework;
 
 namespace IsoTpUnitTest.FramesTest
 {
-    [TestClass]
-    public class ConsecutiveFrameTest
+    [TestFixture]
+    public class ConsecutiveFrameTests
     {
         private Random _rnd;
-        [TestMethod]
+        [Test]
         public void Consecutive_CreateFrame ()
         {
             _rnd = new Random();
@@ -21,7 +21,7 @@ namespace IsoTpUnitTest.FramesTest
             Assert.AreEqual(BitConverter.ToString(consecutiveFrame.Data), BitConverter.ToString(data), "Значение свойства Data не соответствует переданному значению.");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof (ArgumentOutOfRangeException))]
         public void Consecutive_CreateFrame_OutOfRangeException()
         {
@@ -32,7 +32,7 @@ namespace IsoTpUnitTest.FramesTest
             var consecutiveFrame = new ConsecutiveFrame(data, 1);
         }
 
-        [TestMethod]
+        [Test]
         
         public void Consecutive_GetCanFrame()
         {
@@ -52,7 +52,7 @@ namespace IsoTpUnitTest.FramesTest
             Assert.AreEqual(BitConverter.ToString(consCanFrame.Data), result, "Ошибка при записи данных");
         }
 
-        [TestMethod]
+        [Test]
         public void Consecutive_FillWithBytes()
         {
             _rnd = new Random();

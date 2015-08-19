@@ -1,15 +1,15 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Communications.Protocols.IsoTP.Frames;
+using NUnit.Framework;
 
 namespace IsoTpUnitTest.FramesTest
 {
-    [TestClass]
-    public class FirstFrameTest
+    [TestFixture]
+    public class FirstFrameTests
     {
         private Random _random;
 
-        [TestMethod]
+        [Test]
         public void First_Create()
         {
             _random = new Random();
@@ -23,7 +23,7 @@ namespace IsoTpUnitTest.FramesTest
             Assert.AreEqual(BitConverter.ToString(data), BitConverter.ToString(firstFrame.Data), "Значение свойства Data не соответствует переданному массиву");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof(ArgumentOutOfRangeException))]
         public void First_CreateFrame_OutOfRangeException()
         {
@@ -38,7 +38,7 @@ namespace IsoTpUnitTest.FramesTest
             var firstFrame = new FirstFrame(data, 100);
         }
 
-        [TestMethod]
+        [Test]
         public void First_GetCanFrame()
         {
             _random = new Random();
@@ -57,7 +57,7 @@ namespace IsoTpUnitTest.FramesTest
             Assert.AreEqual(BitConverter.ToString(firstCanFrame.Data), result, "Ошибка при записи данных");
         }
 
-        [TestMethod]
+        [Test]
         public void First_FillWithBytes()
         {
             _random = new Random();

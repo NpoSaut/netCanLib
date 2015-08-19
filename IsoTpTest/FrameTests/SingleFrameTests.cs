@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections;
-using System.Runtime.InteropServices;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Communications.Can;
 using Communications.Protocols.IsoTP.Frames;
+using NUnit.Framework;
 
 namespace IsoTpTest.FrameTests
 {
-    [TestClass]
-    public class SingleFrameTest
+    [TestFixture]
+    public class SingleFrameTests
     {
-        private Random _random;
-        byte[] Data { get; set; }
-
-        [TestInitialize]
+        [SetUp]
         public void Init()
         {
             _random = new Random();
@@ -20,7 +16,10 @@ namespace IsoTpTest.FrameTests
             _random.NextBytes(Data);
         }
 
-        [TestMethod]
+        private Random _random;
+        private byte[] Data { get; set; }
+
+        [Test]
         public void Single_Create()
         {
             var frame = new SingleFrame(Data);
@@ -28,7 +27,7 @@ namespace IsoTpTest.FrameTests
             Assert.AreEqual(BitConverter.ToString(frame.Data), BitConverter.ToString(Data), "Значение свойства Data не соответствует переданным данным");
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof (ArgumentNullException))]
         public void Single_Create_ArgumentNullException()
         {
@@ -37,7 +36,7 @@ namespace IsoTpTest.FrameTests
             var frame = new SingleFrame(Data);
         }
 
-        [TestMethod]
+        [Test]
         [ExpectedException(typeof (ArgumentOutOfRangeException))]
         public void Single_Create_ArgumentOutOfRangeException()
         {
@@ -48,23 +47,7 @@ namespace IsoTpTest.FrameTests
             var frame = new SingleFrame(Data);
         }
 
-        [TestMethod]
-        public void Single_GetCanFrame()
-        {
-            const int descriptor = 0xfc08;
-            var frame = new SingleFrame(Data);
-
-            var canFrame = frame.GetCanFrame(descriptor);
-
-            var result = new byte[8];
-            result[0] = (byte)(((byte)frame.FrameType & 0x0f) << 4 | Data.Length & 0x0f);
-            Buffer.BlockCopy(Data, 0, result, 1, Data.Length);
-
-            Assert.AreEqual(canFrame.Descriptor, descriptor, "Значение свойства Descriptor не соответствует переданным данным");
-            Assert.AreEqual(BitConverter.ToString(canFrame.Data), BitConverter.ToString(result), "Значение свойства Data не соответствует переданным данным");
-        }
-
-        [TestMethod]
+        [Test]
         public void Single_FillWithBytes()
         {
             var buff = new byte[8];
@@ -75,6 +58,22 @@ namespace IsoTpTest.FrameTests
 
             Assert.AreEqual(Data.Length, frame.Data.Length, "Рзмер массива Data не соответствует перданным данным");
             Assert.AreEqual(BitConverter.ToString(frame.Data), BitConverter.ToString(Data), "Значение свойства Data не соответствует переданным данным");
+        }
+
+        [Test]
+        public void Single_GetCanFrame()
+        {
+            const int descriptor = 0xfc08;
+            var frame = new SingleFrame(Data);
+
+            CanFrame canFrame = frame.GetCanFrame(descriptor);
+
+            var result = new byte[8];
+            result[0] = (byte)(((byte)frame.FrameType & 0x0f) << 4 | Data.Length & 0x0f);
+            Buffer.BlockCopy(Data, 0, result, 1, Data.Length);
+
+            Assert.AreEqual(canFrame.Descriptor, descriptor, "Значение свойства Descriptor не соответствует переданным данным");
+            Assert.AreEqual(BitConverter.ToString(canFrame.Data), BitConverter.ToString(result), "Значение свойства Data не соответствует переданным данным");
         }
     }
 }
