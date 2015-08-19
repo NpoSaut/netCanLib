@@ -35,17 +35,18 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .Otherwise()
                         .Goto(IsoTpState.Transmiting)
                         .Execute<TransmitTransaction>(BeginTransmitTransaction)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.FirstResponseTimeout));
+                        .Execute(() => _timerManager.CockTimer(_connectionParameters.FirstResponseTimeout, TimeoutReason.WaitingForFirstFlowControl));
 
             IEntryActionSyntax<IsoTpState, IsoTpEvent> whenTransmiting = StateMachine.In(IsoTpState.Transmiting);
 
             whenTransmiting
                 .On(IsoTpEvent.FrameReceived)
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
+                .Execute(() => _timerManager.DecockTimer())
                 .Execute<FlowControlFrame>(SendNextDataPortion)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout))
+                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout))
+                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
                 .Goto(IsoTpState.ReadyToReceive)
                 .Execute(() => Throw(new IsoTpTransactionAbortedException()))

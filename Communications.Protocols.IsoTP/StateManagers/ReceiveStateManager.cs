@@ -4,6 +4,7 @@ using Appccelerate.StateMachine.Syntax;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.Transactions;
+using log4net;
 
 namespace Communications.Protocols.IsoTP.StateManagers
 {
@@ -11,10 +12,11 @@ namespace Communications.Protocols.IsoTP.StateManagers
     {
         private readonly IsoTpConnectionParameters _connectionParameters;
         private readonly Action<IsoTpPacket> _emit;
-        private readonly Action<Exception> _throw;
         private readonly ISender _sender;
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _stateMachine;
+        private readonly Action<Exception> _throw;
         private readonly TimerManager _timerManager;
+        private log4net.ILog _log = LogManager.GetLogger(typeof (ReceiveStateManager));
         private ReceiveTransaction _receiveTransaction;
 
         public ReceiveStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, TimerManager TimerManager, ISender Sender,
@@ -30,7 +32,6 @@ namespace Communications.Protocols.IsoTP.StateManagers
             StateMachine.In(IsoTpState.ReadyToReceive)
                         .On(IsoTpEvent.FrameReceived)
                         .If<IsoTpFrame>(f => f is SingleFrame)
-                        .Goto(IsoTpState.ReadyToReceive)
                         .Execute<SingleFrame>(WhenSingleFrameComes);
 
             StateMachine.In(IsoTpState.ReadyToReceive)
@@ -38,7 +39,8 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .If<IsoTpFrame>(f => f is FirstFrame)
                         .Goto(IsoTpState.Receiving)
                         .Execute<FirstFrame>(WhenFirstFrameComes)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout));
+                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
+                                                               TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControl));
 
             StateMachine.In(IsoTpState.ReadyToReceive)
                         .On(IsoTpEvent.PackageReceived)
@@ -51,24 +53,27 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 // Правильный пакет с данными
                 .If<IsoTpFrame>(IsExpectedConsecutiveData)
                 .Execute<ConsecutiveFrame>(WhenConsecutiveDataComes)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout))
+                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
                 // Другой пакет с данными
                 .If<IsoTpFrame>(f => f is ConsecutiveFrame)
                 .Goto(IsoTpState.ReadyToReceive)
                 .Execute(AbortTransaction)
                 .Execute<ConsecutiveFrame>(f => Throw(new IsoTpSequenceException(_receiveTransaction.ExpectedCounter, f)))
+
                 // Новая короткая транзакция
                 .On(IsoTpEvent.FrameReceived)
                 .If<IsoTpFrame>(f => f is SingleFrame)
                 .Execute(() => Throw(new IsoTpTransactionLostException()))
                 .Execute<SingleFrame>(WhenSingleFrameComes)
+
                 // Новая длинная транзакция
                 .On(IsoTpEvent.FrameReceived)
                 .If<IsoTpFrame>(f => f is FirstFrame)
                 .Goto(IsoTpState.Receiving)
                 .Execute(() => Throw(new IsoTpTransactionLostException()))
                 .Execute<FirstFrame>(WhenFirstFrameComes)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout));
+                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
+                                                       TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControlInInterruptingTransaction));
 
             whenReceiving
                 .On(IsoTpEvent.FrameReceived)
@@ -92,6 +97,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .On(IsoTpEvent.PackageReceived)
                 .Goto(IsoTpState.ReadyToReceive)
                 .Execute<IsoTpPacket>(p => _emit(p))
+                .Execute(() => Console.Write("Ka-doooooooop!~"))
                 .Execute(() => _receiveTransaction = null);
 
             whenReceiving

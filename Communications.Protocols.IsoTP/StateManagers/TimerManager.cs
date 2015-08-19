@@ -4,6 +4,16 @@ using Appccelerate.StateMachine;
 
 namespace Communications.Protocols.IsoTP.StateManagers
 {
+    internal enum TimeoutReason
+    {
+        WaitingForFirstFlowControl,
+        WaitingForConsecutiveFrameAfterFirstFlowControl,
+        WaitingForNextConsecutiveFrame,
+        WaitingForFlowControlFrameAfterWaitFrame,
+        WaitingForFlowControlFrameAfterDataPortionSent,
+        WaitingForConsecutiveFrameAfterFirstFlowControlInInterruptingTransaction
+    }
+
     internal class TimerManager
     {
         private readonly IScheduler _scheduler;
@@ -16,11 +26,11 @@ namespace Communications.Protocols.IsoTP.StateManagers
             _scheduler = Scheduler;
         }
 
-        public void CockTimer(TimeSpan Timeout)
+        public void CockTimer(TimeSpan Timeout, TimeoutReason Reason)
         {
             if (_timeoutToken != null)
                 _timeoutToken.Dispose();
-            _timeoutToken = _scheduler.Schedule(Timeout, () => _stateMachine.Fire(IsoTpEvent.Timeout));
+            _timeoutToken = _scheduler.Schedule(Timeout, () => _stateMachine.Fire(IsoTpEvent.Timeout, Reason));
         }
 
         public void DecockTimer()
