@@ -3,6 +3,8 @@ using System.Reactive;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
+using System.Threading.Tasks;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Machine.Events;
 using Communications.Can;
@@ -54,9 +56,15 @@ namespace Communications.Protocols.IsoTP
             _stateManagers = new IStateManager[]
                              {
                                  new ReadyToReceiveStateManager(_fsm, timeManager),
-                                 new ReceiveStateManager(_fsm, timeManager, sender, _connectionParameters, _rx.OnNext, _rx.OnError), 
-                                 new SendStateManager(_fsm, timeManager, _connectionParameters, sender, _port.Options.SublayerFrameCapacity),
+                                 new ReceiveStateManager(_fsm, timeManager, sender, _connectionParameters,
+                                                         p => Task.Factory.StartNew(() => _rx.OnNext(p)),
+                                                         e => Task.Factory.StartNew(() => _rx.OnError(e))),
+                                 new SendStateManager(_fsm, timeManager, _connectionParameters, sender, _port.Options.SublayerFrameCapacity)
                              };
+
+            _fsm.In(IsoTpState.ReadyToReceive)
+                .ExecuteOnEntry(timeManager.DecockTimer);
+
             _fsm.Initialize(IsoTpState.ReadyToReceive);
             _fsm.TransitionExceptionThrown += FsmOnTransitionExceptionThrown;
 
