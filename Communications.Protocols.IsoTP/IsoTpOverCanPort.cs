@@ -34,6 +34,7 @@ namespace Communications.Protocols.IsoTP
     {
         private readonly IsoTpConnectionParameters _connectionParameters;
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _fsm;
+        private readonly string _name;
         private readonly IIsoTpFramesPort _port;
         private readonly Subject<IsoTpPacket> _rx;
         private readonly IDisposable _rxFromBelowConnection;
@@ -41,16 +42,23 @@ namespace Communications.Protocols.IsoTP
         private IStateManager[] _stateManagers;
 
         public IsoTpOverCanPort(ICanPort CanPort, ushort TransmitDescriptor, ushort ReceiveDescriptor, IsoTpConnectionParameters ConnectionParameters)
+            : this(
+                CanPort, TransmitDescriptor, ReceiveDescriptor, String.Format("ISO-TP R{0:X4}/T{1:X4}", TransmitDescriptor, ReceiveDescriptor),
+                ConnectionParameters) { }
+
+        public IsoTpOverCanPort(ICanPort CanPort, ushort TransmitDescriptor, ushort ReceiveDescriptor, String Name,
+                                IsoTpConnectionParameters ConnectionParameters)
         {
             Options = new IsoTpOverCanPortOptions(TransmitDescriptor, ReceiveDescriptor);
+            _name = Name;
             _connectionParameters = ConnectionParameters;
-            _scheduler = new EventLoopScheduler();
+            _scheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = String.Format("{0} Thread", Name) });
 
             _port = new CanToIsoTpFramesPort(CanPort, TransmitDescriptor, ReceiveDescriptor);
 
             _rx = new Subject<IsoTpPacket>();
 
-            _fsm = new PassiveStateMachine<IsoTpState, IsoTpEvent>();
+            _fsm = new PassiveStateMachine<IsoTpState, IsoTpEvent>(Name);
             var timeManager = new TimerManager(_fsm, _scheduler);
             var sender = new ActionSender(_port.Tx.OnNext);
             _stateManagers = new IStateManager[]
@@ -100,10 +108,7 @@ namespace Communications.Protocols.IsoTP
             //_rx.OnError(e.Exception);
         }
 
-        public override string ToString()
-        {
-            return String.Format("ISO-TP [R{0:X4}/T{1:X4}] Port", _port.Options.ReceiveDescriptor, _port.Options.TransmitDescriptor);
-        }
+        public override string ToString() { return String.Format("ISO-TP {{{0}}}", _name); }
 
         #region IPort Members
 
