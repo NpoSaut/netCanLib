@@ -41,17 +41,17 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
             whenTransmiting
                 .On(IsoTpEvent.FrameReceived)
-                .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
-                .Execute(() => _timerManager.DecockTimer())
-                .Execute<FlowControlFrame>(SendNextDataPortion)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
-                .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
-                .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
-                .Goto(IsoTpState.ReadyToReceive)
-                .Execute(() => Throw(new IsoTpTransactionAbortedException()))
-                .Otherwise()
-                .Execute<IsoTpFrame>(f => Throw(new IsoTpWrongFrameException(f, typeof (FlowControlFrame))));
+                    .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
+                        .Execute(() => _timerManager.DecockTimer())
+                        .Execute<FlowControlFrame>(SendNextDataPortion)
+                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
+                    .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
+                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
+                    .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
+                        .Goto(IsoTpState.ReadyToReceive)
+                        .Execute(() => Throw(new IsoTpTransactionAbortedException()))
+                    .Otherwise()
+                        .Execute<IsoTpFrame>(f => Throw(new IsoTpWrongFrameException(f, typeof (FlowControlFrame))));
 
             whenTransmiting
                 .On(IsoTpEvent.Timeout)

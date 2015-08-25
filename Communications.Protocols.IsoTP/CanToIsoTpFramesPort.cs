@@ -21,14 +21,7 @@ namespace Communications.Protocols.IsoTP
                                                            .Select(f => IsoTpFrame.ParsePacket(f.Data))
                                                            .Publish();
             Rx = rx;
-
-            rx.Subscribe(f => Debug.Print("FUDP:        <-- {0}", f));
-
-            Tx = Observer.Create<IsoTpFrame>(f =>
-                                             {
-                                                 Debug.Print("FUDP:        --> {0}", f);
-                                                 CanPort.Send(f.GetCanFrame(TransmitDescriptor));
-                                             },
+            Tx = Observer.Create<IsoTpFrame>(f => CanPort.Send(f.GetCanFrame(TransmitDescriptor)),
                                              e => CanPort.Tx.OnError(e));
 
             _rxConnection = rx.Connect();

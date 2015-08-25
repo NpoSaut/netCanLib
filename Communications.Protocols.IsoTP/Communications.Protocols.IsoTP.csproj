@@ -79,7 +79,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AppccelerateSourceTemplates\Log4Net\StateMachineLogExtension.cs" />
     <Compile Include="CanIsoTpConnectionForRxHelper.cs" />
     <Compile Include="Exceptions\IsoTpPortIsBusyException.cs" />
     <Compile Include="Exceptions\IsoTpTransactionLostException.cs" />
