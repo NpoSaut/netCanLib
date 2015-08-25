@@ -90,7 +90,7 @@
     <Compile Include="FrameTests\FirstFrameTests.cs" />
     <Compile Include="FrameTests\FlowControlFrameTests.cs" />
     <Compile Include="FrameTests\SingleFrameTests.cs" />
-    <Compile Include="IntegrationTests.cs" />
+    <Compile Include="Integration\CrossTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

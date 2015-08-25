@@ -2,7 +2,7 @@
 using Communications.Protocols.IsoTP.Frames;
 using NUnit.Framework;
 
-namespace IsoTpUnitTest.FramesTest
+namespace IsoTpTest.FrameTests
 {
     [TestFixture]
     public class ConsecutiveFrameTests
