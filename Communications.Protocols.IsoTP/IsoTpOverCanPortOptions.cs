@@ -1,3 +1,5 @@
+using Communications.Protocols.IsoTP.Transactions;
+
 namespace Communications.Protocols.IsoTP
 {
     public class IsoTpOverCanPortOptions : DataPortOptions<IsoTpPacket>

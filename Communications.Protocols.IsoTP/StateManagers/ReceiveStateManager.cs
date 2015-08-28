@@ -4,6 +4,7 @@ using Appccelerate.StateMachine.Syntax;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.Transactions;
+using Communications.Transactions;
 using log4net;
 
 namespace Communications.Protocols.IsoTP.StateManagers
@@ -11,7 +12,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
     internal class ReceiveStateManager : IStateManager
     {
         private readonly IsoTpConnectionParameters _connectionParameters;
-        private readonly Action<IsoTpPacket> _emit;
+        private readonly Action<ITransaction<IsoTpPacket>> _emit;
         private readonly ISender _sender;
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _stateMachine;
         private readonly Action<Exception> _throw;
@@ -20,7 +21,8 @@ namespace Communications.Protocols.IsoTP.StateManagers
         private ReceiveTransaction _receiveTransaction;
 
         public ReceiveStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, TimerManager TimerManager, ISender Sender,
-                                   IsoTpConnectionParameters ConnectionParameters, Action<IsoTpPacket> EmitAction, Action<Exception> ThrowAction)
+                                   IsoTpConnectionParameters ConnectionParameters,
+                                   Action<ITransaction<IsoTpPacket>> EmitAction, Action<Exception> ThrowAction)
         {
             _stateMachine = StateMachine;
             _timerManager = TimerManager;
@@ -42,29 +44,25 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
                                                                TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControl));
 
-            StateMachine.In(IsoTpState.ReadyToReceive)
-                        .On(IsoTpEvent.PackageReceived)
-                        .Execute<IsoTpPacket>(p => _emit(p));
-
             IEntryActionSyntax<IsoTpState, IsoTpEvent> whenReceiving = StateMachine.In(IsoTpState.Receiving);
 
             whenReceiving
                 .On(IsoTpEvent.FrameReceived)
-                // Правильный пакет с данными
-                .If<IsoTpFrame>(IsExpectedConsecutiveData)
-                .Execute<ConsecutiveFrame>(WhenConsecutiveDataComes)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
-                // Другой пакет с данными
-                .If<IsoTpFrame>(f => f is ConsecutiveFrame)
-                .Goto(IsoTpState.ReadyToReceive)
-                .Execute(AbortTransaction)
-                .Execute<ConsecutiveFrame>(f => Throw(new IsoTpSequenceException(_receiveTransaction.ExpectedCounter, f)))
+                    // Правильный пакет с данными
+                    .If<IsoTpFrame>(IsExpectedConsecutiveData)
+                        .Execute<ConsecutiveFrame>(WhenConsecutiveDataComes)
+                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
+                    // Другой пакет с данными
+                    .If<IsoTpFrame>(f => f is ConsecutiveFrame)
+                        .Goto(IsoTpState.ReadyToReceive)
+                        .Execute(AbortTransaction)
+                        .Execute<ConsecutiveFrame>(f => Throw(new IsoTpSequenceException(_receiveTransaction.ExpectedCounter, f)))
 
                 // Новая короткая транзакция
                 .On(IsoTpEvent.FrameReceived)
-                .If<IsoTpFrame>(f => f is SingleFrame)
-                .Execute(() => Throw(new IsoTpTransactionLostException()))
-                .Execute<SingleFrame>(WhenSingleFrameComes)
+                    .If<IsoTpFrame>(f => f is SingleFrame)
+                        .Execute(() => Throw(new IsoTpTransactionLostException()))
+                        .Execute<SingleFrame>(WhenSingleFrameComes)
 
                 // Новая длинная транзакция
                 .On(IsoTpEvent.FrameReceived)
@@ -94,18 +92,15 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .Execute(AbortTransaction);
 
             whenReceiving
-                .On(IsoTpEvent.PackageReceived)
-                .Goto(IsoTpState.ReadyToReceive)
-                .Execute<IsoTpPacket>(p => _emit(p))
-                .Execute(() => Console.Write("Ka-doooooooop!~"))
-                .Execute(() => _receiveTransaction = null);
+                .On(IsoTpEvent.TransactionCompleated)
+                    .Goto(IsoTpState.ReadyToReceive)
+                    .Execute(() => _receiveTransaction.Commit())
+                    .Execute(() => _receiveTransaction = null);
 
             whenReceiving
                 .On(IsoTpEvent.TransmitRequest)
                 .Execute(() => Throw(new IsoTpPortIsBusyException()));
         }
-
-        private void Throw(Exception e) { _throw(e); }
 
         private void AbortTransaction() { _sender.Send(FlowControlFrame.AbortFrame); }
 
@@ -117,12 +112,16 @@ namespace Communications.Protocols.IsoTP.StateManagers
             return cf.Index == _receiveTransaction.ExpectedCounter;
         }
 
-        private void WhenSingleFrameComes(SingleFrame Frame) { _stateMachine.Fire(IsoTpEvent.PackageReceived, new IsoTpPacket(Frame.Data)); }
+        private void WhenSingleFrameComes(SingleFrame Frame)
+        {
+            _emit(new InstantaneousTransaction<IsoTpPacket>(new IsoTpPacket(Frame.Data)));
+        }
 
         private void WhenFirstFrameComes(FirstFrame Frame)
         {
             _receiveTransaction = new ReceiveTransaction(Frame.PacketSize, _connectionParameters.BlockSize);
             _receiveTransaction.PushDataSlice(Frame.Data);
+            _emit(_receiveTransaction);
             SendFlowControl();
         }
 
@@ -138,8 +137,10 @@ namespace Communications.Protocols.IsoTP.StateManagers
             }
 
             if (_receiveTransaction.Done)
-                _stateMachine.Fire(IsoTpEvent.PackageReceived, _receiveTransaction.GetPacket());
+                _stateMachine.Fire(IsoTpEvent.TransactionCompleated);
         }
+
+        private void Throw(Exception e) { _receiveTransaction.Fail(e); }
 
         private void SendFlowControl()
         {

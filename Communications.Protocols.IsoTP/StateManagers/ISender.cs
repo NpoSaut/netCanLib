@@ -1,5 +1,6 @@
 ﻿using System;
 using Communications.Protocols.IsoTP.Frames;
+using Communications.Transactions;
 
 namespace Communications.Protocols.IsoTP.StateManagers
 {
@@ -10,8 +11,8 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
     internal class ActionSender : ISender
     {
-        private readonly Action<IsoTpFrame> _sendAction;
-        public ActionSender(Action<IsoTpFrame> SendAction) { _sendAction = SendAction; }
+        private readonly Func<IsoTpFrame, ITransaction<IsoTpFrame>> _sendAction;
+        public ActionSender(Func<IsoTpFrame, ITransaction<IsoTpFrame>> SendAction) { _sendAction = SendAction; }
 
         public void Send(IsoTpFrame Frame) { _sendAction(Frame); }
     }

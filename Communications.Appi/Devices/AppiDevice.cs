@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reactive;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Communications.Appi.Buffers;
@@ -8,6 +9,7 @@ using Communications.Appi.Decoders;
 using Communications.Appi.Encoders;
 using Communications.Appi.Ports;
 using Communications.Can;
+using Communications.PortHelpers;
 using Communications.Usb;
 using Buffer = Communications.Appi.Buffers.Buffer;
 
@@ -25,7 +27,10 @@ namespace Communications.Appi.Devices
             _decoder = Decoder;
             _usbDevice = UsbDevice;
 
-            IConnectableObservable<Buffer> buffersStream = _usbDevice.Rx.Select(frame => _decoder.DecodeBuffer(frame.Data)).Publish();
+            IConnectableObservable<Buffer> buffersStream = _usbDevice.Rx
+                                                                     .WaitForTransactionCompleated()
+                                                                     .Select(frame => _decoder.DecodeBuffer(frame.Data))
+                                                                     .Publish();
             _buffersStreamConnection = buffersStream.Connect();
 
             var fac = new AppiCanPortFactory<TLineKey>(SendFramesBufferEncoder);
@@ -33,25 +38,10 @@ namespace Communications.Appi.Devices
                 LineKeys.ToDictionary(key => key,
                                       key => fac.ProduceCanPort(key,
                                                                 buffersStream.OfType<MessagesBuffer<TLineKey>>().Select(buffer => buffer.LineStatuses[key]),
-                                                                _usbDevice.Tx));
+                                                                Observer.Create<UsbFrame>(f => _usbDevice.BeginSend(f))));
         }
 
         public IDictionary<TLineKey, ICanPort> CanPorts { get; private set; }
-
-        //        private void Do()
-        //        {
-        //            // Чтение и расшифровка буфера
-        //            byte[] buff = _usbDevice.ReadBuffer();
-        //            Buffer buffer = _decoder.DecodeBuffer(buff);
-        //
-        //            // Проверка сквозного номера
-        //            if (buffer.SequentialNumber == _lastReceivedBuffer)
-        //                return;
-        //            _lastReceivedBuffer = buffer.SequentialNumber;
-        //
-        //            // Обработка расшифрованного буфера
-        //            ProcessAppiBuffer(buffer);
-        //        }
 
         public void Dispose()
         {

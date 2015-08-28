@@ -28,10 +28,10 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
             StateMachine.In(IsoTpState.ReadyToReceive)
                         .On(IsoTpEvent.TransmitRequest)
-                        // Маленький пакет
+                // Маленький пакет
                         .If<TransmitTransaction>(t => t.Length <= SingleFrame.GetPayload(_sublayerFrameCapacity))
                         .Execute<TransmitTransaction>(SendShortTransaction)
-                        // Большой пакет
+                // Большой пакет
                         .Otherwise()
                         .Goto(IsoTpState.Transmiting)
                         .Execute<TransmitTransaction>(BeginTransmitTransaction)
@@ -41,17 +41,17 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
             whenTransmiting
                 .On(IsoTpEvent.FrameReceived)
-                    .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
-                        .Execute(() => _timerManager.DecockTimer())
-                        .Execute<FlowControlFrame>(SendNextDataPortion)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
-                    .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
-                    .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
-                        .Goto(IsoTpState.ReadyToReceive)
-                        .Execute(() => Throw(new IsoTpTransactionAbortedException()))
-                    .Otherwise()
-                        .Execute<IsoTpFrame>(f => Throw(new IsoTpWrongFrameException(f, typeof (FlowControlFrame))));
+                .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
+                .Execute(() => _timerManager.DecockTimer())
+                .Execute<FlowControlFrame>(SendNextDataPortion)
+                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
+                .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
+                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
+                .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
+                .Goto(IsoTpState.ReadyToReceive)
+                .Execute(() => Throw(new IsoTpTransactionAbortedException()))
+                .Otherwise()
+                .Execute<IsoTpFrame>(f => Throw(new IsoTpWrongFrameException(f, typeof (FlowControlFrame))));
 
             whenTransmiting
                 .On(IsoTpEvent.Timeout)
@@ -67,9 +67,9 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .Execute(() => Throw(new IsoTpPortIsBusyException()));
 
             whenTransmiting
-                .On(IsoTpEvent.PackageSent)
+                .On(IsoTpEvent.TransactionCompleated)
                 .Goto(IsoTpState.ReadyToReceive)
-                .Execute(() => _transmitTransaction.Submit());
+                .Execute(() => _transmitTransaction.Commit());
         }
 
         private void Throw(Exception e) { _transmitTransaction.Fail(e); }
@@ -79,7 +79,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
             try
             {
                 _sender.Send(new SingleFrame(Transaction.GetDataSlice(Transaction.Length)));
-                Transaction.Submit();
+                Transaction.Commit();
             }
             catch (Exception e)
             {
@@ -103,7 +103,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 _transmitTransaction.IncreaseIndex();
                 if (_transmitTransaction.Done)
                 {
-                    _stateMachine.Fire(IsoTpEvent.PackageSent);
+                    _stateMachine.Fire(IsoTpEvent.TransactionCompleated);
                     return;
                 }
             }

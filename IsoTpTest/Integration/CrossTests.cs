@@ -6,8 +6,10 @@ using System.Reactive.Subjects;
 using System.Threading;
 using System.Threading.Tasks;
 using Communications.Can;
+using Communications.PortHelpers;
 using Communications.Protocols.IsoTP;
 using Communications.Protocols.IsoTP.Frames;
+using Communications.Transactions;
 using log4net;
 using log4net.Config;
 using NUnit.Framework;
@@ -31,12 +33,23 @@ namespace IsoTpTest.Integration
         private Tuple<IsoTpOverCanPort, IsoTpOverCanPort, ICanPort> GetConnections()
         {
             var canSubject = new Subject<CanFrame>();
-            canSubject.Select(f => IsoTpFrame.ParsePacket(f.Data)).Subscribe(f => _loger.DebugFormat("FUDP: {0}         THREAD: {1}", f, Thread.CurrentThread.Name));
+            IObservable<InstantaneousTransaction<CanFrame>> canTransactions =
+                canSubject.Select(f => new InstantaneousTransaction<CanFrame>(f)).Publish().RefCount();
+
+            canSubject.Select(f => IsoTpFrame.ParsePacket(f.Data))
+                      .Subscribe(f => _loger.DebugFormat("FUDP: {0}         THREAD: {1}", f, Thread.CurrentThread.Name));
 
             var can = MockRepository.GenerateMock<ICanPort>();
-            can.Stub(x => x.Rx).Return(canSubject);
-            can.Stub(x => x.Tx).Return(canSubject);
+            can.Stub(x => x.Rx).Return(canTransactions);
+            can.Stub(x => x.BeginSend(Arg<CanFrame>.Is.Anything))
+               .Return(null)
+               .WhenCalled(x =>
+                           {
+                               canSubject.OnNext((CanFrame)x.Arguments[0]);
+                               x.ReturnValue = new InstantaneousTransaction<CanFrame>((CanFrame)x.Arguments[0]);
+                           });
             can.Stub(x => x.Options).Return(new CanPortOptions());
+
 
             return Tuple.Create(
                 new IsoTpOverCanPort(can, 0x28, 0x48, "Port A", new IsoTpConnectionParameters(BlockSize)),
@@ -65,13 +78,15 @@ namespace IsoTpTest.Integration
             List<byte[]> dataSamples = TransactionLengths.Select((length, i) => GetData(length, (byte)(i + 1))).ToList();
 
             Tuple<IsoTpOverCanPort, IsoTpOverCanPort, ICanPort> x = GetConnections();
-            IConnectableObservable<IsoTpPacket> replay = x.Item2.Rx.Replay();
+            IConnectableObservable<IsoTpPacket> replay = x.Item2.Rx.WaitForTransactionCompleated().Replay();
             using (replay.Connect())
             {
                 foreach (var dataSample in dataSamples)
-                    x.Item1.Tx.OnNext(new IsoTpPacket(dataSample));
+                    x.Item1.BeginSend(new IsoTpPacket(dataSample)).Wait();
+
                 IList<byte[]> incomDataSamples = replay.Take(TransactionLengths.Count())
                                                        .Select(packet => packet.Data)
+                                                       .Do(data => _loger.InfoFormat("Packet Received {0}", BitConverter.ToString(data)))
                                                        .ToList()
                                                        .First();
 
@@ -89,10 +104,10 @@ namespace IsoTpTest.Integration
             byte[] data = GetData(TransactionLength, 0x00);
 
             Tuple<IsoTpOverCanPort, IsoTpOverCanPort, ICanPort> x = GetConnections();
-            IConnectableObservable<IsoTpPacket> replay = x.Item2.Rx.Replay();
+            IConnectableObservable<IsoTpPacket> replay = x.Item2.Rx.WaitForTransactionCompleated().Replay();
             using (replay.Connect())
             {
-                x.Item1.Tx.OnNext(new IsoTpPacket(data));
+                x.Item1.BeginSend(new IsoTpPacket(data));
                 byte[] incomData = replay.First().Data;
 
                 CollectionAssert.AreEqual(data, incomData);
@@ -113,24 +128,26 @@ namespace IsoTpTest.Integration
             byte[] data2 = GetData(Transaction2Length, 0xbb);
             byte[] receivedData1, receivedData2 = null;
 
-            var x = GetConnections();
-            IConnectableObservable<IsoTpPacket> replay = x.Item1.Rx.Replay();
+            Tuple<IsoTpOverCanPort, IsoTpOverCanPort, ICanPort> x = GetConnections();
+            IConnectableObservable<IsoTpPacket> replay = x.Item1.Rx.WaitForTransactionCompleated().Replay();
 
             // Making Loopback
             x.Item2.Rx
-             .Subscribe(p =>
+             .Subscribe(transaction =>
                         {
-                            receivedData2 = p.Data;
+                            _loger.Info("---------------------- RECEIVING ---------------------");
+                            transaction.Wait();
+                            receivedData2 = transaction.Payload.Data;
                             _loger.Info("---------------------- RESPONSE ----------------------");
-                            _loger.InfoFormat("                  {0}", BitConverter.ToString(p.Data));
-                            Task.Factory.StartNew(() => x.Item2.Tx.OnNext(new IsoTpPacket(data2)));
+                            _loger.InfoFormat("                  {0}", BitConverter.ToString(receivedData2));
+                            Task.Factory.StartNew(() => x.Item2.BeginSend(new IsoTpPacket(data2)));
                         });
 
             using (replay.Connect())
             {
                 _loger.Info("                щас отправим");
-                x.Item1.Tx.OnNext(new IsoTpPacket(data1));
-                
+                x.Item1.BeginSend(new IsoTpPacket(data1));
+
                 receivedData1 = replay.Timeout(TimeSpan.FromSeconds(1)).First().Data;
             }
 

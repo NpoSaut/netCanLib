@@ -1,39 +1,49 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using Communications.Transactions;
 
 namespace Communications.Tests
 {
     internal class TestPort<TFrame> : IPort<TFrame>
     {
-        private readonly IDisposable _connection;
+        private readonly Func<TFrame, TFrame> _answerSelector;
+        private readonly bool _loopback;
+        private readonly Subject<ITransaction<TFrame>> _subject;
 
-        public TestPort(Func<IObservable<TFrame>, IObservable<TFrame>> AnswerSelector, bool Loopback)
+        public TestPort(Func<TFrame, TFrame> AnswerSelector, bool Loopback)
         {
+            _answerSelector = AnswerSelector;
+            _loopback = Loopback;
             Options = Loopback
                           ? new PortOptions<TFrame>(new LambdaLoopbackInspector<TFrame>((a, b) => Equals(a, b)))
                           : new PortOptions<TFrame>();
 
-            var subject = new Subject<TFrame>();
-            Tx = subject;
-            IObservable<TFrame> x = AnswerSelector(subject);
-            if (Loopback)
-                x = subject.Merge(x);
-            IConnectableObservable<TFrame> p = x.Publish();
-            Rx = p;
+            _subject = new Subject<ITransaction<TFrame>>();
+            Rx = _subject;
             Rx.Subscribe(j => Debug.WriteLine(j));
-            _connection = p.Connect();
         }
 
         /// <summary>Поток входящих сообщений</summary>
-        public IObservable<TFrame> Rx { get; private set; }
+        public IObservable<ITransaction<TFrame>> Rx { get; private set; }
 
         /// <summary>Поток исходящих сообщений</summary>
         public IObserver<TFrame> Tx { get; private set; }
 
         public PortOptions<TFrame> Options { get; private set; }
 
-        public void Dispose() { _connection.Dispose(); }
+        /// <summary>Начинает отправку кадра</summary>
+        /// <param name="Frame">Кадр для отправки</param>
+        /// <returns>Транзакция передачи</returns>
+        public ITransaction<TFrame> BeginSend(TFrame Frame)
+        {
+            if (_loopback)
+                _subject.OnNext(new InstantaneousTransaction<TFrame>(Frame));
+            _subject.OnNext(new InstantaneousTransaction<TFrame>(_answerSelector(Frame)));
+
+            return new InstantaneousTransaction<TFrame>(Frame);
+        }
+
+        public void Dispose() { _subject.Dispose(); }
     }
 }

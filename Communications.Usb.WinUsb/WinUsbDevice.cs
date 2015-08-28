@@ -5,6 +5,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Communications;
+using Communications.Transactions;
 using Communications.Usb;
 using MadWizard.WinUSBNet;
 
@@ -38,11 +39,15 @@ namespace ReactiveWinUsb
             _scheduler = new EventLoopScheduler();
 
             Rx = Observable.Interval(TimeSpan.Zero, _scheduler)
-                           .Select(x => Read());
+                           .Select(x => Read())
+                           .Select(frame => new InstantaneousTransaction<UsbFrame>(frame));
 
             _tx = new Subject<UsbFrame>();
             _tx.SubscribeOn(_scheduler).Subscribe(Write);
         }
+
+        /// <summary>Поток входящих сообщений</summary>
+        public IObservable<ITransaction<UsbFrame>> Rx { get; private set; }
 
         public IObserver<UsbFrame> Tx
         {
@@ -51,7 +56,14 @@ namespace ReactiveWinUsb
 
         public PortOptions<UsbFrame> Options { get; private set; }
 
-        public IObservable<UsbFrame> Rx { get; private set; }
+        /// <summary>Начинает отправку кадра</summary>
+        /// <param name="Frame">Кадр для отправки</param>
+        /// <returns>Транзакция передачи</returns>
+        public ITransaction<UsbFrame> BeginSend(UsbFrame Frame)
+        {
+            Write(Frame);
+            return new InstantaneousTransaction<UsbFrame>(Frame);
+        }
 
         /// <summary>
         ///     Выполняет определяемые приложением задачи, связанные с удалением, высвобождением или сбросом неуправляемых

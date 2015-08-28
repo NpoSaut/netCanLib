@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Machine.Events;
 using Communications.Can;
+using Communications.PortHelpers;
 using Communications.Protocols.IsoTP.StateManagers;
 using Communications.Protocols.IsoTP.Transactions;
+using Communications.Transactions;
 
 namespace Communications.Protocols.IsoTP
 {
@@ -26,8 +28,7 @@ namespace Communications.Protocols.IsoTP
         Abort,
         Timeout,
         FrameReceived,
-        PackageReceived,
-        PackageSent
+        TransactionCompleated
     }
 
     public class IsoTpOverCanPort : IIsoTpConnection
@@ -36,7 +37,7 @@ namespace Communications.Protocols.IsoTP
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _fsm;
         private readonly string _name;
         private readonly IIsoTpFramesPort _port;
-        private readonly Subject<IsoTpPacket> _rx;
+        private readonly Subject<ITransaction<IsoTpPacket>> _rx;
         private readonly IDisposable _rxFromBelowConnection;
         private readonly EventLoopScheduler _scheduler;
         private IStateManager[] _stateManagers;
@@ -56,11 +57,11 @@ namespace Communications.Protocols.IsoTP
 
             _port = new CanToIsoTpFramesPort(CanPort, TransmitDescriptor, ReceiveDescriptor);
 
-            _rx = new Subject<IsoTpPacket>();
+            _rx = new Subject<ITransaction<IsoTpPacket>>();
 
             _fsm = new PassiveStateMachine<IsoTpState, IsoTpEvent>(Name);
             var timeManager = new TimerManager(_fsm, _scheduler);
-            var sender = new ActionSender(_port.Tx.OnNext);
+            var sender = new ActionSender(_port.BeginSend);
             _stateManagers = new IStateManager[]
                              {
                                  new ReadyToReceiveStateManager(_fsm, timeManager),
@@ -79,11 +80,9 @@ namespace Communications.Protocols.IsoTP
             _rxFromBelowConnection =
                 _port.Rx
                      .SubscribeOn(_scheduler)
+                     .WaitForTransactionCompleated()
                      .Subscribe(f => _fsm.Fire(IsoTpEvent.FrameReceived, f));
-
-            Tx = Observer.Create<IsoTpPacket>(TransmitPacket,
-                                              e => _fsm.Fire(IsoTpEvent.Abort));
-
+            
             _fsm.Start();
         }
 
@@ -96,13 +95,6 @@ namespace Communications.Protocols.IsoTP
             _scheduler.Dispose();
         }
 
-        private void TransmitPacket(IsoTpPacket p)
-        {
-            var transaction = new TransmitTransaction(p.Data);
-            _scheduler.Schedule(() => _fsm.Fire(IsoTpEvent.TransmitRequest, transaction));
-            transaction.Wait();
-        }
-
         private void FsmOnTransitionExceptionThrown(object Sender, TransitionExceptionEventArgs<IsoTpState, IsoTpEvent> e)
         {
             //_rx.OnError(e.Exception);
@@ -113,7 +105,7 @@ namespace Communications.Protocols.IsoTP
         #region IPort Members
 
         /// <summary>Поток входящих сообщений</summary>
-        public IObservable<IsoTpPacket> Rx
+        public IObservable<ITransaction<IsoTpPacket>> Rx
         {
             get { return _rx; }
         }
@@ -123,6 +115,16 @@ namespace Communications.Protocols.IsoTP
 
         /// <summary>Опции порта</summary>
         public DataPortOptions<IsoTpPacket> Options { get; private set; }
+
+        /// <summary>Начинает отправку кадра</summary>
+        /// <param name="Frame">Кадр для отправки</param>
+        /// <returns>Транзакция передачи</returns>
+        public ITransaction<IsoTpPacket> BeginSend(IsoTpPacket Frame)
+        {
+            var transaction = new TransmitTransaction(Frame);
+            _scheduler.Schedule(() => _fsm.Fire(IsoTpEvent.TransmitRequest, transaction));
+            return transaction;
+        }
 
         #endregion
     }

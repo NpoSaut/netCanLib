@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
-using Communications.Protocols.IsoTP.Exceptions;
+using Communications.Transactions;
 
 namespace Communications.Protocols.IsoTP.Transactions
 {
-    public class ReceiveTransaction
+    public class ReceiveTransaction : LongTransactionBase<IsoTpPacket>
     {
         private readonly int _packetSize;
         private readonly MemoryStream _stream;
@@ -21,22 +21,17 @@ namespace Communications.Protocols.IsoTP.Transactions
         public int ExpectedCounter { get; private set; }
         public int BlockCounter { get; set; }
 
-        public bool Done
+        public override bool Done
         {
             get { return _writer.BaseStream.Position >= _packetSize; }
         }
+
+        protected override IsoTpPacket GetPayload() { return new IsoTpPacket(_stream.ToArray()); }
 
         public void PushDataSlice(byte[] Data)
         {
             _writer.Write(Data, 0, Math.Min(Data.Length, _packetSize - (int)_stream.Position));
             ExpectedCounter = 0x0f & (ExpectedCounter + 1);
-        }
-
-        public IsoTpPacket GetPacket()
-        {
-            if (!Done)
-                throw new IsoTpProtocolException("Попытались извлечь пакет из не законченной транзакции");
-            return new IsoTpPacket(_stream.ToArray());
         }
     }
 }
