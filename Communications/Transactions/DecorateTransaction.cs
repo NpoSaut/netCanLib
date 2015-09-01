@@ -17,7 +17,11 @@
             get { return _coreTransaction.Done; }
         }
 
-        public void Wait() { _coreTransaction.Wait(); }
+        public TUpper Wait()
+        {
+            _coreTransaction.Wait();
+            return Payload;
+        }
     }
 
     public static class DecorateTransactionHelper

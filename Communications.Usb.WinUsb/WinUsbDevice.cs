@@ -4,6 +4,7 @@ using System.Linq;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
+using System.Threading;
 using Communications;
 using Communications.Transactions;
 using Communications.Usb;
@@ -36,7 +37,7 @@ namespace ReactiveWinUsb
             _writePipe = _device.Pipes.First(p => p.IsOut);
             _writePipe.Policy.PipeTransferTimeout = 100;
 
-            _scheduler = new EventLoopScheduler();
+            _scheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = "WinUSB Thread" });
 
             Rx = Observable.Interval(TimeSpan.Zero, _scheduler)
                            .Select(x => Read())

@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Diagnostics;
+using System.Threading;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Syntax;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.Transactions;
 using Communications.Transactions;
-using log4net;
+using NLog;
 
 namespace Communications.Protocols.IsoTP.StateManagers
 {
@@ -17,8 +19,9 @@ namespace Communications.Protocols.IsoTP.StateManagers
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _stateMachine;
         private readonly Action<Exception> _throw;
         private readonly TimerManager _timerManager;
-        private log4net.ILog _log = LogManager.GetLogger(typeof (ReceiveStateManager));
         private ReceiveTransaction _receiveTransaction;
+
+        private readonly ILogger _logger = LogManager.GetLogger("ISO-TP");
 
         public ReceiveStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, TimerManager TimerManager, ISender Sender,
                                    IsoTpConnectionParameters ConnectionParameters,
@@ -94,6 +97,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
             whenReceiving
                 .On(IsoTpEvent.TransactionCompleated)
                     .Goto(IsoTpState.ReadyToReceive)
+                    .Execute(() => _logger.Debug("Commit! THREAD: {0}", Thread.CurrentThread.Name))
                     .Execute(() => _receiveTransaction.Commit())
                     .Execute(() => _receiveTransaction = null);
 

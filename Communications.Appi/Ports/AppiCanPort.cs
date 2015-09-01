@@ -5,6 +5,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Communications.Can;
 using Communications.Transactions;
+using NLog;
 
 namespace Communications.Appi.Ports
 {
@@ -13,6 +14,8 @@ namespace Communications.Appi.Ports
         private readonly IConnectableObservable<InstantaneousTransaction<CanFrame>> _rx;
         private readonly IDisposable _rxConnection;
         private readonly Subject<CanFrame> _tx;
+
+        private static ILogger _logger = LogManager.GetLogger("CAN");
 
         private readonly HashSet<int> filter = new HashSet<int>(new[] { 0x66a8, 0x66c8, 0x66e8 });
 
@@ -27,8 +30,8 @@ namespace Communications.Appi.Ports
 
             _rxConnection = _rx.Connect();
 
-            Rx.Where(f => filter.Contains(f.Descriptor)).Subscribe(f => Debug.Print("CAN:                                 <-- {0}", f));
-            _tx.Where(f => filter.Contains(f.Descriptor)).Subscribe(f => Debug.Print("CAN:                                 --> {0}", f));
+            Rx.Where(f => filter.Contains(f.Descriptor)).Subscribe(f => _logger.Debug("CAN:                                 <-- {0}", f));
+            _tx.Where(f => filter.Contains(f.Descriptor)).Subscribe(f => _logger.Debug("CAN:                                 --> {0}", f));
         }
 
         public IObservable<CanFrame> TxOutput
@@ -46,7 +49,11 @@ namespace Communications.Appi.Ports
             get { return _tx; }
         }
 
-        public ITransaction<CanFrame> BeginSend(CanFrame Frame) { throw new NotImplementedException(); }
+        public ITransaction<CanFrame> BeginSend(CanFrame Frame)
+        {
+            _tx.OnNext(Frame);
+            return new InstantaneousTransaction<CanFrame>(Frame);
+        }
 
         public CanPortOptions Options { get; private set; }
 

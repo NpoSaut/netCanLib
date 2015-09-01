@@ -5,6 +5,6 @@
     {
         TPayload Payload { get; }
         bool Done { get; }
-        void Wait();
+        TPayload Wait();
     }
 }

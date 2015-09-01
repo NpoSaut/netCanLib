@@ -79,7 +79,7 @@ namespace Communications.Protocols.IsoTP
 
             _rxFromBelowConnection =
                 _port.Rx
-                     .SubscribeOn(_scheduler)
+                     .ObserveOn(_scheduler)
                      .WaitForTransactionCompleated()
                      .Subscribe(f => _fsm.Fire(IsoTpEvent.FrameReceived, f));
             

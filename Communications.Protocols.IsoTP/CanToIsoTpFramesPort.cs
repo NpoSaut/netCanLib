@@ -6,11 +6,13 @@ using Communications.Can;
 using Communications.PortHelpers;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Transactions;
+using NLog;
 
 namespace Communications.Protocols.IsoTP
 {
     internal class CanToIsoTpFramesPort : IIsoTpFramesPort
     {
+        private static ILogger _logger = LogManager.GetLogger("ISO-TP Lower");
         private readonly ICanPort _canPort;
         private readonly ushort _transmitDescriptor;
         private readonly ushort _receiveDescriptor;
@@ -27,6 +29,7 @@ namespace Communications.Protocols.IsoTP
                                                            .WaitForTransactionCompleated()
                                                            .Where(f => f.Descriptor == ReceiveDescriptor)
                                                            .Select(f => IsoTpFrame.ParsePacket(f.Data))
+                                                           .Do(f => _logger.Trace("ISO-TP:              <-- {0}", f))
                                                            .Select(f => new InstantaneousTransaction<IsoTpFrame>(f))
                                                            .Publish();
             Rx = rx;
@@ -49,6 +52,7 @@ namespace Communications.Protocols.IsoTP
         /// <returns>Транзакция передачи</returns>
         public ITransaction<IsoTpFrame> BeginSend(IsoTpFrame Frame)
         {
+            _logger.Trace("ISO-TP:              --> {0}", Frame);
             var canTransmitTransaction = _canPort.BeginSend(Frame.GetCanFrame(_transmitDescriptor));
             return new DecorateTransaction<IsoTpFrame, CanFrame>(Frame, canTransmitTransaction);
         }

@@ -10,6 +10,6 @@
             get { return true; }
         }
 
-        public void Wait() { }
+        public TPayload Wait() { return Payload; }
     }
 }

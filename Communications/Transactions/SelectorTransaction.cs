@@ -25,6 +25,10 @@ namespace Communications.Transactions
             get { return _sourceTransaction.Done; }
         }
 
-        public void Wait() { _sourceTransaction.Wait(); }
+        public TOut Wait()
+        {
+            _sourceTransaction.Wait();
+            return Payload;
+        }
     }
 }
