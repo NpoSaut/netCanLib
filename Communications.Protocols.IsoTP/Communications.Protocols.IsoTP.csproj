@@ -109,11 +109,15 @@
     <Compile Include="StateManagers\ReadyToReceiveStateManager.cs" />
     <Compile Include="StateManagers\ReceiveStateManager.cs" />
     <Compile Include="StateManagers\SendStateManager.cs" />
-    <Compile Include="StateManagers\TimerManager.cs" />
+    <Compile Include="StateManagers\TimeoutReason.cs" />
     <Compile Include="Transactions\ReceiveTransaction.cs" />
     <Compile Include="Transactions\TransmitTransaction.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Communications.Appi\Communications.Appi.csproj">
+      <Project>{5A812723-E98B-4B82-AE7B-8E2747D8541F}</Project>
+      <Name>Communications.Appi</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Communications\Communications.csproj">
       <Project>{6C5B1ECA-5187-4F63-8CF1-C17DF50D0F65}</Project>
       <Name>Communications</Name>

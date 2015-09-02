@@ -1,6 +1,7 @@
 ﻿using System;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Syntax;
+using Communications.Appi.Timeouts;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.Transactions;
@@ -13,15 +14,15 @@ namespace Communications.Protocols.IsoTP.StateManagers
         private readonly ISender _sender;
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _stateMachine;
         private readonly int _sublayerFrameCapacity;
-        private readonly TimerManager _timerManager;
+        private readonly ITimeoutManager<TimeoutReason> _timeoutManager;
 
         private TransmitTransaction _transmitTransaction;
 
-        public SendStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, TimerManager TimerManager, IsoTpConnectionParameters ConnectionParameters,
+        public SendStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, ITimeoutManager<TimeoutReason> TimeoutManager, IsoTpConnectionParameters ConnectionParameters,
                                 ISender Sender, int SublayerFrameCapacity)
         {
             _stateMachine = StateMachine;
-            _timerManager = TimerManager;
+            _timeoutManager = TimeoutManager;
             _connectionParameters = ConnectionParameters;
             _sender = Sender;
             _sublayerFrameCapacity = SublayerFrameCapacity;
@@ -35,18 +36,18 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .Otherwise()
                         .Goto(IsoTpState.Transmiting)
                         .Execute<TransmitTransaction>(BeginTransmitTransaction)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.FirstResponseTimeout, TimeoutReason.WaitingForFirstFlowControl));
+                        .Execute(() => _timeoutManager.CockTimer(_connectionParameters.FirstResponseTimeout, TimeoutReason.WaitingForFirstFlowControl));
 
             IEntryActionSyntax<IsoTpState, IsoTpEvent> whenTransmiting = StateMachine.In(IsoTpState.Transmiting);
 
             whenTransmiting
                 .On(IsoTpEvent.FrameReceived)
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
-                .Execute(() => _timerManager.DecockTimer())
+                .Execute(() => _timeoutManager.DecockTimer())
                 .Execute<FlowControlFrame>(SendNextDataPortion)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
+                .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
+                .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
                 .Goto(IsoTpState.ReadyToReceive)
                 .Execute(() => Throw(new IsoTpTransactionAbortedException()))
@@ -56,7 +57,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
             whenTransmiting
                 .On(IsoTpEvent.Timeout)
                 .Goto(IsoTpState.ReadyToReceive)
-                .Execute(() => Throw(new IsoTpTimeoutException()));
+                .Execute<TimeoutReason>(r => Throw(new IsoTpTimeoutException(r)));
 
             whenTransmiting
                 .On(IsoTpEvent.Abort)

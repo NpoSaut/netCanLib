@@ -24,8 +24,10 @@ namespace Communications.Transactions
         {
             get
             {
-                if (!Done)
+                if (!_resetEvent.IsSet)
                     throw new ApplicationException("Транзакция ещё не была завершена");
+                if (_transactionException != null)
+                    throw _transactionException;
                 return _payload.Value;
             }
         }
@@ -37,10 +39,7 @@ namespace Communications.Transactions
             _logger.Debug("Ожидаем завершения транзакции {0}", _transactinId);
             _resetEvent.Wait();
             _logger.Debug("Дождались завершения транзакции {0}: {1}", _transactinId, Payload);
-
-            if (_transactionException == null)
-                return Payload;
-            throw _transactionException;
+            return Payload;
         }
 
         protected abstract TPayload GetPayload();

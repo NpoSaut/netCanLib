@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Threading;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Syntax;
+using Communications.Appi.Timeouts;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.Transactions;
@@ -18,17 +19,17 @@ namespace Communications.Protocols.IsoTP.StateManagers
         private readonly ISender _sender;
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _stateMachine;
         private readonly Action<Exception> _throw;
-        private readonly TimerManager _timerManager;
+        private readonly ITimeoutManager<TimeoutReason> _timeoutManager;
         private ReceiveTransaction _receiveTransaction;
 
         private readonly ILogger _logger = LogManager.GetLogger("ISO-TP");
 
-        public ReceiveStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, TimerManager TimerManager, ISender Sender,
+        public ReceiveStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, ITimeoutManager<TimeoutReason> TimeoutManager, ISender Sender,
                                    IsoTpConnectionParameters ConnectionParameters,
                                    Action<ITransaction<IsoTpPacket>> EmitAction, Action<Exception> ThrowAction)
         {
             _stateMachine = StateMachine;
-            _timerManager = TimerManager;
+            _timeoutManager = TimeoutManager;
             _sender = Sender;
             _connectionParameters = ConnectionParameters;
             _emit = EmitAction;
@@ -44,7 +45,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .If<IsoTpFrame>(f => f is FirstFrame)
                         .Goto(IsoTpState.Receiving)
                         .Execute<FirstFrame>(WhenFirstFrameComes)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
+                        .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
                                                                TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControl));
 
             IEntryActionSyntax<IsoTpState, IsoTpEvent> whenReceiving = StateMachine.In(IsoTpState.Receiving);
@@ -54,7 +55,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                     // Правильный пакет с данными
                     .If<IsoTpFrame>(IsExpectedConsecutiveData)
                         .Execute<ConsecutiveFrame>(WhenConsecutiveDataComes)
-                        .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
+                        .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
                     // Другой пакет с данными
                     .If<IsoTpFrame>(f => f is ConsecutiveFrame)
                         .Goto(IsoTpState.ReadyToReceive)
@@ -73,7 +74,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .Goto(IsoTpState.Receiving)
                 .Execute(() => Throw(new IsoTpTransactionLostException()))
                 .Execute<FirstFrame>(WhenFirstFrameComes)
-                .Execute(() => _timerManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
+                .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
                                                        TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControlInInterruptingTransaction));
 
             whenReceiving
@@ -87,7 +88,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .On(IsoTpEvent.Timeout)
                 .Goto(IsoTpState.ReadyToReceive)
                 .Execute(AbortTransaction)
-                .Execute(() => Throw(new IsoTpTimeoutException()));
+                .Execute<TimeoutReason>(r => Throw(new IsoTpTimeoutException(r)));
 
             whenReceiving
                 .On(IsoTpEvent.Abort)

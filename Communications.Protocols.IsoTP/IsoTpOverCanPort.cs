@@ -7,6 +7,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Machine.Events;
+using Communications.Appi.Timeouts;
 using Communications.Can;
 using Communications.PortHelpers;
 using Communications.Protocols.IsoTP.StateManagers;
@@ -60,19 +61,19 @@ namespace Communications.Protocols.IsoTP
             _rx = new Subject<ITransaction<IsoTpPacket>>();
 
             _fsm = new PassiveStateMachine<IsoTpState, IsoTpEvent>(Name);
-            var timeManager = new TimerManager(_fsm, _scheduler);
+            var timeoutManager = new SchedulerTimeoutManager<TimeoutReason>("ISO-TP", Reason => _fsm.Fire(IsoTpEvent.Timeout, Reason), _scheduler);
             var sender = new ActionSender(_port.BeginSend);
             _stateManagers = new IStateManager[]
                              {
-                                 new ReadyToReceiveStateManager(_fsm, timeManager),
-                                 new ReceiveStateManager(_fsm, timeManager, sender, _connectionParameters,
+                                 new ReadyToReceiveStateManager(_fsm, timeoutManager),
+                                 new ReceiveStateManager(_fsm, timeoutManager, sender, _connectionParameters,
                                                          p => Task.Factory.StartNew(() => _rx.OnNext(p)),
                                                          e => Task.Factory.StartNew(() => _rx.OnError(e))),
-                                 new SendStateManager(_fsm, timeManager, _connectionParameters, sender, _port.Options.SublayerFrameCapacity)
+                                 new SendStateManager(_fsm, timeoutManager, _connectionParameters, sender, _port.Options.SublayerFrameCapacity)
                              };
 
             _fsm.In(IsoTpState.ReadyToReceive)
-                .ExecuteOnEntry(timeManager.DecockTimer);
+                .ExecuteOnEntry(timeoutManager.DecockTimer);
 
             _fsm.Initialize(IsoTpState.ReadyToReceive);
             _fsm.TransitionExceptionThrown += FsmOnTransitionExceptionThrown;
