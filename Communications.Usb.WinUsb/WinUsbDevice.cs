@@ -21,6 +21,7 @@ namespace ReactiveWinUsb
         private readonly ConcurrentBag<IDisposable> _senders = new ConcurrentBag<IDisposable>();
         private readonly Subject<UsbFrame> _tx;
         private readonly USBPipe _writePipe;
+        private readonly IDisposable _rxConnection;
 
         public WinUsbDevice(USBDevice Device, int BufferSize)
         {
@@ -39,9 +40,12 @@ namespace ReactiveWinUsb
 
             _scheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = "WinUSB Thread" });
 
-            Rx = Observable.Interval(TimeSpan.Zero, _scheduler)
+            var rx = Observable.Interval(TimeSpan.Zero, _scheduler)
                            .Select(x => Read())
-                           .Select(frame => new InstantaneousTransaction<UsbFrame>(frame));
+                           .Select(frame => new InstantaneousTransaction<UsbFrame>(frame))
+                           .Publish();
+            Rx = rx;
+            _rxConnection = rx.Connect();
 
             _tx = new Subject<UsbFrame>();
             _tx.SubscribeOn(_scheduler).Subscribe(Write);
@@ -72,6 +76,7 @@ namespace ReactiveWinUsb
         /// </summary>
         public void Dispose()
         {
+            _rxConnection.Dispose();
             _scheduler.Schedule(() =>
                                 {
                                     _scheduler.Dispose();
