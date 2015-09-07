@@ -15,7 +15,7 @@ namespace Communications.Appi.Ports
         private readonly IDisposable _rxConnection;
         private readonly Subject<CanFrame> _tx;
 
-        private static ILogger _logger = LogManager.GetLogger("CAN");
+        private static readonly ILogger _logger = LogManager.GetLogger("CAN");
 
         private readonly HashSet<int> filter = new HashSet<int>(new[] { 0x66a8, 0x66c8, 0x66e8 });
 

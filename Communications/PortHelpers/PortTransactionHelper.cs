@@ -12,9 +12,16 @@ namespace Communications.PortHelpers
                          .Select(transaction => transaction.Payload);
         }
 
-        public static IObservable<ITransaction<TOut>> SelectTransaction<TIn, TOut>(this IObservable<ITransaction<TIn>> Source, Func<TIn, TOut> ResultSelector)
+        public static IObservable<ITransaction<TOut>> SelectTransaction<TIn, TOut>(this IObservable<ITransaction<TIn>> Source,
+                                                                                   Func<TIn, TOut> ResultSelector)
         {
-            return Source.Select(transaction => (ITransaction<TOut>)new SelectorTransaction<TIn, TOut>(transaction, ResultSelector));
+            return SelectTransaction<TIn, TOut>(Source, ResultSelector, null);
+        }
+
+        public static IObservable<ITransaction<TOut>> SelectTransaction<TIn, TOut>(this IObservable<ITransaction<TIn>> Source,
+                                                                                   Func<TIn, TOut> ResultSelector, Func<Exception, Exception> ExceptionSelector)
+        {
+            return Source.Select(transaction => (ITransaction<TOut>)new SelectorTransaction<TIn, TOut>(transaction, ResultSelector, ExceptionSelector));
         }
     }
 }

@@ -2,17 +2,33 @@
 
 namespace Communications.Transactions
 {
-    public struct SelectorTransaction<TIn, TOut> : ITransaction<TOut>
+    public class SelectorTransaction<TIn, TOut> : ITransaction<TOut>
     {
+        private readonly Func<Exception, Exception> _exceptionSelector;
         private readonly Lazy<TOut> _payload;
         private readonly Func<TIn, TOut> _resultSelector;
         private readonly ITransaction<TIn> _sourceTransaction;
 
-        public SelectorTransaction(ITransaction<TIn> SourceTransaction, Func<TIn, TOut> ResultSelector)
+        public SelectorTransaction(ITransaction<TIn> SourceTransaction, Func<TIn, TOut> ResultSelector, Func<Exception, Exception> ExceptionSelector)
         {
             _sourceTransaction = SourceTransaction;
             _resultSelector = ResultSelector;
-            _payload = new Lazy<TOut>(() => ResultSelector(SourceTransaction.Payload));
+            _exceptionSelector = ExceptionSelector;
+            _payload = new Lazy<TOut>(GetPayload);
+        }
+
+        private TOut GetPayload()
+        {
+            try
+            {
+                return _resultSelector(_sourceTransaction.Payload);
+            }
+            catch (Exception e)
+            {
+                if (_exceptionSelector != null)
+                    throw _exceptionSelector(e);
+                throw;
+            }
         }
 
         public TOut Payload
@@ -27,8 +43,17 @@ namespace Communications.Transactions
 
         public TOut Wait()
         {
-            _sourceTransaction.Wait();
-            return Payload;
+            try
+            {
+                _sourceTransaction.Wait();
+                return Payload;
+            }
+            catch (Exception e)
+            {
+                if (_exceptionSelector != null)
+                    throw _exceptionSelector(e);
+                throw;
+            }
         }
     }
 }
