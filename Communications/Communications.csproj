@@ -89,6 +89,7 @@
     <Compile Include="IPort.cs" />
     <Compile Include="PortHelpers\PortTransactionHelper.cs" />
     <Compile Include="Transactions\DecorateTransaction.cs" />
+    <Compile Include="Transactions\ExceptionTransaction.cs" />
     <Compile Include="Transactions\InstantaneousTransaction.cs" />
     <Compile Include="Transactions\ITransaction.cs" />
     <Compile Include="LambdaLoopbackInspector.cs" />

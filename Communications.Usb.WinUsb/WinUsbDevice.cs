@@ -17,11 +17,11 @@ namespace ReactiveWinUsb
         private readonly byte[] _buffer;
         private readonly USBDevice _device;
         private readonly USBPipe _readPipe;
+        private readonly IDisposable _rxConnection;
         private readonly EventLoopScheduler _scheduler;
         private readonly ConcurrentBag<IDisposable> _senders = new ConcurrentBag<IDisposable>();
         private readonly Subject<UsbFrame> _tx;
         private readonly USBPipe _writePipe;
-        private readonly IDisposable _rxConnection;
 
         public WinUsbDevice(USBDevice Device, int BufferSize)
         {
@@ -40,10 +40,9 @@ namespace ReactiveWinUsb
 
             _scheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = "WinUSB Thread" });
 
-            var rx = Observable.Interval(TimeSpan.Zero, _scheduler)
-                           .Select(x => Read())
-                           .Select(frame => new InstantaneousTransaction<UsbFrame>(frame))
-                           .Publish();
+            IConnectableObservable<ITransaction<UsbFrame>> rx = Observable.Interval(TimeSpan.Zero, _scheduler)
+                                                                          .Select(x => Read())
+                                                                          .Publish();
             Rx = rx;
             _rxConnection = rx.Connect();
 
@@ -88,12 +87,19 @@ namespace ReactiveWinUsb
 
         private void Write(UsbFrame UsbFrame) { _writePipe.Write(UsbFrame.Data); }
 
-        private UsbFrame Read()
+        private ITransaction<UsbFrame> Read()
         {
-            int readSize = _readPipe.Read(_buffer);
-            var newBuffer = new byte[readSize];
-            Buffer.BlockCopy(_buffer, 0, newBuffer, 0, readSize);
-            return new UsbFrame(newBuffer);
+            try
+            {
+                int readSize = _readPipe.Read(_buffer);
+                var newBuffer = new byte[readSize];
+                Buffer.BlockCopy(_buffer, 0, newBuffer, 0, readSize);
+                return new InstantaneousTransaction<UsbFrame>(new UsbFrame(newBuffer));
+            }
+            catch (Exception e)
+            {
+                return new ExceptionTransaction<UsbFrame>(e);
+            }
         }
     }
 }

@@ -15,7 +15,8 @@ using Buffer = Communications.Appi.Buffers.Buffer;
 
 namespace Communications.Appi.Devices
 {
-    public abstract class AppiDevice<TLineKey> : IDisposable where TLineKey : struct, IConvertible
+    public abstract class AppiDevice<TLineKey> : IDisposable
+        where TLineKey : struct, IConvertible
     {
         private readonly IDisposable _buffersStreamConnection;
         private readonly IAppiBufferDecoder _decoder;
