@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SocketCanWorking.Lib
+namespace Communications.SocketCan.Lib
 {
     /// <summary>‘лаги в структуре передачи CAN-кадра из SocketCan библиотеки.</summary>
     [Flags]

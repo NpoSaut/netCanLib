@@ -1,6 +1,6 @@
-﻿using SocketCanWorking.Lib;
+﻿using Communications.SocketCan.Lib;
 
-namespace SocketCanWorking.LinuxSockets
+namespace Communications.SocketCan.LinuxSockets
 {
     /// <summary>Производит объекты типа <see cref="LinuxSocket" />, работающие через указанный интерфейс
     ///     <see cref="ISocketCanLibFacade" /> к библиотеке для работы с SocketCan</summary>

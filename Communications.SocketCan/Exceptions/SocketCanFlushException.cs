@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace SocketCanWorking.Exceptions
+namespace Communications.SocketCan.Exceptions
 {
     /// <Summary>Ошибка при отчистке буфера Linux SocketCan</Summary>
     [Serializable]

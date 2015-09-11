@@ -21,7 +21,7 @@ namespace Communications.Protocols.IsoTP.Transactions
         public int ExpectedCounter { get; private set; }
         public int BlockCounter { get; set; }
 
-        public override bool Done
+        public bool AllDataReceived
         {
             get { return _writer.BaseStream.Position >= _packetSize; }
         }

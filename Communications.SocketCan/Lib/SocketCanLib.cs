@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace SocketCanWorking.Lib
+namespace Communications.SocketCan.Lib
 {
     /// <summary>Оболочка над функциями, экспортируемыми из SocketCan.</summary>
     public static unsafe class SocketCanLib

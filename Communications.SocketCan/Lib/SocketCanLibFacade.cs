@@ -1,17 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using Communications.Can;
-using SocketCanWorking.Exceptions;
+using Communications.SocketCan.Exceptions;
 
-namespace SocketCanWorking.Lib
+namespace Communications.SocketCan.Lib
 {
     /// <summary>Используется для того, чтобы можно было уйти от статических методов, использованных в библиотеке SocketCanLib</summary>
     public unsafe class SocketCanLibFacade : ISocketCanLibFacade
     {
-        public const int ReceiveBufferLength = 16;
-        private static readonly Encoder Encoder = Encoding.ASCII.GetEncoder();
+        private static readonly Encoder _encoder = Encoding.ASCII.GetEncoder();
 
         /// <summary>Открывает сокет.</summary>
         /// <param name="InterfaceName">Имя сокета</param>
@@ -33,31 +30,27 @@ namespace SocketCanWorking.Lib
         /// <param name="SocketNumber">Номер сокета для отправки.</param>
         /// <param name="Frames">Фрейм для отправки.</param>
         /// <returns>Количество сообщений, поставленых в буфер</returns>
-        public int Write(int SocketNumber, IList<CanFrame> Frames)
+        public int Write(int SocketNumber, CanFrame Frames)
         {
-            SocketCanFdFrame[] framesBuffer = Frames.Select(f => new SocketCanFdFrame(f)).ToArray();
-            fixed (SocketCanFdFrame* framesBufferPtr = framesBuffer)
-            {
-                int res = SocketCanLib.SocketWrite(SocketNumber, framesBufferPtr, framesBuffer.Length);
-                if (res >= 0) return res;
-                else throw new SocketCanWriteException(-res);
-            }
+            var xx = new SocketCanFdFrame(Frames);
+            SocketCanFdFrame* framesBufferPtr = &xx;
+            int res = SocketCanLib.SocketWrite(SocketNumber, framesBufferPtr, 1);
+            if (res >= 0) return res;
+            throw new SocketCanWriteException(-res);
         }
 
         /// <summary>Пытается прочитать фреймы из сокета.</summary>
         /// <param name="SocketNumber">Номер сокета для чтения.</param>
         /// <param name="Timeout">Таймаут ожидания получения сообщения в случае, если во входящем буфере не оказалось сообщений.</param>
         /// <returns>Список фреймов, прочитанных из указанного сокета.</returns>
-        public IList<CanFrame> Read(int SocketNumber, TimeSpan Timeout)
+        public CanFrame Read(int SocketNumber, TimeSpan Timeout)
         {
-            var bags = new FrameBag[ReceiveBufferLength];
             int result;
-            fixed (FrameBag* bagsPtr = bags)
-            {
-                result = SocketCanLib.SocketRead(SocketNumber, bagsPtr, ReceiveBufferLength, (int)Timeout.TotalMilliseconds);
-            }
+            var bag = new FrameBag();
+            FrameBag* bagPtr = &bag;
+            result = SocketCanLib.SocketRead(SocketNumber, bagPtr, 1, (int)Timeout.TotalMilliseconds);
 
-            if (result >= 0) return bags.Take(result).Select(GetCanFrame).ToList();
+            if (result >= 0) return GetCanFrame(bag);
             throw new SocketCanReadException(-result);
         }
 
@@ -72,7 +65,7 @@ namespace SocketCanWorking.Lib
         private static byte[] GetCString(String str)
         {
             var cString = new byte[str.Length + 1];
-            Encoder.GetBytes(str.ToCharArray(), 0, str.Length, cString, 0, true);
+            _encoder.GetBytes(str.ToCharArray(), 0, str.Length, cString, 0, true);
             cString[cString.Length - 1] = (byte)char.MinValue;
             return cString;
         }

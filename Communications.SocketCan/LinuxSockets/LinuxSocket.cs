@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using Communications.Can;
-using SocketCanWorking.Lib;
+using Communications.SocketCan.Lib;
 
-namespace SocketCanWorking.LinuxSockets
+namespace Communications.SocketCan.LinuxSockets
 {
     /// <summary>Linux Can сокет</summary>
     /// <remarks>Реализует открытие сокета, получение и хранение его номера, а так же запись и чтение по своему номеру сокета</remarks>
@@ -33,14 +32,14 @@ namespace SocketCanWorking.LinuxSockets
         public void FlushInBuffer() { _libFacade.FlushInBuffer(_socketNumber); }
 
         /// <summary>Ставит сообщения в очередь на отправку в SocketCan</summary>
-        /// <param name="Frames">Сообщения для отправки</param>
+        /// <param name="Frame">Сообщения для отправки</param>
         /// <returns>Количество сообщений, поставленых в буфер</returns>
-        public int Send(IList<CanFrame> Frames) { return _libFacade.Write(_socketNumber, Frames); }
+        public int Send(CanFrame Frame) { return _libFacade.Write(_socketNumber, Frame); }
 
         /// <summary>Выполняет чтение из сокета</summary>
         /// <param name="Timeout">Таймаут операции чтения</param>
         /// <returns>Сообщения, оказавшиеся в буфере чтения на момент вызова процедуры, либо пришедшие за время, указанное в
         ///     <paramref name="Timeout" /> после её вызова.</returns>
-        public IList<CanFrame> Receive(TimeSpan Timeout) { return _libFacade.Read(_socketNumber, Timeout); }
+        public CanFrame Receive(TimeSpan Timeout) { return _libFacade.Read(_socketNumber, Timeout); }
     }
 }

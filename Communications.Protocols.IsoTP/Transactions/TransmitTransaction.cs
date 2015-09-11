@@ -18,7 +18,7 @@ namespace Communications.Protocols.IsoTP.Transactions
             Index = 1;
         }
 
-        public override bool Done
+        public bool AllDataSent
         {
             get { return _stream.Position >= _stream.Length; }
         }
@@ -36,6 +36,6 @@ namespace Communications.Protocols.IsoTP.Transactions
 
         public void IncreaseIndex() { Index = (byte)(Index + 1); }
 
-        public override string ToString() { return string.Format("ISO-TP Transaction [Done: {0}, Index: {1}, Length: {2} Bytes]", Done, Index, Length); }
+        public override string ToString() { return string.Format("ISO-TP Transaction [Done: {0}, Index: {1}, Length: {2} Bytes]", AllDataSent, Index, Length); }
     }
 }

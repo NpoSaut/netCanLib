@@ -141,7 +141,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 _receiveTransaction.BlockCounter = _connectionParameters.BlockSize;
             }
 
-            if (_receiveTransaction.Done)
+            if (_receiveTransaction.AllDataReceived)
                 _stateMachine.Fire(IsoTpEvent.TransactionCompleated);
         }
 

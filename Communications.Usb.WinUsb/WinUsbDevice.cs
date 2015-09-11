@@ -6,6 +6,7 @@ using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
 using Communications;
+using Communications.PortHelpers;
 using Communications.Transactions;
 using Communications.Usb;
 using MadWizard.WinUSBNet;
@@ -41,7 +42,7 @@ namespace ReactiveWinUsb
             _scheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = "WinUSB Thread" });
 
             IConnectableObservable<ITransaction<UsbFrame>> rx = Observable.Interval(TimeSpan.Zero, _scheduler)
-                                                                          .Select(x => Read())
+                                                                          .SelectTransaction(x => Read(), e => e)
                                                                           .Publish();
             Rx = rx;
             _rxConnection = rx.Connect();
@@ -87,19 +88,12 @@ namespace ReactiveWinUsb
 
         private void Write(UsbFrame UsbFrame) { _writePipe.Write(UsbFrame.Data); }
 
-        private ITransaction<UsbFrame> Read()
+        private UsbFrame Read()
         {
-            try
-            {
-                int readSize = _readPipe.Read(_buffer);
-                var newBuffer = new byte[readSize];
-                Buffer.BlockCopy(_buffer, 0, newBuffer, 0, readSize);
-                return new InstantaneousTransaction<UsbFrame>(new UsbFrame(newBuffer));
-            }
-            catch (Exception e)
-            {
-                return new ExceptionTransaction<UsbFrame>(e);
-            }
+            int readSize = _readPipe.Read(_buffer);
+            var newBuffer = new byte[readSize];
+            Buffer.BlockCopy(_buffer, 0, newBuffer, 0, readSize);
+            return new UsbFrame(newBuffer);
         }
     }
 }

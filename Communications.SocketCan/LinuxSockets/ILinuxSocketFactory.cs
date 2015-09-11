@@ -1,4 +1,4 @@
-﻿namespace SocketCanWorking.LinuxSockets
+﻿namespace Communications.SocketCan.LinuxSockets
 {
     /// <summary>Фабрика по производству объектов типа <see cref="ILinuxSocket" />
     /// </summary>

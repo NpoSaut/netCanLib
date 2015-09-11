@@ -1,7 +1,7 @@
 using System;
 using System.Runtime.InteropServices;
 
-namespace SocketCanWorking.Lib
+namespace Communications.SocketCan.Lib
 {
     /// <summary>Сишная структура TimeVal.</summary>
     [StructLayout(LayoutKind.Sequential, Pack = 1)]

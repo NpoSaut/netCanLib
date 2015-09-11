@@ -30,7 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{D0BF03
 		.nuget\NuGet.targets = .nuget\NuGet.targets
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SocketCanWorking", "SocketCanWorking\SocketCanWorking.csproj", "{088C3CCA-D0A5-423D-974E-CDFDCF4051E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Communications.SocketCan", "Communications.SocketCan\Communications.SocketCan.csproj", "{088C3CCA-D0A5-423D-974E-CDFDCF4051E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

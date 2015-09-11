@@ -32,7 +32,10 @@ namespace Communications.Transactions
             }
         }
 
-        public abstract bool Done { get; }
+        public bool Done
+        {
+            get { return _resetEvent.IsSet; }
+        }
 
         public TPayload Wait()
         {

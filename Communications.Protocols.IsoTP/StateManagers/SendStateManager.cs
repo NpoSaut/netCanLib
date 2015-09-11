@@ -102,7 +102,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 byte[] payload = _transmitTransaction.GetDataSlice(ConsecutiveFrame.GetPayload(_sublayerFrameCapacity));
                 _sender.Send(new ConsecutiveFrame(payload, _transmitTransaction.Index));
                 _transmitTransaction.IncreaseIndex();
-                if (_transmitTransaction.Done)
+                if (_transmitTransaction.AllDataSent)
                 {
                     _stateMachine.Fire(IsoTpEvent.TransactionCompleated);
                     return;

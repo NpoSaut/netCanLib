@@ -38,7 +38,7 @@ namespace Communications.Can
         /// <summary>
         /// Показывает, является ли данный пакет Loopback-пакетом
         /// </summary>
-        public bool IsLoopback { get; private set; }
+        public bool IsLoopback { get; set; }
 
         /// <summary>
         /// Время получения или время создания фрейма

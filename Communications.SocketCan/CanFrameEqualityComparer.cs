@@ -2,9 +2,9 @@
 using System.Linq;
 using Communications.Can;
 
-namespace SocketCanWorking.ReadersWriters
+namespace Communications.SocketCan
 {
-    internal class CanFrameComparer : IEqualityComparer<CanFrame>
+    internal class CanFrameEqualityComparer : IEqualityComparer<CanFrame>
     {
         public bool Equals(CanFrame x, CanFrame y)
         {

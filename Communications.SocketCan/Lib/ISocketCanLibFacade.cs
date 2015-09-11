@@ -1,9 +1,8 @@
 using System;
-using System.Collections.Generic;
 using Communications.Can;
-using SocketCanWorking.Exceptions;
+using Communications.SocketCan.Exceptions;
 
-namespace SocketCanWorking.Lib
+namespace Communications.SocketCan.Lib
 {
     /// <summary>Обёртка над библиотечными функциями, скрывающая подробности вызова c-шных функций и работу с указателями</summary>
     public interface ISocketCanLibFacade
@@ -23,13 +22,13 @@ namespace SocketCanWorking.Lib
         /// <param name="SocketNumber">Номер сокета для отправки.</param>
         /// <param name="Frames">Фрейм для отправки.</param>
         /// <returns>Количество сообщений, поставленых в буфер</returns>
-        int Write(int SocketNumber, IList<CanFrame> Frames);
+        int Write(int SocketNumber, CanFrame Frames);
 
         /// <summary>Пытается прочитать фреймы из сокета.</summary>
         /// <param name="SocketNumber">Номер сокета для чтения.</param>
         /// <param name="Timeout">Таймаут ожидания получения сообщения в случае, если во входящем буфере не оказалось сообщений.</param>
         /// <returns>Список фреймов, прочитанных из указанного сокета.</returns>
-        IList<CanFrame> Read(int SocketNumber, TimeSpan Timeout);
+        CanFrame Read(int SocketNumber, TimeSpan Timeout);
 
         /// <summary>Выполняет отчистку буфера входящих сообщений для указанного сокета</summary>
         /// <param name="SocketNumber">Номер сокета, в котором требуется отчистить буфер входящих сообщений</param>

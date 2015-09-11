@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Runtime.Serialization;
 
-namespace SocketCanWorking.Exceptions
+namespace Communications.SocketCan.Exceptions
 {
     /// <Summary>Исключение при работе с SocketCan.</Summary>
     [Serializable]

@@ -2,7 +2,7 @@ using System;
 using System.Runtime.InteropServices;
 using Communications.Can;
 
-namespace SocketCanWorking.Lib
+namespace Communications.SocketCan.Lib
 {
     /// <summary>װכאדט CanFd פנוילא.</summary>
     [Flags]
