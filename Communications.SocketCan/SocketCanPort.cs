@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
@@ -19,7 +20,7 @@ namespace Communications.SocketCan
         private readonly ILinuxSocket _socketIn;
         private readonly ILinuxSocket _socketOut;
 
-        private readonly IDictionary<CanFrame, SocketCanBlockedTransmitTransaction> _transactions;
+        private readonly ConcurrentDictionary<CanFrame, SocketCanBlockedTransmitTransaction> _transactions;
 
         public SocketCanPort(string Name, ILinuxSocket SocketIn, ILinuxSocket SocketOut)
         {
@@ -27,7 +28,7 @@ namespace Communications.SocketCan
             _socketOut = SocketOut;
             _scheduler = new EventLoopScheduler(ts => new Thread(ts) { Name = string.Format("{0} socket thread", Name) });
 
-            _transactions = new Dictionary<CanFrame, SocketCanBlockedTransmitTransaction>(new CanFrameEqualityComparer());
+            _transactions = new ConcurrentDictionary<CanFrame, SocketCanBlockedTransmitTransaction>(new CanFrameEqualityComparer());
 
             IConnectableObservable<ITransaction<CanFrame>> rx =
                 Observable.Interval(TimeSpan.Zero, _scheduler)
@@ -62,9 +63,8 @@ namespace Communications.SocketCan
         /// <returns>Транзакция передачи</returns>
         public ITransaction<CanFrame> BeginSend(CanFrame Frame)
         {
-            var transaction = new SocketCanBlockedTransmitTransaction(Frame);
-            _transactions.Add(Frame, transaction);
-			_socketOut.Send(Frame);
+            var transaction = _transactions.GetOrAdd(Frame, f => new SocketCanBlockedTransmitTransaction(f));
+            _socketOut.Send(Frame);
             return transaction;
         }
 
