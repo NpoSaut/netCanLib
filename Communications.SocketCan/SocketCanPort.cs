@@ -64,7 +64,7 @@ namespace Communications.SocketCan
         {
             var transaction = new SocketCanBlockedTransmitTransaction(Frame);
             _transactions.Add(Frame, transaction);
-
+			_socketOut.Send(Frame);
             return transaction;
         }
 
