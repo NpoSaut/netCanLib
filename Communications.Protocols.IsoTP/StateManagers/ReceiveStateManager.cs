@@ -87,6 +87,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
             whenReceiving
                 .On(IsoTpEvent.Timeout)
                 .Goto(IsoTpState.ReadyToReceive)
+                .Execute(() => _logger.Error("Таймаут вышел. Последний принятый индекс: {0}", _receiveTransaction.ExpectedCounter - 1))
                 .Execute(AbortTransaction)
                 .Execute<TimeoutReason>(r => Throw(new IsoTpTimeoutException(r)));
 
