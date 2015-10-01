@@ -13,16 +13,16 @@ namespace Communications.Protocols.IsoTP
         }
 
         /// <summary>Размер блока при передаче длинных пакетов</summary>
-        public int BlockSize { get; private set; }
+        public int BlockSize { get; set; }
 
         /// <summary>Время между передачей последовательных фреймов</summary>
-        public TimeSpan SeparationTime { get; private set; }
+        public TimeSpan SeparationTime { get; set; }
 
         /// <summary>Время ожидания первого ответа (FlowControl-кадра) от собеседника</summary>
-        public TimeSpan FirstResponseTimeout { get; private set; }
+        public TimeSpan FirstResponseTimeout { get; set; }
 
         /// <summary>Время ожидания последовательных сообщения (когда соединение уже устоялось)</summary>
-        public TimeSpan ConsecutiveTimeout { get; private set; }
+        public TimeSpan ConsecutiveTimeout { get; set; }
 
         public override string ToString() { return string.Format("BlockSize: {0}, SeparationTime: {1}", BlockSize, SeparationTime); }
     }
