@@ -68,6 +68,7 @@
     <Compile Include="Lib\ISocketCanLibFacade.cs" />
     <Compile Include="Lib\SocketCanFdFrame.cs" />
     <Compile Include="Lib\TimeVal.cs" />
+    <Compile Include="LinuxSocketCanPortProvider.cs" />
     <Compile Include="LinuxSockets\ILinuxSocket.cs" />
     <Compile Include="LinuxSockets\ILinuxSocketFactory.cs" />
     <Compile Include="LinuxSockets\LinuxSocket.cs" />

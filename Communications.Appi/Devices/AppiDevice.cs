@@ -22,7 +22,7 @@ namespace Communications.Appi.Devices
         private readonly IAppiBufferDecoder _decoder;
         private readonly IUsbDevice _usbDevice;
 
-        public AppiDevice(IUsbDevice UsbDevice, IEnumerable<TLineKey> LineKeys, IAppiBufferDecoder Decoder,
+        protected AppiDevice(IUsbDevice UsbDevice, IEnumerable<TLineKey> LineKeys, IAppiBufferDecoder Decoder,
                           AppiSendFramesBufferEncoder<TLineKey> SendFramesBufferEncoder)
         {
             _decoder = Decoder;

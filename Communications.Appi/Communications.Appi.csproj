@@ -62,6 +62,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppiDeviceCanPortProvider.cs" />
     <Compile Include="Encoders\AppiSendFramesBuffer.cs" />
     <Compile Include="Encoders\DictionaryInterfaceCodeProvider.cs" />
     <Compile Include="Encoders\IAppiBufferEncoder.cs" />
