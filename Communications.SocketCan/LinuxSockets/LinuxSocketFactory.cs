@@ -7,15 +7,22 @@ namespace Communications.SocketCan.LinuxSockets
     public class LinuxSocketFactory : ILinuxSocketFactory
     {
         private readonly ISocketCanLibFacade _libFacade;
-        public LinuxSocketFactory(ISocketCanLibFacade LibFacade) { _libFacade = LibFacade; }
+
+        public LinuxSocketFactory(ISocketCanLibFacade LibFacade, int RxBuffSize = 200, int TxBuffSize = 30)
+        {
+            _libFacade = LibFacade;
+            this.RxBuffSize = RxBuffSize;
+            this.TxBuffSize = TxBuffSize;
+        }
+
+        /// <summary>Размер буфера исходящих сообщений</summary>
+        public int TxBuffSize { get; set; }
+
+        /// <summary>Размер буфера входящих сообщений</summary>
+        public int RxBuffSize { get; set; }
 
         /// <summary>Открывает Linux Socket</summary>
         /// <param name="InterfaceName">Имя интерфейса</param>
-        /// <param name="TxBuffSize">Размер буфера исходящих сообщений</param>
-        /// <param name="RxBuffSize">Размер буфера входящих сообщений</param>
-        public ILinuxSocket OpenLinuxSocket(string InterfaceName, int RxBuffSize, int TxBuffSize)
-        {
-            return new LinuxSocket(_libFacade, InterfaceName, RxBuffSize, TxBuffSize);
-        }
+        public ILinuxSocket OpenLinuxSocket(string InterfaceName) { return new LinuxSocket(_libFacade, InterfaceName, RxBuffSize, TxBuffSize); }
     }
 }

@@ -42,6 +42,7 @@ namespace Communications.Protocols.IsoTP
         private readonly IDisposable _rxFromBelowConnection;
         private readonly EventLoopScheduler _scheduler;
         private IStateManager[] _stateManagers;
+        private SchedulerTimeoutManager<TimeoutReason> _timeoutManager;
 
         public IsoTpOverCanPort(ICanPort CanPort, ushort TransmitDescriptor, ushort ReceiveDescriptor, IsoTpConnectionParameters ConnectionParameters)
             : this(
@@ -61,19 +62,19 @@ namespace Communications.Protocols.IsoTP
             _rx = new Subject<ITransaction<IsoTpPacket>>();
 
             _fsm = new PassiveStateMachine<IsoTpState, IsoTpEvent>(Name);
-            var timeoutManager = new SchedulerTimeoutManager<TimeoutReason>("ISO-TP", Reason => _fsm.Fire(IsoTpEvent.Timeout, Reason), _scheduler);
+            _timeoutManager = new SchedulerTimeoutManager<TimeoutReason>("ISO-TP", Reason => _fsm.Fire(IsoTpEvent.Timeout, Reason), _scheduler);
             var sender = new ActionSender(_port.BeginSend);
             _stateManagers = new IStateManager[]
                              {
-                                 new ReadyToReceiveStateManager(_fsm, timeoutManager),
-                                 new ReceiveStateManager(_fsm, timeoutManager, sender, _connectionParameters,
+                                 new ReadyToReceiveStateManager(_fsm, _timeoutManager),
+                                 new ReceiveStateManager(_fsm, _timeoutManager, sender, _connectionParameters,
                                                          p => Task.Factory.StartNew(() => _rx.OnNext(p)),
                                                          e => Task.Factory.StartNew(() => _rx.OnError(e))),
-                                 new SendStateManager(_fsm, timeoutManager, _connectionParameters, sender, _port.Options.SublayerFrameCapacity)
+                                 new SendStateManager(_fsm, _timeoutManager, _connectionParameters, sender, _port.Options.SublayerFrameCapacity)
                              };
 
             _fsm.In(IsoTpState.ReadyToReceive)
-                .ExecuteOnEntry(timeoutManager.DecockTimer);
+                .ExecuteOnEntry(_timeoutManager.DecockTimer);
 
             _fsm.Initialize(IsoTpState.ReadyToReceive);
             _fsm.TransitionExceptionThrown += FsmOnTransitionExceptionThrown;
@@ -89,6 +90,7 @@ namespace Communications.Protocols.IsoTP
 
         public void Dispose()
         {
+            _timeoutManager.Dispose();
             _fsm.Stop();
             _rxFromBelowConnection.Dispose();
             _rx.Dispose();

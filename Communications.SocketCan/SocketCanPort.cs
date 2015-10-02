@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -22,7 +21,7 @@ namespace Communications.SocketCan
 
         private readonly ConcurrentDictionary<CanFrame, SocketCanBlockedTransmitTransaction> _transactions;
 
-        public SocketCanPort(string Name, ILinuxSocket SocketIn, ILinuxSocket SocketOut)
+        internal SocketCanPort(string Name, ILinuxSocket SocketIn, ILinuxSocket SocketOut)
         {
             _socketIn = SocketIn;
             _socketOut = SocketOut;
@@ -47,6 +46,8 @@ namespace Communications.SocketCan
         {
             _rxConnection.Dispose();
             _scheduler.Dispose();
+            _socketIn.Dispose();
+            _socketOut.Dispose();
         }
 
         /// <summary>Поток входящих сообщений</summary>
@@ -63,7 +64,7 @@ namespace Communications.SocketCan
         /// <returns>Транзакция передачи</returns>
         public ITransaction<CanFrame> BeginSend(CanFrame Frame)
         {
-            var transaction = _transactions.GetOrAdd(Frame, f => new SocketCanBlockedTransmitTransaction(f));
+            SocketCanBlockedTransmitTransaction transaction = _transactions.GetOrAdd(Frame, f => new SocketCanBlockedTransmitTransaction(f));
             _socketOut.Send(Frame);
             return transaction;
         }

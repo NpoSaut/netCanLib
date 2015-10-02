@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Reactive.Concurrency;
 using System.Threading;
 using NLog;
@@ -8,12 +7,13 @@ namespace Communications.Appi.Timeouts
 {
     public class SchedulerTimeoutManager<TTimeoutInformation> : ITimeoutManager<TTimeoutInformation>
     {
-        private int _timerId = 0;
         private readonly ILogger _logger;
         private readonly IScheduler _scheduler;
         //private readonly Stopwatch _sw = new Stopwatch();
         private readonly Action<TTimeoutInformation> _timeoutAction;
         private IDisposable _timeoutToken;
+        private int _timerId;
+        private bool _isDisposed;
 
         public SchedulerTimeoutManager(String Name, Action<TTimeoutInformation> TimeoutAction, IScheduler Scheduler)
         {
@@ -46,6 +46,12 @@ namespace Communications.Appi.Timeouts
                 //_logger.Trace("Отменили таймер {1} (на часах было {0})", _sw.ElapsedMilliseconds, _timerId);
                 //_sw.Stop();
             }
+        }
+
+        public void Dispose()
+        {
+            _isDisposed = true;
+            DecockTimer();
         }
     }
 }

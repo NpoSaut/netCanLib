@@ -5,7 +5,7 @@ namespace Communications.Appi.Timeouts
     /// <summary>Диспетчер таймаутов</summary>
     /// <remarks>Используется для взведения и отмены времени ожидания</remarks>
     /// <typeparam name="TTimeoutInformation">Тип параметра времени ожидания. Обычно обозначает причины ожидания</typeparam>
-    public interface ITimeoutManager<in TTimeoutInformation>
+    public interface ITimeoutManager<in TTimeoutInformation> : IDisposable
     {
         /// <summary>Взводит таймер</summary>
         /// <param name="Timeout">Время ожидания</param>
