@@ -8,8 +8,8 @@ namespace Communications.Protocols.IsoTP.Exceptions
     [Serializable]
     public class IsoTpTimeoutException : IsoTpProtocolException
     {
-        private readonly TimeoutReason _inner;
-        public IsoTpTimeoutException(TimeoutReason Inner) : base("Превышено время ожидания чтения ISO-TP фрейма") { _inner = Inner; }
+        private readonly TimeoutReason _reason;
+        public IsoTpTimeoutException(TimeoutReason Reason) : base(string.Format("Превышено время ожидания чтения ISO-TP фрейма ({0})", Reason)) { _reason = Reason; }
         public IsoTpTimeoutException(Exception inner) : base("Превышено время ожидания чтения ISO-TP фрейма", inner) { }
         public IsoTpTimeoutException(string message) : base(message) { }
         public IsoTpTimeoutException(string message, Exception inner) : base(message, inner) { }
