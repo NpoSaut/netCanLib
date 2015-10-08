@@ -42,7 +42,7 @@ namespace Communications.Protocols.IsoTP
         private readonly IDisposable _rxFromBelowConnection;
         private readonly EventLoopScheduler _scheduler;
         private IStateManager[] _stateManagers;
-        private SchedulerTimeoutManager<TimeoutReason> _timeoutManager;
+        private readonly SchedulerTimeoutManager<TimeoutReason> _timeoutManager;
 
         public IsoTpOverCanPort(ICanPort CanPort, ushort TransmitDescriptor, ushort ReceiveDescriptor, IsoTpConnectionParameters ConnectionParameters)
             : this(

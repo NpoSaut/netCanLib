@@ -6,7 +6,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
 {
     public interface ISender
     {
-        void Send(IsoTpFrame Frame);
+        ITransaction<IsoTpFrame> Send(IsoTpFrame Frame);
     }
 
     internal class ActionSender : ISender
@@ -14,6 +14,6 @@ namespace Communications.Protocols.IsoTP.StateManagers
         private readonly Func<IsoTpFrame, ITransaction<IsoTpFrame>> _sendAction;
         public ActionSender(Func<IsoTpFrame, ITransaction<IsoTpFrame>> SendAction) { _sendAction = SendAction; }
 
-        public void Send(IsoTpFrame Frame) { _sendAction(Frame); }
+        public ITransaction<IsoTpFrame> Send(IsoTpFrame Frame) { return _sendAction(Frame); }
     }
 }

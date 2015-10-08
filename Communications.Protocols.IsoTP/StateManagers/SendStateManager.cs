@@ -18,7 +18,8 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
         private TransmitTransaction _transmitTransaction;
 
-        public SendStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, ITimeoutManager<TimeoutReason> TimeoutManager, IsoTpConnectionParameters ConnectionParameters,
+        public SendStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, ITimeoutManager<TimeoutReason> TimeoutManager,
+                                IsoTpConnectionParameters ConnectionParameters,
                                 ISender Sender, int SublayerFrameCapacity)
         {
             _stateMachine = StateMachine;
@@ -45,7 +46,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.ClearToSend)
                 .Execute(() => _timeoutManager.DecockTimer())
                 .Execute<FlowControlFrame>(SendNextDataPortion)
-                .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
+                //.Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent))
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Wait)
                 .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterWaitFrame))
                 .If<IsoTpFrame>(f => f is FlowControlFrame && ((FlowControlFrame)f).Flag == FlowControlFlag.Abort)
@@ -97,17 +98,22 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
         private void SendNextDataPortion(FlowControlFrame Frame)
         {
+            //IList<ITransaction<IsoTpFrame>> transactions = new List<ITransaction<IsoTpFrame>>();
             for (int i = 0; i < Frame.BlockSize; i++)
             {
                 byte[] payload = _transmitTransaction.GetDataSlice(ConsecutiveFrame.GetPayload(_sublayerFrameCapacity));
-                _sender.Send(new ConsecutiveFrame(payload, _transmitTransaction.Index));
+                //transactions.Add(
+                _sender.Send(new ConsecutiveFrame(payload, _transmitTransaction.Index)).Wait();
                 _transmitTransaction.IncreaseIndex();
                 if (_transmitTransaction.AllDataSent)
                 {
                     _stateMachine.Fire(IsoTpEvent.TransactionCompleated);
-                    return;
+                    break;
                 }
             }
+            //foreach (var transaction in transactions)
+            //    transaction.Wait();
+            _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent);
         }
     }
 }
