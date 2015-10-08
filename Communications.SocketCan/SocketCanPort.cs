@@ -72,7 +72,7 @@ namespace Communications.SocketCan
         private void CommitTransaction(CanFrame Frame)
         {
             SocketCanBlockedTransmitTransaction transaction;
-            if (_transactions.TryGetValue(Frame, out transaction))
+            if (_transactions.TryRemove(Frame, out transaction))
                 transaction.Commit();
         }
     }
@@ -80,6 +80,7 @@ namespace Communications.SocketCan
     internal class SocketCanBlockedTransmitTransaction : LongTransactionBase<CanFrame>
     {
         private readonly CanFrame _payload;
+
         public SocketCanBlockedTransmitTransaction(CanFrame Payload) { _payload = Payload; }
 
         protected override CanFrame GetPayload() { return _payload; }
