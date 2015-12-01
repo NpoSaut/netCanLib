@@ -37,6 +37,7 @@ namespace Communications.Appi
 
             private void Push(int Count)
             {
+                if (Count <= 0) return;
                 if (_buffer.IsEmpty) return;
 
                 var list = new List<T>();
