@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Syntax;
 using Communications.Appi.Timeouts;
 using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.Frames;
 using Communications.Protocols.IsoTP.Transactions;
+using Communications.Transactions;
 
 namespace Communications.Protocols.IsoTP.StateManagers
 {
@@ -98,12 +100,12 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
         private void SendNextDataPortion(FlowControlFrame Frame)
         {
-            //IList<ITransaction<IsoTpFrame>> transactions = new List<ITransaction<IsoTpFrame>>();
+            IList<ITransaction<IsoTpFrame>> transactions = new List<ITransaction<IsoTpFrame>>();
             for (int i = 0; i < Frame.BlockSize; i++)
             {
                 byte[] payload = _transmitTransaction.GetDataSlice(ConsecutiveFrame.GetPayload(_sublayerFrameCapacity));
-                //transactions.Add(
-                _sender.Send(new ConsecutiveFrame(payload, _transmitTransaction.Index)).Wait();
+                transactions.Add(
+                    _sender.Send(new ConsecutiveFrame(payload, _transmitTransaction.Index)));
                 _transmitTransaction.IncreaseIndex();
                 if (_transmitTransaction.AllDataSent)
                 {
@@ -111,8 +113,8 @@ namespace Communications.Protocols.IsoTP.StateManagers
                     break;
                 }
             }
-            //foreach (var transaction in transactions)
-            //    transaction.Wait();
+            foreach (var transaction in transactions)
+                transaction.Wait();
             _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent);
         }
     }
