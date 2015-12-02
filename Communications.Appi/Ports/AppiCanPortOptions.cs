@@ -9,7 +9,7 @@ namespace Communications.Appi.Ports
 
         /// <summary>Создаёт новые опции порта с поддержкой Loopback и указанным <see cref="ILoopbackInspector{TFrame}" />
         /// </summary>
-        public AppiCanPortOptions() : base(new CanPortLoopbackInspector()) { _baudRate = 0; }
+        public AppiCanPortOptions() { _baudRate = 0; }
 
         /// <summary>Скорость обмена</summary>
         public override int BaudRate
