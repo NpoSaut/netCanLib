@@ -12,7 +12,9 @@ namespace Communications.Appi.Devices
 
     public class AppiBlock : AppiDevice<AppiLine>
     {
-        public AppiBlock(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder, AppiSendFramesBufferEncoder<AppiLine> SendBufferEncoder)
-            : base(UsbDevice, new[] { AppiLine.Can1, AppiLine.Can2 }, Decoder, SendBufferEncoder) { }
+        public AppiBlock(IUsbDevice UsbDevice, IAppiBufferDecoder Decoder,
+                         AppiSendFramesBufferEncoder<AppiLine> SendBufferEncoder,
+                         AppiSetBaudRateBufferEncoder<AppiLine> SetBaudRateBufferEncoder)
+            : base(UsbDevice, new[] { AppiLine.Can1, AppiLine.Can2 }, Decoder, SendBufferEncoder, SetBaudRateBufferEncoder) { }
     }
 }

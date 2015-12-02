@@ -62,8 +62,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppiCanTransmitTransaction.cs" />
     <Compile Include="AppiDeviceCanPortProvider.cs" />
+    <Compile Include="Buffers\MessagesBuffer.cs" />
     <Compile Include="Encoders\AppiSendFramesBuffer.cs" />
+    <Compile Include="Encoders\AppiSetBaudRateBufferEncoder.cs" />
+    <Compile Include="Encoders\AppiSendFramesBufferLayout.cs" />
+    <Compile Include="Encoders\AppiSetBaudRateBuffer.cs" />
+    <Compile Include="Encoders\AppiSendFramesBufferEncoder.cs" />
+    <Compile Include="Encoders\AppiSetBaudRateBufferLayout.cs" />
     <Compile Include="Encoders\DictionaryInterfaceCodeProvider.cs" />
     <Compile Include="Encoders\IAppiBufferEncoder.cs" />
     <Compile Include="Encoders\IInterfaceCodeProvider.cs" />
@@ -99,6 +106,7 @@
     <Compile Include="Factories\IAppiFactory.cs" />
     <Compile Include="Decoders\IAppiLineStatusDecoder.cs" />
     <Compile Include="Ports\AppiCanPortFactory.cs" />
+    <Compile Include="Ports\AppiCanPortOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ReactiveHelper.cs" />
     <Compile Include="Timeouts\SchedulerTimeoutManager.cs" />

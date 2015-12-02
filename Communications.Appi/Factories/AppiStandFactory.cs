@@ -12,6 +12,7 @@ namespace Communications.Appi.Factories
         private const int SequentialNumberOffset = 5;
 
         private static readonly AppiSendFramesBufferLayout _sendFramesBufferLayout = new AppiSendFramesBufferLayout(0, 1, 3, 10);
+        private static readonly AppiSetBaudRateBufferLayout _setBaudRateBufferLayout = new AppiSetBaudRateBufferLayout(0, 1, 2);
 
         private static readonly IDictionary<int, AppiLineStatusLayout> _buffersLayouts =
             new Dictionary<int, AppiLineStatusLayout>
@@ -51,6 +52,14 @@ namespace Communications.Appi.Factories
 
         protected override AppiDevice<AppiStandLine> OpenDeviceImplementation(IAppiDeviceInfo DeviceInfo)
         {
+            var interfaceCodeProvider = new DictionaryInterfaceCodeProvider<AppiStandLine>(new Dictionary<AppiStandLine, byte>
+                                                                                           {
+                                                                                               { AppiStandLine.CanA, 0x02 },
+                                                                                               { AppiStandLine.CanB, 0x03 },
+                                                                                               { AppiStandLine.CanBusA, 0x22 },
+                                                                                               { AppiStandLine.CanBusB, 0x23 },
+                                                                                               { AppiStandLine.CanTech, 0x12 },
+                                                                                           });
             return new AppiStand(DeviceInfo.UsbSlot.OpenDevice(2048),
                                  new KeyBasedCompositeBufferDecoder(
                                      new Dictionary<byte, IAppiBufferDecoder>
@@ -63,15 +72,8 @@ namespace Communications.Appi.Factories
                                          },
                                          { 0x09, new VersionBufferDecoder(SequentialNumberOffset, 6) }
                                      }),
-                                 new AppiSendFramesBufferEncoder<AppiStandLine>(
-                                     new DictionaryInterfaceCodeProvider<AppiStandLine>(new Dictionary<AppiStandLine, byte>
-                                                                                        {
-                                                                                            { AppiStandLine.CanA, 0x02 },
-                                                                                            { AppiStandLine.CanB, 0x03 },
-                                                                                            { AppiStandLine.CanBusA, 0x22 },
-                                                                                            { AppiStandLine.CanBusB, 0x23 },
-                                                                                            { AppiStandLine.CanTech, 0x12 },
-                                                                                        }), _sendFramesBufferLayout));
+                                 new AppiSendFramesBufferEncoder<AppiStandLine>(interfaceCodeProvider, _sendFramesBufferLayout),
+                                 new AppiSetBaudRateBufferEncoder<AppiStandLine>(interfaceCodeProvider, _setBaudRateBufferLayout));
         }
 
         private static IDictionary<AppiStandLine, AppiLineStatusDecoder> GetLayouts(IDictionary<AppiStandLine, AppiLineStatusLayout> x)

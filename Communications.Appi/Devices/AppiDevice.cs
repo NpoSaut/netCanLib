@@ -23,7 +23,8 @@ namespace Communications.Appi.Devices
         private readonly IUsbDevice _usbDevice;
 
         protected AppiDevice(IUsbDevice UsbDevice, IEnumerable<TLineKey> LineKeys, IAppiBufferDecoder Decoder,
-                          AppiSendFramesBufferEncoder<TLineKey> SendFramesBufferEncoder)
+                             AppiSendFramesBufferEncoder<TLineKey> SendFramesBufferEncoder,
+                             AppiSetBaudRateBufferEncoder<TLineKey> SetBaudRateBufferEncoder)
         {
             _decoder = Decoder;
             _usbDevice = UsbDevice;
@@ -34,7 +35,7 @@ namespace Communications.Appi.Devices
                                                                      .Publish();
             _buffersStreamConnection = buffersStream.Connect();
 
-            var fac = new AppiCanPortFactory<TLineKey>(SendFramesBufferEncoder);
+            var fac = new AppiCanPortFactory<TLineKey>(SetBaudRateBufferEncoder, SendFramesBufferEncoder);
             CanPorts =
                 LineKeys.ToDictionary(key => key,
                                       key => fac.ProduceCanPort(key,
