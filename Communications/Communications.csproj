@@ -61,33 +61,22 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaudRates.cs" />
-    <Compile Include="Can\CanBufferedBase.cs" />
-    <Compile Include="Can\CanFlow.cs" />
     <Compile Include="Can\CanFrame.cs" />
-    <Compile Include="Can\CanFrameHandler.cs" />
-    <Compile Include="Can\CanFramesBuffer.cs" />
-    <Compile Include="Can\CanPort.cs" />
+    <Compile Include="Can\BaudRateChangedEventArgs.cs" />
     <Compile Include="Can\CanPortOptions.cs" />
     <Compile Include="Can\CanPortLoopbackInspector.cs" />
     <Compile Include="Can\FrameEncoders\FrameTextEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameSbsEncoder.cs" />
     <Compile Include="Can\FrameEncoders\FrameStreamEncoder.cs" />
-    <Compile Include="Can\ICanFlow.cs" />
     <Compile Include="Can\ICanPort.cs" />
     <Compile Include="Can\ICanPortOptions.cs" />
     <Compile Include="Can\ICanPortProvider.cs" />
-    <Compile Include="Can\LogReader\CanVirtualPort.cs" />
-    <Compile Include="Can\LogReader\StreamEncoderPort.cs" />
-    <Compile Include="Can\LogReader\TextLogReaderPort.cs" />
-    <Compile Include="Can\LogRecording\LogEncodingRecorder.cs" />
-    <Compile Include="Can\LogRecording\LogRecorder.cs" />
     <Compile Include="Options\DataPortOptions.cs" />
     <Compile Include="IDataFrame.cs" />
     <Compile Include="IDataPort.cs" />
     <Compile Include="Options\IBaudRatePortOptions.cs" />
     <Compile Include="Options\IDataPortOptions.cs" />
-    <Compile Include="ILog.cs" />
     <Compile Include="ILoopbackInspector.cs" />
     <Compile Include="IPort.cs" />
     <Compile Include="Options\IPortOptions.cs" />
@@ -97,12 +86,9 @@
     <Compile Include="Transactions\InstantaneousTransaction.cs" />
     <Compile Include="Transactions\ITransaction.cs" />
     <Compile Include="LambdaLoopbackInspector.cs" />
-    <Compile Include="Port.cs" />
     <Compile Include="PortHelpers\PortRequestHelper.cs" />
     <Compile Include="Options\PortOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Serial\RsPort.cs" />
-    <Compile Include="Serial\RsStream.cs" />
     <Compile Include="Transactions\LongTransactionBase.cs" />
     <Compile Include="Transactions\SelectorTransaction.cs" />
     <Compile Include="Usb\IUsbFacade.cs" />
@@ -113,6 +99,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

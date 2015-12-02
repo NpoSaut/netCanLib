@@ -1,7 +1,7 @@
 ﻿namespace Communications.Usb
 {
     /// <summary>USB-пакет</summary>
-    public class UsbFrame
+    public class UsbFrame : IDataFrame
     {
         public UsbFrame(byte[] Data) { this.Data = Data; }
 
