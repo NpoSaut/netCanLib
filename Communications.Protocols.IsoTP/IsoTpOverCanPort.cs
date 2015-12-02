@@ -9,6 +9,7 @@ using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Machine.Events;
 using Communications.Appi.Timeouts;
 using Communications.Can;
+using Communications.Options;
 using Communications.PortHelpers;
 using Communications.Protocols.IsoTP.StateManagers;
 using Communications.Protocols.IsoTP.Transactions;

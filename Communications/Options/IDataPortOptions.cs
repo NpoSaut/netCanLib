@@ -1,4 +1,4 @@
-﻿namespace Communications
+﻿namespace Communications.Options
 {
     /// <summary>Опции порта передачи бинарных данных</summary>
     public interface IDataPortOptions

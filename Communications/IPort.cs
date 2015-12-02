@@ -1,4 +1,5 @@
 ﻿using System;
+using Communications.Options;
 using Communications.Transactions;
 
 namespace Communications
@@ -7,7 +8,7 @@ namespace Communications
     /// <typeparam name="TFrame">Тип кадра, транслируемого через порт</typeparam>
     /// <typeparam name="TOptions">Тип опций порта</typeparam>
     public interface IPort<TFrame, out TOptions> : IDisposable
-        where TOptions : PortOptions<TFrame>
+        where TOptions : IPortOptions<TFrame>
     {
         /// <summary>Поток входящих сообщений</summary>
         IObservable<ITransaction<TFrame>> Rx { get; }
@@ -27,5 +28,5 @@ namespace Communications
 
     /// <summary>Порт с опциями по-умолчанию</summary>
     /// <typeparam name="TFrame">Тип кадра, транслируемого через порт</typeparam>
-    public interface IPort<TFrame> : IPort<TFrame, PortOptions<TFrame>> { }
+    public interface IPort<TFrame> : IPort<TFrame, IPortOptions<TFrame>> { }
 }

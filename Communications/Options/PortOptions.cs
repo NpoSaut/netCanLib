@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace Communications
+namespace Communications.Options
 {
     /// <summary>Опции порта</summary>
-    public class PortOptions<TFrame>
+    public class PortOptions<TFrame> : IPortOptions<TFrame>
     {
         /// <summary>Создаёт новые опции порта без поддержки Loopback</summary>
         public PortOptions()

@@ -5,7 +5,7 @@ using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using System.Threading;
-using Communications;
+using Communications.Options;
 using Communications.PortHelpers;
 using Communications.Transactions;
 using Communications.Usb;
@@ -59,7 +59,7 @@ namespace ReactiveWinUsb
             get { return _tx; }
         }
 
-        public PortOptions<UsbFrame> Options { get; private set; }
+        public IPortOptions<UsbFrame> Options { get; private set; }
 
         /// <summary>Начинает отправку кадра</summary>
         /// <param name="Frame">Кадр для отправки</param>

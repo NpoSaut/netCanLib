@@ -1,4 +1,4 @@
-﻿namespace Communications
+﻿namespace Communications.Options
 {
     /// <summary>Опции порта передачи бинарных данных по-умолчанию</summary>
     /// <typeparam name="TFrame">Тип кадра</typeparam>
