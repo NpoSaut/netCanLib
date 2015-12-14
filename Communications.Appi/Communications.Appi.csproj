@@ -75,6 +75,7 @@
     <Compile Include="Encoders\IAppiBufferEncoder.cs" />
     <Compile Include="Encoders\IInterfaceCodeProvider.cs" />
     <Compile Include="Exceptions\AppiDeviceOccupiedException.cs" />
+    <Compile Include="Exceptions\AppiPortClosedException.cs" />
     <Compile Include="Factories\AppiDeviceInfo.cs" />
     <Compile Include="Factories\AppiFactoryBase.cs" />
     <Compile Include="Factories\IAppiDeviceInfo.cs" />

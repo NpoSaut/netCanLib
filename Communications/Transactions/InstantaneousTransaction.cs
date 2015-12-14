@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Communications.Transactions
 {
@@ -36,6 +37,6 @@ namespace Communications.Transactions
             get { return true; }
         }
 
-        public TPayload Wait() { return Payload; }
+        public TPayload Wait(TimeSpan Timeout, CancellationToken CancellationToken) { return Payload; }
     }
 }

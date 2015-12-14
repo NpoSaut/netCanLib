@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Reactive.Linq;
 using Communications.PortHelpers;
 using NUnit.Framework;
 

@@ -24,6 +24,7 @@ namespace Communications.Appi.Timeouts
 
         public void CockTimer(TimeSpan Timeout, TTimeoutInformation Information)
         {
+            return;
             if (_timeoutToken != null)
                 _timeoutToken.Dispose();
 

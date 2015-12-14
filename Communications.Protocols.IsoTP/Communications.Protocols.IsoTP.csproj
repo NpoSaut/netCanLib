@@ -80,6 +80,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CanIsoTpConnectionForRxHelper.cs" />
+    <Compile Include="Exceptions\IsoTpPortClosedException.cs" />
     <Compile Include="Exceptions\IsoTpPortIsBusyException.cs" />
     <Compile Include="Exceptions\IsoTpTransactionLostException.cs" />
     <Compile Include="IIsoTpConnection.cs" />

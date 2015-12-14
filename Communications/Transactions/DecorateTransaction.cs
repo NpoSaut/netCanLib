@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Communications.Transactions
 {
@@ -21,11 +22,11 @@ namespace Communications.Transactions
             get { return _coreTransaction.Done; }
         }
 
-        public TUpper Wait()
+        public TUpper Wait(TimeSpan Timeout, CancellationToken CancellationToken)
         {
             try
             {
-                _coreTransaction.Wait();
+                _coreTransaction.Wait(Timeout, CancellationToken);
             }
             catch (Exception e)
             {

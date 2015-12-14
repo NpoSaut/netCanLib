@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Reactive;
+using System.Diagnostics;
 using System.Reactive.Concurrency;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
@@ -11,6 +11,7 @@ using Communications.Appi.Timeouts;
 using Communications.Can;
 using Communications.Options;
 using Communications.PortHelpers;
+using Communications.Protocols.IsoTP.Exceptions;
 using Communications.Protocols.IsoTP.StateManagers;
 using Communications.Protocols.IsoTP.Transactions;
 using Communications.Transactions;
@@ -21,7 +22,8 @@ namespace Communications.Protocols.IsoTP
     {
         ReadyToReceive,
         Receiving,
-        Transmiting
+        Transmiting,
+        Disposed
     }
 
     internal enum IsoTpEvent
@@ -30,7 +32,8 @@ namespace Communications.Protocols.IsoTP
         Abort,
         Timeout,
         FrameReceived,
-        TransactionCompleated
+        TransactionCompleated,
+        Dispose
     }
 
     public class IsoTpOverCanPort : IIsoTpConnection
@@ -42,7 +45,7 @@ namespace Communications.Protocols.IsoTP
         private readonly Subject<ITransaction<IsoTpPacket>> _rx;
         private readonly IDisposable _rxFromBelowConnection;
         private readonly EventLoopScheduler _scheduler;
-        private IStateManager[] _stateManagers;
+        private readonly IStateManager[] _stateManagers;
         private readonly SchedulerTimeoutManager<TimeoutReason> _timeoutManager;
 
         public IsoTpOverCanPort(ICanPort CanPort, ushort TransmitDescriptor, ushort ReceiveDescriptor, IsoTpConnectionParameters ConnectionParameters)
@@ -77,6 +80,9 @@ namespace Communications.Protocols.IsoTP
             _fsm.In(IsoTpState.ReadyToReceive)
                 .ExecuteOnEntry(_timeoutManager.DecockTimer);
 
+            _fsm.In(IsoTpState.Disposed)
+                .ExecuteOnEntry(OnDisposed);
+
             _fsm.Initialize(IsoTpState.ReadyToReceive);
             _fsm.TransitionExceptionThrown += FsmOnTransitionExceptionThrown;
 
@@ -85,18 +91,27 @@ namespace Communications.Protocols.IsoTP
                      .ObserveOn(_scheduler)
                      .WaitForTransactionCompleated()
                      .Subscribe(f => _fsm.Fire(IsoTpEvent.FrameReceived, f));
-            
+
             _fsm.Start();
+        }
+
+        private void OnDisposed()
+        {
+            Debug.WriteLine("ON_DISPOSED {0}", this);
+            _port.Dispose();
+            _timeoutManager.Dispose();
+            _scheduler.Dispose();
+            _rxFromBelowConnection.Dispose();
+            _fsm.Stop();
+            _rx.Dispose();
         }
 
         public void Dispose()
         {
-            _timeoutManager.Dispose();
-            _fsm.Stop();
-            _rxFromBelowConnection.Dispose();
-            _rx.Dispose();
-            _port.Dispose();
-            _scheduler.Dispose();
+            Debug.WriteLine("DISPOSING {0}", this);
+            _fsm.FirePriority(IsoTpEvent.Dispose);
+            //_fsm.Stop();
+            //_rx.OnCompleted();
         }
 
         private void FsmOnTransitionExceptionThrown(object Sender, TransitionExceptionEventArgs<IsoTpState, IsoTpEvent> e)

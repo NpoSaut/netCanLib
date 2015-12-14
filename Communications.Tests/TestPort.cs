@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Reactive.Subjects;
+using Communications.Options;
 using Communications.Transactions;
 
 namespace Communications.Tests
@@ -30,7 +31,7 @@ namespace Communications.Tests
         /// <summary>Поток исходящих сообщений</summary>
         public IObserver<TFrame> Tx { get; private set; }
 
-        public PortOptions<TFrame> Options { get; private set; }
+        public IPortOptions<TFrame> Options { get; private set; }
 
         /// <summary>Начинает отправку кадра</summary>
         /// <param name="Frame">Кадр для отправки</param>

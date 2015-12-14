@@ -41,6 +41,10 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .Execute<TransmitTransaction>(BeginTransmitTransaction)
                         .Execute(() => _timeoutManager.CockTimer(_connectionParameters.FirstResponseTimeout, TimeoutReason.WaitingForFirstFlowControl));
 
+            StateMachine.In(IsoTpState.Disposed)
+                        .On(IsoTpEvent.TransmitRequest)
+                        .Execute<TransmitTransaction>(t => t.Fail(new IsoTpPortClosedException()));
+
             IEntryActionSyntax<IsoTpState, IsoTpEvent> whenTransmiting = StateMachine.In(IsoTpState.Transmiting);
 
             whenTransmiting
@@ -67,6 +71,11 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .Goto(IsoTpState.ReadyToReceive);
 
             whenTransmiting
+                .On(IsoTpEvent.Dispose)
+                .Goto(IsoTpState.Disposed)
+                .Execute(OnDispose);
+
+            whenTransmiting
                 .On(IsoTpEvent.TransmitRequest)
                 .Execute(() => Throw(new IsoTpPortIsBusyException()));
 
@@ -74,6 +83,11 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .On(IsoTpEvent.TransactionCompleated)
                 .Goto(IsoTpState.ReadyToReceive)
                 .Execute(() => _transmitTransaction.Commit());
+        }
+
+        private void OnDispose()
+        {
+            _transmitTransaction.Fail(new IsoTpPortClosedException());
         }
 
         private void Throw(Exception e) { _transmitTransaction.Fail(e); }
@@ -100,11 +114,11 @@ namespace Communications.Protocols.IsoTP.StateManagers
 
         private void SendNextDataPortion(FlowControlFrame Frame)
         {
-            IList<ITransaction<IsoTpFrame>> transactions = new List<ITransaction<IsoTpFrame>>();
+            IList<ITransaction<IsoTpFrame>> transmitCanFrame = new List<ITransaction<IsoTpFrame>>();
             for (int i = 0; i < Frame.BlockSize; i++)
             {
                 byte[] payload = _transmitTransaction.GetDataSlice(ConsecutiveFrame.GetPayload(_sublayerFrameCapacity));
-                transactions.Add(
+                transmitCanFrame.Add(
                     _sender.Send(new ConsecutiveFrame(payload, _transmitTransaction.Index)));
                 _transmitTransaction.IncreaseIndex();
                 if (_transmitTransaction.AllDataSent)
@@ -113,8 +127,8 @@ namespace Communications.Protocols.IsoTP.StateManagers
                     break;
                 }
             }
-            foreach (var transaction in transactions)
-                transaction.Wait();
+            foreach (var canTransaction in transmitCanFrame)
+                canTransaction.Wait();
             _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForFlowControlFrameAfterDataPortionSent);
         }
     }

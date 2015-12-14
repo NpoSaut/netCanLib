@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Reactive.Linq;
 using System.Reactive.Subjects;
 using Communications.Can;
-using Communications.PortHelpers;
 using Communications.Transactions;
 using NLog;
 
 namespace Communications.Appi.Ports
 {
-    public class AppiCanPort : ICanPort
+    public class AppiCanPort : ICanPort, INotifyDisposable
     {
         private static readonly ILogger _logger = LogManager.GetLogger("CAN");
         private readonly IConnectableObservable<ITransaction<CanFrame>> _rx;
@@ -24,8 +23,8 @@ namespace Communications.Appi.Ports
             _tx = new Subject<AppiCanTransmitTransaction>();
 
             _rx = Rx.Select(f => new InstantaneousTransaction<CanFrame>(f))
-                    //.OfType<ITransaction<CanFrame>>()
-                    //.Merge(_tx.SelectTransaction(t => t.GetLoopbackFrame()))
+                //.OfType<ITransaction<CanFrame>>()
+                //.Merge(_tx.SelectTransaction(t => t.GetLoopbackFrame()))
                     .Publish();
 
             _rxConnection = _rx.Connect();
@@ -51,13 +50,24 @@ namespace Communications.Appi.Ports
 
         public ITransaction<CanFrame> BeginSend(CanFrame Frame)
         {
-            var transaction = new AppiCanTransmitTransaction(Frame);
+            var transaction = new AppiCanTransmitTransaction(Frame, this);
             _tx.OnNext(transaction);
             return transaction;
         }
 
         public CanPortOptions Options { get; private set; }
 
-        public void Dispose() { _rxConnection.Dispose(); }
+        public void Dispose()
+        {
+            OnDisposed();
+            _rxConnection.Dispose();
+        }
+        public event EventHandler Disposed;
+
+        protected virtual void OnDisposed()
+        {
+            EventHandler handler = Disposed;
+            if (handler != null) handler(this, EventArgs.Empty);
+        }
     }
 }

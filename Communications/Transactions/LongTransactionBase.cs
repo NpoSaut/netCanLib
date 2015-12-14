@@ -37,10 +37,15 @@ namespace Communications.Transactions
             get { return _resetEvent.IsSet; }
         }
 
-        public TPayload Wait()
+        public TPayload Wait(TimeSpan Timeout, CancellationToken CancellationToken)
         {
             _logger.Debug("Ожидаем завершения транзакции {0}", _transactinId);
-            _resetEvent.Wait();
+            if (!_resetEvent.Wait(Timeout, CancellationToken))
+            {
+                if (CancellationToken.IsCancellationRequested)
+                    throw new OperationCanceledException();
+                throw new TimeoutException();
+            }
             _logger.Debug("Дождались завершения транзакции {0}: {1}", _transactinId, Payload);
             return Payload;
         }
@@ -52,12 +57,20 @@ namespace Communications.Transactions
             _logger.Debug("Фейлим транзакцию {0} -- {1}", _transactinId, e);
             _transactionException = e;
             _resetEvent.Set();
+            OnFailed();
+            OnCompleated();
         }
 
         public void Commit()
         {
             _logger.Debug("Коммитим транзакцию {0}", _transactinId);
             _resetEvent.Set();
+            OnCommited();
+            OnCompleated();
         }
+
+        protected virtual void OnCommited() { }
+        protected virtual void OnFailed() { }
+        protected virtual void OnCompleated() { }
     }
 }

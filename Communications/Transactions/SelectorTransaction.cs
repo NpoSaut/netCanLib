@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace Communications.Transactions
 {
@@ -41,11 +42,11 @@ namespace Communications.Transactions
             get { return _sourceTransaction.Done; }
         }
 
-        public TOut Wait()
+        public TOut Wait(TimeSpan Timeout, CancellationToken CancellationToken)
         {
             try
             {
-                _sourceTransaction.Wait();
+                _sourceTransaction.Wait(Timeout, CancellationToken);
                 return Payload;
             }
             catch (Exception e)

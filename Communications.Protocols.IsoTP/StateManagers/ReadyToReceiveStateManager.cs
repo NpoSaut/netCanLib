@@ -9,6 +9,10 @@ namespace Communications.Protocols.IsoTP.StateManagers
         {
             StateMachine.In(IsoTpState.ReadyToReceive)
                         .ExecuteOnEntry(TimerManager.DecockTimer);
+
+            StateMachine.In(IsoTpState.ReadyToReceive)
+                        .On(IsoTpEvent.Dispose)
+                        .Goto(IsoTpState.Disposed);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Threading;
 using Appccelerate.StateMachine;
 using Appccelerate.StateMachine.Syntax;
@@ -16,13 +15,12 @@ namespace Communications.Protocols.IsoTP.StateManagers
     {
         private readonly IsoTpConnectionParameters _connectionParameters;
         private readonly Action<ITransaction<IsoTpPacket>> _emit;
+        private readonly ILogger _logger = LogManager.GetLogger("ISO-TP");
         private readonly ISender _sender;
         private readonly IStateMachine<IsoTpState, IsoTpEvent> _stateMachine;
         private readonly Action<Exception> _throw;
         private readonly ITimeoutManager<TimeoutReason> _timeoutManager;
         private ReceiveTransaction _receiveTransaction;
-
-        private readonly ILogger _logger = LogManager.GetLogger("ISO-TP");
 
         public ReceiveStateManager(IStateMachine<IsoTpState, IsoTpEvent> StateMachine, ITimeoutManager<TimeoutReason> TimeoutManager, ISender Sender,
                                    IsoTpConnectionParameters ConnectionParameters,
@@ -46,27 +44,27 @@ namespace Communications.Protocols.IsoTP.StateManagers
                         .Goto(IsoTpState.Receiving)
                         .Execute<FirstFrame>(WhenFirstFrameComes)
                         .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
-                                                               TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControl));
+                                                                 TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControl));
 
             IEntryActionSyntax<IsoTpState, IsoTpEvent> whenReceiving = StateMachine.In(IsoTpState.Receiving);
 
             whenReceiving
                 .On(IsoTpEvent.FrameReceived)
-                    // Правильный пакет с данными
-                    .If<IsoTpFrame>(IsExpectedConsecutiveData)
-                        .Execute<ConsecutiveFrame>(WhenConsecutiveDataComes)
-                        .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
-                    // Другой пакет с данными
-                    .If<IsoTpFrame>(f => f is ConsecutiveFrame)
-                        .Goto(IsoTpState.ReadyToReceive)
-                        .Execute(AbortTransaction)
-                        .Execute<ConsecutiveFrame>(f => Throw(new IsoTpSequenceException(_receiveTransaction.ExpectedCounter, f)))
+                // Правильный пакет с данными
+                .If<IsoTpFrame>(IsExpectedConsecutiveData)
+                .Execute<ConsecutiveFrame>(WhenConsecutiveDataComes)
+                .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout, TimeoutReason.WaitingForNextConsecutiveFrame))
+                // Другой пакет с данными
+                .If<IsoTpFrame>(f => f is ConsecutiveFrame)
+                .Goto(IsoTpState.ReadyToReceive)
+                .Execute(AbortTransaction)
+                .Execute<ConsecutiveFrame>(f => Throw(new IsoTpSequenceException(_receiveTransaction.ExpectedCounter, f)))
 
                 // Новая короткая транзакция
                 .On(IsoTpEvent.FrameReceived)
-                    .If<IsoTpFrame>(f => f is SingleFrame)
-                        .Execute(() => Throw(new IsoTpTransactionLostException()))
-                        .Execute<SingleFrame>(WhenSingleFrameComes)
+                .If<IsoTpFrame>(f => f is SingleFrame)
+                .Execute(() => Throw(new IsoTpTransactionLostException()))
+                .Execute<SingleFrame>(WhenSingleFrameComes)
 
                 // Новая длинная транзакция
                 .On(IsoTpEvent.FrameReceived)
@@ -75,7 +73,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .Execute(() => Throw(new IsoTpTransactionLostException()))
                 .Execute<FirstFrame>(WhenFirstFrameComes)
                 .Execute(() => _timeoutManager.CockTimer(_connectionParameters.ConsecutiveTimeout,
-                                                       TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControlInInterruptingTransaction));
+                                                         TimeoutReason.WaitingForConsecutiveFrameAfterFirstFlowControlInInterruptingTransaction));
 
             whenReceiving
                 .On(IsoTpEvent.FrameReceived)
@@ -97,15 +95,25 @@ namespace Communications.Protocols.IsoTP.StateManagers
                 .Execute(AbortTransaction);
 
             whenReceiving
+                .On(IsoTpEvent.Dispose)
+                .Goto(IsoTpState.Disposed)
+                .Execute(OnDispose);
+
+            whenReceiving
                 .On(IsoTpEvent.TransactionCompleated)
-                    .Goto(IsoTpState.ReadyToReceive)
-                    .Execute(() => _logger.Debug("Commit! THREAD: {0}", Thread.CurrentThread.Name))
-                    .Execute(() => _receiveTransaction.Commit())
-                    .Execute(() => _receiveTransaction = null);
+                .Goto(IsoTpState.ReadyToReceive)
+                .Execute(() => _logger.Debug("Commit! THREAD: {0}", Thread.CurrentThread.Name))
+                .Execute(() => _receiveTransaction.Commit())
+                .Execute(() => _receiveTransaction = null);
 
             whenReceiving
                 .On(IsoTpEvent.TransmitRequest)
                 .Execute(() => Throw(new IsoTpPortIsBusyException()));
+        }
+
+        private void OnDispose()
+        {
+            _receiveTransaction.Fail(new IsoTpPortClosedException());
         }
 
         private void AbortTransaction() { _sender.Send(FlowControlFrame.AbortFrame); }
@@ -118,10 +126,7 @@ namespace Communications.Protocols.IsoTP.StateManagers
             return cf.Index == _receiveTransaction.ExpectedCounter;
         }
 
-        private void WhenSingleFrameComes(SingleFrame Frame)
-        {
-            _emit(new InstantaneousTransaction<IsoTpPacket>(new IsoTpPacket(Frame.Data)));
-        }
+        private void WhenSingleFrameComes(SingleFrame Frame) { _emit(new InstantaneousTransaction<IsoTpPacket>(new IsoTpPacket(Frame.Data))); }
 
         private void WhenFirstFrameComes(FirstFrame Frame)
         {

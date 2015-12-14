@@ -72,6 +72,7 @@
     <Compile Include="Can\ICanPort.cs" />
     <Compile Include="Can\ICanPortOptions.cs" />
     <Compile Include="Can\ICanPortProvider.cs" />
+    <Compile Include="INotifyDisposable.cs" />
     <Compile Include="Options\DataPortOptions.cs" />
     <Compile Include="IDataFrame.cs" />
     <Compile Include="IDataPort.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="IPort.cs" />
     <Compile Include="Options\IPortOptions.cs" />
     <Compile Include="PortHelpers\PortTransactionHelper.cs" />
+    <Compile Include="RxHelper.cs" />
     <Compile Include="Transactions\DecorateTransaction.cs" />
     <Compile Include="Transactions\ExceptionTransaction.cs" />
     <Compile Include="Transactions\InstantaneousTransaction.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Transactions\LongTransactionBase.cs" />
     <Compile Include="Transactions\SelectorTransaction.cs" />
+    <Compile Include="Transactions\TransactionHelper.cs" />
     <Compile Include="Usb\IUsbFacade.cs" />
     <Compile Include="Usb\IUsbSlot.cs" />
     <Compile Include="Usb\IUsbDevice.cs" />
