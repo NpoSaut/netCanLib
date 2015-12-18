@@ -47,6 +47,8 @@ namespace Communications.Appi.Devices
 
         public void Dispose()
         {
+            foreach (ICanPort port in CanPorts.Values)
+                port.Dispose();
             _buffersStreamConnection.Dispose();
             _usbDevice.Dispose();
         }
