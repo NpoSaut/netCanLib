@@ -4,6 +4,9 @@
     {
         // ReSharper disable InconsistentNaming
 
+        /// <summary>250 Кбод</summary>
+        public const int CBR_250K = 250000;
+
         /// <summary>100 Кбод</summary>
         public const int CBR_100K = 100000;
 
