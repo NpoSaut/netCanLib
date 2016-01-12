@@ -13,7 +13,10 @@ namespace Communications.Appi
     public enum AppiLine : byte
     { 
         Can1 = 0x02,
-        Can2 = 0x03
+        Can2 = 0x03,
+        Can3 = 0x22,
+        Can4 = 0x23,
+        CanTeh = 0x13
     }
 
     /// <summary>
@@ -72,7 +75,7 @@ namespace Communications.Appi
             CanPorts = new Dictionary<AppiLine, AppiCanPort>()
             {
                 { AppiLine.Can1, new AppiCanPort(this, AppiLine.Can1) },
-                { AppiLine.Can2, new AppiCanPort(this, AppiLine.Can2) }
+                { AppiLine.CanTeh, new AppiCanPort(this, AppiLine.CanTeh) }
             };
 
             WirelessPort = new AppiRsPort(this, "WRS");
@@ -332,7 +335,7 @@ namespace Communications.Appi
                     new Dictionary<AppiLine, AppiSendBuffer>
                     {
                         {AppiLine.Can1, new AppiTimeoutSendBuffer(this, AppiLine.Can1)},
-                        {AppiLine.Can2, new AppiTimeoutSendBuffer(this, AppiLine.Can2)}
+                        {AppiLine.CanTeh, new AppiTimeoutSendBuffer(this, AppiLine.CanTeh)}
                     };
             }
             else
@@ -341,7 +344,7 @@ namespace Communications.Appi
                     new Dictionary<AppiLine, AppiSendBuffer>
                     {
                         {AppiLine.Can1, new AppiFeedbackSendBuffer(this, AppiLine.Can1)},
-                        {AppiLine.Can2, new AppiFeedbackSendBuffer(this, AppiLine.Can2)}
+                        {AppiLine.CanTeh, new AppiFeedbackSendBuffer(this, AppiLine.CanTeh)}
                     };
             }
         }
