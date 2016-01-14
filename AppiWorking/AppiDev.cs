@@ -75,6 +75,7 @@ namespace Communications.Appi
             CanPorts = new Dictionary<AppiLine, AppiCanPort>()
             {
                 { AppiLine.Can1, new AppiCanPort(this, AppiLine.Can1) },
+                { AppiLine.Can3, new AppiCanPort(this, AppiLine.Can3) },
                 { AppiLine.CanTeh, new AppiCanPort(this, AppiLine.CanTeh) }
             };
 
@@ -335,6 +336,7 @@ namespace Communications.Appi
                     new Dictionary<AppiLine, AppiSendBuffer>
                     {
                         {AppiLine.Can1, new AppiTimeoutSendBuffer(this, AppiLine.Can1)},
+                        {AppiLine.Can3, new AppiTimeoutSendBuffer(this, AppiLine.Can3)},
                         {AppiLine.CanTeh, new AppiTimeoutSendBuffer(this, AppiLine.CanTeh)}
                     };
             }
@@ -344,6 +346,7 @@ namespace Communications.Appi
                     new Dictionary<AppiLine, AppiSendBuffer>
                     {
                         {AppiLine.Can1, new AppiFeedbackSendBuffer(this, AppiLine.Can1)},
+                        {AppiLine.Can3, new AppiFeedbackSendBuffer(this, AppiLine.Can3)},
                         {AppiLine.CanTeh, new AppiFeedbackSendBuffer(this, AppiLine.CanTeh)}
                     };
             }

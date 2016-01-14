@@ -33,9 +33,8 @@ namespace Communications.Appi
             foreach (var fg in frameGroups)
             {
                 Byte[] buff = new Byte[2048];
-                Buffer.SetByte(buff, 0, 0x02);
-                Buffer.SetByte(buff, 1, (byte)Line);
-                //Buffer.SetByte(Buff, 2, SendMessageCounter);
+                Buffer.SetByte(buff, 0, (byte)Line);
+                Buffer.SetByte(buff, 1, 0x02);
                 Buffer.SetByte(buff, 3, (byte)fg.Count);
 
                 var messagesBuffer = fg.SelectMany(m => m.ToBufferBytes()).ToArray();

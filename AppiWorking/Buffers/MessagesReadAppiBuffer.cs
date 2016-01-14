@@ -12,31 +12,14 @@ namespace Communications.Appi.Buffers
             new Dictionary<AppiLine, int>
             {
                 { AppiLine.Can1, 24 },
+                { AppiLine.Can3, 524 },
                 { AppiLine.CanTeh, 225 }
             };
 
-        private readonly IDictionary<AppiLine, int> _speeds;
+        private IDictionary<AppiLine, int> _speeds;
 
         public MessagesReadAppiBuffer()
         {
-            CanMessages = new Dictionary<AppiLine, IList<CanFrame>>
-                          {
-                              { AppiLine.Can1, new List<CanFrame>() },
-                              { AppiLine.Can2, new List<CanFrame>() }
-                          };
-            OutMessagesCount = new Dictionary<AppiLine, int>
-                               {
-                                   { AppiLine.Can1, 0 },
-                                   { AppiLine.CanTeh, 0 }
-                               };
-            _speeds = new Dictionary<AppiLine, int>
-                      {
-                          { AppiLine.Can1, 0 },
-                          { AppiLine.Can2, 0 },
-                          { AppiLine.Can3, 0 },
-                          { AppiLine.Can4, 0 },
-                          { AppiLine.CanTeh, 0 }
-                      };
             SerialBuffer = new byte[0];
         }
 
@@ -45,8 +28,6 @@ namespace Communications.Appi.Buffers
         public Byte[] SerialBuffer { get; set; }
 
         public Dictionary<AppiLine, int> OutMessagesCount { get; set; }
-        public int SpeedA { get; set; }
-        public int SpeedB { get; set; }
 
         public IDictionary<AppiLine, int> Speeds
         {
@@ -58,25 +39,30 @@ namespace Communications.Appi.Buffers
         protected override void DecodeIt(byte[] buff)
         {
             int messagesInCan1 = buff[6];
+            int messagesInCan3 = buff[3];
             int messagesInCanTeh = buff[2];
 
             CanMessages = new Dictionary<AppiLine, IList<CanFrame>>
                           {
                               { AppiLine.Can1, ParseBuffer(buff, CanMessagesOffsets[AppiLine.Can1], messagesInCan1).ToList() },
+                              { AppiLine.Can3, ParseBuffer(buff, CanMessagesOffsets[AppiLine.Can3], messagesInCan3).ToList() },
                               { AppiLine.CanTeh, ParseBuffer(buff, CanMessagesOffsets[AppiLine.CanTeh], messagesInCanTeh).ToList() }
                           };
 
-            Speeds[AppiLine.Can1] = buff[7] | buff[8] << 8;
-            Speeds[AppiLine.CanTeh] = buff[9] | buff[10] << 8;
-            Speeds[AppiLine.Can3] = buff[15] | buff[16] << 8;
-            Speeds[AppiLine.Can4] = buff[17] | buff[18] << 8;
+            _speeds = new Dictionary<AppiLine, int>
+                      {
+                          { AppiLine.Can1, buff[7] | buff[8] << 8 },
+                          { AppiLine.CanTeh, buff[9] | buff[10] << 8 },
+                          { AppiLine.Can3, buff[15] | buff[16] << 8 },
+                          { AppiLine.Can4, buff[17] | buff[18] << 8 }
+                      };
 
-            SpeedA = buff[7] | buff[8] << 8;
-            SpeedB = buff[9] | buff[10] << 8;
-
-            OutMessagesCount[AppiLine.Can1] = buff[424];
-            OutMessagesCount[AppiLine.CanTeh] = buff[425];
-            OutMessagesCount[AppiLine.Can2] = buff[426];
+            OutMessagesCount = new Dictionary<AppiLine, int>
+                               {
+                                   { AppiLine.Can1, buff[424] },
+                                   { AppiLine.CanTeh, buff[425] },
+                                   { AppiLine.Can3, buff[426] }
+                               };
 
             int bytesInSerial = buff[1024];
             SerialBuffer = new byte[bytesInSerial];
