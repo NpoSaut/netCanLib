@@ -43,7 +43,7 @@ namespace BlokFrames.Halfset
 
         public override bool IsValid
         {
-            get { return ValueA.Equals(ValueB); }
+            get { return Object.Equals(ValueA, ValueB); }
         }
 
         /// <summary>

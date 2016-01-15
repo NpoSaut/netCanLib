@@ -64,28 +64,12 @@ namespace BlokFrames
 
         protected override void Decode(byte[] Data)
         {
-            var ds = ByteArrayToStructure<DataStruct>(Data);
-            this.Latitude = ds.Lat * 10e-9 * 180 / Math.PI;
-            this.Longitude = (Int32)(ds.Lon | ((ds.Lon & (1 << 30)) << 1)) * 10e-9 * 180 / Math.PI;
-            this.Reliable = (ds.Rel & (1 << 7)) != 0;
+            int intLatitude = BitConverter.ToInt32(Data, 0);
+            int intLongitude = BitConverter.ToInt32(Data, 4) & ~(1 << 31);
+
+            Latitude = intLatitude * 180.0 / (1e9 * Math.PI);
+            Longitude = intLongitude * 180.0 / (1e9 * Math.PI);
+            Reliable = (Data[7] & (1 << 7)) > 0;
         }
-
-
-        [StructLayout(LayoutKind.Explicit, Size = 8, Pack = 1)]
-        protected struct DataStruct
-        {
-            [MarshalAs(UnmanagedType.I4)]
-            [FieldOffset(0)]
-            public Int32 Lat;
-
-            [MarshalAs(UnmanagedType.U4)]
-            [FieldOffset(4)]
-            public UInt32 Lon;
-
-            [MarshalAs(UnmanagedType.U1)]
-            [FieldOffset(7)]
-            public byte Rel;
-        }
-
     }
 }

@@ -22,7 +22,7 @@ namespace BlokFrames
                 if ( value >= 1 && value <= 127 )
                     _Index = value;
                 else
-                    throw new IndexOutOfRangeException("Значение индекса должно быть в диапазоне [1,127]");
+                    throw new IndexOutOfRangeException(String.Format("Значение номера свойства должно быть в диапазоне [1, 127] (получено: {0})", value));
             }
         }
         
