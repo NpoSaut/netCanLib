@@ -13,7 +13,7 @@ namespace Communications.Appi.Buffers
             {
                 { AppiLine.Can1, 24 },
                 { AppiLine.Can3, 524 },
-                { AppiLine.CanTeh, 225 }
+                { AppiLine.CanTeh, 224 }
             };
 
         private IDictionary<AppiLine, int> _speeds;
