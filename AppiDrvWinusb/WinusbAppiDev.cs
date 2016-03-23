@@ -18,7 +18,6 @@ namespace Communications.Appi.Winusb
         public static readonly List<string> DeviceGuids =
             new List<string>
             {
-                "524cc09a-0a72-4d06-980e-afee3131196e",
                 "3af3f480-41b5-4c24-b2a9-6aacf7de3d01"
             };
 
