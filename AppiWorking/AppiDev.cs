@@ -7,6 +7,7 @@ using Communications.Appi.Buffers;
 using Communications.Appi.Exceptions;
 using Communications.Can;
 using System.IO;
+using NLog;
 
 namespace Communications.Appi
 {
@@ -24,12 +25,12 @@ namespace Communications.Appi
     /// </summary>
     public abstract class AppiDev : IDisposable
     {
-        public ILog BufferLog { get; set; }
+        private static ILogger _logger = LogManager.GetLogger("APPI");
+
         private enum BufferDirection { In, Out }
         private void PushBufferToLog(BufferDirection Direction, Byte[] Buffer)
         {
-            if (BufferLog != null)
-                BufferLog.PushTextEvent(String.Format("{0} {1}", Direction.ToString().PadRight(4), BitConverter.ToString(Buffer).Replace('-', ' ')));
+            // Удалил, т.к. больно уж это подробная отладка получается
         }
 
         /// <summary>
@@ -116,7 +117,7 @@ namespace Communications.Appi
             // Смотрим, не принимали ли мы это ранее
             if (buffer.SequentNumber == LastReadBufferId)
             {
-                if (BufferLog != null) BufferLog.PushTextEvent("Повторяющийся буфер обнаружен и проигнорирован.");
+                _logger.Error("Повторяющийся буфер обнаружен и проигнорирован.");
                 return;
             }
             else LastReadBufferId = buffer.SequentNumber;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections.ObjectModel;
+using NLog;
 
 namespace Communications.Can
 {
@@ -10,10 +11,7 @@ namespace Communications.Can
     /// </summary>
     public abstract class CanPort : Port
     {
-        /// <summary>
-        /// Список логгеров, ассоциированных с данным портом
-        /// </summary>
-        public IList<ILog> Logs { get; set; }
+        private readonly ILogger _logger;
 
         /// <summary>
         /// Получает или задаёт скорость порта (в бодах)
@@ -38,6 +36,7 @@ namespace Communications.Can
             : base(PortName)
         {
             GenerateLoopbackEcho = true;
+            _logger = LogManager.GetLogger(PortName);
         }
 
         #region Отправка сообщений
@@ -123,11 +122,11 @@ namespace Communications.Can
         }
 
         private enum FramesFlowDirection { In, Out }
+
         private void LogFramesFlow(FramesFlowDirection Direction, IList<CanFrame> Frames)
         {
-            string h = Direction.ToString().PadRight(4);
-            if (Logs != null)
-                foreach (var f in Frames) Logs.PushTextEvent(string.Format("{0} {1}", h, f));
+            foreach (CanFrame frame in Frames)
+                _logger.Trace("{0,4} {1}", Direction, frame);
         }
     }   
     
