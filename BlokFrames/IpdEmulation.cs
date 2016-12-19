@@ -87,7 +87,7 @@ namespace BlokFrames
             internal void WriteTo(Stream str)
             {
                 var w = new BinaryWriter(str);
-                w.Write((UInt16)(Frequency/10));
+                w.Write((UInt16)(Frequency));
                 w.Write((Byte)(
                         (byte)Direction << 0 |
                         (byte)Channel1Condition << 1 |
@@ -98,7 +98,7 @@ namespace BlokFrames
             public enum DpsSensorPlacement { Left, Right }
 
             /// <summary>Получает <see cref="SensorState" /> исходя из значений скорости, числа зубьев и диаметра бандажа</summary>
-            /// <remarks>Эмпирически выяснилось, что значение скорости необходимо будет умножить на 160 :-/. Формула взята у Юры из исходника программы АППИ.</remarks>
+            /// <remarks>Формула взята у Антона из комментария в исходниках программы БС-ДПС.</remarks>
             /// <param name="Speed">Значение скорости (с учётом знака: + вперёд, - назад)</param>
             /// <param name="CogsCount">Количество импульсов (зубьев ДПС) на оборот колеса</param>
             /// <param name="BondageDiameter">Диаметре бандажа колеса</param>
@@ -112,8 +112,7 @@ namespace BlokFrames
                        {
                            Channel1Condition = Channel1Condition,
                            Channel2Condition = Channel2Condition,
-                           Frequency =
-                               (int) Math.Round((Math.Abs(Speed) * 88.41941282883074209382431298473 * CogsCount) / BondageDiameter), // Почему-то эмпирически выяснено, что нужно умножать скорость на 160 :-/
+                           Frequency = (int)Math.Round(Math.Abs(Speed) * CogsCount * 16 / 3.6 / 3.14 / BondageDiameter * 1000),
                            Direction = Speed > 0
                                            ? (SensorPlacement == DpsSensorPlacement.Left
                                                   ? RorationDirection.Clockwise
