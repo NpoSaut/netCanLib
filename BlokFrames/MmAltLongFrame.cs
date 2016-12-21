@@ -58,7 +58,7 @@ namespace BlokFrames
             BitConverter.GetBytes((Int32)(Latitude  * 1e9 * Math.PI / 180)).CopyTo(data, 0);
             BitConverter.GetBytes((Int32)(Longitude * 1e9 * Math.PI / 180)).CopyTo(data, 4);
             data[7] &= 0x7f;
-            data[7] |= (Byte)((Reliable ? 1 : 0) << 7);
+            data[7] |= (Byte)((Reliable ? 0 : 1) << 7);
             return data;
         }
 
@@ -69,7 +69,7 @@ namespace BlokFrames
 
             Latitude = intLatitude * 180.0 / (1e9 * Math.PI);
             Longitude = intLongitude * 180.0 / (1e9 * Math.PI);
-            Reliable = (Data[7] & (1 << 7)) > 0;
+            Reliable = (Data[7] & (1 << 7)) == 0;
         }
     }
 }
